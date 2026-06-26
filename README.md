@@ -1,6 +1,20 @@
-# Berkshire AI - 四大师并行投研系统
+# Berkshire AI - 四大师并行投研系统（已完整整合上游）
 
-> 继承自 xbtlin/ai-berkshire，融合 TextGrad 自进化机制
+> **完整整合自** [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire)（原始四大师框架 + 18 Skills + 9 Tools + 反偏见 + 金融严谨性 + 大量实战报告）
+> 
+> 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
+
+**当前状态**：上游全能力 + V10 引擎已并入本仓库。**V10.2 重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
+
+**重要**：用户明确说明 **不在 Claude Code 中使用**，而是在 **OpenClaw / QwenPaw 这一类 AI Agent 产品/运行时**中使用。
+
+- **多 Agent 并行运行方式完整保留并适配**：investment-team、news-pulse、earnings-team 等技能里的“team-lead + 4 个专业子 Agent 并发研究”结构完整保留（这是上游四大师并行的核心价值）。只是把 Claude Code 的 TeamCreate/TaskCreate/SendMessage 等语法，换成了：
+  - OpenClaw：sessions_spawn、ACP 子代理、ACP 消息 / sessions_send 通信。
+  - QwenPaw：loop_engine 的并行角色实例或 harness 多 agent 调度。
+  - 降级方案：当平台不支持轻松 spawn 并行子 agent 时，用手动多个会话或强模型顺序模拟。
+- **OpenClaw**：将 skills 作为标准 `SKILL.md` 安装到 agent workspace（支持 frontmatter + 详细行为指令 + 如何 spawn 子 agent）。
+- **QwenPaw**：作为 loop_engine 的一部分运行（berkshire-ai 的 evolution_loop_v10 直接集成在 `~/.qwenpaw/loop_engine/` 下）。
+- 所有 skills 已清理为**独立可移植的 Agent 指令模板**（无 Claude Code Team/Task 编排），但**多 agent 团队运行的流程和价值保留**。
 
 ## 🎯 核心理念
 
@@ -34,52 +48,126 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 快速开始
+## 🚀 快速开始（整合后）
 
-### 运行投研分析
+### OpenClaw 中使用（推荐方式）
 
+OpenClaw 技能格式：目录 + `SKILL.md`（带 YAML frontmatter）。
+
+推荐使用项目自带的更新脚本（推荐）：
 ```bash
-# 使用 Deep Research (每周五 18:00 自动执行)
-qwenpaw cron run 5bb93208-3036-4ced-922b-961c26ef1566
+cd ~/Documents/Github/berkshire-ai
+./update-platforms.sh
+```
+这会自动把所有 skills 和 tools 同步到 OpenClaw（和 QwenPaw）。
 
-# 使用 Thesis Tracker (每日 08:30 自动执行)
-qwenpaw cron run 03c4ebc8-cb78-4d17-ae49-4138d4b8c389
-
-# 使用 Evolution Loop (每周五 20:00 自动执行)
-qwenpaw cron run 99ac7a57-4e3f-4cb2-bace-f0b7cc37c143
+手动方式（一次性）：
+```bash
+mkdir -p ~/.openclaw/workspace/skills/berkshire-investment-research
+cp berkshire-ai/skills/investment-research.md ~/.openclaw/workspace/skills/berkshire-investment-research/SKILL.md
+# 同理其他...
 ```
 
-### 手动执行分析
+所有 SKILL.md 顶部已包含兼容 frontmatter（name / description / version 10.2），OpenClaw agent 会自动发现并在匹配场景时激活。
+
+工具调用：技能内会指导 agent 执行 `python3 ~/Documents/Github/berkshire-ai/tools/financial_rigor.py ...`（或使用 update 后 v8 里的相对路径）。
+
+示例触发：对 agent 说“对腾讯做四大师投资研究”或“运行 berkshire investment research on 0700.HK”。
+
+还有一个总入口技能：`berkshire`（激活后可列出所有子技能）。
+
+### QwenPaw 中使用
+
+berkshire-ai 已经深度集成到 QwenPaw：
+
+- 核心 runner：`src/evolution_loop_v10.py` 放在 `~/.qwenpaw/loop_engine/berkshire_v8/`（或当前版本目录）。
+- 技能模板作为 prompt 组件被 loop 加载（见 `config/skill.md` 和 loop 内的 PROMPT_TEMPLATES 引用）。
+- 状态/轨迹/反射：写入 `~/.qwenpaw/berkshire_state.md`、`~/.qwenpaw/berkshire_traces/` 等。
+- 直接运行：
+```bash
+python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
+```
+
+如果要手动加载单个技能提示，可在 QwenPaw 的上下文或 skill_pool 中引用 `berkshire-ai/skills/*.md`。
+
+### 其他环境（通用）
+
+- 直接把 `skills/xxx.md` 内容作为系统提示或 user message 喂给任何支持工具调用的 agent（Grok、Qwen、Claude 等）。
+- 结合本地 Python 工具链使用（推荐把 `tools/` 加入 PATH 或在调用前 cd 到 berkshire-ai 目录）。
+```
+
+### 使用 TextGrad V10 进化引擎
 
 ```bash
-# 贵州茅台分析
 python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
-
-# 腾讯控股分析
-python3 src/evolution_loop_v10.py --ticker 0700.HK --company 腾讯控股
 ```
 
-## 📁 项目结构
+### Agent 内工具调用（OpenClaw / QwenPaw 推荐）
+
+Agent 技能会指导你使用 shell / 集成工具执行：
+
+```bash
+# 金融严谨性验证（必须用于任何关键数字）
+python3 berkshire-ai/tools/financial_rigor.py verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
+python3 berkshire-ai/tools/financial_rigor.py cross-validate --field revenue --values '123.4 123.5' --sources 'macrotrends aastocks'
+
+# 报告 15% 随机抽检 + 准出判决
+python3 berkshire-ai/tools/report_audit.py extract --report reports/腾讯-2025Q4.md
+python3 berkshire-ai/tools/report_audit.py verdict --results '{...}' --report reports/xxx.md
+```
+
+**重要**：在 OpenClaw/QwenPaw 中，确保 berkshire-ai 目录对 agent 可见（workspace 挂载或 git clone），或在 skill 描述中写明绝对路径。
+
+所有工具位于 `./tools/`（Decimal 精确计算、Benford 检验、三情景估值等）。
+
+## 🕸️ Knowledge Graph (graphify)
+
+本项目已集成 [graphify](https://graphify.dev) 用于代码/技能结构理解。
+
+- Hook 已安装 (post-commit 等自动更新)
+- Graph: `graphify-out/graph.json`（graphify 对**整个代码库**构建的知识图谱；节点/边数量随代码演进而变化，以 `graphify-out/manifest.json` 实际为准）
+- 注意：此处的 graphify 代码图 ≠ TextGrad 引擎的 `BerkshireGraph`（后者是固定的 18 个变量节点 / 5 层投研计算图，见 `src/graph.py`）
+- 使用方式（在支持的 AI 助手中）：
+  - `/graphify` 激活 skill
+  - `graphify query "项目核心组件?"`
+  - `graphify path "evolution_loop" "financial_rigor"`
+  - `graphify explain "BerkshireGraph"`
+  - 更新: `graphify update .` (代码仅, 无 LLM 成本)
+- AGENTS.md 中有集成规则。
+- 适合探索技能依赖、代码关系、投资框架结构。
+
+安装/更新: `./update-platforms.sh` 会同步 graphify-out (如果需要)。
+
+## 📁 项目结构（已整合上游）
 
 ```
 berkshire-ai/
-├── README.md                    # 本文件
-├── VERSION_HISTORY.md           # 版本历史与测试记录
-├── src/                         # 核心代码
-│   ├── evolution_loop_v10.py    # V10.0 TextGrad 化引擎
-│   ├── tavily_search.py         # Tavily 双Key轮询
-│   └── prompt_templates.py      # 四大师 Prompt 模板
-├── tests/                       # 测试套件
-│   ├── test_v10_e2e.py          # V10.0 端到端测试
-│   └── test_backtest.py         # 历史轨迹回测
-├── docs/                        # 文档
-│   ├── textgrad_design.md       # TextGrad 设计文档
-│   └── backtest_reports/        # 回测报告
-├── config/                      # 配置
-│   ├── skill.md                 # SKILL.md 技能定义
-│   └── state.md                 # 状态文件
-├── traces/                      # 轨迹记录
-└── reflections/                 # 反思报告
+├── README.md                    # 本文件（整合说明）
+├── VERSION_HISTORY.md
+├── src/                         # TextGrad V10 自进化引擎（本地核心）
+│   ├── evolution_loop_v10.py
+│   └── tavily_search.py
+├── skills/                      # ★ 完整上游 18 个技能（已并入，OpenClaw 兼容）
+│   ├── investment-research.md   # 带 frontmatter，可直接作为 SKILL.md 使用
+│   ├── investment-team.md
+│   ├── earnings-review.md
+│   ├── news-pulse.md
+│   ├── financial-data.md        # 数据源规范（所有技能必须引用）
+│   └── ... (其他 13 个)
+│   # OpenClaw 安装示例见上方“OpenClaw 中使用”章节
+├── tools/                       # ★ 完整上游工具链（已并入）
+│   ├── financial_rigor.py       # 精确市值/估值/交叉验证（核心）
+│   ├── report_audit.py          # 报告数据抽检（15%）
+│   ├── ashare_data.py
+│   └── ... (stock_screener, xueqiu_scraper, momentum backtests, etc.)
+├── config/
+│   ├── skill.md                 # V10.1 整合版 meta-skill
+│   └── state.md
+├── docs/
+│   └── textgrad_design.md
+├── graphify-out/                # 知识图谱 (graphify) - 用于项目结构查询、代码/技能关系
+├── tests/
+└── traces/ / reflections/       # 运行时
 ```
 
 ## 🔄 版本规范
@@ -95,11 +183,12 @@ berkshire-ai/
 
 ## 📊 当前版本
 
-**V10.0** (2026-06-26)
+**V10.1** (2026-06-26)
 - ✅ TextGrad 化 (节点级诊断 + 梯度反向传播)
 - ✅ Tavily 双Key轮询 (2000次/月)
 - ✅ 四大师全覆盖 (100%)
 - ✅ 回测诊断覆盖率 100%
+- ✅ **上游全能力整合**：完整 skills/ (18个) + tools/ (9个) from xbtlin/ai-berkshire 并入 (已规范化路径引用)
 
 ## 🔗 相关链接
 
@@ -110,4 +199,4 @@ berkshire-ai/
 ## 📝 维护者
 
 - Mckay (houqing)
-- 最后更新: 2026-06-26
+- 最后更新: 2026-06-26 (full upstream skills+tools integrated)

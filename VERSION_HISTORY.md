@@ -36,6 +36,68 @@
 
 ## 📜 版本历史
 
+### V10.3 - 2026-06-26 (graphify 集成)
+
+**变更内容**:
+- 集成 graphify 知识图谱工具：
+  - `graphify hook install` (post-commit 等自动更新)
+  - `graphify update . --no-cluster` 构建代码图 (44 nodes, 68 edges)
+  - 生成 `graphify-out/graph.json` + GRAPH_TREE.html
+  - 创建 AGENTS.md (Claw/OpenClaw 规则)
+  - README 新增 graphify 使用章节
+  - 支持 /graphify skill, query, path, explain
+- 项目结构现在可通过知识图谱探索（技能依赖、代码关系、TextGrad 引擎组件）
+- update-platforms.sh 保持同步
+
+**测试结果**:
+- graphify query/path 正常工作
+- 所有项目内测试通过
+- 无外部目录依赖变更
+
+---
+
+### V10.2 - 2026-06-26 (OpenClaw / QwenPaw 适配)
+
+**变更内容**:
+- 明确目标运行时为 **OpenClaw / QwenPaw 这一类 AI Agent 产品**（不再针对 Claude Code）。
+- README 新增专属章节：
+  - OpenClaw：SKILL.md frontmatter + `~/.openclaw/workspace/skills/berkshire-*/SKILL.md` 安装指南。
+  - QwenPaw：与 `~/.qwenpaw/loop_engine/berkshire_v*/` 的现有集成说明 + 直接运行方式。
+- 核心 skills（investment-research、investment-team、earnings-review、news-pulse、financial-data 等）添加标准 YAML frontmatter（name、description、version），使之可直接作为 OpenClaw SKILL.md 使用。
+- 技能语言调整为 Agent 激活式（“激活条件：... 时激活”），便于 OpenClaw/QwenPaw 发现与触发。
+- 清理剩余“Claude 对...”等描述，统一为“Agent / 研究者”。
+- 工具调用说明强化：在 agent 内通过 shell 执行 `python3 berkshire-ai/tools/...`。
+
+**测试结果**:
+- 技能 frontmatter 验证通过
+- 路径与工具调用在 OpenClaw 风格 workspace 和 QwenPaw loop 下可用
+- 无 Claude Code 编排残留
+
+---
+
+### V10.1 - 2026-06-26
+
+**变更内容**:
+- **上游全能力整合**：完整并入 xbtlin/ai-berkshire 的 18 个 skills + 9 个 tools
+  - skills/: investment-research, investment-team, bottleneck-hunter, thesis-tracker, financial-data, earnings-*, industry-*, portfolio-* 等
+  - tools/: financial_rigor.py（核心）、report_audit.py、ashare_data.py、stock_screener、xueqiu_scraper、momentum_backtest* 等
+- 路径适配为本仓库相对路径（`tools/financial_rigor.py`）
+- config/skill.md 升级为 V10.1 整合版描述
+- README 明确标注“已完整整合上游 + 本地 V10 TextGrad 引擎”
+
+**测试结果**:
+- [x] 工具可用性验证（financial_rigor 精确计算、report_audit 抽检逻辑）
+- [x] 技能内容完整性（bottleneck-hunter、thesis-tracker、investment-team 等核心流程已落地）
+- 保持 V10.0 TextGrad 引擎不变
+
+**结论**: ✅ 整合完成（保留原 V10.0 测试结果）
+
+**完整整合清单**:
+- skills/: 18个 (bottleneck-hunter, deep-company-series, dyp-ask, earnings-*, financial-data, industry-*, investment-*, management-deep-dive, news-pulse, portfolio-review, private-company-research, quality-screen, thesis-tracker, wechat-article)
+- tools/: 9个 (ashare_data, financial_rigor, log-command, momentum_backtest*, morningstar_fair_value, report_audit, stock_screener, xueqiu_scraper)
+
+---
+
 ### V10.0 - 2026-06-26
 
 **变更内容**:
@@ -64,7 +126,7 @@
 
 **变更内容**:
 - Tavily 实时搜索集成
-- 双Key轮询 (tvly-dev-sMIt8... + tvly-dev-PJxjo...)
+- 双Key轮询（Key 从环境变量 TAVILY_API_KEYS 读取，不入库）
 - 消除 LLM 数据幻觉
 
 **测试结果**:

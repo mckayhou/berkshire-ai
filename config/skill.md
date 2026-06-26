@@ -1,11 +1,17 @@
 ---
 name: investment-research
-version: 10.0
+version: 10.2
 type: meta-skill
 description: >
-  继承自 xbtlin/ai-berkshire 的四大师并行投研框架。
+  完整整合自 xbtlin/ai-berkshire 的四大师并行投研框架 + 工具链 + 技能库。
   巴菲特/芒格/段永平/李录 四视角并行分析，含反偏见机制与金融严谨性验证。
   V10.0: TextGrad 化 - 显式计算图 + 节点级诊断 + 文本梯度反向传播。
+  V10.1: 上游全能力整合（skills/ 18个 + tools/ 9个 from xbtlin/ai-berkshire 完整并入，已规范化路径为本地 tools/ 相对引用）。
+  V10.3: 集成 graphify 知识图谱 (graphify-out/graph.json)，用于项目代码/技能结构查询。
+  重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
+  - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
+  - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
+  已移除所有 Claude Code 特定多代理编排指令。
 ---
 
 # Investment Research Meta-Skill (V10.0 - TextGrad 化)
@@ -86,13 +92,13 @@ description: >
 **数据获取流程**:
 ```bash
 # 1. 获取股票实时数据 (股价/市值/PE/PB/股息率)
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py stock {ticker} {company_name}
+python3 src/tavily_search.py stock {ticker} {company_name}
 
 # 2. 获取财务指标 (收入/利润/ROE/负债率)
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py financial {ticker}
+python3 src/tavily_search.py financial {ticker}
 
 # 3. 获取行业新闻 (竞争格局/最新动态)
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py news {industry} {company}
+python3 src/tavily_search.py news {industry} {company}
 ```
 
 **数据要求**:
@@ -137,37 +143,37 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py news {industry} {co
 
 ```bash
 # 股票实时数据
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py stock 0700.HK 腾讯控股
+python3 src/tavily_search.py stock 0700.HK 腾讯控股
 
 # 财务指标
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py financial 0700.HK
+python3 src/tavily_search.py financial 0700.HK
 
 # 行业新闻
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/tavily_search.py news 互联网 腾讯
+python3 src/tavily_search.py news 互联网 腾讯
 ```
 
-**环境变量**: `TAVILY_API_KEY` (已配置)
-**免费额度**: 1000 次/月
+**环境变量**: `TAVILY_API_KEYS`（逗号分隔多 Key，推荐）或单 Key `TAVILY_API_KEY`。**切勿把真实 Key 写入仓库**，请放 `~/.bashrc` 或 `.env`。
+**免费额度**: 1000 次/月/Key（多 Key 轮询见 `src/tavily_search.py`）
 
 ### 4.2 财务验证工具
 
 ```bash
 # 市值验算
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py verify-market-cap \
+python3 tools/financial_rigor.py verify-market-cap \
   --price {股价} --shares {总股本} --reported {报告市值} --currency {币种}
 
 # 估值验算
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py verify-valuation \
+python3 tools/financial_rigor.py verify-valuation \
   --price {股价} --eps {EPS} --bvps {每股净资产}
 
 # 三情景估值
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py three-scenario \
+python3 tools/financial_rigor.py three-scenario \
   --price {股价} --eps {EPS} --shares {股本亿} \
   --growth {乐观} {中性} {悲观} \
   --pe {乐观PE} {中性PE} {悲观PE}
 
 # 数据交叉验证
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py cross-validate \
+python3 tools/financial_rigor.py cross-validate \
   --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
 ```
 
@@ -176,6 +182,10 @@ python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py
 ### 5.0 TextGrad 化进化 (V10.0 新增)
 
 > **核心思想**: 借鉴 TextGrad (Nature 2025) 的自动微分思想，实现节点级诊断和针对性优化。
+
+> ⚠️ **实现状态（重要，避免文档与代码脱节）**
+> - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。当前"梯度"是**基于评分的规则化诊断模板**，非 LLM 驱动的真·文本梯度。
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、对比反思自动化、Cron 自动进化。请勿在生产流程中依赖这些命令，直到落地。
 
 **计算图结构**:
 ```
@@ -204,7 +214,12 @@ gradients = graph.backward(scores)
 | 优化方式 | 全局修改 | 针对性修改 |
 | 可解释性 | 低 | 高 (梯度可视化) |
 
-**实现文件**: `~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py`
+**实现文件**: `src/evolution_loop_v10.py`（部署到 QwenPaw 后位于 `~/.qwenpaw/loop_engine/berkshire_v8/`）
+
+**运行演示**:
+```bash
+python3 src/evolution_loop_v10.py   # 打印计算图节点数与本轮需更新的变量数
+```
 
 ### 5.1 轨迹记录 (Trajectory Recording)
 
@@ -243,7 +258,8 @@ gradients = graph.backward(scores)
 **反思流程**：
 ```bash
 # 运行对比反思
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py reflect <ticker>
+# [规划] 该子命令尚未实现
+python3 src/evolution_loop_v10.py reflect <ticker>
 ```
 
 **输出**：
@@ -269,7 +285,8 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py reflect <ticker>
 **执行优化**：
 ```bash
 # 运行完整优化循环
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py optimize <ticker>
+# [规划] 该子命令尚未实现
+python3 src/evolution_loop_v10.py optimize <ticker>
 ```
 
 ### 5.4 进化日志 (Evolution Log)
@@ -294,7 +311,7 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py optimize <ticker>
 
 ## 📝 Prompt 模板 (V9.1 优化版)
 
-> **详细模板**: 参见 `~/.qwenpaw/loop_engine/berkshire_v8/PROMPT_TEMPLATES.md`
+> **详细模板**: 参见 `docs/PROMPT_TEMPLATES.md`（[规划] 待补充；部署后位于 `~/.qwenpaw/loop_engine/berkshire_v8/`）
 
 ### 四大师 Prompt 结构
 
@@ -341,8 +358,10 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py optimize <ticker>
 
 | 数据 | 路径 |
 |:-----|:-----|
-| Skills | `~/.copaw/workspaces/default/skills/ai-berkshire/` |
-| Tools | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/` |
+| Skills（仓库内） | `skills/` |
+| Tools（仓库内） | `tools/` |
+| 部署后根目录（QwenPaw） | `~/.qwenpaw/loop_engine/berkshire_v8/` |
+| 部署后根目录（OpenClaw） | `~/.openclaw/workspace/skills/berkshire-*/` |
 | State | `~/.qwenpaw/berkshire_state.md` |
 | Traces | `~/.qwenpaw/berkshire_traces/` |
 | Reflections | `~/.qwenpaw/berkshire_reflections/` |
@@ -381,14 +400,14 @@ cat ~/.qwenpaw/berkshire_state.md
 
 **工具调用**：
 ```bash
-# 数据获取
-python3 ~/wendata/wendata.py "query"
+# 数据获取（实时检索）
+python3 src/tavily_search.py stock <ticker> <company_name>
 
 # 金融严谨性验证
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py verify-market-cap ...
+python3 tools/financial_rigor.py verify-market-cap ...
 
 # 报告抽检
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/report_audit.py extract ...
+python3 tools/report_audit.py extract ...
 ```
 
 **输出动作**：
@@ -424,7 +443,7 @@ python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/report_audit.py ex
 
 **触发条件**：
 - 每周五 20:00 自动运行
-- 用户手动触发 `evolution_loop.py optimize`
+- 用户手动触发 `evolution_loop_v10.py optimize`（[规划] 尚未实现）
 
 **进化输出**：
 - 更新 `SKILL.md` 的 Evolution Log
@@ -483,7 +502,8 @@ description: 四大师并行投研框架 + Loop Engineering 自我进化
 
 ```bash
 # 检查进化循环状态
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py status
+# [规划] 该子命令尚未实现
+python3 src/evolution_loop_v10.py status
 
 # 检查轨迹数量
 ls ~/.qwenpaw/berkshire_traces/*.json | wc -l
@@ -510,13 +530,14 @@ ls ~/.qwenpaw/berkshire_reflections/*.json | wc -l
 # 1. 运行一次完整投研任务（如分析腾讯控股）
 # 2. 记录轨迹
 # 3. 运行对比反思
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py reflect 0700.HK
+# [规划] reflect/optimize 子命令尚未实现
+python3 src/evolution_loop_v10.py reflect 0700.HK
 
 # 4. 运行优化
-python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop.py optimize 0700.HK
+python3 src/evolution_loop_v10.py optimize 0700.HK
 
 # 5. 验证 SKILL.md 更新
-grep "v9.1" ~/.copaw/workspaces/default/skills/investment-research/SKILL.md
+grep "v9.1" skills/investment-research.md
 ```
 
 ### 12.2 持续监控

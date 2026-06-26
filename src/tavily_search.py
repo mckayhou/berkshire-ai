@@ -160,17 +160,18 @@ def test_tavily_integration():
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*70)
     
-    if not TAVILY_API_KEY:
-        print("\n❌ TAVILY_API_KEY 未配置")
+    if not _load_keys():
+        print("\n❌ TAVILY_API_KEY(S) 未配置")
         print("\n请执行以下步骤：")
         print("1. 访问 https://tavily.com 注册账号（免费 1000次/月）")
         print("2. 获取 API Key")
-        print("3. 在 ~/.bashrc 中添加：")
-        print("   export TAVILY_API_KEY='tvly-xxxxxxxxxxxxx'")
+        print("3. 在 ~/.bashrc 中添加（推荐多 Key 轮询）：")
+        print("   export TAVILY_API_KEYS='tvly-key1,tvly-key2'")
+        print("   # 或单 Key： export TAVILY_API_KEY='tvly-xxxxxxxxxxxxx'")
         print("4. 执行：source ~/.bashrc")
         return False
-    
-    print("\n✅ TAVILY_API_KEY 已配置")
+
+    print("\n✅ TAVILY_API_KEY(S) 已配置")
     
     try:
         searcher = TavilySearcher()
@@ -208,5 +209,52 @@ def test_tavily_integration():
         return False
 
 
+def _cli():
+    """命令行入口：与 skills/config 文档中的调用方式保持一致。
+
+    用法:
+      python3 src/tavily_search.py stock <ticker> <company_name>
+      python3 src/tavily_search.py financial <ticker>
+      python3 src/tavily_search.py news <industry> [company]
+      python3 src/tavily_search.py test
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Tavily 实时检索（四大师数据获取）")
+    sub = parser.add_subparsers(dest="command")
+
+    p_stock = sub.add_parser("stock", help="获取股票实时数据")
+    p_stock.add_argument("ticker")
+    p_stock.add_argument("company_name")
+
+    p_fin = sub.add_parser("financial", help="获取财务指标")
+    p_fin.add_argument("ticker")
+
+    p_news = sub.add_parser("news", help="获取行业新闻")
+    p_news.add_argument("industry")
+    p_news.add_argument("company", nargs="?", default="")
+
+    sub.add_parser("test", help="运行集成自测")
+
+    args = parser.parse_args()
+
+    if args.command == "test" or args.command is None:
+        test_tavily_integration()
+        return
+
+    searcher = TavilySearcher()
+    if args.command == "stock":
+        result = searcher.get_stock_data(args.ticker, args.company_name)
+    elif args.command == "financial":
+        result = searcher.get_financial_metrics(args.ticker)
+    elif args.command == "news":
+        result = searcher.get_industry_news(args.industry, args.company)
+    else:
+        parser.print_help()
+        return
+
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+
 if __name__ == "__main__":
-    test_tavily_integration()
+    _cli()

@@ -1,0 +1,8 @@
+# Berkshire AI 运行时依赖
+#
+# 说明：
+# - tools/ 下的金融工具（financial_rigor.py / report_audit.py 等）仅用 Python 标准库，无需安装任何依赖。
+# - src/ 的 TextGrad 引擎（graph.py / optimizer.py）同样零依赖。
+# - 仅 src/tavily_search.py 的实时检索需要 httpx。
+
+httpx>=0.27,<1.0
