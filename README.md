@@ -94,7 +94,6 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 
 - 直接把 `skills/xxx.md` 内容作为系统提示或 user message 喂给任何支持工具调用的 agent（Grok、Qwen、Claude 等）。
 - 结合本地 Python 工具链使用（推荐把 `tools/` 加入 PATH 或在调用前 cd 到 berkshire-ai 目录）。
-```
 
 ### 使用 TextGrad V10 进化引擎
 
@@ -169,6 +168,28 @@ berkshire-ai/
 ├── tests/
 └── traces/ / reflections/       # 运行时
 ```
+
+## 📚 文档导航
+
+| 文档 | 内容 |
+|---|---|
+| [README_EN.md](README_EN.md) | English version |
+| [TESTING.md](TESTING.md) | 测试指南 + 最近一次全量 E2E 报告 |
+| [tools/README.md](tools/README.md) | 9 个工具的 CLI 用法目录 |
+| [docs/report-conventions.md](docs/report-conventions.md) | 报告目录/命名规范、投研核心原则 |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图（含本 fork 实现状态） |
+| [docs/textgrad_design.md](docs/textgrad_design.md) | TextGrad V10 引擎设计 |
+| [LICENSE](LICENSE) | MIT（fork 自 xbtlin/ai-berkshire，保留原作者版权） |
+
+## 🧪 测试
+
+```bash
+pip install -r requirements.txt pytest
+python3 -m pytest tests/ -v -rs      # 单元 + 集成（无 key/无网时相关用例自动 skip）
+python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
+```
+
+完整 E2E 步骤与最近一次结果见 [TESTING.md](TESTING.md)。
 
 ## 🔄 版本规范
 

@@ -36,6 +36,27 @@
 
 ## 📜 版本历史
 
+### V10.4 - 2026-06-26 (upstream 对齐 + 全量 E2E + 文档完善)
+
+**变更内容**:
+- **与 upstream 对齐**（能力/治理/文档层）：
+  - `skills/private-company-research.md` 重写为 upstream 完整 6 子 Agent 框架（商业模式/财务侦探/竞争/风险治理/技术IP/替代数据），并适配 OpenClaw/QwenPaw 多 Agent 编排（1108 行）
+  - 新增 `LICENSE`(MIT)、`README_EN.md`、`docs/ROADMAP.md`、`docs/report-conventions.md`、`assets/architecture.mmd`+`.png`
+  - 带入 `data/`（5 个 csv/json，供 stock_screener/morningstar 用）+ 2 份样例报告（RocketLab、赛力斯）
+  - 未并入 upstream 的 2084 份历史报告与个人实盘记录（属原作者作品/私人数据）
+- **全量 E2E 测试**（详见 TESTING.md）：单元/集成/回测/进化引擎 + 9 个工具全部跑通
+- **Bug 修复**：`tools/morningstar_fair_value.py` 增加 argparse（`--help` 不再触发 84 秒抓取；新增 `--max-pages`/`--top`），星级渲染容错（`_stars()`）
+- **文档完善**：新增 `TESTING.md`、`tools/README.md`；README 增加文档导航 + 测试章节，修复一处游离代码围栏
+
+**测试结果**:
+- 单元 + 集成测试: 9 通过 / 1 跳过（Tavily 在受限网络下 skip，有网时通过真实 API）
+- 回测验证: 诊断覆盖率 100%
+- 工具 E2E: financial_rigor(6子命令+安全)/report_audit/ashare_data(4)/momentum×2/stock_screener/morningstar/tavily 全部通过；xueqiu CLI 验证（全量需登录态）
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.3 - 2026-06-26 (graphify 集成)
 
 **变更内容**:
