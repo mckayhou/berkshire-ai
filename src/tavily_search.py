@@ -5,6 +5,7 @@ Berkshire AI V9.3 - Tavily Search Integration (Multi-Key Round-Robin)
 """
 import os
 import json
+import time
 import httpx
 import threading
 from typing import Dict, List, Optional
@@ -12,6 +13,14 @@ from datetime import datetime
 
 # Tavily API 配置
 TAVILY_API_URL = "https://api.tavily.com/search"
+
+# 视为"瞬时可重试"的 HTTP 状态码（网关/服务暂时不可用）
+_TRANSIENT_STATUS = {500, 502, 503, 504}
+
+
+def _backoff_seconds(attempt: int) -> float:
+    """指数退避，封顶 4s。"""
+    return min(0.5 * (2 ** attempt), 4.0)
 
 def _load_keys() -> List[str]:
     """加载所有可用 Key"""
@@ -51,10 +60,16 @@ class TavilySearcher:
             self._key_index = (self._key_index + 1) % len(self.keys)
             print(f"  [Tavily] Key 轮询: #{old} → #{self._key_index}")
     
-    def search(self, query: str, max_results: int = 5, _retries: int = 0) -> Dict:
-        """执行搜索，429 时自动切换 Key"""
-        max_rotations = len(self.keys)
-        for attempt in range(max_rotations):
+    def search(self, query: str, max_results: int = 5, max_retries: int = 2) -> Dict:
+        """执行搜索。
+
+        - 429 限流：切换 Key 重试（不计入退避）
+        - 超时 / 网络错误 / 5xx 网关错误：指数退避后重试，最多 max_retries 次
+        - 其它错误：立即返回 error
+        """
+        max_attempts = len(self.keys) + max_retries
+        last_error = None
+        for attempt in range(max_attempts):
             try:
                 with httpx.Client(timeout=30) as client:
                     response = client.post(
@@ -68,18 +83,30 @@ class TavilySearcher:
                             "search_depth": "advanced"
                         }
                     )
-                    if response.status_code == 429:
-                        print(f"  [Tavily] 429 限流，切换 Key...")
-                        self._rotate_key()
-                        continue
-                    response.raise_for_status()
-                    return response.json()
+                if response.status_code == 429:
+                    print(f"  [Tavily] 429 限流，切换 Key...")
+                    self._rotate_key()
+                    continue
+                if response.status_code in _TRANSIENT_STATUS:
+                    last_error = f"HTTP {response.status_code}"
+                    print(f"  [Tavily] {last_error} 瞬时错误，退避重试...")
+                    time.sleep(_backoff_seconds(attempt))
+                    continue
+                response.raise_for_status()
+                return response.json()
+            except (httpx.TimeoutException, httpx.TransportError) as e:
+                # 超时/连接类错误：可重试
+                last_error = f"{type(e).__name__}: {e}"
+                print(f"  [Tavily] 网络瞬时错误，退避重试: {last_error}")
+                time.sleep(_backoff_seconds(attempt))
+                continue
             except Exception as e:
                 if "429" in str(e):
                     self._rotate_key()
                     continue
                 return {"error": str(e), "results": []}
-        return {"error": f"所有 {len(self.keys)} 个 Key 均被限流", "results": []}
+        return {"error": f"重试 {max_attempts} 次后仍失败: {last_error or '所有 Key 均被限流'}",
+                "results": []}
     
     def get_stock_data(self, ticker: str, company_name: str) -> Dict:
         """获取股票实时数据"""

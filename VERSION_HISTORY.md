@@ -36,6 +36,25 @@
 
 ## 📜 版本历史
 
+### V10.7 - 2026-06-26 (网络层加固：瞬时错误重试 + 18 个离线网络测试)
+
+**变更内容**:
+- **`src/tavily_search.py`**：`search()` 增加瞬时错误重试——超时 / 连接错误（`httpx.TimeoutException`/`TransportError`）/ 5xx 网关错误（500/502/503/504）指数退避（封顶 4s）后重试；429 维持切 Key；其它错误立即返回。删除从未使用的死参数 `_retries`，改为 `max_retries`
+- **`tools/ashare_data.py`**：`_curl()` 增加重试（默认 2 次）+ 显式 `subprocess.TimeoutExpired` 处理，最终失败抛 `ConnectionError`（原先超时会直接冒泡）
+- **`tools/morningstar_fair_value.py`**：`fetch_page()` 增加重试 + 超时/空响应/**非 JSON**（被限流/拦截）处理，最终失败抛 `ConnectionError`（原先非 JSON 会 `JSONDecodeError` 崩溃）
+- **新增 18 个离线网络测试** `tests/test_tools_network.py`（monkeypatch httpx/subprocess，零真实网络）：
+  - tavily：`_load_keys` 多/单/空、无 key 抛错、Key 轮询、瞬时重试成功、5xx 重试耗尽、429 切 Key、4xx 立即 error、结果解析+截断+error 透传
+  - ashare：`_curl` 成功/GBK 回退/超时重试/持续失败抛错
+  - morningstar：`fetch_page` 成功/非 JSON 重试/持续超时抛错
+
+**测试结果**:
+- 全量: 107 通过（带 Tavily key 时 0 跳过；无 key 时 1 跳过）
+- lint: 无错误；graphify 图已更新
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.6 - 2026-06-26 (工具层加固：离线单测 + 3 处健壮性/正确性修复)
 
 **变更内容**:

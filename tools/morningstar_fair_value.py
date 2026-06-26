@@ -39,13 +39,31 @@ PAGE_SIZE = 100
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 
 
-def fetch_page(page: int) -> dict:
+def fetch_page(page: int, retries: int = 2) -> dict:
+    """抓取一页结果。瞬时失败（超时/空响应/非 JSON）自动重试，最终失败抛 ConnectionError。"""
     url = API_BASE.format(page=page, page_size=PAGE_SIZE)
-    result = subprocess.run(
-        ["curl", "-s", "-H", "User-Agent: Mozilla/5.0", url],
-        capture_output=True, text=True, timeout=30,
-    )
-    return json.loads(result.stdout)
+    last = None
+    for attempt in range(retries + 1):
+        try:
+            result = subprocess.run(
+                ["curl", "-s", "-H", "User-Agent: Mozilla/5.0", url],
+                capture_output=True, text=True, timeout=30,
+            )
+        except subprocess.TimeoutExpired:
+            last = f"请求超时 (>30s)"
+            time.sleep(0.5 * (attempt + 1))
+            continue
+        if result.returncode != 0 or not (result.stdout or "").strip():
+            last = "请求失败或空响应"
+            time.sleep(0.5 * (attempt + 1))
+            continue
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            last = "返回非 JSON（可能被限流或拦截）"
+            time.sleep(0.5 * (attempt + 1))
+            continue
+    raise ConnectionError(f"Morningstar 抓取失败 (page={page}): {last}")
 
 
 def extract_ticker(tenforeid: str) -> str:

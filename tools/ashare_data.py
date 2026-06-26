@@ -18,26 +18,41 @@ import json
 import os
 import subprocess
 import sys
+import time
 from decimal import Decimal, ROUND_HALF_EVEN
 
 _TIMEOUT = 15
+_RETRIES = 2
 
 
-def _curl(url):
-    """用 curl --noproxy 直连，绕过系统代理。"""
-    result = subprocess.run(
-        ["/usr/bin/curl", "-s", "--noproxy", "*",
-         "-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
-         url],
-        capture_output=True, timeout=_TIMEOUT,
-    )
-    if result.returncode != 0 or not result.stdout.strip():
-        raise ConnectionError(f"请求失败: {url}")
-    # 腾讯行情 API 返回 GBK 编码，其他返回 UTF-8
-    try:
-        return result.stdout.decode("utf-8")
-    except UnicodeDecodeError:
-        return result.stdout.decode("gbk")
+def _curl(url, retries: int = _RETRIES):
+    """用 curl --noproxy 直连，绕过系统代理。
+
+    瞬时失败（超时/非零退出/空响应）自动重试，最终失败抛 ConnectionError。
+    """
+    last = None
+    for attempt in range(retries + 1):
+        try:
+            result = subprocess.run(
+                ["/usr/bin/curl", "-s", "--noproxy", "*",
+                 "-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+                 url],
+                capture_output=True, timeout=_TIMEOUT,
+            )
+        except subprocess.TimeoutExpired:
+            last = f"请求超时 (>{_TIMEOUT}s): {url}"
+            time.sleep(0.5 * (attempt + 1))
+            continue
+        if result.returncode != 0 or not result.stdout.strip():
+            last = f"请求失败: {url}"
+            time.sleep(0.5 * (attempt + 1))
+            continue
+        # 腾讯行情 API 返回 GBK 编码，其他返回 UTF-8
+        try:
+            return result.stdout.decode("utf-8")
+        except UnicodeDecodeError:
+            return result.stdout.decode("gbk")
+    raise ConnectionError(last or f"请求失败: {url}")
 
 
 def _curl_json(url, params=None):
