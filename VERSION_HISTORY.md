@@ -36,6 +36,27 @@
 
 ## 📜 版本历史
 
+### V10.5 - 2026-06-26 (TextGrad 引擎清理：去重 + 结构化梯度)
+
+**变更内容**:
+- **四大师单一来源**：`src/graph.py` 新增 `Master` dataclass + `MASTERS` 常量，派生 `MASTER_PREFIXES`/`ROLE_NAMES`/`MASTER_CHECKS`；变量/边/反向传播/诊断全部从 `MASTERS` 派生，节点命名收敛到 `analysis_node`/`prompt_node`/`model_node`。消除散落在 4 处的硬编码大师列表——新增大师只需改一处。
+- **去 emoji 字符串耦合（控制流结构化）**：新增 `Gradient` dataclass（`ok`/`score`/`issues`/`text`）。`backward()` 返回类型 `Dict[str, str]` → `Dict[str, Gradient]`。
+  - `optimizer.step()` 判定从 `"❌" not in gradient` 改为 `gradient.ok`，并记录结构化 `issues`
+  - 测试/回测消费方 `"❌" in g` → `not g.ok`
+  - `Gradient` 保留 `__str__`/`__contains__` 仅用于展示兼容，不参与任何控制流
+- **零行为回归**：example runner 仍为 18 nodes / 7 updates，回测覆盖率不变
+- 为将来走 B（LLM 驱动自进化）铺路：`Gradient.issues` 已结构化，未来填入 LLM 批评意见时消费方无需改动
+
+**测试结果**:
+- 单元 + 集成测试: 9 通过 / 1 跳过（Tavily 无 key skip）
+- 回测验证: 诊断覆盖率 100%
+- 进化引擎 example: Graph 18 nodes / Updates 7（与重构前一致）
+- lint: 无错误；graphify 图已更新
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.4 - 2026-06-26 (upstream 对齐 + 全量 E2E + 文档完善)
 
 **变更内容**:

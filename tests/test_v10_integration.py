@@ -79,8 +79,8 @@ def test_computation_graph():
     gradients = graph.backward(scores)
     assert len(gradients) > 0, "梯度为空"
 
-    # 验证节点级诊断
-    failed_nodes = [k for k, v in gradients.items() if "❌" in v]
+    # 验证节点级诊断（结构化 ok 字段）
+    failed_nodes = [k for k, v in gradients.items() if not v.ok]
     assert failed_nodes, "低分场景应至少诊断出一个失败节点"
     print(f"  ✅ 反向传播成功 (梯度数: {len(gradients)})")
     print(f"     失败节点: {failed_nodes}")

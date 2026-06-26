@@ -108,8 +108,8 @@ def run_backtest():
         # V10.0 反向传播
         gradients = graph.backward(scores)
         
-        issues_found = sum(1 for g in gradients.values() if "❌" in g)
-        prompts_to_fix = sum(1 for k, g in gradients.items() if k.endswith("_prompt") and "❌" in g)
+        issues_found = sum(1 for g in gradients.values() if not g.ok)
+        prompts_to_fix = sum(1 for k, g in gradients.items() if k.endswith("_prompt") and not g.ok)
         
         result = {
             "ticker": ticker,

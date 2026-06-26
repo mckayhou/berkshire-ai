@@ -50,10 +50,10 @@ def test_backward_propagation():
     gradients = graph.backward(scores)
     assert len(gradients) > 0, "梯度数应大于0"
     
-    # 验证低分大师有梯度
-    buffett_grad = gradients.get('buffett_analysis', '')
-    lilu_grad = gradients.get('lilu_analysis', '')
-    assert '❌' in buffett_grad or '❌' in lilu_grad, "低分大师应有问题标记"
+    # 验证低分大师有梯度（读取结构化 ok 字段，而非解析 emoji 文本）
+    buffett_grad = gradients['buffett_analysis']
+    lilu_grad = gradients['lilu_analysis']
+    assert (not buffett_grad.ok) or (not lilu_grad.ok), "低分大师应被标记为未达标"
     
     print("✅ 反向传播测试通过")
 

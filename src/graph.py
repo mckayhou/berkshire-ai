@@ -2,7 +2,7 @@
 """
 Berkshire Graph: Computation Graph for TextGrad V10 engine.
 
-Defines Variable and BerkshireGraph for 4-masters parallel analysis.
+Defines Variable, Gradient and BerkshireGraph for 4-masters parallel analysis.
 """
 
 from dataclasses import dataclass, field
@@ -10,6 +10,49 @@ from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 
 # Note: no relative imports for compatibility when run via sys.path insert to src/
+
+
+# ---------------------------------------------------------------------------
+# 单一来源：四大师定义（变量、边、梯度全部从这里派生，避免多处重复）
+# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class Master:
+    prefix: str   # duan / buffett / munger / lilu
+    name: str     # 中文名
+    focus: str    # 关注点
+
+
+MASTERS: Tuple[Master, ...] = (
+    Master("duan", "段永平", "生意本质"),
+    Master("buffett", "巴菲特", "护城河估值"),
+    Master("munger", "芒格", "逆向风险"),
+    Master("lilu", "李录", "文明趋势"),
+)
+
+MASTER_PREFIXES: Tuple[str, ...] = tuple(m.prefix for m in MASTERS)
+ROLE_NAMES: Dict[str, str] = {m.prefix: m.name for m in MASTERS}
+
+# 每位大师分析不达标时的针对性检查项
+MASTER_CHECKS: Dict[str, List[str]] = {
+    "duan": [
+        "检查: 是否用一句话定义了生意本质？",
+        "检查: 是否分析了收入漏斗？",
+    ],
+    "buffett": [
+        "检查: 是否包含 PE/PB/DCF 估值分析？",
+        "检查: 是否评估了护城河宽度？",
+    ],
+    "munger": [
+        "检查: 是否包含逆向思考 (失败路径)？",
+        "检查: 是否分析了监管风险？",
+    ],
+    "lilu": [
+        "检查: 是否评估了长期趋势？",
+        "检查: 是否分析了管理层质量？",
+    ],
+}
+
+SCORE_THRESHOLD = 0.85
 
 
 @dataclass
@@ -25,6 +68,27 @@ class Variable:
     score: float = 0.0
     gradient: Optional[str] = None
     last_updated: Optional[str] = None
+
+
+@dataclass
+class Gradient:
+    """结构化文本梯度。
+
+    控制流（优化器、回测、测试）应读取 `ok` / `issues`，
+    而不是从 `text` 里解析 ✅/❌ 字符串——后者是给人看的渲染。
+    """
+    node: str
+    ok: bool
+    text: str
+    score: Optional[float] = None
+    issues: List[str] = field(default_factory=list)
+
+    # 兼容旧的“字符串展示”用法（如 print、`"❌" in grad`），但不应用于控制流
+    def __str__(self) -> str:
+        return self.text
+
+    def __contains__(self, item: str) -> bool:
+        return item in self.text
 
 
 class BerkshireGraph:
@@ -52,6 +116,19 @@ class BerkshireGraph:
         self.trace_id: Optional[str] = None
         self.scores: Dict[str, float] = {}
 
+    # --- 节点命名约定（单一来源派生） ---
+    @staticmethod
+    def analysis_node(prefix: str) -> str:
+        return f"{prefix}_analysis"
+
+    @staticmethod
+    def prompt_node(prefix: str) -> str:
+        return f"{prefix}_prompt"
+
+    @staticmethod
+    def model_node(prefix: str) -> str:
+        return f"{prefix}_model"
+
     def _init_variables(self):
         """初始化计算图变量"""
         # Layer 0: 输入
@@ -62,22 +139,16 @@ class BerkshireGraph:
         # Layer 1: 数据获取
         self.variables["tavily_search"] = Variable("tavily_search", "output", layer=1)
 
-        # Layer 2: 四大师分析 (每个大师 2 个变量: prompt + model)
-        masters = [
-            ("duan", "段永平", "生意本质"),
-            ("buffett", "巴菲特", "护城河估值"),
-            ("munger", "芒格", "逆向风险"),
-            ("lilu", "李录", "文明趋势"),
-        ]
-        for prefix, role, focus in masters:
-            self.variables[f"{prefix}_prompt"] = Variable(
-                f"{prefix}_prompt", "prompt", role=role, layer=2
+        # Layer 2: 四大师分析 (每个大师 3 个变量: prompt + model + analysis)
+        for m in MASTERS:
+            self.variables[self.prompt_node(m.prefix)] = Variable(
+                self.prompt_node(m.prefix), "prompt", role=m.name, layer=2
             )
-            self.variables[f"{prefix}_model"] = Variable(
-                f"{prefix}_model", "model", role=role, layer=2
+            self.variables[self.model_node(m.prefix)] = Variable(
+                self.model_node(m.prefix), "model", role=m.name, layer=2
             )
-            self.variables[f"{prefix}_analysis"] = Variable(
-                f"{prefix}_analysis", "output", role=role, layer=2
+            self.variables[self.analysis_node(m.prefix)] = Variable(
+                self.analysis_node(m.prefix), "output", role=m.name, layer=2
             )
 
         # Layer 3: 财务验证
@@ -96,14 +167,14 @@ class BerkshireGraph:
         ])
 
         # Layer 1 → Layer 2
-        for prefix in ["duan", "buffett", "munger", "lilu"]:
-            self.edges.append(("tavily_search", f"{prefix}_analysis"))
-            self.edges.append((f"{prefix}_prompt", f"{prefix}_analysis"))
-            self.edges.append((f"{prefix}_model", f"{prefix}_analysis"))
+        for prefix in MASTER_PREFIXES:
+            self.edges.append(("tavily_search", self.analysis_node(prefix)))
+            self.edges.append((self.prompt_node(prefix), self.analysis_node(prefix)))
+            self.edges.append((self.model_node(prefix), self.analysis_node(prefix)))
 
         # Layer 2 → Layer 3
-        for prefix in ["duan", "buffett", "munger", "lilu"]:
-            self.edges.append((f"{prefix}_analysis", "financial_rigor"))
+        for prefix in MASTER_PREFIXES:
+            self.edges.append((self.analysis_node(prefix), "financial_rigor"))
 
         # Layer 3 → Layer 4
         self.edges.append(("financial_rigor", "final_report"))
@@ -131,7 +202,7 @@ class BerkshireGraph:
 
         return result
 
-    def backward(self, scores: Dict[str, float]) -> Dict[str, str]:
+    def backward(self, scores: Dict[str, float]) -> Dict[str, Gradient]:
         """
         沿计算图反向传播文本梯度
 
@@ -139,109 +210,108 @@ class BerkshireGraph:
             scores: 各大师评分 {"duan": 0.92, "buffett": 0.68, ...}
 
         Returns:
-            gradients: 每个变量的文本梯度
+            gradients: {节点名: Gradient}
         """
         self.scores = scores
-        gradients = {}
+        gradients: Dict[str, Gradient] = {}
+
+        analysis_nodes = {self.analysis_node(p): p for p in MASTER_PREFIXES}
+        prompt_nodes = {self.prompt_node(p): p for p in MASTER_PREFIXES}
+        model_nodes = {self.model_node(p): p for p in MASTER_PREFIXES}
 
         # 反向遍历 (从输出到输入)
         for node in reversed(self.topological_sort()):
             if node == "final_report":
                 gradients[node] = self._compute_output_gradient()
-            elif node.endswith("_analysis"):
-                role_prefix = node.split("_")[0]
-                score = scores.get(role_prefix, 0)
-                gradients[node] = self._compute_master_gradient(role_prefix, score)
-            elif node in ["duan_prompt", "buffett_prompt", "munger_prompt", "lilu_prompt"]:
-                # Prompt 变量：根据下游分析梯度生成
-                analysis_node = node.replace("_prompt", "_analysis")
-                downstream_grad = gradients.get(analysis_node, "")
-                gradients[node] = self._compute_prompt_gradient(node, downstream_grad)
-            elif node in ["duan_model", "buffett_model", "munger_model", "lilu_model"]:
-                # Model 变量：根据下游分析梯度生成
-                analysis_node = node.replace("_model", "_analysis")
-                downstream_grad = gradients.get(analysis_node, "")
-                gradients[node] = self._compute_model_gradient(node, downstream_grad)
+            elif node in analysis_nodes:
+                prefix = analysis_nodes[node]
+                gradients[node] = self._compute_master_gradient(
+                    prefix, scores.get(prefix, 0)
+                )
+            elif node in prompt_nodes:
+                prefix = prompt_nodes[node]
+                downstream = gradients.get(self.analysis_node(prefix))
+                gradients[node] = self._compute_prompt_gradient(node, downstream)
+            elif node in model_nodes:
+                prefix = model_nodes[node]
+                downstream = gradients.get(self.analysis_node(prefix))
+                gradients[node] = self._compute_model_gradient(node, downstream)
 
         return gradients
 
-    def _compute_output_gradient(self) -> str:
+    def _compute_output_gradient(self) -> Gradient:
         """计算输出层梯度"""
         avg_score = sum(self.scores.values()) / len(self.scores) if self.scores else 0
+        ok = avg_score >= SCORE_THRESHOLD
 
-        if avg_score >= 0.85:
-            return f"✅ 整体分析质量良好 (平均评分 {avg_score:.3f})"
+        if ok:
+            text = f"✅ 整体分析质量良好 (平均评分 {avg_score:.3f})"
+        else:
+            text = f"❌ 整体分析质量不达标 (平均评分 {avg_score:.3f} < {SCORE_THRESHOLD})"
 
-        return f"❌ 整体分析质量不达标 (平均评分 {avg_score:.3f} < 0.85)"
+        return Gradient(node="final_report", ok=ok, text=text, score=avg_score)
 
-    def _compute_master_gradient(self, role: str, score: float) -> str:
+    def _compute_master_gradient(self, prefix: str, score: float) -> Gradient:
         """计算四大师分析层梯度"""
-        role_names = {
-            "duan": "段永平",
-            "buffett": "巴菲特",
-            "munger": "芒格",
-            "lilu": "李录",
-        }
-        role_name = role_names.get(role, role)
+        role_name = ROLE_NAMES.get(prefix, prefix)
+        node = self.analysis_node(prefix)
 
-        if score >= 0.85:
-            return f"✅ {role_name} 分析质量良好 (评分 {score:.3f})"
+        if score >= SCORE_THRESHOLD:
+            return Gradient(
+                node=node, ok=True, score=score,
+                text=f"✅ {role_name} 分析质量良好 (评分 {score:.3f})",
+            )
 
-        issues = []
+        issues: List[str] = []
         if score < 0.70:
             issues.append(f"评分过低 ({score:.3f})，需要重点改进")
-        elif score < 0.85:
+        else:
             issues.append(f"评分偏低 ({score:.3f})，需要优化")
 
-        # 根据角色特性生成针对性诊断
-        if role == "buffett":
-            issues.append("检查: 是否包含 PE/PB/DCF 估值分析？")
-            issues.append("检查: 是否评估了护城河宽度？")
-        elif role == "munger":
-            issues.append("检查: 是否包含逆向思考 (失败路径)？")
-            issues.append("检查: 是否分析了监管风险？")
-        elif role == "lilu":
-            issues.append("检查: 是否评估了长期趋势？")
-            issues.append("检查: 是否分析了管理层质量？")
-        elif role == "duan":
-            issues.append("检查: 是否用一句话定义了生意本质？")
-            issues.append("检查: 是否分析了收入漏斗？")
+        # 根据角色特性追加针对性诊断（单一来源）
+        issues.extend(MASTER_CHECKS.get(prefix, []))
 
-        return f"❌ {role_name} 分析存在问题:\n" + "\n".join(f"  - {i}" for i in issues)
+        text = f"❌ {role_name} 分析存在问题:\n" + "\n".join(f"  - {i}" for i in issues)
+        return Gradient(node=node, ok=False, score=score, text=text, issues=issues)
 
-    def _compute_prompt_gradient(self, var_name: str, downstream_grad: str) -> str:
+    def _compute_prompt_gradient(self, var_name: str, downstream: Optional[Gradient]) -> Gradient:
         """计算 Prompt 变量的梯度"""
-        if "✅" in downstream_grad:
-            return f"✅ {var_name} 无需修改"
+        if downstream is None or downstream.ok:
+            return Gradient(node=var_name, ok=True, text=f"✅ {var_name} 无需修改")
 
-        role = var_name.split("_")[0]
-        return f"""
+        text = f"""
 📝 {var_name} 需要优化
 
 下游诊断:
-{downstream_grad}
+{downstream.text}
 
 建议修改方向:
 1. 根据下游诊断中的"检查"项，补充缺失的分析维度
 2. 增强 Prompt 中的约束条件
 3. 添加具体的输出格式要求
 """
+        return Gradient(
+            node=var_name, ok=False, text=text, issues=list(downstream.issues)
+        )
 
-    def _compute_model_gradient(self, var_name: str, downstream_grad: str) -> str:
+    def _compute_model_gradient(self, var_name: str, downstream: Optional[Gradient]) -> Gradient:
         """计算 Model 变量的梯度"""
-        if "✅" in downstream_grad:
-            return f"✅ {var_name} 无需修改"
+        if downstream is None or downstream.ok:
+            return Gradient(node=var_name, ok=True, text=f"✅ {var_name} 无需修改")
 
-        return f"""
+        text = f"""
 🔄 {var_name} 可能需要调整
 
 下游诊断:
-{downstream_grad}
+{downstream.text}
 
 建议:
 1. 如果 Prompt 优化后仍无改善，考虑更换模型
 2. 当前模型配置参考 V9.1 模型分配表
 """
+        return Gradient(
+            node=var_name, ok=False, text=text, issues=list(downstream.issues)
+        )
 
     def visualize(self) -> str:
         """可视化计算图"""

@@ -2,6 +2,22 @@
 
 > 基于 TextGrad (Nature 2025) 的自动微分思想，重构 Berkshire 进化机制
 
+## ✅ 实现现状 (截至 V10.5)
+
+本文档同时描述「已实现的脚手架」与「未来的完整自进化引擎 (Option B)」。两者请勿混淆：
+
+| 能力 | 状态 | 说明 |
+|:-----|:-----|:-----|
+| 计算图 `BerkshireGraph` | ✅ 已实现 | 18 节点 5 层，拓扑排序 + 反向遍历 |
+| 单一来源 `MASTERS` | ✅ 已实现 (V10.5) | 变量/边/梯度全部从 `MASTERS` 派生，新增大师只改一处 |
+| 结构化梯度 `Gradient` | ✅ 已实现 (V10.5) | `ok`/`score`/`issues`/`text`，控制流读 `ok`，不解析 emoji |
+| `backward(scores)` 反向传播 | ✅ 已实现 | 输入为各大师评分 `Dict[str, float]`，输出 `Dict[str, Gradient]` |
+| 优化器 `TextualGradientDescent.step()` | 🟡 半实现 | 依据 `Gradient.ok` 产出「更新计划」并记日志，**尚未真正改写 Prompt 值** |
+| LLM 驱动的文本梯度 (`∇_LLM`) | ⬜ 未实现 (Option B) | 当前梯度为基于评分的启发式模板，非 LLM 生成的批评 |
+| 真正的迭代进化循环 | ⬜ 未实现 (Option B) | `evolution_loop_v10.py` 目前是单次 example 演示 |
+
+> 结论：当前是「干净、可测试的概念脚手架」。`Gradient.issues` 已是结构化列表，未来走 Option B 时把启发式诊断替换为 LLM 批评即可，**消费方（优化器/回测/测试）无需改动**。
+
 ## 📖 TextGrad 核心概念
 
 | 概念 | 定义 | Berkshire 映射 |

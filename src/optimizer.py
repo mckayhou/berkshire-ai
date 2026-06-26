@@ -8,9 +8,9 @@ from datetime import datetime
 
 # Absolute for src/ path insert compatibility
 try:
-    from graph import BerkshireGraph, Variable
+    from graph import BerkshireGraph, Variable, Gradient
 except ImportError:
-    from .graph import BerkshireGraph, Variable
+    from .graph import BerkshireGraph, Variable, Gradient
 
 
 class TextualGradientDescent:
@@ -21,9 +21,11 @@ class TextualGradientDescent:
         self.lr = lr
         self.update_log: List[Dict] = []
 
-    def step(self, gradients: Dict[str, str]) -> List[Dict]:
+    def step(self, gradients: Dict[str, Gradient]) -> List[Dict]:
         """
         根据梯度更新变量
+
+        控制流读取 `Gradient.ok`（结构化字段），不再解析展示文本里的 ✅/❌。
 
         Returns:
             updates: 更新记录列表
@@ -31,8 +33,8 @@ class TextualGradientDescent:
         updates = []
 
         for var_name, gradient in gradients.items():
-            if "❌" not in gradient:
-                continue  # 无需更新
+            if gradient.ok:
+                continue  # 该节点达标，无需更新
 
             var = self.graph.variables.get(var_name)
             if not var:
@@ -43,7 +45,8 @@ class TextualGradientDescent:
                 "variable": var_name,
                 "type": var.type,
                 "role": var.role,
-                "gradient": gradient,
+                "gradient": gradient.text,
+                "issues": list(gradient.issues),
                 "timestamp": datetime.now().isoformat(),
                 "action": self._determine_action(var, gradient),
             }
@@ -52,7 +55,7 @@ class TextualGradientDescent:
 
         return updates
 
-    def _determine_action(self, var: Variable, gradient: str) -> str:
+    def _determine_action(self, var: Variable, gradient: Gradient) -> str:
         """根据梯度确定优化动作"""
         if var.type == "prompt":
             return "修改 Prompt: 根据梯度中的'检查'项补充缺失维度"
