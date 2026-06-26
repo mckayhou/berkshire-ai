@@ -9,11 +9,21 @@ See update-platforms.sh for deployment to OpenClaw/QwenPaw.
 
 # Absolute imports for compatibility (sys.path insert to src/ in tests)
 try:
-    from graph import BerkshireGraph, Variable
+    from graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
     from optimizer import TextualGradientDescent
 except ImportError:
-    from .graph import BerkshireGraph, Variable
+    from .graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
     from .optimizer import TextualGradientDescent
+
+__all__ = [
+    "BerkshireGraph",
+    "Variable",
+    "Gradient",
+    "Master",
+    "MASTERS",
+    "TextualGradientDescent",
+    "run_example",
+]
 
 
 def run_example():

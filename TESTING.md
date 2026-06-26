@@ -46,7 +46,7 @@ python3 tools/xueqiu_scraper.py --user-id <ID> --keywords 拼多多,PDD --output
 
 | 组件 | 命令 | 结果 |
 |---|---|---|
-| 单元+集成测试 | `pytest tests/` | ✅ 9 passed, 1 skipped（Tavily 用例在无网/受限网络下 skip，有网时通过）|
+| 单元+集成测试 | `pytest tests/` | ✅ 88 passed, 1 skipped（含 76 个工具层离线单测：financial_rigor 精确计算+AST 安全边界、report_audit 提取/抽样/判决、ashare_data/stock_screener/morningstar 纯函数；Tavily 用例在无网下 skip）|
 | 回测脚本 | `test_v10_backtest.py` | ✅ 诊断覆盖率 100% |
 | 进化引擎 | `evolution_loop_v10.py` | ✅ Graph created 18 nodes, Updates needed 7 |
 | 计算图/优化器 | `graph.py` / `optimizer.py` | ✅ 由单元测试覆盖（拓扑排序/反向传播/优化器）|

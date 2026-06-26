@@ -107,175 +107,145 @@
 
 ## 📐 实现方案
 
-### 1. 计算图定义 (Python)
+### 1. 单一来源：四大师定义 (`src/graph.py`)
+
+变量、边、梯度全部从 `MASTERS` 派生，避免在 4 处重复硬编码大师列表。新增/删减大师只需改这一处。
+
 ```python
-class BerkshireGraph:
-    def __init__(self):
-        # Layer 0: 输入变量
-        self.variables = {
-            "ticker": Variable("ticker", type="input"),
-            "tavily_query": Variable("tavily_query", type="input"),
-            "date_anchor": Variable("date_anchor", type="input"),
-            
-            # Layer 2: 四大师变量
-            "duan_prompt": Variable("duan_prompt", type="prompt", role="段永平"),
-            "duan_model": Variable("duan_model", type="model", role="段永平"),
-            "buffett_prompt": Variable("buffett_prompt", type="prompt", role="巴菲特"),
-            "buffett_model": Variable("buffett_model", type="model", role="巴菲特"),
-            "munger_prompt": Variable("munger_prompt", type="prompt", role="芒格"),
-            "munger_model": Variable("munger_model", type="model", role="芒格"),
-            "lilu_prompt": Variable("lilu_prompt", type="prompt", role="李录"),
-            "lilu_model": Variable("lilu_model", type="model", role="李录"),
+@dataclass(frozen=True)
+class Master:
+    prefix: str   # duan / buffett / munger / lilu
+    name: str     # 中文名
+    focus: str    # 关注点
+
+MASTERS = (
+    Master("duan", "段永平", "生意本质"),
+    Master("buffett", "巴菲特", "护城河估值"),
+    Master("munger", "芒格", "逆向风险"),
+    Master("lilu", "李录", "文明趋势"),
+)
+
+MASTER_PREFIXES = tuple(m.prefix for m in MASTERS)
+ROLE_NAMES = {m.prefix: m.name for m in MASTERS}
+
+# 每位大师分析不达标时的针对性检查项（启发式，未来由 LLM 取代）
+MASTER_CHECKS = {
+    "duan":    ["检查: 是否用一句话定义了生意本质？", "检查: 是否分析了收入漏斗？"],
+    "buffett": ["检查: 是否包含 PE/PB/DCF 估值分析？", "检查: 是否评估了护城河宽度？"],
+    "munger":  ["检查: 是否包含逆向思考 (失败路径)？", "检查: 是否分析了监管风险？"],
+    "lilu":    ["检查: 是否评估了长期趋势？", "检查: 是否分析了管理层质量？"],
+}
+```
+
+节点命名收敛到三个静态方法，`_init_variables` / `_init_edges` 循环遍历 `MASTERS`：
+
+```python
+@staticmethod
+def analysis_node(prefix): return f"{prefix}_analysis"
+@staticmethod
+def prompt_node(prefix):   return f"{prefix}_prompt"
+@staticmethod
+def model_node(prefix):    return f"{prefix}_model"
+```
+
+### 2. 结构化文本梯度 `Gradient`
+
+控制流（优化器、回测、测试）读 `ok`/`issues`，**不再从 `text` 里解析 ✅/❌**。`text` 仅用于给人看的渲染。
+
+```python
+@dataclass
+class Gradient:
+    node: str
+    ok: bool
+    text: str
+    score: Optional[float] = None
+    issues: List[str] = field(default_factory=list)
+
+    # 仅为展示兼容（print / "❌" in grad），不参与控制流
+    def __str__(self): return self.text
+    def __contains__(self, item): return item in self.text
+```
+
+### 3. 反向传播 `backward(scores)`
+
+输入各大师评分 `Dict[str, float]`，输出 `Dict[str, Gradient]`：
+
+```python
+def backward(self, scores: Dict[str, float]) -> Dict[str, Gradient]:
+    self.scores = scores
+    gradients = {}
+    analysis_nodes = {self.analysis_node(p): p for p in MASTER_PREFIXES}
+    prompt_nodes   = {self.prompt_node(p):   p for p in MASTER_PREFIXES}
+    model_nodes    = {self.model_node(p):    p for p in MASTER_PREFIXES}
+
+    for node in reversed(self.topological_sort()):
+        if node == "final_report":
+            gradients[node] = self._compute_output_gradient()
+        elif node in analysis_nodes:
+            prefix = analysis_nodes[node]
+            gradients[node] = self._compute_master_gradient(prefix, scores.get(prefix, 0))
+        elif node in prompt_nodes:
+            prefix = prompt_nodes[node]
+            gradients[node] = self._compute_prompt_gradient(node, gradients.get(self.analysis_node(prefix)))
+        elif node in model_nodes:
+            prefix = model_nodes[node]
+            gradients[node] = self._compute_model_gradient(node, gradients.get(self.analysis_node(prefix)))
+    return gradients
+
+def _compute_master_gradient(self, prefix, score) -> Gradient:
+    role_name = ROLE_NAMES.get(prefix, prefix)
+    node = self.analysis_node(prefix)
+    if score >= SCORE_THRESHOLD:  # 0.85
+        return Gradient(node=node, ok=True, score=score,
+                        text=f"✅ {role_name} 分析质量良好 (评分 {score:.3f})")
+    issues = [f"评分过低 ({score:.3f})，需要重点改进" if score < 0.70
+              else f"评分偏低 ({score:.3f})，需要优化"]
+    issues.extend(MASTER_CHECKS.get(prefix, []))   # 针对性诊断（单一来源）
+    text = f"❌ {role_name} 分析存在问题:\n" + "\n".join(f"  - {i}" for i in issues)
+    return Gradient(node=node, ok=False, score=score, text=text, issues=issues)
+```
+
+### 4. 优化器 (Textual Gradient Descent) — `src/optimizer.py`
+
+控制流读 `gradient.ok`（结构化），产出「更新计划」并记日志。
+
+> 🟡 现状：`step()` 只产出更新计划 + 日志，**尚未真正改写变量值**。真正的 `apply_gradient`（LLM 改写 Prompt）属 Option B，见下。
+
+```python
+def step(self, gradients: Dict[str, Gradient]) -> List[Dict]:
+    updates = []
+    for var_name, gradient in gradients.items():
+        if gradient.ok:
+            continue                      # 达标节点跳过（不再 "❌" in gradient）
+        var = self.graph.variables.get(var_name)
+        if not var:
+            continue
+        update = {
+            "variable": var_name, "type": var.type, "role": var.role,
+            "gradient": gradient.text, "issues": list(gradient.issues),
+            "timestamp": datetime.now().isoformat(),
+            "action": self._determine_action(var, gradient),
         }
-        
-        # 依赖关系 (edges)
-        self.edges = [
-            # Layer 0 → Layer 1
-            ("ticker", "tavily_search"),
-            ("tavily_query", "tavily_search"),
-            ("date_anchor", "tavily_search"),
-            
-            # Layer 1 → Layer 2
-            ("tavily_search", "duan_analysis"),
-            ("tavily_search", "buffett_analysis"),
-            ("tavily_search", "munger_analysis"),
-            ("tavily_search", "lilu_analysis"),
-            
-            # Layer 2 变量 → Layer 2 分析
-            ("duan_prompt", "duan_analysis"),
-            ("duan_model", "duan_analysis"),
-            ("buffett_prompt", "buffett_analysis"),
-            ("buffett_model", "buffett_analysis"),
-            ("munger_prompt", "munger_analysis"),
-            ("munger_model", "munger_analysis"),
-            ("lilu_prompt", "lilu_analysis"),
-            ("lilu_model", "lilu_analysis"),
-            
-            # Layer 2 → Layer 3
-            ("duan_analysis", "financial_rigor"),
-            ("buffett_analysis", "financial_rigor"),
-            ("munger_analysis", "financial_rigor"),
-            ("lilu_analysis", "financial_rigor"),
-            
-            # Layer 3 → Layer 4
-            ("financial_rigor", "final_report"),
-        ]
-    
-    def backward(self, failure_trace: dict) -> dict:
-        """
-        沿计算图反向传播文本梯度
-        
-        Args:
-            failure_trace: 包含最终评分和各大师评分的字典
-        
-        Returns:
-            gradients: 每个变量的文本梯度 (诊断+修改建议)
-        """
-        gradients = {}
-        
-        # 从输出层向输入层反向遍历
-        for node in reversed(topological_sort(self.edges)):
-            if node in ["final_report", "financial_rigor"]:
-                # 输出层：根据最终评分生成梯度
-                gradients[node] = self.compute_output_gradient(failure_trace)
-            elif node.endswith("_analysis"):
-                # 四大师分析层：根据各大师评分生成梯度
-                role = node.split("_")[0]
-                score = failure_trace.get(f"{role}_score", 0)
-                gradients[node] = self.compute_master_gradient(role, score)
-            elif node in self.variables:
-                # 变量层：根据下游梯度生成变量梯度
-                downstream_grad = gradients.get(self.get_successor(node))
-                gradients[node] = self.compute_variable_gradient(
-                    node, downstream_grad
-                )
-        
-        return gradients
-    
-    def compute_master_gradient(self, role: str, score: float) -> str:
-        """为四大师分析生成文本梯度"""
-        if score >= 0.85:
-            return f"✅ {role} 分析质量良好 (评分 {score})"
-        
-        issues = []
-        if score < 0.70:
-            issues.append(f"评分过低 ({score})，需要重点改进")
-        
-        # 根据角色特性生成针对性诊断
-        if role == "巴菲特":
-            if "估值" not in self.last_output:
-                issues.append("缺少估值分析 (PE/PB/DCF)")
-            if "护城河" not in self.last_output:
-                issues.append("缺少护城河评估")
-        elif role == "芒格":
-            if "风险" not in self.last_output:
-                issues.append("缺少风险分析")
-            if "失败" not in self.last_output:
-                issues.append("缺少逆向思考")
-        # ... 其他角色类似
-        
-        return f"❌ {role} 分析存在问题:\n" + "\n".join(issues)
+        updates.append(update)
+        self.update_log.append(update)
+    return updates
 ```
 
-### 2. 节点级诊断 (LLM 调用)
-```python
-def compute_text_gradient(node: Variable, downstream_feedback: str) -> str:
-    """
-    使用 LLM 为变量生成文本梯度
-    
-    类比 TextGrad 的 ∇_LLM 算子
-    """
-    prompt = f"""
-    你是一个 AI 系统优化专家。以下是某个分析节点的下游反馈：
-    
-    节点: {node.name}
-    角色: {node.role or 'N/A'}
-    当前值: {node.value}
-    
-    下游反馈:
-    {downstream_feedback}
-    
-    请分析：
-    1. 这个节点的哪些部分导致了下游问题？
-    2. 应该如何修改这个节点以改进输出？
-    
-    输出格式：
-    **诊断**: [具体问题]
-    **修改建议**: [具体修改]
-    """
-    
-    return llm.call(prompt)
-```
+### 5. ⬜ Option B（未来）：LLM 驱动的自进化
 
-### 3. 优化器 (Textual Gradient Descent)
+把启发式诊断替换为 LLM 批评、把 `step()` 升级为真正改写 Prompt 的迭代循环。由于 `Gradient.issues` 已结构化，下列替换不影响任何消费方：
+
 ```python
-class TextualGradientDescent:
-    def __init__(self, variables: list, lr: float = 1.0):
-        self.variables = variables
-        self.lr = lr
-    
-    def step(self, gradients: dict):
-        """根据梯度更新变量"""
-        for var in self.variables:
-            grad = gradients.get(var.name)
-            if grad and "❌" in grad:
-                # 有问题，需要修改
-                new_value = self.apply_gradient(var, grad)
-                var.update(new_value)
-                self.log_update(var, grad, new_value)
-    
-    def apply_gradient(self, var: Variable, gradient: str) -> str:
-        """应用梯度到变量"""
-        prompt = f"""
-        当前变量值:
-        {var.value}
-        
-        需要改进的方向:
-        {gradient}
-        
-        请根据改进方向修改变量值，保持核心结构不变。
-        """
-        return llm.call(prompt)
+# ∇_LLM：用 LLM 为变量生成文本梯度（替代 MASTER_CHECKS 启发式）
+def compute_text_gradient(node, downstream: Gradient) -> Gradient:
+    critique = llm.call(f"""节点 {node.name} 角色 {node.role}
+下游反馈：{downstream.text}
+请输出 issues 列表 + 修改建议""")
+    return Gradient(node=node.name, ok=False, text=critique.text, issues=critique.issues)
+
+# apply_gradient：真正改写 Prompt（替代当前“只记日志”）
+def apply_gradient(var, gradient: Gradient) -> str:
+    return llm.call(f"当前值：{var.value}\n改进方向：{gradient.text}\n请改写，保持核心结构")
 ```
 
 ## 📊 预期收益
@@ -289,25 +259,25 @@ class TextualGradientDescent:
 
 ## 🚀 实施计划
 
-### Phase 1: 计算图定义 (Week 1)
-- [ ] 实现 `BerkshireGraph` 类
-- [ ] 定义变量和依赖关系
-- [ ] 实现拓扑排序
+### Phase 1: 计算图定义 ✅ 已完成
+- [x] 实现 `BerkshireGraph` 类
+- [x] 定义变量和依赖关系（从 `MASTERS` 单一来源派生）
+- [x] 实现拓扑排序
 
-### Phase 2: 反向传播 (Week 2)
-- [ ] 实现 `backward()` 方法
-- [ ] 实现节点级梯度计算
-- [ ] 集成 LLM 诊断
+### Phase 2: 反向传播 🟡 脚手架完成（LLM 诊断待办）
+- [x] 实现 `backward()` 方法（输入 `scores`，输出 `Dict[str, Gradient]`）
+- [x] 实现节点级梯度计算（结构化 `Gradient`，启发式 `MASTER_CHECKS`）
+- [ ] 集成 LLM 诊断（Option B：`∇_LLM` 取代启发式）
 
-### Phase 3: 优化器 (Week 3)
-- [ ] 实现 `TextualGradientDescent`
-- [ ] 实现变量更新逻辑
-- [ ] 添加更新日志
+### Phase 3: 优化器 🟡 半实现
+- [x] 实现 `TextualGradientDescent`（依据 `Gradient.ok` 产出更新计划）
+- [x] 添加更新日志
+- [ ] 实现变量真实改写（Option B：`apply_gradient` 经 LLM 改写 Prompt）
 
-### Phase 4: 集成测试 (Week 4)
-- [ ] 使用历史轨迹测试
-- [ ] 对比 V9.3 vs V10.0
-- [ ] 文档更新
+### Phase 4: 测试与验证 ✅ 已完成（回归用）
+- [x] 单元/集成/回测全部跑通（12 通过/1 跳过，覆盖率 100%）
+- [x] 文档更新（本文件）
+- [ ] Option B 落地后再对比 V9.3 vs V10.0 实际进化收益
 
 ## 📝 关键决策
 
@@ -326,4 +296,6 @@ class TextualGradientDescent:
 
 ---
 
-**下一步**: 实现 `BerkshireGraph` 类并集成到 `evolution_loop_v10.py`
+**当前状态 (V10.5)**: 计算图脚手架 + 单一来源 `MASTERS` + 结构化 `Gradient` 已落地并测试通过。
+
+**下一步 (Option B)**: 将启发式 `MASTER_CHECKS` 替换为 LLM 生成的文本梯度，并把 `step()` 升级为真正改写 Prompt 的迭代进化循环。`Gradient.issues` 已结构化，消费方零改动即可平滑切换。

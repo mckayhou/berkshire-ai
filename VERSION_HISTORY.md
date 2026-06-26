@@ -36,6 +36,27 @@
 
 ## 📜 版本历史
 
+### V10.6 - 2026-06-26 (工具层加固：离线单测 + 3 处健壮性/正确性修复)
+
+**变更内容**:
+- **新增离线单元测试 76 个**（无网络、无外部依赖，3 个文件）：
+  - `tests/test_tools_financial_rigor.py`：精确十进制计算（exact/fmt_number/市值/估值/交叉验证/Benford）+ AST 安全求值器的**安全边界**（拒绝 `__import__`/属性/函数调用/自由变量/lambda/列表字面量/超大幂）
+  - `tests/test_tools_report_audit.py`：数据点提取/标签过滤/抽样确定性/偏差判定/准出打回判决
+  - `tests/test_tools_misc.py`：`ashare_data`（代码前缀转换/腾讯行情解析/脏输入格式化）、`stock_screener`（动量信号 `check_momentum`/分级 `grade_signal`）、`morningstar`（星级渲染/ticker 提取）
+- **健壮性/正确性修复（3 处）**：
+  1. `report_audit.render_verdict`（**正确性 bug**）：单一来源偏差超阈值此前被软化为"⚠️ 警告"并仍判 **PASS/准出**——对审计工具是危险默认。现修复为：单来源完全取决于该来源（超阈值即 **FAIL/打回**）；双来源维持"皆过=通过 / 皆错=不通过 / 一过一错=警告"
+  2. `financial_rigor.cross_validate`（**崩溃**）：空来源字典此前因对空列表取中位数 `IndexError`；现返回 `{consensus: None, all_consistent: False}` 并提示
+  3. `financial_rigor.safe_arith_eval`（**资源耗尽防护**）：幂运算指数 >1000 直接拒绝，防止 `9**99999` 类表达式吃满 CPU/内存
+- CLI 三处修复均已 e2e 验证（巨幂拒绝 / 空交叉验证 / 单源 30% 偏差判 FAIL）
+
+**测试结果**:
+- 全量: 88 通过 / 1 跳过（Tavily 无 key skip）
+- lint: 无错误；graphify 图已更新
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.5 - 2026-06-26 (TextGrad 引擎清理：去重 + 结构化梯度)
 
 **变更内容**:
@@ -44,11 +65,14 @@
   - `optimizer.step()` 判定从 `"❌" not in gradient` 改为 `gradient.ok`，并记录结构化 `issues`
   - 测试/回测消费方 `"❌" in g` → `not g.ok`
   - `Gradient` 保留 `__str__`/`__contains__` 仅用于展示兼容，不参与任何控制流
+  - `evolution_loop_v10.py` 通过 `__all__` 对外导出 `Gradient`/`Master`/`MASTERS`
 - **零行为回归**：example runner 仍为 18 nodes / 7 updates，回测覆盖率不变
+- **文档同步**：`docs/textgrad_design.md` 更新为「实现现状 + Option B」两段——新增实现状态表、修正与代码脱节的旧片段（`failure_trace`→`scores`、返回 str→`Gradient`、`"❌" in grad`→`.ok`）、补 `MASTERS`/`Gradient` 真实片段、Phase 勾选实际进度
+- **新增测试**：`test_masters_single_source` / `test_gradient_is_structured` / `test_optimizer_reads_ok_field`（守护单一来源 + 结构化契约）
 - 为将来走 B（LLM 驱动自进化）铺路：`Gradient.issues` 已结构化，未来填入 LLM 批评意见时消费方无需改动
 
 **测试结果**:
-- 单元 + 集成测试: 9 通过 / 1 跳过（Tavily 无 key skip）
+- 单元 + 集成测试: 12 通过 / 1 跳过（Tavily 无 key skip；单元由 5→8 用例）
 - 回测验证: 诊断覆盖率 100%
 - 进化引擎 example: Graph 18 nodes / Updates 7（与重构前一致）
 - lint: 无错误；graphify 图已更新

@@ -172,6 +172,10 @@ def cross_validate(field_name, source_values: dict, unit="", tolerance_pct=2.0):
     print(f"交叉验证: {field_name} (Cross-Validation)")
     print("=" * 60)
 
+    if not source_values:
+        print("  ⚠️  未提供任何数据来源，无法交叉验证")
+        return {"consensus": None, "all_consistent": False}
+
     values = {k: exact(v) for k, v in source_values.items()}
     sources = list(values.keys())
     nums = list(values.values())
@@ -312,7 +316,12 @@ def _safe_eval_node(node):
             raise ValueError("仅支持数字常量")
         return node.value
     if isinstance(node, ast.BinOp) and type(node.op) in _BIN_OPS:
-        return _BIN_OPS[type(node.op)](_safe_eval_node(node.left), _safe_eval_node(node.right))
+        left = _safe_eval_node(node.left)
+        right = _safe_eval_node(node.right)
+        # 防资源耗尽：拒绝超大幂指数（如 9**9**9 会瞬间吃满内存/CPU）
+        if isinstance(node.op, ast.Pow) and isinstance(right, (int, float)) and abs(right) > 1000:
+            raise ValueError("幂运算指数过大 (>1000)，已拒绝以防止资源耗尽")
+        return _BIN_OPS[type(node.op)](left, right)
     if isinstance(node, ast.UnaryOp) and type(node.op) in _UNARY_OPS:
         return _UNARY_OPS[type(node.op)](_safe_eval_node(node.operand))
     raise ValueError("表达式包含不支持的语法")

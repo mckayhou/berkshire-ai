@@ -308,15 +308,25 @@ def render_verdict(results: list, report_name: str = "") -> dict:
             diff2 = _pct_diff(reported, fetched2)
 
         # 判断
+        # 单一来源：判定完全取决于该来源（不再因缺第二来源而软化为"警告"）
+        # 双来源：两者皆过=通过；两者皆错=不通过；一过一错=警告（口径差异）
+        has_second = diff2 is not None
         pass1 = diff1 <= _TOLERANCE
-        pass2 = (diff2 is None) or (diff2 <= _TOLERANCE)
+        pass2 = (diff2 <= _TOLERANCE) if has_second else True
 
-        if pass1 and pass2:
+        if has_second:
+            verdict_pass = pass1 and pass2
+            verdict_fail = (not pass1) and (not pass2)
+        else:
+            verdict_pass = pass1
+            verdict_fail = not pass1
+
+        if verdict_pass:
             status = f'{GREEN}✅ 通过{RESET}'
             detail = f'{source}: {fetched:.2f} (偏差 {diff1*100:.2f}%)'
             if diff2 is not None:
                 detail += f'  |  {source2}: {fetched2:.2f} (偏差 {diff2*100:.2f}%)'
-        elif not pass1 and not pass2:
+        elif verdict_fail:
             status = f'{RED}❌ 不通过{RESET}'
             detail = f'{source}: {fetched:.2f} (偏差 {diff1*100:.2f}%)'
             if diff2 is not None:
