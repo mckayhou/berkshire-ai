@@ -1,0 +1,35 @@
+{
+  "NVDA": {
+    "quarters": {
+      "2023-02-22": {"label": "FY23Q4(Jan23)", "rev_yoy": -21.0, "gm": 63.3, "eps_beat": 10.0},
+      "2023-05-24": {"label": "FY24Q1(Apr23)", "rev_yoy": -13.0, "gm": 64.6, "eps_beat": 18.5},
+      "2023-08-23": {"label": "FY24Q2(Jul23)", "rev_yoy": 101.0, "gm": 70.1, "eps_beat": 29.0},
+      "2023-11-21": {"label": "FY24Q3(Oct23)", "rev_yoy": 206.0, "gm": 74.0, "eps_beat": 19.0},
+      "2024-02-21": {"label": "FY24Q4(Jan24)", "rev_yoy": 265.0, "gm": 76.0, "eps_beat": 12.0},
+      "2024-05-22": {"label": "FY25Q1(Apr24)", "rev_yoy": 262.0, "gm": 78.4, "eps_beat": 9.0},
+      "2024-08-28": {"label": "FY25Q2(Jul24)", "rev_yoy": 122.0, "gm": 75.1, "eps_beat": 5.6},
+      "2024-11-20": {"label": "FY25Q3(Oct24)", "rev_yoy": 94.0, "gm": 74.6, "eps_beat": 8.0},
+      "2025-02-26": {"label": "FY25Q4(Jan25)", "rev_yoy": 78.0, "gm": 73.0, "eps_beat": 4.0}
+    }
+  },
+  "AMD": {
+    "quarters": {
+      "2023-10-31": {"label": "Q3 2023", "rev_yoy": 4.0, "gm": 47.0, "eps_beat": 6.1},
+      "2024-01-30": {"label": "Q4 2023", "rev_yoy": 10.0, "gm": 47.0, "eps_beat": 3.7},
+      "2024-04-30": {"label": "Q1 2024", "rev_yoy": 2.0, "gm": 47.0, "eps_beat": 3.3},
+      "2024-07-30": {"label": "Q2 2024", "rev_yoy": 9.0, "gm": 49.0, "eps_beat": 1.5},
+      "2024-10-29": {"label": "Q3 2024", "rev_yoy": 18.0, "gm": 50.0, "eps_beat": 4.5},
+      "2025-02-04": {"label": "Q4 2024", "rev_yoy": 24.0, "gm": 51.0, "eps_beat": 3.0}
+    }
+  },
+  "MU": {
+    "quarters": {
+      "2023-09-27": {"label": "FY23Q4(Aug23)", "rev_yoy": -40.0, "gm": -1.0, "eps_beat": 18.0},
+      "2023-12-20": {"label": "FY24Q1(Nov23)", "rev_yoy": 16.0, "gm": 20.0, "eps_beat": 68.0},
+      "2024-03-20": {"label": "FY24Q2(Feb24)", "rev_yoy": 58.0, "gm": 28.0, "eps_beat": 82.0},
+      "2024-06-26": {"label": "FY24Q3(May24)", "rev_yoy": 82.0, "gm": 35.4, "eps_beat": 6.9},
+      "2024-09-25": {"label": "FY24Q4(Aug24)", "rev_yoy": 93.0, "gm": 36.5, "eps_beat": 5.4},
+      "2025-01-08": {"label": "FY25Q1(Nov24)", "rev_yoy": 84.0, "gm": 38.4, "eps_beat": 3.0}
+    }
+  }
+}

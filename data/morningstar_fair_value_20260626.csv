@@ -1,0 +1,101 @@
+rank,ticker,name,close_price,fair_value,upside_pct,star_rating,moat,uncertainty,sector,industry
+1,CHTR,Charter Communications Inc Class A,129.65,400,208.5,,Narrow,,Communication Services,Telecom Services
+2,HUBS,HubSpot Inc,170.28,450,164.3,,Narrow,,Technology,Software - Application
+3,ADBE,Adobe Inc,193.41,380,96.5,5,Narrow,,Technology,Software - Application
+4,LPLA,LPL Financial Holdings Inc,277.33,542,95.4,,Wide,,Financial Services,Capital Markets
+5,INTU,Intuit Inc,255.07,455,78.4,,Narrow,,Technology,Software - Application
+6,TYL,Tyler Technologies Inc,281.09,500,77.9,,Wide,,Technology,Software - Application
+7,AVGO,Broadcom Inc,378.91,650,71.5,,Wide,,Technology,Semiconductors
+8,MSFT,Microsoft Corp,352.83,600,70.1,,Wide,,Technology,Software - Infrastructure
+9,META,Meta Platforms Inc Class A,542.87,850,56.6,,Wide,,Communication Services,Internet Content & Information
+10,GPI,Group 1 Automotive Inc,300.82,461,53.2,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+11,DPZ,Domino's Pizza Inc,285.44,412,44.3,,Wide,,Consumer Cyclical,Restaurants
+12,LAD,Lithia Motors Inc Class A,296.73,426,43.6,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+13,FICO,Fair Isaac Corp,1143.48,1600,39.9,,Wide,,Technology,Software - Application
+14,HII,Huntington Ingalls Industries Inc,279.09,379,35.8,,Wide,,Industrials,Aerospace & Defense
+15,ZBRA,Zebra Technologies Corp Ordinary Shares - Class A,243.39,330,35.6,,Narrow,,Technology,Communication Equipment
+16,SPGI,S&P Global Inc,395.14,530,34.1,,Wide,,Financial Services,Financial Data & Stock Exchanges
+17,MELI,MercadoLibre Inc,1619.25,2150,32.8,,Wide,,Consumer Cyclical,Internet Retail
+18,ROP,Roper Technologies Inc,332.42,440,32.4,,None,,Technology,Software - Application
+19,ONC,BeOne Medicines Ltd ADR,275.34,354,28.6,,None,,Healthcare,Biotechnology
+20,NOC,Northrop Grumman Corp,499.33,640,28.2,,Wide,,Industrials,Aerospace & Defense
+21,SPOT,Spotify Technology SA,441.21,560,26.9,,Narrow,,Communication Services,Internet Content & Information
+22,LMT,Lockheed Martin Corp,505.02,640,26.7,,Wide,,Industrials,Aerospace & Defense
+23,GOOG,Alphabet Inc Class C,342.19,433,26.5,3,Wide,,Communication Services,Internet Content & Information
+24,GOOGL,Alphabet Inc Class A,343.71,433,26.0,3,Wide,,Communication Services,Internet Content & Information
+25,CI,The Cigna Group,281.87,354,25.6,,Narrow,,Healthcare,Healthcare Plans
+26,ELV,Elevance Health Inc,387.32,474,22.4,,Narrow,,Healthcare,Healthcare Plans
+27,RACE,Ferrari NV,352.2,430,22.1,,Wide,,Consumer Cyclical,Auto Manufacturers
+28,COR,Cencora Inc,286.95,350,22.0,,Narrow,,Healthcare,Medical Distribution
+29,AZO,AutoZone Inc,3059.04,3700,21.0,,Wide,,Consumer Cyclical,Auto Parts
+30,MSI,Motorola Solutions Inc,397.01,480,20.9,,Wide,,Technology,Communication Equipment
+31,LHX,L3Harris Technologies Inc,288.52,346,19.9,,Narrow,,Industrials,Aerospace & Defense
+32,MCK,McKesson Corp,763.81,910,19.1,,Narrow,,Healthcare,Medical Distribution
+33,BLK,BlackRock Inc,971.92,1150,18.3,,Wide,,Financial Services,Asset Management
+34,REGN,Regeneron Pharmaceuticals Inc,620.14,730,17.7,,Narrow,,Healthcare,Biotechnology
+35,AMP,Ameriprise Financial Inc,453.29,530,16.9,3,Narrow,,Financial Services,Asset Management
+36,HCA,HCA Healthcare Inc,386.94,444,14.7,,Narrow,,Healthcare,Medical Care Facilities
+37,SNPS,Synopsys Inc,455.02,520,14.3,,Wide,,Technology,Software - Infrastructure
+38,MSCI,MSCI Inc,544.56,620,13.9,,Wide,,Financial Services,Financial Data & Stock Exchanges
+39,MCO,Moodys Corp,438.85,500,13.9,,Wide,,Financial Services,Financial Data & Stock Exchanges
+40,TSLA,Tesla Inc,375.12,425,13.3,,Narrow,,Consumer Cyclical,Auto Manufacturers
+41,MA,Mastercard Inc Class A,488.92,550,12.5,,Wide,,Financial Services,Credit Services
+42,DELL,Dell Technologies Inc Ordinary Shares - Class C,409.45,460,12.3,,None,,Technology,Computer Hardware
+43,APP,AppLovin Corp Ordinary Shares - Class A,445.93,500,12.1,,Narrow,,Communication Services,Advertising Agencies
+44,PEN,Penumbra Inc,317.4,355,11.8,,None,,Healthcare,Medical Devices
+45,TMO,Thermo Fisher Scientific Inc,505.75,560,10.7,,Wide,,Healthcare,Diagnostics & Research
+46,FCNCA,First Citizens BancShares Inc Class A,2089.21,2310,10.6,,None,,Financial Services,Banks - Regional
+47,GD,General Dynamics Corp,344.7,379,10.0,,Wide,,Industrials,Aerospace & Defense
+48,WSO,Watsco Inc Ordinary Shares,412.19,449,8.9,,Narrow,,Industrials,Industrial Distribution
+49,AON,Aon PLC Class A,315.95,341,7.9,,Narrow,,Financial Services,Insurance Brokers
+50,AYI,Acuity Inc,359.39,380,5.7,4,Narrow,,Industrials,Electrical Equipment & Parts
+51,ULTA,Ulta Beauty Inc,485.52,510,5.0,,Narrow,,Consumer Cyclical,Specialty Retail
+52,BRK/B,Berkshire Hathaway Inc Class B,487.81,510,4.5,,Narrow,,Financial Services,Insurance - Diversified
+53,BRK/A,Berkshire Hathaway Inc Class A,733399.98,765000,4.3,,Narrow,,Financial Services,Insurance - Diversified
+54,MPWR,Monolithic Power Systems Inc,1438.3,1500,4.3,,Wide,,Technology,Semiconductors
+55,LIN,Linde PLC,522.28,540,3.4,,Wide,,Basic Materials,Specialty Chemicals
+56,UNH,UnitedHealth Group Inc,415.53,427,2.8,,Narrow,,Healthcare,Healthcare Plans
+57,TDG,TransDigm Group Inc,1332.56,1340,0.6,,Wide,,Industrials,Aerospace & Defense
+58,MKL,Markel Group Inc,1883.38,1880,-0.2,,None,,Financial Services,Insurance - Property & Casualty
+59,V,Visa Inc Class A,330.52,330,-0.2,,Wide,,Financial Services,Credit Services
+60,LII,Lennox International Inc,570.73,563,-1.4,,Narrow,,Industrials,Building Products & Equipment
+61,TSM,Taiwan Semiconductor Manufacturing Co Ltd ADR,434.99,428,-1.6,,Wide,,Technology,Semiconductors
+62,GWW,W.W. Grainger Inc,1374.78,1340,-2.5,,Wide,,Industrials,Industrial Distribution
+63,SHW,Sherwin-Williams Co,339.08,330,-2.7,,Wide,,Basic Materials,Specialty Chemicals
+64,AMG,Affiliated Managers Group Inc,340.08,330,-3.0,2,None,,Financial Services,Asset Management
+65,AMGN,Amgen Inc,352.82,342,-3.1,3,Wide,,Healthcare,Drug Manufacturers - General
+66,MTD,Mettler-Toledo International Inc,1243.42,1200,-3.5,,Narrow,,Healthcare,Diagnostics & Research
+67,DE,Deere & Co,630.76,600,-4.9,,Wide,,Industrials,Farm & Heavy Construction Machinery
+68,FFIV,F5 Inc,386.01,366,-5.2,,Narrow,,Technology,Software - Infrastructure
+69,ISRG,Intuitive Surgical Inc,399.69,378,-5.4,,Wide,,Healthcare,Medical Instruments & Supplies
+70,WAT,Waters Corp,376.89,349,-7.4,,Wide,,Healthcare,Diagnostics & Research
+71,GEV,GE Vernova Inc,1085.47,1000,-7.9,,Narrow,,Industrials,Specialty Industrial Machinery
+72,ADI,Analog Devices Inc,417.93,380,-9.1,3,Wide,,Technology,Semiconductors
+73,CDNS,Cadence Design Systems Inc,368.23,330,-10.4,,Wide,,Technology,Software - Application
+74,HUBB,Hubbell Inc,536.04,479,-10.6,,Wide,,Industrials,Electrical Equipment & Parts
+75,HUM,Humana Inc,376,333,-11.4,,Narrow,,Healthcare,Healthcare Plans
+76,EQIX,Equinix Inc,1087.61,950,-12.7,,Narrow,,Real Estate,REIT - Specialty
+77,VRTX,Vertex Pharmaceuticals Inc,480.18,410,-14.6,,Narrow,,Healthcare,Biotechnology
+78,IDXX,IDEXX Laboratories Inc,554.94,470,-15.3,,Wide,,Healthcare,Diagnostics & Research
+79,AMD,Advanced Micro Devices Inc,532.57,450,-15.5,3,Narrow,,Technology,Semiconductors
+80,URI,United Rentals Inc,1139.51,960,-15.8,,Narrow,,Industrials,Rental & Leasing Services
+81,SNA,Snap-on Inc,400.95,335,-16.4,,Narrow,,Industrials,Tools & Accessories
+82,LFUS,Littelfuse Inc,477.22,390,-18.3,,Narrow,,Technology,Electronic Components
+83,LLY,Eli Lilly and Co,1127.69,900,-20.2,,Wide,,Healthcare,Drug Manufacturers - General
+84,TT,Trane Technologies PLC Class A,503.46,402,-20.2,,Narrow,,Industrials,Building Products & Equipment
+85,ARGX,argenx SE ADR,888.65,700,-21.2,,None,,Healthcare,Biotechnology
+86,COST,Costco Wholesale Corp,942.24,740,-21.5,,Wide,,Consumer Defensive,Discount Stores
+87,CRWD,CrowdStrike Holdings Inc Class A,678.65,530,-21.9,,Wide,,Technology,Software - Infrastructure
+88,ASML,ASML Holding NV ADR,1841.18,1400,-24.0,,Wide,,Technology,Semiconductor Equipment & Materials
+89,RBC,RBC Bearings Inc,648.89,490,-24.5,,Wide,,Industrials,Tools & Accessories
+90,CMI,Cummins Inc,727.59,520,-28.5,,Narrow,,Industrials,Specialty Industrial Machinery
+91,AMAT,Applied Materials Inc,668,470,-29.6,,Wide,,Technology,Semiconductor Equipment & Materials
+92,MLM,Martin Marietta Materials Inc,628.94,440,-30.0,,Narrow,,Basic Materials,Building Materials
+93,PH,Parker Hannifin Corp,989.91,680,-31.3,,Narrow,,Industrials,Specialty Industrial Machinery
+94,GS,The Goldman Sachs Group Inc,1065.09,730,-31.5,,Wide,,Financial Services,Capital Markets
+95,STX,Seagate Technology Holdings PLC,1025.36,680,-33.7,,None,,Technology,Computer Hardware
+96,CAT,Caterpillar Inc,1057.01,680,-35.7,,Wide,,Industrials,Farm & Heavy Construction Machinery
+97,WDC,Western Digital Corp,675.39,415,-38.6,,None,,Technology,Computer Hardware
+98,PWR,Quanta Services Inc,718.59,430,-40.2,,None,,Industrials,Engineering & Construction
+99,SNDK,SanDisk Corp Ordinary Shares,2335,1000,-57.2,,None,,Technology,Computer Hardware
+100,MU,Micron Technology Inc,1213.56,455,-62.5,,None,,Technology,Semiconductors

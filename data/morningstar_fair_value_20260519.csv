@@ -1,0 +1,841 @@
+rank,ticker,name,close_price,fair_value,upside_pct,star_rating,moat,uncertainty,sector,industry
+1,KSS,Kohl's Corp,11.72,41,249.8,,None,,Consumer Cyclical,Department Stores
+2,BBWI,Bath & Body Works Inc,16.21,56,245.5,,Narrow,,Consumer Cyclical,Specialty Retail
+3,ADNT,Adient PLC,20.64,69,234.3,5,Narrow,,Consumer Cyclical,Auto Parts
+4,KLAR,Klarna Group PLC,15.55,45,189.4,,Narrow,,Technology,Software - Infrastructure
+5,CHTR,Charter Communications Inc Class A,141.21,400,183.3,,Narrow,,Communication Services,Telecom Services
+6,TME,Tencent Music Entertainment Group ADR,9.06,25,175.9,,Narrow,,Communication Services,Internet Content & Information
+7,UA,Under Armour Inc Class C,4.93,13.6,175.9,,None,,Consumer Cyclical,Apparel Manufacturing
+8,CPB,The Campbell's Co,20.34,56,175.3,,Wide,,Consumer Defensive,Packaged Foods
+9,UAA,Under Armour Inc Class A,5.02,13.6,170.9,,None,,Consumer Cyclical,Apparel Manufacturing
+10,KMX,CarMax Inc,37.05,99,167.2,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+11,WGO,Winnebago Industries Inc,29.04,76,161.7,,None,,Consumer Cyclical,Recreational Vehicles
+12,CPRI,Capri Holdings Ltd,17.54,45.5,159.4,,None,,Consumer Cyclical,Luxury Goods
+13,FLUT,Flutter Entertainment PLC,97.29,245,151.8,,Narrow,,Consumer Cyclical,Gambling
+14,TEAM,Atlassian Corp Class A,89.44,220,146.0,,Narrow,,Technology,Software - Application
+15,LULU,Lululemon Athletica Inc,120.26,295,145.3,,Narrow,,Consumer Cyclical,Apparel Retail
+16,VFC,VF Corp,16.89,39.5,133.9,,None,,Consumer Cyclical,Apparel Manufacturing
+17,NKE,Nike Inc Class B,42.57,97,127.9,,Wide,,Consumer Cyclical,Footwear & Accessories
+18,RH,RH Class A,120.72,275,127.8,,None,,Consumer Cyclical,Specialty Retail
+19,BAX,Baxter International Inc,17.79,40,124.8,,Narrow,,Healthcare,Medical Instruments & Supplies
+20,CLVT,Clarivate PLC Ordinary Shares,2.51,5.5,119.1,,None,,Technology,Information Technology Services
+21,CRSP,CRISPR Therapeutics AG,48.56,106,118.3,,None,,Healthcare,Biotechnology
+22,HUBS,HubSpot Inc,208.51,450,115.8,,Narrow,,Technology,Software - Application
+23,NTLA,Intellia Therapeutics Inc,12.69,27,112.8,,None,,Healthcare,Biotechnology
+24,FRPT,Freshpet Inc,48.45,100,106.4,,None,,Consumer Defensive,Packaged Foods
+25,PODD,Insulet Corp,152.49,314,105.9,,Narrow,,Healthcare,Medical Devices
+26,PSKY,Paramount Skydance Corp Ordinary Shares - Class B,9.82,20,103.7,,None,,Communication Services,Entertainment
+27,BLKB,Blackbaud Inc,32,65,103.1,,Narrow,,Technology,Software - Application
+28,FISV,Fiserv Inc,56.66,115,103.0,,Narrow,,Technology,Information Technology Services
+29,HUYA,HUYA Inc Class A,2.8,5.6,100.0,,None,,Communication Services,Entertainment
+30,FIS,Fidelity National Information Services Inc,43.37,85,96.0,,Narrow,,Technology,Information Technology Services
+31,CNH,CNH Industrial NV,10.5,20.5,95.2,,Narrow,,Industrials,Farm & Heavy Construction Machinery
+32,STLA,Stellantis NV,7.41,14.4,94.3,,None,,Consumer Cyclical,Auto Manufacturers
+33,BABA,Alibaba Group Holding Ltd ADR,133.26,258,93.6,,Wide,,Consumer Cyclical,Internet Retail
+34,GPN,Global Payments Inc,68.67,131,90.8,,Narrow,,Industrials,Specialty Business Services
+35,WU,The Western Union Co,8.46,16,89.1,,Narrow,,Financial Services,Credit Services
+36,PRGO,Perrigo Co PLC,10.68,20,87.3,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+37,GNTX,Gentex Corp,22.68,42,85.2,,Narrow,,Consumer Cyclical,Auto Parts
+38,FMC,FMC Corp,13.55,25,84.5,,Narrow,,Basic Materials,Agricultural Inputs
+39,NICE,NICE Ltd ADR,92.41,170,84.0,,None,,Technology,Software - Application
+40,DOCU,Docusign Inc,49.02,90,83.6,,None,,Technology,Software - Application
+41,BILI,Bilibili Inc ADR,19.63,36,83.4,,None,,Communication Services,Internet Content & Information
+42,LPLA,LPL Financial Holdings Inc,295.62,542,83.3,,Wide,,Financial Services,Capital Markets
+43,SAP,SAP SE ADR,174.62,317,81.5,,Wide,,Technology,Software - Application
+44,THO,Thor Industries Inc,73.81,134,81.5,,None,,Consumer Cyclical,Recreational Vehicles
+45,BMRN,BioMarin Pharmaceutical Inc,49.67,90,81.2,,Narrow,,Healthcare,Biotechnology
+46,PYPL,PayPal Holdings Inc,44.38,80,80.2,,Narrow,,Financial Services,Credit Services
+47,ZTS,Zoetis Inc Class A,77.72,140,80.1,,Wide,,Healthcare,Drug Manufacturers - Specialty & Generic
+48,KHC,The Kraft Heinz Co,23.35,42,79.9,,Narrow,,Consumer Defensive,Packaged Foods
+49,TU,TELUS Corp,12.3,22,78.9,,Narrow,,Communication Services,Telecom Services
+50,MKTX,MarketAxess Holdings Inc,141.11,250,77.2,,Wide,,Financial Services,Capital Markets
+51,ABG,Asbury Automotive Group Inc,176.28,312,77.0,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+52,KBR,KBR Inc,32.24,57,76.8,,None,,Industrials,Engineering & Construction
+53,NTES,NetEase Inc ADR,113.61,200,76.0,,Narrow,,Communication Services,Electronic Gaming & Multimedia
+54,PK,Park Hotels & Resorts Inc,11.09,19.5,75.8,,None,,Real Estate,REIT - Hotel & Motel
+55,CLX,Clorox Co,92.82,163,75.6,,Wide,,Consumer Defensive,Household & Personal Products
+56,VEEV,Veeva Systems Inc Class A,163.85,287,75.2,,Wide,,Healthcare,Health Information Services
+57,DKNG,DraftKings Inc Ordinary Shares - Class A,25.78,45,74.6,,Narrow,,Consumer Cyclical,Gambling
+58,RGEN,Repligen Corp,104.2,180,72.7,,Narrow,,Healthcare,Medical Instruments & Supplies
+59,SE,Sea Ltd ADR,88.29,152,72.2,,Narrow,,Consumer Cyclical,Internet Retail
+60,ZS,Zscaler Inc,174.69,300,71.7,,Narrow,,Technology,Software - Infrastructure
+61,CSGP,CoStar Group Inc,33.2,57,71.7,,Narrow,,Real Estate,Real Estate Services
+62,VNT,Vontier Corp Ordinary Shares,27.99,48,71.5,,Narrow,,Technology,Scientific & Technical Instruments
+63,FMS,Fresenius Medical Care AG ADR,22.22,38,71.0,,Narrow,,Healthcare,Medical Care Facilities
+64,FICO,Fair Isaac Corp,1181.82,2020,70.9,,Wide,,Technology,Software - Application
+65,CE,Celanese Corp Class A,55.75,95,70.4,,Narrow,,Basic Materials,Chemicals
+66,GIS,General Mills Inc,33.45,57,70.4,,Narrow,,Consumer Defensive,Packaged Foods
+67,BR,Broadridge Financial Solutions Inc,150.62,255,69.3,,Wide,,Technology,Information Technology Services
+68,GIL,Gildan Activewear Inc,56.37,95,68.5,,Narrow,,Consumer Cyclical,Apparel Manufacturing
+69,PVH,PVH Corp,80.33,135,68.1,,None,,Consumer Cyclical,Apparel Manufacturing
+70,RELX,RELX PLC ADR,33.96,57,67.8,,Wide,,Industrials,Specialty Business Services
+71,YUMC,Yum China Holdings Inc,45.48,76,67.1,,Wide,,Consumer Cyclical,Restaurants
+72,VIPS,Vipshop Holdings Ltd ADR,13.94,23.3,67.1,,None,,Consumer Cyclical,Internet Retail
+73,CHWY,Chewy Inc,21.63,36,66.4,,Narrow,,Consumer Cyclical,Internet Retail
+74,TRU,TransUnion,68.6,114,66.2,,Wide,,Financial Services,Financial Data & Stock Exchanges
+75,DHR,Danaher Corp,163.86,270,64.8,,Wide,,Healthcare,Diagnostics & Research
+76,CMCSA,Comcast Corp Class A,24.93,41,64.5,,Narrow,,Communication Services,Telecom Services
+77,EFX,Equifax Inc,164.23,270,64.4,,Wide,,Industrials,Consulting Services
+78,CPNG,Coupang Inc Ordinary Shares - Class A,15.7,25.8,64.3,,Narrow,,Consumer Cyclical,Internet Retail
+79,MBUU,Malibu Boats Inc Class A,25.62,42,63.9,,None,,Consumer Cyclical,Recreational Vehicles
+80,NCLH,Norwegian Cruise Line Holdings Ltd,15.26,25,63.8,,Narrow,,Consumer Cyclical,Travel Services
+81,MOS,The Mosaic Co,21.41,35,63.5,,None,,Basic Materials,Agricultural Inputs
+82,CTSH,Cognizant Technology Solutions Corp Class A,51.4,84,63.4,,Narrow,,Technology,Information Technology Services
+83,MLCO,Melco Resorts and Entertainment Ltd ADR,5.53,9,62.7,,Narrow,,Consumer Cyclical,Resorts & Casinos
+84,PDD,PDD Holdings Inc ADR,94.97,154,62.2,,Narrow,,Consumer Cyclical,Internet Retail
+85,TRI,Thomson Reuters Corp,90,146,62.2,,Narrow,,Industrials,Specialty Business Services
+86,AUR,Aurora Innovation Inc Class A,7.42,12,61.7,,None,,Consumer Cyclical,Auto Parts
+87,SARO,StandardAero Inc,25.74,41.5,61.2,,Narrow,,Industrials,Aerospace & Defense
+88,PEGA,Pegasystems Inc,34.15,55,61.1,,None,,Technology,Software - Application
+89,LAD,Lithia Motors Inc Class A,264.89,426,60.8,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+90,GWRE,Guidewire Software Inc,137.09,220,60.5,,Wide,,Technology,Software - Application
+91,AMCR,Amcor PLC Ordinary Shares,37.49,60,60.0,4,Narrow,,Consumer Cyclical,Packaging & Containers
+92,NOW,ServiceNow Inc,103.42,165,59.5,,Narrow,,Technology,Software - Application
+93,GRAB,Grab Holdings Ltd Class A,3.54,5.6,58.2,,None,,Technology,Software - Application
+94,BDX,Becton Dickinson & Co,142.35,225,58.1,,Narrow,,Healthcare,Medical Instruments & Supplies
+95,CHKP,Check Point Software Technologies Ltd,127.28,201,57.9,,Narrow,,Technology,Software - Infrastructure
+96,PHG,Koninklijke Philips NV ADR,26.05,41,57.4,,Wide,,Healthcare,Medical Devices
+97,TRIP,Tripadvisor Inc,9.53,15,57.4,,None,,Consumer Cyclical,Travel Services
+98,OMC,Omnicom Group Inc,73.14,115,57.2,,Narrow,,Communication Services,Advertising Agencies
+99,MGNI,Magnite Inc,13.39,21,56.8,,None,,Communication Services,Advertising Agencies
+100,APH,Amphenol Corp Class A,121.72,190,56.1,4,Wide,,Technology,Electronic Components
+101,CRM,Salesforce Inc,179.48,280,56.0,,Narrow,,Technology,Software - Application
+102,TYL,Tyler Technologies Inc,320.79,500,55.9,,Wide,,Technology,Software - Application
+103,IQV,IQVIA Holdings Inc,172.81,268,55.1,,Narrow,,Healthcare,Diagnostics & Research
+104,MQ,Marqeta Inc Class A,3.94,6.1,54.8,,None,,Technology,Software - Infrastructure
+105,ACM,AECOM,71.49,110,53.9,4,None,,Industrials,Engineering & Construction
+106,MAT,Mattel Inc,14.94,23,53.9,,Narrow,,Consumer Cyclical,Leisure
+107,GLOB,Globant SA,39.85,61,53.1,,None,,Technology,Information Technology Services
+108,ZBH,Zimmer Biomet Holdings Inc,85.14,130,52.7,,Wide,,Healthcare,Medical Devices
+109,JHX,James Hardie Industries PLC,19.82,30,51.4,,Wide,,Basic Materials,Building Materials
+110,TSCO,Tractor Supply Co,31.72,48,51.3,,Wide,,Consumer Cyclical,Specialty Retail
+111,PBH,Prestige Consumer Healthcare Inc,46.6,70,50.2,,Narrow,,Healthcare,Drug Manufacturers - Specialty & Generic
+112,EL,The Estee Lauder Companies Inc Class A,80.01,120,50.0,,Wide,,Consumer Defensive,Household & Personal Products
+113,LI,Li Auto Inc ADR,16.69,25,49.8,,None,,Consumer Cyclical,Auto Manufacturers
+114,RIVN,Rivian Automotive Inc Class A,13.35,20,49.8,,None,,Consumer Cyclical,Auto Manufacturers
+115,KRC,Kilroy Realty Corp,34.14,51,49.4,,None,,Real Estate,REIT - Office
+116,LW,Lamb Weston Holdings Inc,43.65,65,48.9,,Narrow,,Consumer Defensive,Packaged Foods
+117,ADBE,Adobe Inc,255.64,380,48.6,5,Narrow,,Technology,Software - Application
+118,RPD,Rapid7 Inc,6.73,10,48.6,,None,,Technology,Software - Infrastructure
+119,BXP,BXP Inc,59.92,89,48.5,,None,,Real Estate,REIT - Office
+120,ATHM,Autohome Inc ADR,16.89,25,48.0,,None,,Communication Services,Internet Content & Information
+121,LEN,Lennar Corp Class A,83.82,124,47.9,,None,,Consumer Cyclical,Residential Construction
+122,TNDM,Tandem Diabetes Care Inc,13.53,20,47.8,,None,,Healthcare,Medical Devices
+123,OTIS,Otis Worldwide Corp Ordinary Shares,71.13,105,47.6,,Wide,,Industrials,Specialty Industrial Machinery
+124,WIX,Wix.com Ltd,55.75,82,47.1,,None,,Technology,Software - Infrastructure
+125,QGEN,Qiagen NV,33.78,49.47,46.4,,Narrow,,Healthcare,Diagnostics & Research
+126,GPI,Group 1 Automotive Inc,317.18,461,45.3,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+127,CCOI,Cogent Communications Holdings Inc,17.22,25,45.2,,Narrow,,Communication Services,Telecom Services
+128,MDT,Medtronic PLC,77.32,112,44.9,,Narrow,,Healthcare,Medical Devices
+129,BSX,Boston Scientific Corp,55.92,81,44.8,,Narrow,,Healthcare,Medical Devices
+130,SNY,Sanofi SA ADR,43.54,63,44.7,,Narrow,,Healthcare,Drug Manufacturers - General
+131,ICUI,ICU Medical Inc,123.08,178,44.6,,None,,Healthcare,Medical Instruments & Supplies
+132,DPZ,Domino's Pizza Inc,308,443,43.8,,Wide,,Consumer Cyclical,Restaurants
+133,ACN,Accenture PLC Class A,177.55,255,43.6,3,Narrow,,Technology,Information Technology Services
+134,RCI,Rogers Communications Inc Shs -B- Non-Voting,35.53,51,43.5,,Narrow,,Communication Services,Telecom Services
+135,GEHC,GE HealthCare Technologies Inc Common Stock,61.51,88,43.1,,Wide,,Healthcare,Medical Devices
+136,SONY,Sony Group Corp ADR,22.71,32.5,43.1,,Wide,,Technology,Consumer Electronics
+137,COO,The Cooper Companies Inc,60.94,87,42.8,,Narrow,,Healthcare,Medical Instruments & Supplies
+138,ESTC,Elastic NV,53.91,77,42.8,,None,,Technology,Software - Application
+139,XRAY,Dentsply Sirona Inc,9.82,14,42.6,,None,,Healthcare,Medical Instruments & Supplies
+140,RMD,ResMed Inc,204.15,290,42.1,,Narrow,,Healthcare,Medical Instruments & Supplies
+141,QLYS,Qualys Inc,97.98,139,41.9,,Narrow,,Technology,Software - Infrastructure
+142,TCOM,Trip.com Group Ltd ADR,49.32,70,41.9,,Narrow,,Consumer Cyclical,Travel Services
+143,A,Agilent Technologies Inc,112.11,159,41.8,4,Wide,,Healthcare,Diagnostics & Research
+144,MSFT,Microsoft Corp,423.54,600,41.7,,Wide,,Technology,Software - Infrastructure
+145,MOH,Molina Healthcare Inc,184.88,262,41.7,,Narrow,,Healthcare,Healthcare Plans
+146,ATR,AptarGroup Inc,115.81,164,41.6,,Narrow,,Healthcare,Medical Instruments & Supplies
+147,EMN,Eastman Chemical Co,70.94,100,41.0,,Narrow,,Basic Materials,Specialty Chemicals
+148,EMN,Eastman Chemical Co,70.94,100,41.0,,Narrow,,Basic Materials,Specialty Chemicals
+149,BF/B,Brown-Forman Corp Registered Shs -B- Non Vtg,26.25,37,41.0,,Wide,,Consumer Defensive,Beverages - Wineries & Distilleries
+150,CCL,Carnival Corporation Ltd,24.91,35,40.5,,Narrow,,Consumer Cyclical,Travel Services
+151,ELAN,Elanco Animal Health Inc,19.93,28,40.5,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+152,GAP,Gap Inc,20.73,29,39.9,,None,,Consumer Cyclical,Apparel Retail
+153,OPTU,Optimum Communications Inc Class A,0.72,1,39.8,4,None,,Communication Services,Telecom Services
+154,MKC,McCormick & Co Inc Ordinary Shares (Non Voting),46.7,65,39.2,,Wide,,Consumer Defensive,Packaged Foods
+155,JD,JD.com Inc ADR,31.6,44,39.2,,Wide,,Consumer Cyclical,Internet Retail
+156,META,Meta Platforms Inc Class A,611.21,850,39.1,,Wide,,Communication Services,Internet Content & Information
+157,SMG,The Scotts Miracle Gro Co Class A,57.53,80,39.1,,Narrow,,Basic Materials,Agricultural Inputs
+158,ALGN,Align Technology Inc,158.78,220,38.6,4,Narrow,,Healthcare,Medical Instruments & Supplies
+159,BCE,BCE Inc,23.82,33,38.5,,Narrow,,Communication Services,Telecom Services
+160,F,Ford Motor Co,13.03,18,38.1,,None,,Consumer Cyclical,Auto Manufacturers
+161,INGR,Ingredion Inc,101.42,140,38.0,,Narrow,,Consumer Defensive,Packaged Foods
+162,OSK,Oshkosh Corp,121.95,168,37.8,,Narrow,,Industrials,Farm & Heavy Construction Machinery
+163,KMB,Kimberly-Clark Corp,96.54,133,37.8,,Narrow,,Consumer Defensive,Household & Personal Products
+164,DOO,BRP Inc Shs Subord.Voting,55.33,76,37.4,,Wide,,Consumer Cyclical,Recreational Vehicles
+165,HRL,Hormel Foods Corp,20.38,28,37.4,,Narrow,,Consumer Defensive,Packaged Foods
+166,JKHY,Jack Henry & Associates Inc,139.11,191,37.3,,Wide,,Technology,Information Technology Services
+167,WFG,West Fraser Timber Co.Ltd,59.15,81,36.9,,None,,Basic Materials,Lumber & Wood Production
+168,CELH,Celsius Holdings Inc,29.33,40,36.4,,None,,Consumer Defensive,Beverages - Non-Alcoholic
+169,DECK,Deckers Outdoor Corp,94.61,129,36.3,,Narrow,,Consumer Cyclical,Footwear & Accessories
+170,TEX,Terex Corp,57.95,79,36.3,,Narrow,,Industrials,Farm & Heavy Construction Machinery
+171,BMI,Badger Meter Inc,118.96,162,36.2,,Narrow,,Technology,Scientific & Technical Instruments
+172,ICLR,Icon PLC,113.78,155,36.2,,None,,Healthcare,Diagnostics & Research
+173,BKNG,Booking Holdings Inc,155.07,211,36.1,,Wide,,Consumer Cyclical,Travel Services
+174,SNOW,Snowflake Inc Ordinary Shares,164.24,223,35.8,,None,,Technology,Software - Application
+175,MELI,MercadoLibre Inc,1585.91,2150,35.6,,Wide,,Consumer Cyclical,Internet Retail
+176,EPAM,EPAM Systems Inc,100.44,136,35.4,,None,,Technology,Information Technology Services
+177,W,Wayfair Inc Class A,59.26,80,35.0,,None,,Consumer Cyclical,Internet Retail
+178,TECH,Bio-Techne Corp,44.43,60,35.0,,Narrow,,Healthcare,Biotechnology
+179,M,Macy's Inc,18.52,25,35.0,,None,,Consumer Cyclical,Department Stores
+180,PEB,Pebblebrook Hotel Trust,14.44,19.5,35.0,,None,,Real Estate,REIT - Hotel & Motel
+181,PAYP,PayPay Corp ADR - Sponsor,19.3,26,34.7,,Narrow,,Technology,Software - Infrastructure
+182,AYI,Acuity Inc,282.56,380,34.5,4,Narrow,,Industrials,Electrical Equipment & Parts
+183,MGA,Magna International Inc,59.59,80,34.3,,None,,Consumer Cyclical,Auto Parts
+184,ANET,Arista Networks Inc,141.71,190,34.1,,Wide,,Technology,Computer Hardware
+185,SSNC,SS&C Technologies Holdings Inc,67.22,90,33.9,,None,,Technology,Software - Application
+186,BIRK,Birkenstock Holding PLC,32.12,43,33.9,,Narrow,,Consumer Cyclical,Footwear & Accessories
+187,KVUE,Kenvue Inc,17.18,23,33.9,,Wide,,Consumer Defensive,Household & Personal Products
+188,COR,Cencora Inc,261.87,350,33.7,,Narrow,,Healthcare,Medical Distribution
+189,GIB,CGI Inc Class A,65.08,87,33.7,,Narrow,,Technology,Information Technology Services
+190,DOC,Healthpeak Properties Inc,19.49,26,33.4,,None,,Real Estate,REIT - Healthcare Facilities
+191,MDLN,Medline Inc Ordinary Shares - Class A,36.02,48,33.3,,Narrow,,Healthcare,Medical Instruments & Supplies
+192,ROP,Roper Technologies Inc,331.01,440,32.9,,None,,Technology,Software - Application
+193,ESAB,ESAB Corp,88.03,117,32.9,,Narrow,,Industrials,Metal Fabrication
+194,XPEV,XPeng Inc ADR,15.06,20,32.8,,None,,Consumer Cyclical,Auto Manufacturers
+195,DSGX,The Descartes Systems Group Inc,70.85,94,32.7,,Narrow,,Technology,Software - Application
+196,RACE,Ferrari NV,324.77,430,32.4,,Wide,,Consumer Cyclical,Auto Manufacturers
+197,ALLE,Allegion PLC,128.47,170,32.3,3,Wide,,Industrials,Security & Protection Services
+198,INVH,Invitation Homes Inc,28.75,38,32.2,,None,,Real Estate,REIT - Residential
+199,SABR,Sabre Corp,1.59,2.1,32.1,,None,,Technology,Software - Infrastructure
+200,RKT,Rocket Companies Inc Ordinary Shares Class A,13.04,17.2,31.9,,Narrow,,Financial Services,Mortgage Finance
+201,MRNA,Moderna Inc,48.11,63,30.9,,None,,Healthcare,Biotechnology
+202,ABT,Abbott Laboratories,87.91,115,30.8,3,Narrow,,Healthcare,Medical Devices
+203,ALC,Alcon Inc,65.97,86,30.4,3,Narrow,,Healthcare,Medical Instruments & Supplies
+204,CZR,Caesars Entertainment Inc,27.62,36,30.3,,None,,Consumer Cyclical,Resorts & Casinos
+205,CCI,Crown Castle Inc,89.92,117,30.1,,Narrow,,Real Estate,REIT - Specialty
+206,BBIO,BridgeBio Pharma Inc,65.32,85,30.1,,None,,Healthcare,Biotechnology
+207,CNM,Core & Main Inc Class A,46.13,60,30.1,,Narrow,,Industrials,Industrial Distribution
+208,AS,Amer Sports Inc,33.15,43,29.7,3,Narrow,,Consumer Cyclical,Leisure
+209,SAH,Sonic Automotive Inc Class A,74.06,96,29.6,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+210,J,Jacobs Solutions Inc,113.61,147,29.4,,None,,Industrials,Engineering & Construction
+211,PNR,Pentair PLC,73.41,95,29.4,,Narrow,,Industrials,Specialty Industrial Machinery
+212,MGM,MGM Resorts International,37.09,48,29.4,,None,,Consumer Cyclical,Resorts & Casinos
+213,PCG,PG&E Corp,15.85,20.5,29.3,,None,,Utilities,Utilities - Regulated Electric
+214,BSY,Bentley Systems Inc Ordinary Shares - Class B,33.31,43,29.1,,Wide,,Technology,Software - Application
+215,PAG,Penske Automotive Group Inc,159.75,206,29.0,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+216,AN,AutoNation Inc,181.94,234,28.6,,Narrow,,Consumer Cyclical,Auto & Truck Dealerships
+217,CPRT,Copart Inc,33.44,43,28.6,,Wide,,Industrials,Specialty Business Services
+218,IP,International Paper Co,30.4,39,28.3,,None,,Consumer Cyclical,Packaging & Containers
+219,LYB,LyondellBasell Industries NV Class A,74.13,95,28.2,,Narrow,,Basic Materials,Specialty Chemicals
+220,BAC,Bank of America Corp,50.69,65,28.2,,Wide,,Financial Services,Banks - Diversified
+221,RVTY,Revvity Inc,95.48,122,27.8,,None,,Healthcare,Diagnostics & Research
+222,TAP,Molson Coors Beverage Co Shs -B- Non-Voting,41.68,53,27.2,,None,,Consumer Defensive,Beverages - Brewers
+223,BZ,Kanzhun Ltd ADR,14.16,18,27.1,,None,,Communication Services,Internet Content & Information
+224,SPGI,S&P Global Inc,417.41,530,27.0,,Wide,,Financial Services,Financial Data & Stock Exchanges
+225,ZBRA,Zebra Technologies Corp Ordinary Shares - Class A,260.06,330,26.9,,Narrow,,Technology,Communication Equipment
+226,AMT,American Tower Corp,177.28,225,26.9,4,Narrow,,Real Estate,REIT - Specialty
+227,HMC,Honda Motor Co Ltd ADR,25.21,32,26.9,,None,,Consumer Cyclical,Auto Manufacturers
+228,TMO,Thermo Fisher Scientific Inc,442,560,26.7,,Wide,,Healthcare,Diagnostics & Research
+229,ABNB,Airbnb Inc Ordinary Shares - Class A,134.3,170,26.6,4,Wide,,Consumer Cyclical,Travel Services
+230,SCHW,Charles Schwab Corp,92.39,117,26.6,,Wide,,Financial Services,Capital Markets
+231,TM,Toyota Motor Corp ADR,187.37,237,26.5,,None,,Consumer Cyclical,Auto Manufacturers
+232,OWL,Blue Owl Capital Inc Ordinary Shares - Class A,9.49,12,26.4,,Narrow,,Financial Services,Asset Management
+233,PFE,Pfizer Inc,25.33,32,26.3,,Narrow,,Healthcare,Drug Manufacturers - General
+234,AJG,Arthur J. Gallagher & Co,207.15,261,26.0,,Narrow,,Financial Services,Insurance Brokers
+235,DASH,DoorDash Inc Ordinary Shares - Class A,162.67,205,26.0,,Narrow,,Consumer Cyclical,Internet Retail
+236,ONON,On Holding AG,38.1,48,26.0,,Narrow,,Consumer Cyclical,Footwear & Accessories
+237,TMUS,T-Mobile US Inc,190.65,240,25.9,,Narrow,,Communication Services,Telecom Services
+238,SLG,SL Green Realty Corp,42.93,54,25.8,,None,,Real Estate,REIT - Office
+239,MICC,The Magnum Ice Cream Co NV,15.74,19.8,25.8,,Wide,,Consumer Defensive,Packaged Foods
+240,RDDT,Reddit Inc Class A Shares,159.11,200,25.7,,Narrow,,Communication Services,Internet Content & Information
+241,ELS,Equity Lifestyle Properties Inc,62.12,78,25.6,,None,,Real Estate,REIT - Residential
+242,AGCO,AGCO Corp,113.17,142,25.5,4,None,,Industrials,Farm & Heavy Construction Machinery
+243,SNN,Smith & Nephew PLC ADR,30.3,38,25.4,,Narrow,,Healthcare,Medical Devices
+244,VRSK,Verisk Analytics Inc,171.52,215,25.3,,Wide,,Industrials,Consulting Services
+245,UHS,Universal Health Services Inc Class B,169.27,212,25.2,,Narrow,,Healthcare,Medical Care Facilities
+246,TAL,TAL Education Group ADR,10.55,13.2,25.1,,None,,Consumer Defensive,Education & Training Services
+247,DLTR,Dollar Tree Inc,91.23,114,25.0,,None,,Consumer Defensive,Discount Stores
+248,HAYW,Hayward Holdings Inc,13.61,17,24.9,,Narrow,,Industrials,Electrical Equipment & Parts
+249,FDS,FactSet Research Systems Inc,224.35,280,24.8,,None,,Financial Services,Financial Data & Stock Exchanges
+250,THC,Tenet Healthcare Corp,192.45,240,24.7,,Narrow,,Healthcare,Medical Care Facilities
+251,DOW,Dow Inc,38.56,48,24.5,,Narrow,,Basic Materials,Chemicals
+252,NU,Nu Holdings Ltd Ordinary Shares Class A,12.29,15.3,24.5,,Narrow,,Financial Services,Banks - Regional
+253,MANH,Manhattan Associates Inc,136.71,170,24.4,,Narrow,,Technology,Software - Application
+254,IONS,Ionis Pharmaceuticals Inc,72.52,90,24.1,,Narrow,,Healthcare,Biotechnology
+255,MAS,Masco Corp,65.53,81,23.6,,Wide,,Industrials,Building Products & Equipment
+256,NWG,NatWest Group PLC ADR,15.29,18.9,23.6,,Narrow,,Financial Services,Banks - Regional
+257,CI,The Cigna Group,286.69,354,23.5,,Narrow,,Healthcare,Healthcare Plans
+258,WYNN,Wynn Resorts Ltd,95.51,118,23.5,,Narrow,,Consumer Cyclical,Resorts & Casinos
+259,SNAP,Snap Inc Class A,5.67,7,23.5,,None,,Communication Services,Internet Content & Information
+260,SBAC,SBA Communications Corp Class A,203.34,250,22.9,,Narrow,,Real Estate,REIT - Specialty
+261,WH,Wyndham Hotels & Resorts Inc Ordinary Shares,78.14,96,22.9,,Narrow,,Consumer Cyclical,Lodging
+262,INTU,Intuit Inc,403.16,495,22.8,,Narrow,,Technology,Software - Application
+263,CWK,Cushman & Wakefield Ltd,12.64,15.5,22.6,,None,,Real Estate,Real Estate Services
+264,EQR,Equity Residential,65.43,80,22.3,,None,,Real Estate,REIT - Residential
+265,UL,Unilever PLC ADR,57.3,70,22.2,,Wide,,Consumer Defensive,Household & Personal Products
+266,BMY,Bristol-Myers Squibb Co,57.31,70,22.1,,Wide,,Healthcare,Drug Manufacturers - General
+267,NVO,Novo Nordisk AS ADR,44.28,54,22.0,,Wide,,Healthcare,Drug Manufacturers - General
+268,SUI,Sun Communities Inc,121.51,148,21.8,,None,,Real Estate,REIT - Residential
+269,MDLZ,Mondelez International Inc Class A,61.64,75,21.7,,Wide,,Consumer Defensive,Confectioners
+270,RF,Regions Financial Corp,26.97,32.8,21.6,,Narrow,,Financial Services,Banks - Regional
+271,O,Realty Income Corp,61.71,75,21.5,,None,,Real Estate,REIT - Retail
+272,DXCM,DexCom Inc,65.09,79,21.4,,Narrow,,Healthcare,Medical Devices
+273,LMT,Lockheed Martin Corp,528.31,640,21.1,,Wide,,Industrials,Aerospace & Defense
+274,SOFI,SoFi Technologies Inc Ordinary Shares,15.71,19,20.9,,None,,Financial Services,Credit Services
+275,SKM,SK Telecom Co Ltd ADR,37.01,44.7,20.8,,None,,Communication Services,Telecom Services
+276,COLD,Americold Realty Trust Inc,14.49,17.5,20.8,5,None,,Real Estate,REIT - Industrial
+277,ECL,Ecolab Inc,249.21,300,20.4,,Wide,,Basic Materials,Specialty Chemicals
+278,ELV,Elevance Health Inc,394.07,474,20.3,,Narrow,,Healthcare,Healthcare Plans
+279,DIS,The Walt Disney Co,103.91,125,20.3,,Wide,,Communication Services,Entertainment
+280,COF,Capital One Financial Corp,187.17,225,20.2,,Narrow,,Financial Services,Credit Services
+281,CNC,Centene Corp,58.23,70,20.2,,None,,Healthcare,Healthcare Plans
+282,HBAN,Huntington Bancshares Inc,15.57,18.7,20.1,,None,,Financial Services,Banks - Regional
+283,FCNCA,First Citizens BancShares Inc Class A,1942.36,2330,20.0,,None,,Financial Services,Banks - Regional
+284,VLTO,Veralto Corp,86.71,104,19.9,,Wide,,Industrials,Pollution & Treatment Controls
+285,KKR,KKR & Co Inc Ordinary Shares,95.97,115,19.8,,Narrow,,Financial Services,Asset Management
+286,AMCX,AMC Global Media Inc Class A,8.35,10,19.8,4,None,,Communication Services,Entertainment
+287,BX,Blackstone Inc,117.04,140,19.6,,Wide,,Financial Services,Asset Management
+288,AVB,AvalonBay Communities Inc,185.25,221,19.3,,None,,Real Estate,REIT - Residential
+289,ALSN,Allison Transmission Holdings Inc,114.06,136,19.2,4,Narrow,,Consumer Cyclical,Auto Parts
+290,CHH,Choice Hotels International Inc,106.65,127,19.1,,Narrow,,Consumer Cyclical,Lodging
+291,ETSY,Etsy Inc,58.83,70,19.0,,Narrow,,Consumer Cyclical,Internet Retail
+292,XYZ,Block Inc Class A,70.63,84,18.9,,Narrow,,Technology,Software - Infrastructure
+293,AMRZ,Amrize Ltd Registered Share,49.64,59,18.9,3,Narrow,,Basic Materials,Building Materials
+294,ET,Energy Transfer LP,20.19,24,18.9,,None,,Energy,Oil & Gas Midstream
+295,AVGO,Broadcom Inc,420.71,500,18.8,,Wide,,Technology,Semiconductors
+296,HRI,Herc Holdings Inc,133.85,159,18.8,,None,,Industrials,Rental & Leasing Services
+297,SIRI,Sirius XM Holdings Inc,26.09,31,18.8,,None,,Communication Services,Entertainment
+298,MRSH,Marsh,165.98,197,18.7,,Narrow,,Financial Services,Insurance Brokers
+299,NTR,Nutrien Ltd,71.62,85,18.7,,Narrow,,Basic Materials,Agricultural Inputs
+300,DG,Dollar General Corp,106.23,126,18.6,,Narrow,,Consumer Defensive,Discount Stores
+301,EIX,Edison International,68.44,81,18.4,,Narrow,,Utilities,Utilities - Regulated Electric
+302,WFC,Wells Fargo & Co,74.37,88,18.3,,Wide,,Financial Services,Banks - Diversified
+303,SWKS,Skyworks Solutions Inc,70.35,83,18.0,,None,,Technology,Semiconductors
+304,CG,The Carlyle Group Inc,46.6,55,18.0,,Narrow,,Financial Services,Asset Management
+305,NWSA,News Corp Class A,26.27,31,18.0,,None,,Communication Services,Entertainment
+306,ORCL,Oracle Corp,186.61,220,17.9,,Narrow,,Technology,Software - Infrastructure
+307,USB,U.S. Bancorp,53.45,63,17.9,,Wide,,Financial Services,Banks - Regional
+308,LVS,Las Vegas Sands Corp,50.19,59,17.6,,Narrow,,Consumer Cyclical,Resorts & Casinos
+309,TV,Grupo Televisa SAB ADR,2.81,3.3,17.4,,None,,Communication Services,Telecom Services
+310,MCK,McKesson Corp,775.97,910,17.3,,Narrow,,Healthcare,Medical Distribution
+311,SHOP,Shopify Inc Registered Shs -A- Subord Vtg,102.39,120,17.2,,Narrow,,Technology,Software - Application
+312,IR,Ingersoll Rand Inc,69.97,82,17.2,,Narrow,,Industrials,Specialty Industrial Machinery
+313,RPRX,Royalty Pharma PLC Class A,52.07,61,17.1,,Narrow,,Healthcare,Biotechnology
+314,RBLX,Roblox Corp Ordinary Shares - Class A,46.98,55,17.1,,Narrow,,Communication Services,Electronic Gaming & Multimedia
+315,MSI,Motorola Solutions Inc,410.27,480,17.0,,Wide,,Technology,Communication Equipment
+316,NVDA,NVIDIA Corp,222.32,260,16.9,,Wide,,Technology,Semiconductors
+317,IBM,International Business Machines Corp,222.75,260,16.7,,Narrow,,Technology,Information Technology Services
+318,NET,Cloudflare Inc,201.75,235,16.5,,Wide,,Technology,Software - Infrastructure
+319,NOC,Northrop Grumman Corp,550,640,16.4,,Wide,,Industrials,Aerospace & Defense
+320,WDAY,Workday Inc Class A,128.88,150,16.4,,Narrow,,Technology,Software - Application
+321,POR,Portland General Electric Co,48.29,56,16.0,,Narrow,,Utilities,Utilities - Regulated Electric
+322,REGN,Regeneron Pharmaceuticals Inc,629.68,730,15.9,,Narrow,,Healthcare,Biotechnology
+323,TOL,Toll Brothers Inc,126.97,147,15.8,,None,,Consumer Cyclical,Residential Construction
+324,PPG,PPG Industries Inc,103.66,120,15.8,,Narrow,,Basic Materials,Specialty Chemicals
+325,FRT,Federal Realty Investment Trust,114.93,133,15.7,,None,,Real Estate,REIT - Retail
+326,EDU,New Oriental Education & Technology Group Inc ADR,51.09,59,15.5,,None,,Consumer Defensive,Education & Training Services
+327,SYF,Synchrony Financial,71.05,82,15.4,,None,,Financial Services,Credit Services
+328,GSK,GSK PLC ADR,50.26,58,15.4,,Wide,,Healthcare,Drug Manufacturers - General
+329,IFF,International Flavors & Fragrances Inc,73.7,85,15.3,,Narrow,,Basic Materials,Specialty Chemicals
+330,RJF,Raymond James Financial Inc,154.46,178,15.2,,Narrow,,Financial Services,Asset Management
+331,STZ,Constellation Brands Inc Class A,147.58,170,15.2,,Wide,,Consumer Defensive,Beverages - Brewers
+332,HII,Huntington Ingalls Industries Inc,329.35,379,15.1,,Wide,,Industrials,Aerospace & Defense
+333,NGG,National Grid PLC ADR,83.84,96.5,15.1,,Narrow,,Utilities,Utilities - Regulated Electric
+334,KIM,Kimco Realty Corp,23.47,27,15.0,,None,,Real Estate,REIT - Retail
+335,OKTA,Okta Inc Class A,87.04,100,14.9,,None,,Technology,Software - Infrastructure
+336,RTO,Rentokil Initial PLC ADR,32.21,37,14.9,,Narrow,,Industrials,Specialty Business Services
+337,TFC,Truist Financial Corp,47.05,54,14.8,,None,,Financial Services,Banks - Regional
+338,KT,KT Corp ADR,19.16,22,14.8,3,None,,Communication Services,Telecom Services
+339,BLCO,Bausch & Lomb Corp,16.11,18.5,14.8,,Narrow,,Healthcare,Medical Instruments & Supplies
+340,LOW,Lowe's Companies Inc,218.02,250,14.7,,Wide,,Consumer Cyclical,Home Improvement Retail
+341,HPQ,HP Inc,20.92,24,14.7,,None,,Technology,Computer Hardware
+342,WSO,Watsco Inc Ordinary Shares,391.69,449,14.6,,Narrow,,Industrials,Industrial Distribution
+343,LH,Labcorp Holdings Inc,255.57,293,14.6,,Narrow,,Healthcare,Diagnostics & Research
+344,STE,Steris PLC,212.87,244,14.6,,Narrow,,Healthcare,Medical Devices
+345,BIIB,Biogen Inc,191.91,220,14.6,,Narrow,,Healthcare,Drug Manufacturers - General
+346,ABEV,Ambev SA ADR,3.14,3.6,14.6,4,Wide,,Consumer Defensive,Beverages - Brewers
+347,XYL,Xylem Inc,108.3,124,14.5,,Narrow,,Industrials,Specialty Industrial Machinery
+348,ALLY,Ally Financial Inc,42.11,48.2,14.5,3,None,,Financial Services,Credit Services
+349,SYY,Sysco Corp,73.52,84,14.3,,Wide,,Consumer Defensive,Food Distribution
+350,UPS,United Parcel Service Inc Class B,95.53,109,14.1,,Wide,,Industrials,Integrated Freight & Logistics
+351,EXPE,Expedia Group Inc,214.99,245,14.0,,Narrow,,Consumer Cyclical,Travel Services
+352,ALB,Albemarle Corp,175.74,200,13.8,3,Narrow,,Basic Materials,Specialty Chemicals
+353,HSY,The Hershey Co,191.73,218,13.7,,Wide,,Consumer Defensive,Confectioners
+354,RTX,RTX Corp,175.95,200,13.7,,Wide,,Industrials,Aerospace & Defense
+355,AMAT,Applied Materials Inc,413.57,470,13.6,,Wide,,Technology,Semiconductor Equipment & Materials
+356,MPLX,MPLX LP Partnership Units,55.44,63,13.6,,Narrow,,Energy,Oil & Gas Midstream
+357,FIVN,Five9 Inc,21.13,24,13.6,,None,,Technology,Software - Infrastructure
+358,SF,Stifel Financial Corp,74.04,84,13.5,,Narrow,,Financial Services,Capital Markets
+359,GM,General Motors Co,73.1,83,13.5,,None,,Consumer Cyclical,Auto Manufacturers
+360,FITB,Fifth Third Bancorp,47.94,54.4,13.5,,Narrow,,Financial Services,Banks - Regional
+361,PEP,PepsiCo Inc,149.06,169,13.4,,Wide,,Consumer Defensive,Beverages - Non-Alcoholic
+362,EXR,Extra Space Storage Inc,139.27,158,13.4,,None,,Real Estate,REIT - Industrial
+363,TDG,TransDigm Group Inc,1182.35,1340,13.3,,Wide,,Industrials,Aerospace & Defense
+364,VZ,Verizon Communications Inc,46.76,53,13.3,,Narrow,,Communication Services,Telecom Services
+365,PLTR,Palantir Technologies Inc Ordinary Shares - Class A,135.14,153,13.2,,Narrow,,Technology,Software - Infrastructure
+366,UBER,Uber Technologies Inc,75.08,85,13.2,,Narrow,,Technology,Software - Application
+367,CARR,Carrier Global Corp Ordinary Shares,64.51,73,13.2,,Narrow,,Industrials,Building Products & Equipment
+368,ESS,Essex Property Trust Inc,272.24,308,13.1,,None,,Real Estate,REIT - Residential
+369,ADSK,Autodesk Inc,243.49,275,12.9,,Wide,,Technology,Software - Application
+370,BALL,Ball Corp,55.8,63,12.9,,Narrow,,Consumer Cyclical,Packaging & Containers
+371,MCO,Moodys Corp,443.41,500,12.8,,Wide,,Financial Services,Financial Data & Stock Exchanges
+372,WMG,Warner Music Group Corp Ordinary Shares - Class A,34.56,39,12.8,,Narrow,,Communication Services,Entertainment
+373,AMP,Ameriprise Financial Inc,471.18,530,12.5,3,Narrow,,Financial Services,Asset Management
+374,SPOT,Spotify Technology SA,445.01,500,12.4,,Narrow,,Communication Services,Internet Content & Information
+375,LII,Lennox International Inc,501.41,563,12.3,,Narrow,,Industrials,Building Products & Equipment
+376,FERG,Ferguson Enterprises Inc,219.95,247,12.3,,Narrow,,Industrials,Industrial Distribution
+377,WPP,WPP PLC ADR,18.52,20.79,12.3,,None,,Communication Services,Advertising Agencies
+378,LYFT,Lyft Inc Class A,13.37,15,12.2,,None,,Technology,Software - Application
+379,KDP,Keurig Dr Pepper Inc,29.43,33,12.1,,Narrow,,Consumer Defensive,Beverages - Non-Alcoholic
+380,INFY,Infosys Ltd ADR,12.59,14.1,12.0,,Narrow,,Technology,Information Technology Services
+381,PNC,PNC Financial Services Group Inc,213.72,239,11.8,,Narrow,,Financial Services,Banks - Regional
+382,CF,CF Industries Holdings Inc,125.22,140,11.8,,Narrow,,Basic Materials,Agricultural Inputs
+383,HD,The Home Depot Inc,299.81,335,11.7,,Wide,,Consumer Cyclical,Home Improvement Retail
+384,MTD,Mettler-Toledo International Inc,1074.84,1200,11.6,,Narrow,,Healthcare,Diagnostics & Research
+385,FER,Ferrovial NV,67.19,75,11.6,,Wide,,Industrials,Engineering & Construction
+386,ICE,Intercontinental Exchange Inc,155.99,174,11.5,,Wide,,Financial Services,Financial Data & Stock Exchanges
+387,LHX,L3Harris Technologies Inc,311.16,346,11.2,,Narrow,,Industrials,Aerospace & Defense
+388,REG,Regency Centers Corp,77.33,86,11.2,,None,,Real Estate,REIT - Retail
+389,PTC,PTC Inc,144.06,160,11.1,,Wide,,Technology,Software - Application
+390,DTE,DTE Energy Co,141.35,157,11.1,,Narrow,,Utilities,Utilities - Regulated Electric
+391,MTB,M&T Bank Corp,206.27,229,11.0,,Narrow,,Financial Services,Banks - Regional
+392,CTVA,Corteva Inc,81.08,90,11.0,,Wide,,Basic Materials,Agricultural Inputs
+393,HOG,Harley-Davidson Inc,24.35,27,10.9,,Narrow,,Consumer Cyclical,Recreational Vehicles
+394,DVN,Devon Energy Corp,49.68,55,10.7,,Narrow,,Energy,Oil & Gas E&P
+395,RNG,RingCentral Inc Class A,40.68,45,10.6,,None,,Technology,Software - Application
+396,GD,General Dynamics Corp,343.11,379,10.5,,Wide,,Industrials,Aerospace & Defense
+397,T,AT&T Inc,24.43,27,10.5,,Narrow,,Communication Services,Telecom Services
+398,AEP,American Electric Power Co Inc,127.68,141,10.4,4,Narrow,,Utilities,Utilities - Regulated Electric
+399,PINS,Pinterest Inc Class A,19.93,22,10.4,,Narrow,,Communication Services,Internet Content & Information
+400,C,Citigroup Inc,122.41,135,10.3,,None,,Financial Services,Banks - Diversified
+401,GGG,Graco Inc,76.17,84,10.3,,Wide,,Industrials,Specialty Industrial Machinery
+402,FOX,Fox Corp Class B,58.99,65,10.2,,None,,Communication Services,Entertainment
+403,GOOG,Alphabet Inc Class C,393.11,433,10.1,3,Wide,,Communication Services,Internet Content & Information
+404,PCAR,PACCAR Inc,111.68,123,10.1,,Narrow,,Industrials,Farm & Heavy Construction Machinery
+405,PUK,Prudential PLC ADR,30.87,34,10.1,,None,,Financial Services,Insurance - Life
+406,BC,Brunswick Corp,76.47,84,9.8,,Narrow,,Consumer Cyclical,Recreational Vehicles
+407,ZION,Zions Bancorp NA,60.09,66,9.8,,None,,Financial Services,Banks - Regional
+408,AEG,Aegon Ltd ADR,8.56,9.4,9.8,3,None,,Financial Services,Insurance - Diversified
+409,TEL,TE Connectivity PLC Registered Shares,200.51,220,9.7,,Narrow,,Technology,Electronic Components
+410,AR,Antero Resources Corp,38.36,42,9.5,,None,,Energy,Oil & Gas E&P
+411,TW,Tradeweb Markets Inc,112.43,123,9.4,,Wide,,Financial Services,Capital Markets
+412,CVS,CVS Health Corp,95.99,105,9.4,,None,,Healthcare,Healthcare Plans
+413,PII,Polaris Inc,63.98,70,9.4,,Wide,,Consumer Cyclical,Recreational Vehicles
+414,TXT,Textron Inc,90.59,99,9.3,,None,,Industrials,Aerospace & Defense
+415,UNH,UnitedHealth Group Inc,391.13,427,9.2,,Narrow,,Healthcare,Healthcare Plans
+416,KEY,KeyCorp,21.07,23,9.2,,None,,Financial Services,Banks - Regional
+417,GOOGL,Alphabet Inc Class A,396.94,433,9.1,3,Wide,,Communication Services,Internet Content & Information
+418,DHI,D.R. Horton Inc,137.49,150,9.1,,None,,Consumer Cyclical,Residential Construction
+419,ARES,Ares Management Corp Ordinary Shares - Class A,123.7,135,9.1,,Narrow,,Financial Services,Asset Management
+420,HLN,Haleon PLC ADR,9.17,10,9.1,,Wide,,Healthcare,Drug Manufacturers - Specialty & Generic
+421,SHW,Sherwin-Williams Co,302.78,330,9.0,,Wide,,Basic Materials,Specialty Chemicals
+422,DD,DuPont de Nemours Inc,48.64,53,9.0,,Narrow,,Basic Materials,Specialty Chemicals
+423,HUM,Humana Inc,306,333,8.8,,Narrow,,Healthcare,Healthcare Plans
+424,MA,Mastercard Inc Class A,505.79,550,8.7,,Wide,,Financial Services,Credit Services
+425,WING,Wingstop Inc,129,140,8.5,,Narrow,,Consumer Cyclical,Restaurants
+426,ALNY,Alnylam Pharmaceuticals Inc,286.27,310,8.3,3,Narrow,,Healthcare,Biotechnology
+427,CR,Crane Co,170.77,185,8.3,,Wide,,Industrials,Specialty Industrial Machinery
+428,FE,FirstEnergy Corp,44.32,48,8.3,,Narrow,,Utilities,Utilities - Regulated Electric
+429,TIMB,TIM SA ADR,22.17,24,8.3,,None,,Communication Services,Telecom Services
+430,TSM,Taiwan Semiconductor Manufacturing Co Ltd ADR,395.95,428,8.1,,Wide,,Technology,Semiconductors
+431,D,Dominion Energy Inc,67.56,73,8.1,,Narrow,,Utilities,Utilities - Regulated Electric
+432,BA,Boeing Co,220.61,238,7.9,,Wide,,Industrials,Aerospace & Defense
+433,CAH,Cardinal Health Inc,199.77,215,7.6,,Narrow,,Healthcare,Medical Distribution
+434,GE,GE Aerospace,285.99,307,7.3,,Wide,,Industrials,Aerospace & Defense
+435,SHEL,Shell PLC ADR (Representing - Ordinary Shares),88.59,95,7.2,,None,,Energy,Oil & Gas Integrated
+436,ES,Eversource Energy,68.08,73,7.2,,None,,Utilities,Utilities - Regulated Electric
+437,AMD,Advanced Micro Devices Inc,420.99,450,6.9,3,Narrow,,Technology,Semiconductors
+438,AON,Aon PLC Class A,326.57,349,6.9,,Narrow,,Financial Services,Insurance Brokers
+439,LNT,Alliant Energy Corp,72.09,77,6.8,4,Narrow,,Utilities,Utilities - Regulated Electric
+440,PSA,Public Storage,296.15,316,6.7,,None,,Real Estate,REIT - Industrial
+441,CMG,Chipotle Mexican Grill Inc,33.75,36,6.7,,Wide,,Consumer Cyclical,Restaurants
+442,CTAS,Cintas Corp,174.51,186,6.6,,Wide,,Industrials,Specialty Business Services
+443,DUK,Duke Energy Corp,122.84,131,6.6,,Narrow,,Utilities,Utilities - Regulated Electric
+444,SEIC,SEI Investments Co,92.01,98,6.5,,Narrow,,Financial Services,Asset Management
+445,DE,Deere & Co,564.49,600,6.3,,Wide,,Industrials,Farm & Heavy Construction Machinery
+446,NXPI,NXP Semiconductors NV,291.68,310,6.3,,Wide,,Technology,Semiconductors
+447,MCD,McDonald's Corp,282.47,300,6.2,,Wide,,Consumer Cyclical,Restaurants
+448,MSCI,MSCI Inc,584.13,620,6.1,,Wide,,Financial Services,Financial Data & Stock Exchanges
+449,SJM,JM Smucker Co,103.64,110,6.1,,None,,Consumer Defensive,Packaged Foods
+450,MFG,Mizuho Financial Group Inc ADR,8.39,8.9,6.1,,None,,Financial Services,Banks - Regional
+451,GWW,W.W. Grainger Inc,1265.03,1340,5.9,,Wide,,Industrials,Industrial Distribution
+452,BLK,BlackRock Inc,1085.88,1150,5.9,,Wide,,Financial Services,Asset Management
+453,WEC,WEC Energy Group Inc,109.55,116,5.9,,Narrow,,Utilities,Utilities - Regulated Electric
+454,LNG,Cheniere Energy Inc,247.74,262,5.8,,Wide,,Energy,Oil & Gas Midstream
+455,AMZN,Amazon.com Inc,264.86,280,5.7,3,Wide,,Consumer Cyclical,Internet Retail
+456,IT,Gartner Inc,155.43,164,5.5,,None,,Technology,Information Technology Services
+457,AMGN,Amgen Inc,324.39,342,5.4,3,Wide,,Healthcare,Drug Manufacturers - General
+458,IEX,IDEX Corp,208.63,220,5.4,,Wide,,Industrials,Specialty Industrial Machinery
+459,DT,Dynatrace Inc Ordinary Shares,39.85,42,5.4,,Narrow,,Technology,Software - Application
+460,MAC,Macerich Co,21.87,23,5.2,,None,,Real Estate,REIT - Retail
+461,WAT,Waters Corp,332.19,349,5.1,,Wide,,Healthcare,Diagnostics & Research
+462,HCA,HCA Healthcare Inc,422.79,444,5.0,,Narrow,,Healthcare,Medical Care Facilities
+463,CBRE,CBRE Group Inc Class A,130.44,137,5.0,,Narrow,,Real Estate,Real Estate Services
+464,BRK/A,Berkshire Hathaway Inc Class A,730000.05,765000,4.8,,Narrow,,Financial Services,Insurance - Diversified
+465,BRK/B,Berkshire Hathaway Inc Class B,488.38,510,4.4,,Narrow,,Financial Services,Insurance - Diversified
+466,QSR,Restaurant Brands International Inc,75.69,79,4.4,,Narrow,,Consumer Cyclical,Restaurants
+467,APD,Air Products and Chemicals Inc,293.31,306,4.3,4,Wide,,Basic Materials,Specialty Chemicals
+468,NXST,Nexstar Media Group Inc,196.54,205,4.3,,None,,Communication Services,Broadcasting
+469,HSBC,HSBC Holdings PLC ADR,90.13,94,4.3,,Narrow,,Financial Services,Banks - Diversified
+470,PEN,Penumbra Inc,326.54,340,4.1,,None,,Healthcare,Medical Devices
+471,AB,AllianceBernstein Holding LP,38.41,40,4.1,3,None,,Financial Services,Asset Management
+472,PG,Procter & Gamble Co,142.39,148,3.9,,Wide,,Consumer Defensive,Household & Personal Products
+473,BCS,Barclays PLC ADR,22.94,23.8,3.7,,None,,Financial Services,Banks - Diversified
+474,NIO,NIO Inc ADR,5.88,6.1,3.7,,None,,Consumer Cyclical,Auto Manufacturers
+475,ADP,Automatic Data Processing Inc,222.94,231,3.6,,Narrow,,Technology,Software - Application
+476,LYG,Lloyds Banking Group PLC ADR,5.17,5.35,3.5,,Narrow,,Financial Services,Banks - Regional
+477,JPM,JPMorgan Chase & Co,300.73,311,3.4,,Wide,,Financial Services,Banks - Diversified
+478,SNPS,Synopsys Inc,498.43,515,3.3,,Wide,,Technology,Software - Infrastructure
+479,AWK,American Water Works Co Inc,124.83,129,3.3,4,Narrow,,Utilities,Utilities - Regulated Water
+480,WBD,Warner Bros. Discovery Inc Ordinary Shares - Class A,27.1,28,3.3,,None,,Communication Services,Entertainment
+481,HIMS,Hims & Hers Health Inc Ordinary Shares - Class A,22.29,23,3.2,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+482,PENN,PENN Entertainment Inc,16.48,17,3.2,,None,,Consumer Cyclical,Resorts & Casinos
+483,AES,The AES Corp,14.53,15,3.2,,None,,Utilities,Utilities - Diversified
+484,TXN,Texas Instruments Inc,300.6,310,3.1,,Wide,,Technology,Semiconductors
+485,SRE,Sempra,90.23,93,3.1,,Narrow,,Utilities,Utilities - Diversified
+486,CNP,CenterPoint Energy Inc,41.72,43,3.1,,Narrow,,Utilities,Utilities - Regulated Electric
+487,PPL,PPL Corp,34.93,36,3.1,,Narrow,,Utilities,Utilities - Regulated Electric
+488,SUNB,Sunbelt Rentals Holdings Inc,75.77,78,2.9,,Narrow,,Industrials,Rental & Leasing Services
+489,RDY,Dr Reddy's Laboratories Ltd ADR,13.6,14,2.9,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+490,BAM,Brookfield Asset Management Ltd Ordinary Shares - Class A,48.62,50,2.8,,Narrow,,Financial Services,Asset Management
+491,MGEE,MGE Energy Inc,75,77,2.7,,Narrow,,Utilities,Utilities - Regulated Electric
+492,EQT,EQT Corp,57.45,59,2.7,,None,,Energy,Oil & Gas E&P
+493,GEN,Gen Digital Inc,24.34,25,2.7,,None,,Technology,Software - Infrastructure
+494,TROW,T. Rowe Price Group Inc,102.38,105,2.6,,Narrow,,Financial Services,Asset Management
+495,EXE,Expand Energy Corp Ordinary Shares - New,98.45,101,2.6,,None,,Energy,Oil & Gas E&P
+496,UAL,United Airlines Holdings Inc,92.55,95,2.6,,None,,Industrials,Airlines
+497,NWS,News Corp Class B,30.23,31,2.5,,None,,Communication Services,Entertainment
+498,EXC,Exelon Corp,43.97,45,2.3,,Narrow,,Utilities,Utilities - Regulated Electric
+499,CRWV,CoreWeave Inc Ordinary Shares - Class A,103.77,106,2.1,,None,,Technology,Software - Infrastructure
+500,BUD,Anheuser-Busch InBev SA/NV ADR,81.32,83,2.1,5,Wide,,Consumer Defensive,Beverages - Brewers
+501,AIG,American International Group Inc,78.36,80,2.1,3,None,,Financial Services,Insurance - Diversified
+502,EA,Electronic Arts Inc,201.05,205,2.0,,Narrow,,Communication Services,Electronic Gaming & Multimedia
+503,PRU,Prudential Financial Inc,102.98,105,2.0,,None,,Financial Services,Insurance - Life
+504,EW,Edwards Lifesciences Corp,82.39,84,2.0,,Narrow,,Healthcare,Medical Devices
+505,WTRG,Essential Utilities Inc,37.24,38,2.0,,Narrow,,Utilities,Utilities - Regulated Water
+506,WST,West Pharmaceutical Services Inc,304.41,310,1.8,,Wide,,Healthcare,Medical Instruments & Supplies
+507,JLL,Jones Lang LaSalle Inc,288.9,294,1.8,,Narrow,,Real Estate,Real Estate Services
+508,HUBB,Hubbell Inc,470.87,479,1.7,,Wide,,Industrials,Electrical Equipment & Parts
+509,URI,United Rentals Inc,944.57,960,1.6,,Narrow,,Industrials,Rental & Leasing Services
+510,CFR,Cullen/Frost Bankers Inc,137.77,140,1.6,,Narrow,,Financial Services,Banks - Regional
+511,CRH,CRH PLC,103.39,105,1.6,,Narrow,,Basic Materials,Building Materials
+512,APP,AppLovin Corp Ordinary Shares - Class A,492.38,500,1.5,,Narrow,,Communication Services,Advertising Agencies
+513,GTLS,Chart Industries Inc,207.19,210,1.4,,Narrow,,Industrials,Specialty Industrial Machinery
+514,EOG,EOG Resources Inc,142.99,145,1.4,,Narrow,,Energy,Oil & Gas E&P
+515,HAS,Hasbro Inc,93.72,95,1.4,,Narrow,,Consumer Cyclical,Leisure
+516,OKE,ONEOK Inc,93.76,95,1.3,,Narrow,,Energy,Oil & Gas Midstream
+517,YUM,Yum Brands Inc,152.31,154,1.1,,Wide,,Consumer Cyclical,Restaurants
+518,AMG,Affiliated Managers Group Inc,297.03,300,1.0,2,None,,Financial Services,Asset Management
+519,RCL,Royal Caribbean Group,252.59,255,1.0,,Narrow,,Consumer Cyclical,Travel Services
+520,GILD,Gilead Sciences Inc,129.67,131,1.0,,Wide,,Healthcare,Drug Manufacturers - General
+521,MPWR,Monolithic Power Systems Inc,1486.33,1500,0.9,,Wide,,Technology,Semiconductors
+522,SYK,Stryker Corp,313.22,316,0.9,,Wide,,Healthcare,Medical Devices
+523,HE,Hawaiian Electric Industries Inc,13.38,13.5,0.9,,None,,Utilities,Utilities - Regulated Electric
+524,MKL,Markel Group Inc,1865.59,1880,0.8,,None,,Financial Services,Insurance - Property & Casualty
+525,HST,Host Hotels & Resorts Inc,21.87,22,0.6,,None,,Real Estate,REIT - Hotel & Motel
+526,PAYX,Paychex Inc,94.49,95,0.5,,Narrow,,Technology,Software - Application
+527,JHG,Janus Henderson Group PLC,51.8,52,0.4,,None,,Financial Services,Asset Management
+528,CNI,Canadian National Railway Co,112.63,113,0.3,,Wide,,Industrials,Railroads
+529,RBA,RB Global Inc,102.84,103,0.2,,Narrow,,Industrials,Specialty Business Services
+530,ULTA,Ulta Beauty Inc,479.87,480,0.0,,Narrow,,Consumer Cyclical,Specialty Retail
+531,AZN,AstraZeneca PLC,183.92,184,0.0,,Wide,,Healthcare,Drug Manufacturers - General
+532,CART,Maplebear Inc,40.99,41,0.0,,None,,Consumer Cyclical,Internet Retail
+533,VTRS,Viatris Inc,16.5,16.5,0.0,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+534,BBD,Bank Bradesco SA ADR,3.51,3.5,-0.3,,None,,Financial Services,Banks - Regional
+535,COP,ConocoPhillips,124.54,124,-0.4,,Narrow,,Energy,Oil & Gas E&P
+536,TENB,Tenable Holdings Inc,23.12,23,-0.5,,None,,Technology,Software - Infrastructure
+537,LIN,Linde PLC,510.86,508,-0.6,,Wide,,Basic Materials,Specialty Chemicals
+538,BIO,Bio-Rad Laboratories Inc Class A,281.82,280,-0.6,,Wide,,Healthcare,Medical Devices
+539,VIV,Telefonica Brasil SA ADR,14.09,14,-0.6,,None,,Communication Services,Telecom Services
+540,AXP,American Express Co,312.24,310,-0.7,2,Wide,,Financial Services,Credit Services
+541,SPG,Simon Property Group Inc,200.42,199,-0.7,,None,,Real Estate,REIT - Retail
+542,FHI,Federated Hermes Inc Class B,54.42,54,-0.8,,None,,Financial Services,Asset Management
+543,FLR,Fluor Corp,44.35,44,-0.8,,None,,Industrials,Engineering & Construction
+544,TIGO,Millicom International Cellular SA,80.73,80,-0.9,,Narrow,,Communication Services,Telecom Services
+545,GEV,GE Vernova Inc,1012.25,1000,-1.2,,Narrow,,Industrials,Specialty Industrial Machinery
+546,HEI,Heico Corp,293.57,290,-1.2,,Narrow,,Industrials,Aerospace & Defense
+547,NEE,NextEra Energy Inc,89.04,88,-1.2,,Narrow,,Utilities,Utilities - Regulated Electric
+548,VG,Venture Global Inc Ordinary Shares - Class A,14.17,14,-1.2,,None,,Energy,Oil & Gas Midstream
+549,FOXA,Fox Corp Class A,65.87,65,-1.3,,None,,Communication Services,Entertainment
+550,MRK,Merck & Co Inc,112.56,111,-1.4,,Wide,,Healthcare,Drug Manufacturers - General
+551,IVZ,Invesco Ltd,27.39,27,-1.4,,None,,Financial Services,Asset Management
+552,JEF,Jefferies Financial Group Inc,51.85,51,-1.6,,None,,Financial Services,Capital Markets
+553,CWAN,Clearwater Analytics Holdings Inc Class A,24.4,24,-1.6,,Narrow,,Technology,Software - Application
+554,WCN,Waste Connections Inc,158.92,156,-1.8,,Wide,,Industrials,Waste Management
+555,TGT,Target Corp,123.4,121,-1.9,,None,,Consumer Defensive,Discount Stores
+556,SBGI,Sinclair Inc Ordinary Shares - Class A,14.27,14,-1.9,,None,,Communication Services,Broadcasting
+557,EVR,Evercore Inc Class A,331.92,325,-2.1,,Narrow,,Financial Services,Capital Markets
+558,CVX,Chevron Corp,196.12,192,-2.1,,Narrow,,Energy,Oil & Gas Integrated
+559,CL,Colgate-Palmolive Co,89.92,88,-2.1,,Wide,,Consumer Defensive,Household & Personal Products
+560,NSC,Norfolk Southern Corp,320.08,313,-2.2,,Wide,,Industrials,Railroads
+561,AEE,Ameren Corp,107.38,105,-2.2,3,Narrow,,Utilities,Utilities - Regulated Electric
+562,MO,Altria Group Inc,73.72,72,-2.3,3,Wide,,Consumer Defensive,Tobacco
+563,ZTO,ZTO Express (Cayman) Inc ADR,23.55,23,-2.3,,Narrow,,Industrials,Integrated Freight & Logistics
+564,TSLA,Tesla Inc,409.99,400,-2.4,,Narrow,,Consumer Cyclical,Auto Manufacturers
+565,ED,Consolidated Edison Inc,106.51,104,-2.4,,None,,Utilities,Utilities - Regulated Electric
+566,VTR,Ventas Inc,88.14,86,-2.4,,None,,Real Estate,REIT - Healthcare Facilities
+567,EVRG,Evergy Inc,81.96,80,-2.4,,Narrow,,Utilities,Utilities - Regulated Electric
+568,PEG,Public Service Enterprise Group Inc,76.84,75,-2.4,,Narrow,,Utilities,Utilities - Regulated Electric
+569,ENB,Enbridge Inc,56.37,55,-2.4,,Narrow,,Energy,Oil & Gas Midstream
+570,ITUB,Itau Unibanco Holding SA ADR,7.89,7.7,-2.4,,None,,Financial Services,Banks - Regional
+571,SOLS,Solstice Advanced Materials Inc,82.07,80,-2.5,,Narrow,,Basic Materials,Specialty Chemicals
+572,FANG,Diamondback Energy Inc,205.62,200,-2.7,,Narrow,,Energy,Oil & Gas E&P
+573,VRNS,Varonis Systems Inc,28.78,28,-2.7,,None,,Technology,Software - Infrastructure
+574,XOM,Exxon Mobil Corp,160.49,156,-2.8,,Narrow,,Energy,Oil & Gas Integrated
+575,V,Visa Inc Class A,332.64,323,-2.9,,Wide,,Financial Services,Credit Services
+576,GRMN,Garmin Ltd,226.89,220,-3.0,,Narrow,,Technology,Scientific & Technical Instruments
+577,BOX,Box Inc Class A,25.77,25,-3.0,,None,,Technology,Software - Infrastructure
+578,DGX,Quest Diagnostics Inc,189.84,184,-3.1,,Narrow,,Healthcare,Diagnostics & Research
+579,CNS,Cohen & Steers Inc,72.26,70,-3.1,,Narrow,,Financial Services,Asset Management
+580,HUBG,Hub Group Inc Class A,38.17,37,-3.1,,Narrow,,Industrials,Integrated Freight & Logistics
+581,BSAC,Banco Santander Chile ADR,30.54,29.6,-3.1,,Narrow,,Financial Services,Banks - Regional
+582,SQM,Sociedad Quimica Y Minera De Chile SA ADR,82.66,80,-3.2,,Narrow,,Basic Materials,Specialty Chemicals
+583,QRVO,Qorvo Inc,94.21,91,-3.4,,None,,Technology,Semiconductors
+584,DB,Deutsche Bank AG,31.36,30.3,-3.4,,None,,Financial Services,Banks - Regional
+585,FFIV,F5 Inc,379.74,366,-3.6,,Narrow,,Technology,Software - Infrastructure
+586,KOF,Coca-Cola Femsa SAB de CV ADR,105.83,102,-3.6,,Wide,,Consumer Defensive,Beverages - Non-Alcoholic
+587,TTE,TotalEnergies SE,93.43,90,-3.7,,None,,Energy,Oil & Gas Integrated
+588,URBN,Urban Outfitters Inc,69.61,67,-3.7,,None,,Consumer Cyclical,Apparel Retail
+589,AME,AMETEK Inc,225.66,217,-3.8,2,Wide,,Industrials,Specialty Industrial Machinery
+590,ST,Sensata Technologies Holding PLC,47.82,46,-3.8,,None,,Technology,Scientific & Technical Instruments
+591,ZM,Zoom Communications Inc,98.87,95,-3.9,,Narrow,,Technology,Software - Application
+592,DDOG,Datadog Inc Class A,208.82,200,-4.2,,Wide,,Technology,Software - Application
+593,PBR,Petroleo Brasileiro SA Petrobras ADR,20.7,19.8,-4.3,,None,,Energy,Oil & Gas Integrated
+594,DLR,Digital Realty Trust Inc,188.5,180,-4.5,,None,,Real Estate,REIT - Specialty
+595,CDNS,Cadence Design Systems Inc,345.99,330,-4.6,,Wide,,Technology,Software - Application
+596,ILMN,Illumina Inc,141.51,135,-4.6,,Narrow,,Healthcare,Diagnostics & Research
+597,DINO,HF Sinclair Corp,70.3,67,-4.7,,Narrow,,Energy,Oil & Gas Refining & Marketing
+598,ATO,Atmos Energy Corp,178.52,170,-4.8,,Narrow,,Utilities,Utilities - Regulated Gas
+599,ASML,ASML Holding NV ADR,1472.39,1400,-4.9,,Wide,,Technology,Semiconductor Equipment & Materials
+600,XEL,Xcel Energy Inc,78.1,74,-5.2,,Narrow,,Utilities,Utilities - Regulated Electric
+601,ING,ING Groep NV ADR,29.53,28,-5.2,,Narrow,,Financial Services,Banks - Diversified
+602,H,Hyatt Hotels Corp Class A,169.4,160,-5.5,,Narrow,,Consumer Cyclical,Lodging
+603,WM,Waste Management Inc,222.73,210,-5.7,,Wide,,Industrials,Waste Management
+604,TTD,The Trade Desk Inc Class A,22.27,21,-5.7,,None,,Communication Services,Advertising Agencies
+605,FTRE,Fortrea Holdings Inc,13.59,12.8,-5.8,,Narrow,,Healthcare,Biotechnology
+606,GH,Guardant Health Inc,95.66,90,-5.9,,None,,Healthcare,Diagnostics & Research
+607,VRTX,Vertex Pharmaceuticals Inc,436.58,410,-6.1,,Narrow,,Healthcare,Biotechnology
+608,NVS,Novartis AG ADR,149.15,140,-6.1,,Wide,,Healthcare,Drug Manufacturers - General
+609,Q,Qnity Electronics Inc,149.03,140,-6.1,,Narrow,,Technology,Semiconductor Equipment & Materials
+610,EPD,Enterprise Products Partners LP,39.46,37,-6.2,,Wide,,Energy,Oil & Gas Midstream
+611,MUFG,Mitsubishi UFJ Financial Group Inc ADR,19.19,18,-6.2,,None,,Financial Services,Banks - Diversified
+612,PGR,Progressive Corp,204,191,-6.4,,Narrow,,Financial Services,Insurance - Property & Casualty
+613,CME,CME Group Inc Class A,305.12,285,-6.6,,Wide,,Financial Services,Financial Data & Stock Exchanges
+614,PAYC,Paycom Software Inc,139.18,130,-6.6,,None,,Technology,Software - Application
+615,SOLV,Solventum Corp,76.13,71,-6.7,,None,,Healthcare,Medical Instruments & Supplies
+616,RSG,Republic Services Inc,214.52,200,-6.8,,Wide,,Industrials,Waste Management
+617,APO,Apollo Global Management Inc,134.07,125,-6.8,,Narrow,,Financial Services,Asset Management
+618,OGE,OGE Energy Corp,47.31,44,-7.0,,Narrow,,Utilities,Utilities - Regulated Electric
+619,BIDU,Baidu Inc ADR,137.71,128,-7.1,,None,,Communication Services,Internet Content & Information
+620,LIVN,LivaNova PLC,72.23,67,-7.2,,Narrow,,Healthcare,Medical Devices
+621,WIT,Wipro Ltd ADR,1.94,1.8,-7.2,,None,,Technology,Information Technology Services
+622,BEKE,KE Holdings Inc ADR,17.8,16.5,-7.3,,Narrow,,Real Estate,Real Estate Services
+623,NI,NiSource Inc,46.55,43,-7.6,,Narrow,,Utilities,Utilities - Regulated Gas
+624,SNA,Snap-on Inc,363.55,335,-7.9,,Narrow,,Industrials,Tools & Accessories
+625,MET,MetLife Inc,81.41,75,-7.9,,None,,Financial Services,Insurance - Life
+626,OXY,Occidental Petroleum Corp,59.7,55,-7.9,,None,,Energy,Oil & Gas E&P
+627,CCEP,Coca-Cola Europacific Partners PLC,92.41,85,-8.0,,Narrow,,Consumer Defensive,Beverages - Non-Alcoholic
+628,VALE,Vale SA ADR,16.31,15,-8.0,,None,,Basic Materials,Other Industrial Metals & Mining
+629,BFH,Bread Financial Holdings Inc,85.93,79,-8.1,,None,,Financial Services,Credit Services
+630,STX,Seagate Technology Holdings PLC,740.84,680,-8.2,,None,,Technology,Computer Hardware
+631,MDB,MongoDB Inc Class A,330,303,-8.2,,None,,Technology,Software - Infrastructure
+632,KMI,Kinder Morgan Inc Class P,33.78,31,-8.2,,Narrow,,Energy,Oil & Gas Midstream
+633,FMX,Fomento Economico Mexicano SAB de CV ADR,122.25,112,-8.4,,Narrow,,Consumer Defensive,Beverages - Brewers
+634,ROL,Rollins Inc,54.61,50,-8.4,,Wide,,Consumer Cyclical,Personal Services
+635,CMS,CMS Energy Corp,72.13,66,-8.5,,Narrow,,Utilities,Utilities - Regulated Electric
+636,PLD,Prologis Inc,142.31,130,-8.7,,None,,Real Estate,REIT - Industrial
+637,S,SentinelOne Inc Class A,17.54,16,-8.8,,None,,Technology,Software - Infrastructure
+638,LLY,Eli Lilly and Co,988.09,900,-8.9,,Wide,,Healthcare,Drug Manufacturers - General
+639,HON,Honeywell International Inc,217.23,198,-8.9,,Wide,,Industrials,Conglomerates
+640,KO,Coca-Cola Co,81.2,74,-8.9,,Wide,,Consumer Defensive,Beverages - Non-Alcoholic
+641,TEVA,Teva Pharmaceutical Industries Ltd ADR,34.03,31,-8.9,,None,,Healthcare,Drug Manufacturers - Specialty & Generic
+642,BP,BP PLC ADR,45.69,41.6,-9.0,,None,,Energy,Oil & Gas Integrated
+643,PANW,Palo Alto Networks Inc,247.55,225,-9.1,,Wide,,Technology,Software - Infrastructure
+644,BEPC,Brookfield Renewable Corp Ordinary Shares - Class A (Exchangeable Sub Voting),36.36,33,-9.2,,None,,Utilities,Utilities - Renewable
+645,AAPL,Apple Inc,297.84,270,-9.3,,Wide,,Technology,Consumer Electronics
+646,HXL,Hexcel Corp,89.28,81,-9.3,,Narrow,,Industrials,Aerospace & Defense
+647,UBS,UBS Group AG Registered Shares,46.29,42,-9.3,,Narrow,,Financial Services,Banks - Diversified
+648,FAST,Fastenal Co,44,39.9,-9.3,,Wide,,Industrials,Industrial Distribution
+649,BBVA,Banco Bilbao Vizcaya Argentaria SA ADR,22.04,20,-9.3,,Narrow,,Financial Services,Banks - Diversified
+650,BKR,Baker Hughes Co Class A,66.2,60,-9.4,,None,,Energy,Oil & Gas Equipment & Services
+651,WDC,Western Digital Corp,458.68,415,-9.5,,None,,Technology,Computer Hardware
+652,WELL,Welltower Inc,212.61,192,-9.7,,None,,Real Estate,REIT - Healthcare Facilities
+653,DKS,Dick's Sporting Goods Inc,210.45,190,-9.7,,Narrow,,Consumer Cyclical,Specialty Retail
+654,ARGX,argenx SE ADR,776.26,700,-9.8,,None,,Healthcare,Biotechnology
+655,CQP,Cheniere Energy Partners LP,64.33,58,-9.8,,Wide,,Energy,Oil & Gas Midstream
+656,CRL,Charles River Laboratories International Inc,149.93,135,-10.0,,None,,Healthcare,Diagnostics & Research
+657,VOD,Vodafone Group PLC ADR,15,13.5,-10.0,,None,,Communication Services,Telecom Services
+658,CB,Chubb Ltd,330.33,297,-10.1,,Narrow,,Financial Services,Insurance - Property & Casualty
+659,ITT,ITT Inc,194.98,175,-10.2,,Wide,,Industrials,Specialty Industrial Machinery
+660,DCI,Donaldson Co Inc,82.46,74,-10.3,,Narrow,,Industrials,Specialty Industrial Machinery
+661,EQIX,Equinix Inc,1062.62,950,-10.6,,Narrow,,Real Estate,REIT - Specialty
+662,LFUS,Littelfuse Inc,436,390,-10.6,,Narrow,,Technology,Electronic Components
+663,BCH,Banco De Chile ADR,36.48,32.6,-10.6,,Narrow,,Financial Services,Banks - Regional
+664,PM,Philip Morris International Inc,191.5,171,-10.7,,Wide,,Consumer Defensive,Tobacco
+665,KR,The Kroger Co,68.32,61,-10.7,,None,,Consumer Defensive,Grocery Stores
+666,NFLX,Netflix Inc,89.65,80,-10.8,,Narrow,,Communication Services,Entertainment
+667,SLB,SLB Ltd,57.15,51,-10.8,,Narrow,,Energy,Oil & Gas Equipment & Services
+668,AZO,AutoZone Inc,3365.74,3000,-10.9,,Wide,,Consumer Cyclical,Auto Parts
+669,PSX,Phillips 66,179.8,160,-11.0,,Narrow,,Energy,Oil & Gas Refining & Marketing
+670,AD,Array Digital Infrastructure Inc,50.59,45,-11.0,,None,,Communication Services,Telecom Services
+671,RBC,RBC Bearings Inc,551.12,490,-11.1,,Wide,,Industrials,Tools & Accessories
+672,ERIC,Telefonaktiebolaget L M Ericsson ADR,12.84,11.4,-11.2,,None,,Technology,Communication Equipment
+673,NDAQ,Nasdaq Inc,92.6,82,-11.4,,Narrow,,Financial Services,Financial Data & Stock Exchanges
+674,AFRM,Affirm Holdings Inc Ordinary Shares - Class A,64.41,57,-11.5,3,Narrow,,Financial Services,Credit Services
+675,NJR,New Jersey Resources Corp,57.62,51,-11.5,,Narrow,,Utilities,Utilities - Regulated Gas
+676,IQ,iQIYI Inc ADR,1.13,1,-11.5,,None,,Communication Services,Entertainment
+677,GFS,GLOBALFOUNDRIES Inc,67.84,60,-11.6,,None,,Technology,Semiconductors
+678,FSLR,First Solar Inc,233.64,206,-11.8,,None,,Technology,Solar
+679,ABBV,AbbVie Inc,209.41,184,-12.1,2,Wide,,Healthcare,Drug Manufacturers - General
+680,BK,Bank of New York Mellon Corp,136.58,120,-12.1,,Wide,,Financial Services,Banks - Diversified
+681,SATS,EchoStar Corp Class A,136.45,120,-12.1,,None,,Communication Services,Telecom Services
+682,LECO,Lincoln Electric Holdings Inc,260.9,229,-12.2,,Narrow,,Industrials,Tools & Accessories
+683,ITW,Illinois Tool Works Inc,249.46,219,-12.2,,Wide,,Industrials,Specialty Industrial Machinery
+684,NTRS,Northern Trust Corp,165.27,145,-12.3,,Wide,,Financial Services,Asset Management
+685,BTI,British American Tobacco PLC ADR,66.35,58,-12.6,,Wide,,Consumer Defensive,Tobacco
+686,TT,Trane Technologies PLC Class A,460.42,402,-12.7,,Narrow,,Industrials,Building Products & Equipment
+687,PNW,Pinnacle West Capital Corp,99.76,87,-12.8,,None,,Utilities,Utilities - Regulated Electric
+688,RIO,Rio Tinto PLC ADR,103.33,90,-12.9,,None,,Basic Materials,Other Industrial Metals & Mining
+689,UNP,Union Pacific Corp,275.13,239,-13.1,,Wide,,Industrials,Railroads
+690,E,Eni SpA ADR,56.39,49,-13.1,,None,,Energy,Oil & Gas Integrated
+691,VRSN,VeriSign Inc,305.31,265,-13.2,,Wide,,Technology,Software - Infrastructure
+692,GLW,Corning Inc,178.55,155,-13.2,,Narrow,,Technology,Electronic Components
+693,NDSN,Nordson Corp,276.76,240,-13.3,,Wide,,Industrials,Specialty Industrial Machinery
+694,BNS,Bank of Nova Scotia,77.26,67,-13.3,,Narrow,,Financial Services,Banks - Diversified
+695,LYV,Live Nation Entertainment Inc,167.49,145,-13.4,,Narrow,,Communication Services,Entertainment
+696,LYV,Live Nation Entertainment Inc,167.49,145,-13.4,,Narrow,,Communication Services,Entertainment
+697,SO,Southern Co,93.71,81,-13.6,,Narrow,,Utilities,Utilities - Regulated Electric
+698,MCHP,Microchip Technology Inc,92.76,80,-13.8,,Wide,,Technology,Semiconductors
+699,WMB,Williams Companies Inc,77.69,67,-13.8,,Narrow,,Energy,Oil & Gas Midstream
+700,IDXX,IDEXX Laboratories Inc,545.79,470,-13.9,,Wide,,Healthcare,Diagnostics & Research
+701,ISRG,Intuitive Surgical Inc,439.92,378,-14.1,,Wide,,Healthcare,Medical Instruments & Supplies
+702,CP,Canadian Pacific Kansas City Ltd,86.22,74,-14.2,,Wide,,Industrials,Railroads
+703,TER,Teradyne Inc,321.05,275,-14.3,,Wide,,Technology,Semiconductor Equipment & Materials
+704,MS,Morgan Stanley,192.69,165,-14.4,,Wide,,Financial Services,Capital Markets
+705,AMX,America Movil SAB de CV ADR - Series B,26.88,23,-14.4,3,Narrow,,Communication Services,Telecom Services
+706,BNTX,BioNTech SE ADR,88.85,76,-14.5,,None,,Healthcare,Biotechnology
+707,KLAC,KLA Corp,1756.45,1500,-14.6,,Wide,,Technology,Semiconductor Equipment & Materials
+708,JAZZ,Jazz Pharmaceuticals PLC,229.55,196,-14.6,,None,,Healthcare,Biotechnology
+709,FTNT,Fortinet Inc,126.5,108,-14.6,,Wide,,Technology,Software - Infrastructure
+710,LUV,Southwest Airlines Co,38.36,32.7,-14.8,,None,,Industrials,Airlines
+711,TRP,TC Energy Corp,69.32,59,-14.9,,Narrow,,Energy,Oil & Gas Midstream
+712,RRC,Range Resources Corp,42.36,36,-15.0,,None,,Energy,Oil & Gas E&P
+713,PSO,Pearson PLC ADR,15.29,13,-15.0,,None,,Communication Services,Publishing
+714,PBA,Pembina Pipeline Corp,49.48,42,-15.1,,None,,Energy,Oil & Gas Midstream
+715,COIN,Coinbase Global Inc Ordinary Shares - Class A,189.44,160,-15.5,,None,,Financial Services,Financial Data & Stock Exchanges
+716,WRB,WR Berkley Corp,68.76,58,-15.6,,Narrow,,Financial Services,Insurance - Property & Casualty
+717,BEP,Brookfield Renewable Partners LP,34.37,29,-15.6,,None,,Utilities,Utilities - Renewable
+718,ETN,Eaton Corp PLC,381.87,321,-15.9,,Wide,,Industrials,Specialty Industrial Machinery
+719,GNRC,Generac Holdings Inc,253.05,212,-16.2,,Narrow,,Industrials,Specialty Industrial Machinery
+720,CNQ,Canadian Natural Resources Ltd,48.95,41,-16.2,,Narrow,,Energy,Oil & Gas E&P
+721,INTC,Intel Corp,108.17,90,-16.8,,None,,Technology,Semiconductors
+722,EQNR,Equinor ASA ADR,39.66,33,-16.8,,None,,Energy,Oil & Gas Integrated
+723,AA,Alcoa Corp,62.59,52,-16.9,2,None,,Basic Materials,Aluminum
+724,JNJ,Johnson & Johnson,228.92,190,-17.0,,Wide,,Healthcare,Drug Manufacturers - General
+725,ETR,Entergy Corp,109.58,91,-17.0,,Narrow,,Utilities,Utilities - Regulated Electric
+726,IHG,InterContinental Hotels Group PLC ADR,150.87,125,-17.1,,Wide,,Consumer Cyclical,Lodging
+727,TRV,The Travelers Companies Inc,305.99,252,-17.6,,Narrow,,Financial Services,Insurance - Property & Casualty
+728,ON,ON Semiconductor Corp,109.43,90,-17.8,,Narrow,,Technology,Semiconductors
+729,BMO,Bank of Montreal,153.8,126,-18.1,,Narrow,,Financial Services,Banks - Diversified
+730,HLT,Hilton Worldwide Holdings Inc,318.14,260,-18.3,,Wide,,Consumer Cyclical,Lodging
+731,LOGI,Logitech International SA,105.21,86,-18.3,,None,,Technology,Computer Hardware
+732,IREN,IREN Ltd,50.46,41,-18.7,,None,,Financial Services,Capital Markets
+733,BEN,Franklin Resources Inc,31.97,26,-18.7,,None,,Financial Services,Asset Management
+734,AKAM,Akamai Technologies Inc,150.77,122,-19.1,4,Narrow,,Technology,Software - Infrastructure
+735,AAL,American Airlines Group Inc,12.36,10,-19.1,3,None,,Industrials,Airlines
+736,JCI,Johnson Controls International PLC Registered Shares,137.31,111,-19.2,,Narrow,,Industrials,Building Products & Equipment
+737,WFRD,Weatherford International PLC Ordinary Shares - New,111.42,90,-19.2,,None,,Energy,Oil & Gas Equipment & Services
+738,MFC,Manulife Financial Corp,38.23,30.9,-19.2,,None,,Financial Services,Insurance - Life
+739,DRI,Darden Restaurants Inc,193.75,156,-19.5,,Narrow,,Consumer Cyclical,Restaurants
+740,WSM,Williams-Sonoma Inc,169.16,136,-19.6,,None,,Consumer Cyclical,Specialty Retail
+741,EXPD,Expeditors International of Washington Inc,156.77,126,-19.6,,Wide,,Industrials,Integrated Freight & Logistics
+742,ADM,Archer-Daniels-Midland Co,80.91,65,-19.7,,None,,Consumer Defensive,Farm Products
+743,NOV,NOV Inc,21.17,17,-19.7,,None,,Energy,Oil & Gas Equipment & Services
+744,CSX,CSX Corp,46.2,37,-19.9,,Wide,,Industrials,Railroads
+745,LSTR,Landstar System Inc,179.11,143,-20.2,,Wide,,Industrials,Integrated Freight & Logistics
+746,DOV,Dover Corp,210.83,168,-20.3,,Narrow,,Industrials,Specialty Industrial Machinery
+747,ALL,Allstate Corp,221.21,176,-20.4,2,None,,Financial Services,Insurance - Property & Casualty
+748,HAL,Halliburton Co,42.78,34,-20.5,,Narrow,,Energy,Oil & Gas Equipment & Services
+749,PKG,Packaging Corp of America,210.69,167,-20.7,,None,,Consumer Cyclical,Packaging & Containers
+750,PH,Parker Hannifin Corp,858.43,680,-20.8,,Narrow,,Industrials,Specialty Industrial Machinery
+751,MLM,Martin Marietta Materials Inc,555.78,440,-20.8,,Narrow,,Basic Materials,Building Materials
+752,LRCX,Lam Research Corp,277.96,220,-20.9,,Wide,,Technology,Semiconductor Equipment & Materials
+753,GDS,GDS Holdings Ltd ADR,41.72,33,-20.9,,None,,Technology,Information Technology Services
+754,ULS,UL Solutions Inc Class A common stock,99.01,78,-21.2,,Narrow,,Industrials,Specialty Business Services
+755,HPE,Hewlett Packard Enterprise Co,33,26,-21.2,,None,,Technology,Communication Equipment
+756,CAT,Caterpillar Inc,863.95,680,-21.3,,Wide,,Industrials,Farm & Heavy Construction Machinery
+757,MMM,3M Co,152.53,120,-21.3,2,Narrow,,Industrials,Conglomerates
+758,EMR,Emerson Electric Co,132.22,104,-21.3,,Wide,,Industrials,Specialty Industrial Machinery
+759,SLF,Sun Life Financial Inc,72.79,57,-21.7,,None,,Financial Services,Insurance - Diversified
+760,MEDP,Medpace Holdings Inc,420.67,329,-21.8,,Narrow,,Healthcare,Diagnostics & Research
+761,DVA,DaVita Inc,199.52,156,-21.8,,Narrow,,Healthcare,Medical Care Facilities
+762,STT,State Street Corp,153.74,120,-21.9,,Wide,,Financial Services,Asset Management
+763,SBUX,Starbucks Corp,106.6,83,-22.1,,Wide,,Consumer Cyclical,Restaurants
+764,CHRW,C.H. Robinson Worldwide Inc,169.72,132,-22.2,,Wide,,Industrials,Integrated Freight & Logistics
+765,ADI,Analog Devices Inc,418.58,325,-22.4,3,Wide,,Technology,Semiconductors
+766,BWA,BorgWarner Inc,61.82,48,-22.4,,Narrow,,Consumer Cyclical,Auto Parts
+767,LUMN,Lumen Technologies Inc Ordinary Shares,9.67,7.5,-22.4,,None,,Communication Services,Telecom Services
+768,TD,The Toronto-Dominion Bank,108.38,84,-22.5,,Wide,,Financial Services,Banks - Diversified
+769,RY,Royal Bank of Canada,184.79,143,-22.6,,Wide,,Financial Services,Banks - Diversified
+770,NVT,nVent Electric PLC,160.69,124,-22.8,,Narrow,,Industrials,Electrical Equipment & Parts
+771,GS,The Goldman Sachs Group Inc,946.36,730,-22.9,,Wide,,Financial Services,Capital Markets
+772,MRVL,Marvell Technology Inc,168.93,130,-23.0,,Narrow,,Technology,Semiconductors
+773,CMI,Cummins Inc,677.87,520,-23.3,,Narrow,,Industrials,Specialty Industrial Machinery
+774,PRMB,Primo Brands Corp Ordinary Shares - Class A,23.5,18,-23.4,,None,,Consumer Defensive,Beverages - Non-Alcoholic
+775,NRG,NRG Energy Inc,125.5,96,-23.5,,None,,Utilities,Utilities - Independent Power Producers
+776,ROKU,Roku Inc Class A,124.15,95,-23.5,,None,,Communication Services,Entertainment
+777,CHD,Church & Dwight Co Inc,96.78,74,-23.5,,None,,Consumer Defensive,Household & Personal Products
+778,ENPH,Enphase Energy Inc,49.69,38,-23.5,,None,,Technology,Solar
+779,B,Barrick Mining Corp,40.6,31,-23.6,,None,,Basic Materials,Gold
+780,BJ,BJ's Wholesale Club Holdings Inc,97.03,74,-23.7,,None,,Consumer Defensive,Discount Stores
+781,QCOM,Qualcomm Inc,203.64,155,-23.9,,Narrow,,Technology,Semiconductors
+782,ODFL,Old Dominion Freight Line Inc Ordinary Shares,204.13,155,-24.1,,Narrow,,Industrials,Trucking
+783,TWLO,Twilio Inc Class A,197.68,150,-24.1,,None,,Technology,Software - Infrastructure
+784,CM,Canadian Imperial Bank of Commerce,112.07,85,-24.2,,Narrow,,Financial Services,Banks - Diversified
+785,MAR,Marriott International Inc Class A,359.18,272,-24.3,,Wide,,Consumer Cyclical,Lodging
+786,CSCO,Cisco Systems Inc,118.88,90,-24.3,,Wide,,Technology,Communication Equipment
+787,ARMK,Aramark,52.94,40,-24.4,,None,,Industrials,Specialty Business Services
+788,STM,STMicroelectronics NV ADR,60.96,46,-24.5,,Narrow,,Technology,Semiconductors
+789,DBX,Dropbox Inc Class A,27.98,21,-24.9,,None,,Technology,Software - Infrastructure
+790,SNDK,SanDisk Corp Ordinary Shares,1333.01,1000,-25.0,,None,,Technology,Computer Hardware
+791,ROST,Ross Stores Inc,211.08,158,-25.1,,Wide,,Consumer Cyclical,Apparel Retail
+792,TBLA,Taboola.com Ltd,5.01,3.75,-25.1,,None,,Communication Services,Internet Content & Information
+793,FDX,FedEx Corp,369.72,276,-25.3,,Narrow,,Industrials,Integrated Freight & Logistics
+794,INCY,Incyte Corp,95.19,71,-25.4,,None,,Healthcare,Biotechnology
+795,CRWD,CrowdStrike Holdings Inc Class A,618.83,460,-25.7,,Wide,,Technology,Software - Infrastructure
+796,VMC,Vulcan Materials Co,266.33,198,-25.7,,Narrow,,Basic Materials,Building Materials
+797,IBKR,Interactive Brokers Group Inc Class A,86.12,64,-25.7,,Wide,,Financial Services,Capital Markets
+798,BHP,BHP Group Ltd ADR,84.02,62,-26.2,,None,,Basic Materials,Other Industrial Metals & Mining
+799,SAN,Banco Santander SA ADR,11.86,8.6,-27.5,,Narrow,,Financial Services,Banks - Diversified
+800,MNST,Monster Beverage Corp,88.54,64,-27.7,,Narrow,,Consumer Defensive,Beverages - Non-Alcoholic
+801,KNX,Knight-Swift Transportation Holdings Inc Class A,69.27,50,-27.8,,None,,Industrials,Trucking
+802,MPC,Marathon Petroleum Corp,259.53,186,-28.3,,Narrow,,Energy,Oil & Gas Refining & Marketing
+803,VNET,VNET Group Inc ADR,10.52,7.5,-28.7,,None,,Technology,Information Technology Services
+804,TJX,TJX Companies Inc,150.25,107,-28.8,,Wide,,Consumer Cyclical,Apparel Retail
+805,VST,Vistra Corp,136.75,97,-29.1,,None,,Utilities,Utilities - Independent Power Producers
+806,VLO,Valero Energy Corp,258.52,181,-30.0,,Narrow,,Energy,Oil & Gas Refining & Marketing
+807,ORLY,O'Reilly Automotive Inc,91.74,64,-30.2,,Wide,,Consumer Cyclical,Auto Parts
+808,ARM,ARM Holdings PLC ADR,215.12,150,-30.3,,Wide,,Technology,Semiconductors
+809,VRT,Vertiv Holdings Co Class A,339.73,236,-30.5,,Narrow,,Industrials,Electrical Equipment & Parts
+810,WCC,WESCO International Inc,347.84,240,-31.0,,Narrow,,Industrials,Industrial Distribution
+811,DAL,Delta Air Lines Inc,70.24,48,-31.7,,None,,Industrials,Airlines
+812,TTWO,Take-Two Interactive Software Inc,242.16,165,-31.9,,Narrow,,Communication Services,Electronic Gaming & Multimedia
+813,HOOD,Robinhood Markets Inc Class A,77.15,52,-32.6,,Narrow,,Financial Services,Capital Markets
+814,RL,Ralph Lauren Corp Class A,325.87,219,-32.8,,Narrow,,Consumer Cyclical,Apparel Manufacturing
+815,TPR,Tapestry Inc,131.17,88,-32.9,,Narrow,,Consumer Cyclical,Luxury Goods
+816,MU,Micron Technology Inc,681.54,455,-33.2,,None,,Technology,Semiconductors
+817,MTZ,MasTec Inc,385.58,256,-33.6,,None,,Industrials,Engineering & Construction
+818,NEM,Newmont Corp,109.85,72,-34.5,,None,,Basic Materials,Gold
+819,JBHT,JB Hunt Transport Services Inc,261.46,171,-34.6,,Narrow,,Industrials,Integrated Freight & Logistics
+820,DELL,Dell Technologies Inc Ordinary Shares - Class C,238.03,155,-34.9,,None,,Technology,Computer Hardware
+821,ROK,Rockwell Automation Inc,436.36,282,-35.4,,Wide,,Industrials,Specialty Industrial Machinery
+822,KEYS,Keysight Technologies Inc,340.48,220,-35.4,,Wide,,Technology,Scientific & Technical Instruments
+823,MSM,MSC Industrial Direct Co Inc Class A,104.66,67,-36.0,,Narrow,,Industrials,Industrial Distribution
+824,BB,BlackBerry Ltd,6.38,4,-37.3,,None,,Technology,Software - Infrastructure
+825,SAIA,Saia Inc,458.31,286,-37.6,,None,,Industrials,Trucking
+826,NOK,Nokia Oyj ADR,13.74,8.5,-38.1,,None,,Technology,Communication Equipment
+827,XPO,XPO Inc,200.46,123,-38.6,,None,,Industrials,Trucking
+828,COST,Costco Wholesale Corp,1076.47,650,-39.6,,Wide,,Consumer Defensive,Discount Stores
+829,NBIS,Nebius Group NV Shs Class-A-,199.86,120,-40.0,,None,,Communication Services,Internet Content & Information
+830,PWR,Quanta Services Inc,723.03,430,-40.5,,None,,Industrials,Engineering & Construction
+831,EBAY,eBay Inc,114.43,67,-41.4,,Narrow,,Consumer Cyclical,Internet Retail
+832,TECK,Teck Resources Ltd Class B (Sub Voting),60.24,35,-41.9,,None,,Basic Materials,Other Industrial Metals & Mining
+833,UNIT,Uniti Group Inc,10.8,6,-44.4,,None,,Real Estate,REIT - Specialty
+834,AEM,Agnico Eagle Mines Ltd,179.21,93,-48.1,1,None,,Basic Materials,Gold
+835,CIEN,Ciena Corp,524.53,270,-48.5,,Narrow,,Technology,Communication Equipment
+836,FCX,Freeport-McMoRan Inc,60.5,31,-48.8,,None,,Basic Materials,Copper
+837,WMT,Walmart Inc,133.34,62,-53.5,,Wide,,Consumer Defensive,Discount Stores
+838,NXT,Nextpower Inc Class A,134.48,60,-55.4,,None,,Technology,Solar
+839,KGC,Kinross Gold Corp,28.51,10,-64.9,,None,,Basic Materials,Gold
+840,BE,Bloom Energy Corp Class A,258.71,70,-72.9,,None,,Industrials,Electrical Equipment & Parts

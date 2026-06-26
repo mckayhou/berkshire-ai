@@ -1,0 +1,38 @@
+{
+  "us_ai_chip": [
+    "NVDA",
+    "AMD",
+    "MU",
+    "AVGO",
+    "MRVL",
+    "TSM"
+  ],
+  "us_ai_app": [
+    "GOOG",
+    "META",
+    "MSFT",
+    "AMZN",
+    "CRM",
+    "NOW",
+    "PLTR"
+  ],
+  "us_ai_infra": [
+    "ETN",
+    "PWR",
+    "VRT",
+    "CRWV"
+  ],
+  "us_crypto": [
+    "COIN",
+    "HOOD",
+    "MSTR",
+    "CRCL"
+  ],
+  "hk_internet": [
+    "0700.HK",
+    "9888.HK",
+    "1024.HK",
+    "9992.HK"
+  ],
+  "a_share": []
+}
