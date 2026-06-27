@@ -4,7 +4,7 @@ description: |
   对指定公司/股票进行系统化四大师投资研究（段永平-巴菲特-芒格-李录）。
   包含 AI 偏见自查、数据双源验证、金融严谨性工具调用（financial_rigor.py）、
   反面检验与明确结论。适合 OpenClaw / QwenPaw 等 Agent 运行时激活。
-version: 10.2
+version: 10.9
 ---
 
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
@@ -13,7 +13,18 @@ version: 10.2
 
 对 $ARGUMENTS 进行系统化投资研究分析。
 
-## 研究框架
+## 研究深度（depth）
+
+用户可指定 **lite** / **standard** / **deep**；未指定时默认 **standard**。
+
+| 模式 | 适用场景 | 模块范围 | 工具要求 | 准出 |
+|------|----------|----------|----------|------|
+| **lite** | 扫描候选快速定性、队列内标的初筛 | 生意本质（一段话）+ 综合决策表 + **行动卡** | `verify-market-cap`、`cross-validate`（收入）、`verify-valuation` 各 1 次 | 行动卡完整即可；**可跳过** `report_audit` |
+| **standard** | 默认深度研报 | 全文七个模块 + 行动卡 | 数据收集后全套 `financial_rigor`（见下文） | **必须** `report_audit` 准出 |
+| **deep** | 建仓前最终确认、TRIGGERED 论文重研 | standard 全部 + 反面检验加长 | 收入/净利润/现金各 `cross-validate`；`three-scenario` 必跑；已知持仓时 `portfolio_risk.py` | `report_audit` + 行动卡含 `risk_flags` 互证 |
+
+lite 模式下仍须标注信息丰富度（A/B/C），但可省略图表与历史类比长文。
+
 
 基于巴菲特、芒格、段永平、李录四位投资大师的方法论，按以下七个模块顺序执行研究：
 

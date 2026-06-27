@@ -109,11 +109,11 @@ def run_scan(tickers_with_group: list[tuple[str, str]], verbose: bool = True) ->
     return results
 
 
-def summarize(results: list[dict]) -> dict:
+def summarize(results: list[dict], risk_result: dict | None = None) -> dict:
     buy = [r for r in results if r["grade"].startswith("BUY")]
     watch = [r for r in results if r["grade"] == "WATCH"]
     buy.sort(key=lambda x: x["max_position_pct"], reverse=True)
-    return {
+    out = {
         "scanned": len(results),
         "buy_count": len(buy),
         "watch_count": len(watch),
@@ -121,6 +121,11 @@ def summarize(results: list[dict]) -> dict:
         "watch_signals": watch,
         "timestamp": datetime.now().isoformat(),
     }
+    if risk_result is not None:
+        out["risk_flags"] = risk_result.get("flags", [])
+        out["risk_ok"] = risk_result.get("ok", True)
+        out["risk_metrics"] = risk_result.get("metrics", {})
+    return out
 
 
 def print_human_summary(summary: dict, top: int | None = None):
@@ -154,6 +159,12 @@ def print_human_summary(summary: dict, top: int | None = None):
         for r in summary["watch_signals"][:10]:
             print(f"     {r['ticker']:<10} {r['group']:<14} 30日+{r.get('pct_30d')}% — stock_screener.py --update {r['ticker']}")
 
+    if summary.get("risk_flags"):
+        print("\n  ⚠️  组合 risk_flags（portfolio_risk）:")
+        for f in summary["risk_flags"]:
+            icon = "❌" if f["severity"] == "fail" else "⚠️"
+            print(f"     {icon} {f['message']}")
+
     print()
 
 
@@ -166,6 +177,16 @@ def main():
     parser.add_argument("--json", action="store_true", help="输出 JSON")
     parser.add_argument("--top", type=int, default=None, help="人类可读模式下只列前 N 个买入信号")
     parser.add_argument("--quiet", action="store_true", help="扫描时不打印逐标的行")
+    parser.add_argument(
+        "--holdings",
+        help="可选：当前组合 JSON，如 '{\"NVDA\":25,\"CASH\":15}'，用于 risk_flags",
+    )
+    parser.add_argument(
+        "--proposed",
+        nargs=2,
+        metavar=("TICKER", "PCT"),
+        help="模拟对某标的加仓后的风险（需配合 --holdings）",
+    )
     args = parser.parse_args()
 
     if args.tickers:
@@ -179,7 +200,21 @@ def main():
 
     print(f"\n  扫描 {len(pairs)} 个标的 …")
     results = run_scan(pairs, verbose=not args.quiet)
-    summary = summarize(results)
+
+    risk_result = None
+    if args.holdings:
+        from portfolio_risk import check_holdings, parse_holdings  # noqa: E402
+        h = parse_holdings(json.loads(args.holdings))
+        proposed = (args.proposed[0], float(args.proposed[1])) if args.proposed else None
+        # 模拟：将最高优先级买入信号作为加仓建议（若无 --proposed）
+        if proposed is None and results:
+            buys = [r for r in results if r["grade"].startswith("BUY")]
+            if buys:
+                top = buys[0]
+                proposed = (top["ticker"], float(top["max_position_pct"]))
+        risk_result = check_holdings(h, proposed=proposed)
+
+    summary = summarize(results, risk_result)
 
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))

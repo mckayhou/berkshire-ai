@@ -36,6 +36,24 @@
 
 ## 📜 版本历史
 
+### V10.9 - 2026-06-27 (Risk Manager + 研究队列 + CI + lite 深度)
+
+**变更内容**:
+- 新增 `tools/portfolio_risk.py`：组合集中度、现金、主题暴露、可选相关性告警
+- 新增 `tools/thesis_queue.py`：解析 `config/state.md` + 合并 `portfolio_scan` → `research_now` 优先级
+- `portfolio_scan.py`：`--holdings` / `--proposed` 输出 `risk_flags`
+- `skills/investment-research.md`：lite / standard / deep 三档深度
+- `docs/action-card.md`：risk_flags 字段；`thesis-tracker` 队列同步流程
+- `config/state.md`：工具路径改为仓库内 `tools/`
+- GitHub Actions：`pytest tests/`（`.github/workflows/test.yml`）
+- 新增离线单测：`test_tools_portfolio_risk.py`、`test_tools_thesis_queue.py`
+
+**测试结果**: 125 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.8 - 2026-06-26 (吸收 ai-hedge-fund：行动卡 + portfolio_scan)
 
 **变更内容**:

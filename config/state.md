@@ -45,13 +45,15 @@
 ### 核心工具
 | 工具 | 路径 | 功能 |
 |:-----|:-----|:-----|
-| **Data Fetching** | `~/wendata/wendata.py` | JusticePlutus 数据获取 |
-| **Financial Rigor** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py` | 市值/估值/交叉验证/三情景 |
-| **Report Audit** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/report_audit.py` | 报告数据抽检 (15%随机抽样) |
-| **A-Share Data** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/ashare_data.py` | A股数据获取 |
-| **Stock Screener** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/stock_screener.py` | 股票筛选 |
-| **Xueqiu Scraper** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/xueqiu_scraper.py` | 雪球数据抓取 |
-| **Morningstar FV** | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/morningstar_fair_value.py` | 晨星公允价值计算 |
+| **Financial Rigor** | `tools/financial_rigor.py` | 市值/估值/交叉验证/三情景 |
+| **Report Audit** | `tools/report_audit.py` | 报告数据抽检 (15%随机抽样) |
+| **Portfolio Scan** | `tools/portfolio_scan.py` | watchlist 扫描 + 行动卡草案 |
+| **Portfolio Risk** | `tools/portfolio_risk.py` | 组合集中度/主题/相关性检查 |
+| **Thesis Queue** | `tools/thesis_queue.py` | state.md + 扫描 → 研究待办 |
+| **A-Share Data** | `tools/ashare_data.py` | A股数据获取 |
+| **Stock Screener** | `tools/stock_screener.py` | 股票筛选 |
+| **Xueqiu Scraper** | `tools/xueqiu_scraper.py` | 雪球数据抓取 |
+| **Morningstar FV** | `tools/morningstar_fair_value.py` | 晨星公允价值榜单 |
 
 ### Skills (18个 - 继承自 ai-berkshire)
 | 类别 | Skills |
@@ -67,12 +69,12 @@
 ### 路径汇总
 | 数据 | 路径 |
 |:-----|:-----|
-| Skills | `~/.copaw/workspaces/default/skills/ai-berkshire/` |
-| Tools | `~/.copaw/workspaces/default/skills/ai-berkshire/tools/` |
-| State File | `~/.qwenpaw/berkshire_state.md` (本文件) |
-| Traces | `~/.qwenpaw/berkshire_traces/` |
-| Reflections | `~/.qwenpaw/berkshire_reflections/` |
-| Evolution Engine | `~/.qwenpaw/loop_engine/berkshire_v8/` |
+| 仓库根目录 | `berkshire-ai/`（本仓库） |
+| Skills | `skills/` |
+| Tools | `tools/` |
+| State File | `config/state.md`（本文件） |
+| 行动卡模板 | `docs/action-card.md` |
+| Watchlist | `data/watchlist.json` |
 
 ## 6. 四大师分析框架 (V9.0 核心)
 
@@ -109,23 +111,26 @@
 ## 8. 金融严谨性验证 (必须使用工具)
 
 ```bash
-# 市值验算
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py verify-market-cap \
+# 市值验算（仓库根目录执行）
+python3 tools/financial_rigor.py verify-market-cap \
   --price {股价} --shares {总股本} --reported {报告市值} --currency {币种}
 
 # 估值验算
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py verify-valuation \
+python3 tools/financial_rigor.py verify-valuation \
   --price {股价} --eps {EPS} --bvps {每股净资产}
 
 # 三情景估值
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py three-scenario \
+python3 tools/financial_rigor.py three-scenario \
   --price {股价} --eps {EPS} --shares {股本亿} \
   --growth {乐观} {中性} {悲观} \
   --pe {乐观PE} {中性PE} {悲观PE}
 
 # 数据交叉验证
-python3 ~/.copaw/workspaces/default/skills/ai-berkshire/tools/financial_rigor.py cross-validate \
+python3 tools/financial_rigor.py cross-validate \
   --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
+
+# 研究队列
+python3 tools/thesis_queue.py --json
 ```
 
 ## 9. Cron 任务 (V10.0)

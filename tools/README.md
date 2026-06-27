@@ -11,6 +11,8 @@
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
 | `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
+| `portfolio_risk.py` | 组合风险检查（集中度/现金/主题/相关性） | 否 | 可选 `data/correlation_*.csv` |
+| `thesis_queue.py` | state.md + 扫描信号 → 研究待办队列 | 否* | `config/state.md` |
 | `morningstar_fair_value.py` | Morningstar 公允价值榜单 | 是 | curl |
 | `xueqiu_scraper.py` | 雪球用户时间线抓取 | 是 | playwright + 登录态 |
 | `log-command.sh` | 命令日志辅助脚本 | 否 | bash |
@@ -83,9 +85,27 @@ python3 tools/portfolio_scan.py                    # 全 watchlist
 python3 tools/portfolio_scan.py --group us_ai_chip hk_internet
 python3 tools/portfolio_scan.py NVDA MU            # 指定标的
 python3 tools/portfolio_scan.py --json --top 5     # JSON + 只列前 5 个买入信号
+python3 tools/portfolio_scan.py --json --holdings '{"NVDA":25,"0700.HK":20,"CASH":15}'
 ```
 
-## morningstar_fair_value.py（在线）
+## portfolio_risk.py（离线，Risk Manager 层）
+
+检查单票/前三集中度、现金占比、watchlist 主题暴露；可选读取 `data/correlation_3stocks_2021-2026.csv` 做高相关告警。
+
+```bash
+python3 tools/portfolio_risk.py --holdings '{"NVDA":45,"CASH":55}' --json
+python3 tools/portfolio_risk.py --holdings-file portfolio.json --proposed MU 5
+```
+
+## thesis_queue.py（离线*，队列同步）
+
+解析 `config/state.md` §1/§2，合并 `portfolio_scan` 买入信号，输出 `research_now` 优先级列表。`--run-scan` 会联网。
+
+```bash
+python3 tools/thesis_queue.py --json
+python3 tools/thesis_queue.py --from-scan scan.json --suggest-md
+```
+
 
 ```bash
 python3 tools/morningstar_fair_value.py                      # 抓全量(~6000只)并存 CSV 到 data/

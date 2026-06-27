@@ -215,3 +215,25 @@ version: 10.2
 - **红线一旦触发就行动** — 最怕的是"再等等看"，这是亏大钱的开始
 - **论文破裂 ≠ 股价下跌** — 股价跌30%不一定要卖，论文破裂才要卖
 - **诚实面对错误** — 论文建错了就承认，不要为了面子硬撑
+
+---
+
+## 队列同步（thesis_queue）
+
+季度复盘或 Cron 触发时，用 `tools/thesis_queue.py` 对齐 `config/state.md` 与扫描信号：
+
+```bash
+# 读 state.md，输出优先研究列表
+python3 tools/thesis_queue.py
+
+# 合并 portfolio_scan JSON（离线，推荐 Cron 先扫再合并）
+python3 tools/portfolio_scan.py --json > /tmp/scan.json
+python3 tools/thesis_queue.py --from-scan /tmp/scan.json --json
+
+# 可粘贴进 §2 Pending Queue 的建议条目
+python3 tools/thesis_queue.py --from-scan /tmp/scan.json --suggest-md
+```
+
+**优先级**：TRIGGERED 论文 > 新 BUY 扫描信号 > Watch 论文。工具**不自动改写** state.md；由 Agent 或人工审核后粘贴 `--suggest-md` 输出。
+
+TRIGGERED 论文应走 **deep** 深度重研（`investment-research depth=deep`）并更新 `reports/{公司}-thesis.md`。

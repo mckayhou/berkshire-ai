@@ -54,6 +54,14 @@ def test_summarize_counts():
     assert s["buy_signals"][0]["max_position_pct"] == 8
 
 
+def test_summarize_with_risk():
+    results = [{"grade": "BUY_5%", "max_position_pct": 5}]
+    risk = {"ok": False, "flags": [{"severity": "warn", "code": "cash_low", "message": "low cash"}], "metrics": {}}
+    s = ps.summarize(results, risk)
+    assert s["risk_ok"] is False
+    assert len(s["risk_flags"]) == 1
+
+
 def test_load_watchlist_group_filter(tmp_path, monkeypatch):
     wl = {"a": ["NVDA"], "b": ["MU"]}
     p = tmp_path / "watchlist.json"

@@ -84,6 +84,16 @@
       "norm_label": ""
     },
     {
+      "label": "test_tools_portfolio_risk.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_portfolio_risk.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_tools_portfolio_risk",
+      "community": 51,
+      "norm_label": "test_tools_portfolio_risk.py"
+    },
+    {
       "label": "test_tools_portfolio_scan.py",
       "file_type": "code",
       "source_file": "tests/test_tools_portfolio_scan.py",
@@ -102,6 +112,16 @@
       "id": "test_tools_report_audit",
       "community": 38,
       "norm_label": "test_tools_report_audit.py"
+    },
+    {
+      "label": "test_tools_thesis_queue.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_thesis_queue.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_tools_thesis_queue",
+      "community": 52,
+      "norm_label": "test_tools_thesis_queue.py"
     },
     {
       "label": "test_v10_backtest.py",
@@ -212,6 +232,16 @@
       "norm_label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7:\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / none,\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de n/a\u3002"
     },
     {
+      "label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/portfolio_risk.py",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "portfolio_risk",
+      "community": 50,
+      "norm_label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002"
+    },
+    {
       "label": "\u52a0\u8f7d watchlist\uff1bgroups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
       "file_type": "rationale",
       "source_file": "tools/portfolio_scan.py",
@@ -240,6 +270,16 @@
       "id": "stock_screener",
       "community": 33,
       "norm_label": "\u7528curl\u83b7\u53d6yahoo finance\u65e5\u7ebf\u6570\u636e"
+    },
+    {
+      "label": "\u89e3\u6790 \u00a71 Active Portfolio Theses \u8868\u683c\u884c\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/thesis_queue.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "thesis_queue",
+      "community": 53,
+      "norm_label": "\u89e3\u6790 \u00a71 active portfolio theses \u8868\u683c\u884c\u3002"
     },
     {
       "label": "\u4f18\u5148\u9875\u9762 JS fetch\uff1b\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
@@ -754,6 +794,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_risk.py",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "portfolio_risk",
+      "target": "portfolio_risk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "tools/portfolio_scan.py",
       "source_location": "L45",
       "weight": 1.0,
@@ -779,6 +829,16 @@
       "weight": 1.0,
       "source": "stock_screener",
       "target": "stock_screener",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/thesis_queue.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "thesis_queue",
+      "target": "thesis_queue",
       "confidence_score": 1.0
     },
     {
@@ -867,9 +927,9 @@
       "source_file": "README.md",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "action-card",
-      "confidence_score": 1.0
+      "target": "action-card"
     },
     {
       "relation": "references",
@@ -997,9 +1057,9 @@
       "source_file": "docs/report-conventions.md",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "report-conventions",
-      "target": "action-card",
-      "confidence_score": 1.0
+      "target": "action-card"
     },
     {
       "relation": "contains",
@@ -1263,5 +1323,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "62bf72966d50c4080770bec2a1b2aab9f0f89569"
+  "built_at_commit": "fbbbcf0f8f5637f4109caeef751a3ce842c27033"
 }

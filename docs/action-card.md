@@ -46,6 +46,10 @@
 
 ### 下次审视
 - 日期或事件：{财报日 / 政策节点 / 季度组合回顾}
+
+### 组合 risk_flags（若已运行 portfolio_risk / portfolio_scan --holdings）
+- {severity} {code}: {message}
+- （无则写「未检查」或「通过」）
 ```
 
 ---
@@ -90,4 +94,7 @@
 ## 工具联动
 
 - 扫描 watchlist 生成信号草案：`python3 tools/portfolio_scan.py --json`
+- 组合风险检查：`python3 tools/portfolio_risk.py --holdings '{"NVDA":25,"CASH":15}' --json`
+- 扫描 + 风险一并输出：`python3 tools/portfolio_scan.py --json --holdings '{"NVDA":25,"CASH":15}'`
+- 研究队列同步：`python3 tools/thesis_queue.py --json`（或 `--run-scan` 联网合并扫描）
 - 单标的深度研究后，用行动卡固化结论；扫描信号仅作**候选池**，不可替代研报与 `report_audit` 准出。
