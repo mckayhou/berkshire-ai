@@ -10,6 +10,7 @@
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
+| `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
 | `morningstar_fair_value.py` | Morningstar 公允价值榜单 | 是 | curl |
 | `xueqiu_scraper.py` | 雪球用户时间线抓取 | 是 | playwright + 登录态 |
 | `log-command.sh` | 命令日志辅助脚本 | 否 | bash |
@@ -72,6 +73,16 @@ python3 tools/momentum_backtest_v2.py
 ```bash
 python3 tools/stock_screener.py
 python3 tools/stock_screener.py --update NVDA   # 更新某标的基本面
+```
+
+## portfolio_scan.py（在线，PM 层扫描）
+
+在 `stock_screener` 基础上输出**结构化行动卡草案**（立场 + 建议仓位上限），供 Agent 或组合审视使用；非交易指令。模板见 `docs/action-card.md`。
+```bash
+python3 tools/portfolio_scan.py                    # 全 watchlist
+python3 tools/portfolio_scan.py --group us_ai_chip hk_internet
+python3 tools/portfolio_scan.py NVDA MU            # 指定标的
+python3 tools/portfolio_scan.py --json --top 5     # JSON + 只列前 5 个买入信号
 ```
 
 ## morningstar_fair_value.py（在线）

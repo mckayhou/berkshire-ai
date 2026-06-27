@@ -84,6 +84,16 @@
       "norm_label": ""
     },
     {
+      "label": "test_tools_portfolio_scan.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_portfolio_scan.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_tools_portfolio_scan",
+      "community": 49,
+      "norm_label": "test_tools_portfolio_scan.py"
+    },
+    {
       "label": "test_tools_report_audit.py",
       "file_type": "code",
       "source_file": "tests/test_tools_report_audit.py",
@@ -200,6 +210,16 @@
       "id": "morningstar_fair_value",
       "community": 24,
       "norm_label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7:\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / none,\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de n/a\u3002"
+    },
+    {
+      "label": "\u52a0\u8f7d watchlist\uff1bgroups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/portfolio_scan.py",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "portfolio_scan",
+      "community": 48,
+      "norm_label": "\u52a0\u8f7d watchlist;groups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002"
     },
     {
       "label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002",
@@ -338,6 +358,16 @@
       "id": "ROADMAP",
       "community": 4,
       "norm_label": "berkshire-ai roadmap"
+    },
+    {
+      "label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361\uff08Action Card\uff09",
+      "file_type": "document",
+      "source_file": "docs/action-card.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "action-card",
+      "community": 4,
+      "norm_label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361(action card)"
     },
     {
       "label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303\uff08report conventions\uff09",
@@ -724,6 +754,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_scan.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "portfolio_scan",
+      "target": "portfolio_scan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "tools/report_audit.py",
       "source_location": "L65",
       "weight": 1.0,
@@ -820,6 +860,16 @@
       "confidence_score": 1.0,
       "source": "README.md",
       "target": "VERSION_HISTORY"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "README.md",
+      "target": "action-card",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -929,6 +979,26 @@
       "weight": 1.0,
       "source": "ROADMAP",
       "target": "ROADMAP",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/action-card.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "action-card",
+      "target": "action-card",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/report-conventions.md",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "report-conventions",
+      "target": "action-card",
       "confidence_score": 1.0
     },
     {
@@ -1193,5 +1263,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8cb92ebc60b921f1c2d50e9657b4cb6b61aa7560"
+  "built_at_commit": "62bf72966d50c4080770bec2a1b2aab9f0f89569"
 }

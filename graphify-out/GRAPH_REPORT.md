@@ -1,16 +1,16 @@
-# Graph Report - berkshire-ai  (2026-06-26)
+# Graph Report - berkshire-ai  (2026-06-27)
 
 ## Corpus Check
-- 57 files · ~45,078 words
+- 60 files · ~46,415 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 57 nodes · 60 edges · 48 communities (6 shown, 42 thin omitted)
+- 60 nodes · 64 edges · 50 communities (7 shown, 43 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8cb92ebc`
+- Built from commit: `62bf7296`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -58,18 +58,19 @@
 - [[_COMMUNITY_Community 44|Community 44]]
 - [[_COMMUNITY_Community 45|Community 45]]
 - [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 8 edges
+1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
 2. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-3. `报告输出规范（report conventions）` - 5 edges
+3. `报告输出规范（report conventions）` - 6 edges
 4. `Berkshire AI 版本历史` - 4 edges
 5. `berkshire-ai Roadmap` - 4 edges
-6. `测试指南与 E2E 报告（TESTING）` - 3 edges
-7. `Berkshire AI V10.0 - TextGrad 化设计` - 3 edges
-8. `reports/ — 研究报告输出目录` - 3 edges
-9. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
-10. `Simple runner for the engine.` - 2 edges
+6. `结构化行动卡（Action Card）` - 4 edges
+7. `测试指南与 E2E 报告（TESTING）` - 3 edges
+8. `Berkshire AI V10.0 - TextGrad 化设计` - 3 edges
+9. `reports/ — 研究报告输出目录` - 3 edges
+10. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
@@ -80,22 +81,22 @@
   README.md → TESTING.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
   README.md → VERSION_HISTORY.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `报告输出规范（report conventions）`  [EXTRACTED]
-  README.md → docs/report-conventions.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `结构化行动卡（Action Card）`  [EXTRACTED]
+  README.md → docs/action-card.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 42 thin omitted)
+## Communities (50 total, 43 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.64
-Nodes (8): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 报告输出规范（report conventions）, reports/ — 研究报告输出目录, Berkshire AI V10.0 - TextGrad 化设计
+Cohesion: 0.58
+Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
 
 ## Knowledge Gaps
 - **2 isolated node(s):** `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **42 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

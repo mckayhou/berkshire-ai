@@ -147,7 +147,16 @@ version: 10.2
 
 #### 5.2 寻找替代标的
 
-如果组合中有"不如现金"的仓位，或者现金占比过高，建议使用 `/industry-research` 或 `/investment-checklist` 对感兴趣的行业/公司进行系统筛选，而非在本Skill内直接推荐个股。
+如果组合中有"不如现金"的仓位，或者现金占比过高：
+
+1. **快速扫描候选池**（动量+价值，非最终结论）：
+   ```bash
+   python3 tools/portfolio_scan.py          # 全 watchlist
+   python3 tools/portfolio_scan.py --json   # Agent 可读 JSON
+   python3 tools/portfolio_scan.py --group hk_internet
+   ```
+2. 对扫描出的 `BUY_*` 标的，用 `investment-research` / `investment-team` 做深度研究，并用 `docs/action-card.md` 定稿仓位。
+3. 或使用 `industry-research` / `investment-checklist` 做行业级筛选。
 
 #### 5.3 现金管理
 
@@ -177,6 +186,8 @@ version: 10.2
 1. **组合整体健康度**：优秀 / 良好 / 需要调整 / 问题严重
 2. **最应该做的一件事是什么？**（加仓X / 减仓Y / 不动）
 3. **当前最大风险是什么？**
+
+报告末尾附上 **组合行动摘要**（见 `docs/action-card.md` 组合专节）。
 
 ### 第七步：保存组合文件
 

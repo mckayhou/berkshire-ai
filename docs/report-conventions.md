@@ -76,3 +76,11 @@ reports/{公司名}/
 - 货币单位要明确（港币/人民币/美元），防止混淆
 - PE/ROE 等指标用 `tools/financial_rigor.py` 精确计算，禁止心算
 - 报告写完后用 `tools/report_audit.py` 做 15% 随机抽检准出
+
+## 行动卡（Action Card）
+
+深度研报与组合审视报告**末尾必须**附上结构化行动卡，模板见 [`docs/action-card.md`](action-card.md)：
+- 立场、操作建议、建议仓位区间、目标价、风险与催化剂
+- 组合报告使用其中的「组合行动摘要」专节
+
+扫描工具 `portfolio_scan.py` 可生成候选信号草案，但不能替代行动卡与 `report_audit` 准出。

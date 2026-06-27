@@ -175,7 +175,8 @@ berkshire-ai/
 |---|---|
 | [README_EN.md](README_EN.md) | English version |
 | [TESTING.md](TESTING.md) | 测试指南 + 最近一次全量 E2E 报告 |
-| [tools/README.md](tools/README.md) | 9 个工具的 CLI 用法目录 |
+| [tools/README.md](tools/README.md) | 10 个工具的 CLI 用法目录 |
+| [docs/action-card.md](docs/action-card.md) | 结构化行动卡（PM 汇总层，可执行结论模板） |
 | [docs/report-conventions.md](docs/report-conventions.md) | 报告目录/命名规范、投研核心原则 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图（含本 fork 实现状态） |
 | [docs/textgrad_design.md](docs/textgrad_design.md) | TextGrad V10 引擎设计 |

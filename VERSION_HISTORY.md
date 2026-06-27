@@ -36,6 +36,21 @@
 
 ## 📜 版本历史
 
+### V10.8 - 2026-06-26 (吸收 ai-hedge-fund：行动卡 + portfolio_scan)
+
+**变更内容**:
+- 新增 `docs/action-card.md`：结构化行动卡模板（立场/仓位/目标价/风险/催化剂），研报与组合报告末尾必附
+- 新增 `tools/portfolio_scan.py`：watchlist 扫描 + 行动卡草案输出（`--json`/`--group`/`--top`），借鉴 PM 层但保持研报导向
+- Skills 接入：`investment-research`、`investment-team`（PM 汇总 7½）、`portfolio-review`（扫描候选池）
+- 文档：`report-conventions`、`tools/README`、`README` 导航更新
+- 新增 6 个离线单测 `tests/test_tools_portfolio_scan.py`
+
+**测试结果**: 113 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.7 - 2026-06-26 (网络层加固：瞬时错误重试 + 18 个离线网络测试)
 
 **变更内容**:
