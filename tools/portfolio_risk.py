@@ -21,6 +21,7 @@ _TOOLS = os.path.dirname(os.path.abspath(__file__))
 _REPO = os.path.dirname(_TOOLS)
 DATA_DIR = os.path.join(_REPO, "data")
 WATCHLIST_FILE = os.path.join(DATA_DIR, "watchlist.json")
+DEFAULT_HOLDINGS_FILE = os.path.join(DATA_DIR, "holdings.json")
 DEFAULT_CORR = os.path.join(DATA_DIR, "correlation_3stocks_2021-2026.csv")
 
 # 默认阈值（与 portfolio-review / 李录集中持仓哲学对齐）
@@ -64,6 +65,8 @@ def parse_holdings(raw: dict) -> dict[str, float]:
     """标准化持仓占比；CASH 单独保留。"""
     out = {}
     for k, v in raw.items():
+        if str(k).startswith("_"):
+            continue
         key = _norm_ticker(k)
         try:
             pct = float(v)
@@ -73,6 +76,31 @@ def parse_holdings(raw: dict) -> dict[str, float]:
             raise ValueError(f"占比不能为负: {k}={pct}")
         out[key] = out.get(key, 0) + pct
     return out
+
+
+def load_holdings_file(path: str | None = None) -> dict[str, float]:
+    """从 JSON 文件加载持仓；默认 data/holdings.json。"""
+    path = path or DEFAULT_HOLDINGS_FILE
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"持仓文件不存在: {path}")
+    with open(path, encoding="utf-8") as f:
+        raw = json.load(f)
+    return parse_holdings(raw)
+
+
+def resolve_holdings(
+    holdings_json: str | None = None,
+    holdings_file: str | None = None,
+    use_default_file: bool = True,
+) -> dict[str, float] | None:
+    """解析 CLI 持仓来源；无输入且默认文件不存在时返回 None。"""
+    if holdings_file:
+        return load_holdings_file(holdings_file)
+    if holdings_json:
+        return parse_holdings(json.loads(holdings_json))
+    if use_default_file and os.path.exists(DEFAULT_HOLDINGS_FILE):
+        return load_holdings_file(DEFAULT_HOLDINGS_FILE)
+    return None
 
 
 def theme_exposure(holdings: dict[str, float], themes: dict[str, str]) -> dict[str, float]:
@@ -286,15 +314,15 @@ def main():
     args = parser.parse_args()
 
     if args.holdings_file:
-        with open(args.holdings_file, encoding="utf-8") as f:
-            raw = json.load(f)
+        holdings = load_holdings_file(args.holdings_file)
     elif args.holdings:
-        raw = json.loads(args.holdings)
+        holdings = parse_holdings(json.loads(args.holdings))
+    elif os.path.exists(DEFAULT_HOLDINGS_FILE):
+        holdings = load_holdings_file(DEFAULT_HOLDINGS_FILE)
     else:
-        parser.error("需要 --holdings 或 --holdings-file")
+        parser.error("需要 --holdings、--holdings-file，或创建 data/holdings.json")
         return
 
-    holdings = parse_holdings(raw)
     corr = None if args.no_correlation else load_latest_correlations(args.correlation)
     proposed = (args.proposed[0], float(args.proposed[1])) if args.proposed else None
 

@@ -55,5 +55,26 @@ def test_high_correlation_warn():
     assert any(f["code"] == "high_correlation" for f in r["flags"])
 
 
+def test_load_holdings_file_skips_meta(tmp_path):
+    p = tmp_path / "h.json"
+    p.write_text('{"_comment": "x", "NVDA": 60, "CASH": 40}')
+    h = pr.load_holdings_file(str(p))
+    assert h["NVDA"] == 60
+    assert "_COMMENT" not in h
+
+
+def test_resolve_holdings_default_file(tmp_path, monkeypatch):
+    p = tmp_path / "holdings.json"
+    p.write_text('{"MU": 50, "CASH": 50}')
+    monkeypatch.setattr(pr, "DEFAULT_HOLDINGS_FILE", str(p))
+    h = pr.resolve_holdings(use_default_file=True)
+    assert h is not None and h["MU"] == 50
+
+
+def test_resolve_holdings_none_when_missing(monkeypatch):
+    monkeypatch.setattr(pr, "DEFAULT_HOLDINGS_FILE", "/nonexistent/holdings.json")
+    assert pr.resolve_holdings(use_default_file=True) is None
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

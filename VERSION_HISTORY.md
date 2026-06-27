@@ -36,6 +36,20 @@
 
 ## 📜 版本历史
 
+### V10.10 - 2026-06-27 (接线：holdings + portfolio-review + 周度脚本)
+
+**变更内容**:
+- `data/holdings.example.json`；`portfolio_risk`/`portfolio_scan` 自动读 `data/holdings.json`
+- `scripts/portfolio-weekly.sh`：scan → thesis_queue 一键工作流
+- `portfolio-review`：强制 `portfolio_risk` + scan；`news-pulse`：Pending Queue 模板
+- `docs/ROADMAP.md` 同步 V10.9–10.10 状态
+
+**测试结果**: 128 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.9 - 2026-06-27 (Risk Manager + 研究队列 + CI + lite 深度)
 
 **变更内容**:

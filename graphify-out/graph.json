@@ -4,6 +4,34 @@
   "graph": {},
   "nodes": [
     {
+      "label": "portfolio-weekly.sh",
+      "file_type": "code",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "portfolio-weekly",
+      "community": 45,
+      "norm_label": "portfolio-weekly.sh"
+    },
+    {
+      "label": "portfolio-weekly.sh script",
+      "file_type": "code",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry",
+      "community": 45,
+      "norm_label": "portfolio-weekly.sh script"
+    },
+    {
       "label": "Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-",
       "file_type": "rationale",
       "source_file": "src/__init__.py",
@@ -235,7 +263,7 @@
       "label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
       "file_type": "rationale",
       "source_file": "tools/portfolio_risk.py",
-      "source_location": "L51",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "portfolio_risk",
       "community": 50,
@@ -656,11 +684,21 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tools_README.md",
-      "community": 45,
+      "community": 54,
       "norm_label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e"
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "portfolio-weekly",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry",
+      "confidence_score": 1.0
+    },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
@@ -795,7 +833,7 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "tools/portfolio_risk.py",
-      "source_location": "L51",
+      "source_location": "L52",
       "weight": 1.0,
       "source": "portfolio_risk",
       "target": "portfolio_risk",
@@ -1323,5 +1361,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fbbbcf0f8f5637f4109caeef751a3ce842c27033"
+  "built_at_commit": "0a5b25f13e477b56be407d3231bffd491bcf81ac"
 }

@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782568374.61683,
-    "ast_hash": "1dac068037cb0565e14cd66d9afeba56",
+    "mtime": 1782568690.254768,
+    "ast_hash": "4f76aab87ae7dbed81bfee302313e849",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "config/state.md": {
-    "mtime": 1782568373.001442,
-    "ast_hash": "13ce18c5b0644ef4cda28b09f077f31b",
+    "mtime": 1782568686.7192419,
+    "ast_hash": "6f7fc9e636d695b44fb555b61de1978a",
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
@@ -175,13 +175,13 @@
     "semantic_hash": ""
   },
   "skills/news-pulse.md": {
-    "mtime": 1782439157.7761137,
-    "ast_hash": "afc28c57b34fac288465b3981d274759",
+    "mtime": 1782568672.398942,
+    "ast_hash": "43b518cedac4330456bc73747e264a8b",
     "semantic_hash": ""
   },
   "skills/portfolio-review.md": {
-    "mtime": 1782567695.6524158,
-    "ast_hash": "d7240351ed5864808f978bee54604516",
+    "mtime": 1782568668.8389592,
+    "ast_hash": "d666887f178cfeb4b407abbe3aa22551",
     "semantic_hash": ""
   },
   "skills/private-company-research.md": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782454293.1160824,
-    "ast_hash": "29334a3f52937fe40644afe7304b7a06",
+    "mtime": 1782568682.3957047,
+    "ast_hash": "ace07b258b1fe5c6983e38d185cdb801",
     "semantic_hash": ""
   },
   "docs/report-conventions.md": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782568357.4309044,
-    "ast_hash": "a1cd32b79c393824c74b7cd7d0a30f14",
+    "mtime": 1782568703.847928,
+    "ast_hash": "bba4cb7a7041ea1e6ba457d73829d8ce",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "tools/portfolio_scan.py": {
-    "mtime": 1782568287.6374285,
-    "ast_hash": "ee0176cc968c8e30347fe3d4ca1a947f",
+    "mtime": 1782568645.9453866,
+    "ast_hash": "b38f1417bfee604ab70c32742111fd9c",
     "semantic_hash": ""
   },
   "docs/action-card.md": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "tests/test_tools_portfolio_risk.py": {
-    "mtime": 1782568397.9189713,
-    "ast_hash": "3c03d59462cc19c5bd1b70e83c2b4309",
+    "mtime": 1782568684.2162783,
+    "ast_hash": "654b8e93402a64adc785e8e679069a40",
     "semantic_hash": ""
   },
   "tests/test_tools_thesis_queue.py": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "tools/portfolio_risk.py": {
-    "mtime": 1782568271.9291685,
-    "ast_hash": "2793c565db10e9fdd3d1dc4d384ca104",
+    "mtime": 1782568727.7283719,
+    "ast_hash": "07b7e8c72946aa80941b407261e42d87",
     "semantic_hash": ""
   },
   "tools/thesis_queue.py": {
@@ -332,6 +332,16 @@
   ".github/workflows/test.yml": {
     "mtime": 1782568345.790126,
     "ast_hash": "f6f8cb6fb55725ccc495fabbe26a3367",
+    "semantic_hash": ""
+  },
+  "data/holdings.example.json": {
+    "mtime": 1782568632.387217,
+    "ast_hash": "60ac17f82d928d973c81cf2095e938f5",
+    "semantic_hash": ""
+  },
+  "scripts/portfolio-weekly.sh": {
+    "mtime": 1782568648.3280482,
+    "ast_hash": "72fabaa221c5996bf0b403172dd195c4",
     "semantic_hash": ""
   }
 }

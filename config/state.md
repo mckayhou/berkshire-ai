@@ -75,6 +75,8 @@
 | State File | `config/state.md`（本文件） |
 | 行动卡模板 | `docs/action-card.md` |
 | Watchlist | `data/watchlist.json` |
+| 持仓模板 | `data/holdings.example.json` → 复制为 `data/holdings.json` |
+| 周度脚本 | `scripts/portfolio-weekly.sh` |
 
 ## 6. 四大师分析框架 (V9.0 核心)
 
@@ -130,7 +132,9 @@ python3 tools/financial_rigor.py cross-validate \
   --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
 
 # 研究队列
+python3 tools/portfolio_scan.py --json --quiet --holdings-file data/holdings.json
 python3 tools/thesis_queue.py --json
+./scripts/portfolio-weekly.sh --suggest-md
 ```
 
 ## 9. Cron 任务 (V10.0)
@@ -140,5 +144,6 @@ python3 tools/thesis_queue.py --json
 | `03c4ebc8` | Thesis Tracker | 每日 08:30 | ✅ 已测试 |
 | `5bb93208` | Deep Research | 每周五 18:00 | ✅ 已测试 |
 | `99ac7a57` | Evolution Loop | 每周五 20:00 | ✅ 已测试 |
+| — | Portfolio Weekly | 每周一 09:00（建议） | 运行 `./scripts/portfolio-weekly.sh --suggest-md` |
 
 **注意**: 旧的 V9.0 任务 (`84e90130`, `3ea0b79b`) 已于 2026-06-26 删除。

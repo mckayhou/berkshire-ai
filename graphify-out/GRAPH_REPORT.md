@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-06-27)
 
 ## Corpus Check
-- 64 files · ~49,275 words
+- 66 files · ~49,796 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 64 nodes · 66 edges · 54 communities (9 shown, 45 thin omitted)
+- 66 nodes · 67 edges · 55 communities (9 shown, 46 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fbbbcf0f`
+- Built from commit: `0a5b25f1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,6 +61,7 @@
 - [[_COMMUNITY_Community 48|Community 48]]
 - [[_COMMUNITY_Community 50|Community 50]]
 - [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
@@ -89,19 +90,19 @@
 ## Import Cycles
 - None detected.
 
-## Communities (54 total, 45 thin omitted)
+## Communities (55 total, 46 thin omitted)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.58
 Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
 
 ## Knowledge Gaps
-- **2 isolated node(s):** `log-command.sh script`, `update-platforms.sh script`
+- **3 isolated node(s):** `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `log-command.sh script`, `update-platforms.sh script` to the rest of the system?**
-  _2 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script` to the rest of the system?**
+  _3 weakly-connected nodes found - possible documentation gaps or missing edges._

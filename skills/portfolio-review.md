@@ -2,7 +2,7 @@
 name: berkshire-portfolio-review
 description: |
   组合管理：从研究公司到管理持仓。风险、相关性、行动建议。
-version: 10.2
+version: 10.10
 ---
 
 # 组合管理：从"研究公司"到"管理组合"
@@ -39,9 +39,38 @@ version: 10.2
 
 如果输入只有比例没有金额，按比例分析即可。
 
+**将解析结果同步到 `data/holdings.json`**（占比格式，含 `CASH`），供 `portfolio_risk` / `portfolio_scan` 自动读取。首次使用可复制 `data/holdings.example.json`。
+
 同时检查是否存在已有的组合文件（`reports/portfolio-latest.md`），如有则读取并更新。
 
-### 第二步：获取最新数据
+### 第一步½：程序化风险检查（必须）
+
+在人工填表之前，**必须先跑工具**（仓库根目录）：
+
+```bash
+# 组合风险（集中度、现金、主题暴露、可选相关性）
+python3 tools/portfolio_risk.py --json
+
+# 扫描候选 + 与持仓叠加的 risk_flags
+python3 tools/portfolio_scan.py --json --quiet
+```
+
+若刚更新 `data/holdings.json`，上述命令会自动读取；也可显式指定：
+
+```bash
+python3 tools/portfolio_risk.py --holdings-file data/holdings.json --json
+python3 tools/portfolio_scan.py --json --quiet --holdings-file data/holdings.json
+```
+
+将 JSON 中的 `risk_flags`、`metrics`（top1_pct、top3_pct、theme_exposure）**嵌入报告第三节**，勿用手工心算替代工具结论。
+
+**每周 Cron / 手动复盘**可一键跑：
+
+```bash
+./scripts/portfolio-weekly.sh           # 扫描摘要 + 研究队列
+./scripts/portfolio-weekly.sh --suggest-md   # 生成可粘贴 state.md §2 的条目
+```
+
 
 使用搜索工具，通过 WebSearch 为每个持仓并行或顺序获取：
 1. 当前股价和估值指标（PE、PB、股息率）
@@ -71,12 +100,16 @@ version: 10.2
 
 #### 4.1 集中度分析
 
+**优先使用 `portfolio_risk.py --json` 的 `metrics` 填表**；人工表仅作补充说明：
+
 | 指标 | 当前值 | 建议范围 | 判断 |
 |------|-------|---------|------|
-| 第一大持仓占比 | | <40% | |
-| 前三大持仓占比 | | 50-80% | |
-| 总持仓数量 | | 5-15只 | |
-| 现金占比 | | 10-30%（视市场环境） | |
+| 第一大持仓占比 | （来自 `top1_pct`） | <40% | |
+| 前三大持仓占比 | （来自 `top3_pct`） | 50-80% | |
+| 总持仓数量 | （来自 `position_count`） | 5-15只 | |
+| 现金占比 | （来自 `cash_pct`） | 10-30%（视市场环境） | |
+
+`risk_flags` 中 `severity=fail` 的项必须在报告醒目位置复述。
 
 **李录的标准**：3-5只核心持仓，前3占80%+。**但这要求每一只都研究透彻。**
 
@@ -84,7 +117,9 @@ version: 10.2
 
 #### 4.2 相关性检查
 
-识别持仓之间的隐性关联：
+`portfolio_risk.py` 在存在 `data/correlation_3stocks_2021-2026.csv` 且持仓映射到 CSV 列时，会输出 `high_correlation` 告警——**须写入报告**。
+
+在此基础上，人工补充隐性主题关联（工具无法覆盖的产业链/监管共振）：
 
 | 持仓A | 持仓B | 相关类型 | 风险 |
 |-------|-------|---------|------|
@@ -151,9 +186,9 @@ version: 10.2
 
 1. **快速扫描候选池**（动量+价值，非最终结论）：
    ```bash
-   python3 tools/portfolio_scan.py          # 全 watchlist
-   python3 tools/portfolio_scan.py --json   # Agent 可读 JSON
+   python3 tools/portfolio_scan.py --json --quiet   # 自动读 data/holdings.json
    python3 tools/portfolio_scan.py --group hk_internet
+   python3 tools/thesis_queue.py --from-scan /tmp/scan.json   # 合并研究队列
    ```
 2. 对扫描出的 `BUY_*` 标的，用 `investment-research` / `investment-team` 做深度研究，并用 `docs/action-card.md` 定稿仓位。
 3. 或使用 `industry-research` / `investment-checklist` 做行业级筛选。
@@ -196,6 +231,8 @@ version: 10.2
 - 本次审视日期和结论
 - 调仓记录（追加）
 - 下次审视提醒
+
+并更新 `data/holdings.json`（与报告持仓占比一致）。
 
 ---
 

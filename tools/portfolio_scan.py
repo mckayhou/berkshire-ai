@@ -179,7 +179,11 @@ def main():
     parser.add_argument("--quiet", action="store_true", help="扫描时不打印逐标的行")
     parser.add_argument(
         "--holdings",
-        help="可选：当前组合 JSON，如 '{\"NVDA\":25,\"CASH\":15}'，用于 risk_flags",
+        help="可选：当前组合 JSON，如 '{\"NVDA\":25,\"CASH\":15}'",
+    )
+    parser.add_argument(
+        "--holdings-file",
+        help="持仓 JSON 文件（默认尝试 data/holdings.json）",
     )
     parser.add_argument(
         "--proposed",
@@ -202,11 +206,14 @@ def main():
     results = run_scan(pairs, verbose=not args.quiet)
 
     risk_result = None
-    if args.holdings:
-        from portfolio_risk import check_holdings, parse_holdings  # noqa: E402
-        h = parse_holdings(json.loads(args.holdings))
+    from portfolio_risk import check_holdings, resolve_holdings  # noqa: E402
+    h = resolve_holdings(
+        holdings_json=args.holdings,
+        holdings_file=args.holdings_file,
+        use_default_file=True,
+    )
+    if h is not None:
         proposed = (args.proposed[0], float(args.proposed[1])) if args.proposed else None
-        # 模拟：将最高优先级买入信号作为加仓建议（若无 --proposed）
         if proposed is None and results:
             buys = [r for r in results if r["grade"].startswith("BUY")]
             if buys:

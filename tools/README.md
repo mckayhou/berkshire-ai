@@ -13,6 +13,7 @@
 | `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
 | `portfolio_risk.py` | 组合风险检查（集中度/现金/主题/相关性） | 否 | 可选 `data/correlation_*.csv` |
 | `thesis_queue.py` | state.md + 扫描信号 → 研究待办队列 | 否* | `config/state.md` |
+| `holdings` 数据 | `data/holdings.example.json` | 否 | 复制为 `data/holdings.json`（本地，不提交） |
 | `morningstar_fair_value.py` | Morningstar 公允价值榜单 | 是 | curl |
 | `xueqiu_scraper.py` | 雪球用户时间线抓取 | 是 | playwright + 登录态 |
 | `log-command.sh` | 命令日志辅助脚本 | 否 | bash |
@@ -106,6 +107,7 @@ python3 tools/thesis_queue.py --json
 python3 tools/thesis_queue.py --from-scan scan.json --suggest-md
 ```
 
+## morningstar_fair_value.py（在线）
 
 ```bash
 python3 tools/morningstar_fair_value.py                      # 抓全量(~6000只)并存 CSV 到 data/
