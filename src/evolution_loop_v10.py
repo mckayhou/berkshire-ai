@@ -10,43 +10,43 @@ See update-platforms.sh for deployment to OpenClaw/QwenPaw.
 
 # Absolute imports for compatibility (sys.path insert to src/ in tests)
 try:
-    from graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
+    from debate import DebateResult, run_debate
+    from decision_log import DecisionRecord, append_decision
+    from graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
     from optimizer import TextualGradientDescent
     from prompt_optimizer import (
         LLMClient,
-        StaticLLMClient,
         OpenAICompatibleLLMClient,
+        StaticLLMClient,
         apply_gradient,
         build_rewrite_messages,
     )
-    from decision_log import DecisionRecord, append_decision
     from realized_feedback import (
+        PriceProvider,
+        ReturnStats,
+        StaticPriceProvider,
         realized_scores,
         realized_scores_via_provider,
-        PriceProvider,
-        StaticPriceProvider,
-        ReturnStats,
     )
-    from debate import run_debate, DebateResult
 except ImportError:
-    from .graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
+    from .debate import DebateResult, run_debate
+    from .decision_log import DecisionRecord, append_decision
+    from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
     from .optimizer import TextualGradientDescent
     from .prompt_optimizer import (
         LLMClient,
-        StaticLLMClient,
         OpenAICompatibleLLMClient,
+        StaticLLMClient,
         apply_gradient,
         build_rewrite_messages,
     )
-    from .decision_log import DecisionRecord, append_decision
     from .realized_feedback import (
+        PriceProvider,
+        ReturnStats,
+        StaticPriceProvider,
         realized_scores,
         realized_scores_via_provider,
-        PriceProvider,
-        StaticPriceProvider,
-        ReturnStats,
     )
-    from .debate import run_debate, DebateResult
 
 __all__ = [
     "BerkshireGraph",

@@ -27,7 +27,7 @@ import math
 import os
 import re
 import sys
-from decimal import Decimal, Context, ROUND_HALF_EVEN
+from decimal import ROUND_HALF_EVEN, Context
 from random import Random
 
 _CTX = Context(prec=28, rounding=ROUND_HALF_EVEN)
@@ -469,7 +469,7 @@ def main():
         sampled = sample_points(all_points, ratio=args.ratio, seed=args.seed)
 
         print('=' * 70)
-        print(f'报告数据抽检清单')
+        print('报告数据抽检清单')
         print(f'文件：{args.report}')
         print(f'总提取数据点：{len(all_points)}  |  抽样比例：{args.ratio:.0%}  |  抽检数量：{len(sampled)}')
         if args.seed is not None:

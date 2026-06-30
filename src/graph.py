@@ -5,9 +5,9 @@ Berkshire Graph: Computation Graph for TextGrad V10 engine.
 Defines Variable, Gradient and BerkshireGraph for 4-masters parallel analysis.
 """
 
+from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
-from collections import defaultdict
 
 # Note: no relative imports for compatibility when run via sys.path insert to src/
 
@@ -181,8 +181,8 @@ class BerkshireGraph:
 
     def topological_sort(self) -> List[str]:
         """拓扑排序，返回节点执行顺序"""
-        in_degree = defaultdict(int)
-        adj = defaultdict(list)
+        in_degree: Dict[str, int] = defaultdict(int)
+        adj: Dict[str, List[str]] = defaultdict(list)
 
         for src, dst in self.edges:
             adj[src].append(dst)

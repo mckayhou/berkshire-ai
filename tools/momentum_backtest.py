@@ -7,10 +7,9 @@
 """
 
 import json
-import sys
-from datetime import datetime, timedelta
-from urllib.request import urlopen, Request
 from collections import OrderedDict
+from datetime import datetime
+from urllib.request import Request, urlopen
 
 # ============================================================
 # 第一部分：获取历史价格数据（Yahoo Finance Chart API）
@@ -211,7 +210,7 @@ def backtest_ticker(ticker):
     print(f"{'='*70}")
 
     # 获取价格数据
-    print(f"\n  [1/3] 获取历史价格数据...")
+    print("\n  [1/3] 获取历史价格数据...")
     prices = fetch_price_data(ticker, "2021-06-01", "2025-06-30")
     if not prices:
         print("  ❌ 无法获取价格数据，跳过")
@@ -220,12 +219,12 @@ def backtest_ticker(ticker):
     print(f"  获取到 {len(prices)} 个交易日数据 ({prices[0]['date']} ~ {prices[-1]['date']})")
 
     # 计算动量信号
-    print(f"\n  [2/3] 扫描动量信号...")
+    print("\n  [2/3] 扫描动量信号...")
     momentum_signals = compute_momentum_signals(prices)
     print(f"  发现 {len(momentum_signals)} 个动量触发点")
 
     # 价值验证
-    print(f"\n  [3/3] 对动量信号进行价值验证...")
+    print("\n  [3/3] 对动量信号进行价值验证...")
 
     buy_signals = []
     seen_months = set()
@@ -275,7 +274,7 @@ def backtest_ticker(ticker):
 
     # 输出结果
     print(f"\n  {'—'*60}")
-    print(f"  动量发现 + 价值验证结果：")
+    print("  动量发现 + 价值验证结果：")
     print(f"  {'—'*60}")
 
     # 只展示关键时间窗口的信号
@@ -305,7 +304,7 @@ def backtest_ticker(ticker):
         total_return = (final_price - buy_price) / buy_price * 100
 
         print(f"\n  {'='*60}")
-        print(f"  📊 假设在首次买入信号执行：")
+        print("  📊 假设在首次买入信号执行：")
         print(f"     买入日：{buy_date} @ ${buy_price}")
         print(f"     最终日：{final_date} @ ${round(final_price, 2)}")
         print(f"     总回报：{round(total_return, 1)}%")
@@ -332,7 +331,7 @@ if __name__ == "__main__":
 
     # 总结
     print(f"\n\n{'='*70}")
-    print(f"  📋 回测总结")
+    print("  📋 回测总结")
     print(f"{'='*70}")
     print(f"\n  {'标的':<8} {'首次买入信号':<16} {'买入价':<12} {'触发基本面'}")
     print(f"  {'—'*65}")
@@ -343,8 +342,8 @@ if __name__ == "__main__":
         else:
             print(f"  {ticker:<8} {'无买入信号':<16}")
 
-    print(f"\n  关键问题回答：")
-    print(f"  ┌─────────────────────────────────────────────────────────────┐")
-    print(f"  │ 这个框架能否在AI浪潮早期捕捉到NVDA/AMD/MU？              │")
-    print(f"  │ 答案见上方详细分析。                                       │")
-    print(f"  └─────────────────────────────────────────────────────────────┘")
+    print("\n  关键问题回答：")
+    print("  ┌─────────────────────────────────────────────────────────────┐")
+    print("  │ 这个框架能否在AI浪潮早期捕捉到NVDA/AMD/MU？              │")
+    print("  │ 答案见上方详细分析。                                       │")
+    print("  └─────────────────────────────────────────────────────────────┘")

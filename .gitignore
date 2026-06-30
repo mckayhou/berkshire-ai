@@ -7,6 +7,17 @@ __pycache__/
 venv/
 env/
 ENV/
+.venv/
+.venv-*/
+
+# Coverage / build artifacts
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+build/
+dist/
+*.egg-info/
 
 # Data (symlinked from ~/.qwenpaw/)
 traces/data/
@@ -34,9 +45,10 @@ graphify-out/*.html
 graphify-out/.graphify_root
 graphify-out/.graphify_labels.json
 
-# 环境变量（切勿提交任何真实 API Key）
+# 环境变量（切勿提交任何真实 API Key）；.env.example 为模板，需提交
 .env
 .env.*
+!.env.example
 
 # 本地持仓（使用 data/holdings.example.json 作模板）
 data/holdings.json

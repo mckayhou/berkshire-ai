@@ -36,6 +36,26 @@
 
 ## 📜 版本历史
 
+### V10.14 - 2026-06-30 (生产化硬化 档A：工程门禁 + 打包 + 中心配置)
+
+**变更内容**:
+
+- **打包/工具配置** `pyproject.toml`：项目元数据 + 运行时依赖(httpx) + 可选 extras(`ashare`/`dev`) + 集中 ruff/mypy/pytest/coverage 配置。
+- **CI 升级** `.github/workflows/test.yml`：
+  - `lint-type` 作业：`ruff check`（lint + import 排序）+ `mypy`（核心引擎 src/）
+  - `pytest` 作业：Python **3.10 / 3.11 / 3.12 矩阵** + 从 `requirements.txt` 安装 + `--cov-fail-under=45` 覆盖率门 + pip 缓存
+  - `security` 作业：`pip-audit`（依赖漏洞，非阻断保可见性）+ `gitleaks`（密钥扫描）
+  - 新增 `.github/dependabot.yml`：pip + github-actions 周更
+- **中心配置** `src/config.py`：所有环境变量的单一事实来源（`ENV_SPEC`）+ 零依赖 `.env` 加载（不覆盖真实环境）+ `get_settings()` 只读快照 + `doctor()` 启动自检（ready/degraded/unconfigured，**不泄露密钥明文**）+ CLI `python3 src/config.py`。
+- 新增 `.env.example` 模板；`src/__init__.py` 补导出 `prompt_optimizer` 符号。
+- **代码清理**：ruff 修复全仓 ~100 处（未用 import / 多余 f-string 前缀 / 裸 except / 单行 if 等）；mypy 修复 src/ 3 处类型问题（缺注解 / Optional 收窄）。
+
+**测试结果**: **232 通过 + 1 跳过**（新增 10 个 config 单测），ruff 全绿、mypy `src/` 无问题、覆盖率 51%（门槛 45%）。
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.13 - 2026-06-30 (变量真实改写 Option B：apply_gradient 经 LLM 改写 Prompt)
 
 **变更内容**:

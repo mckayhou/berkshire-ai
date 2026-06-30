@@ -60,7 +60,7 @@ import math
 import os
 import statistics
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -556,7 +556,6 @@ def collect_alpha_samples(
     def _bench(market_key: str) -> Optional[Series]:
         if market_key not in bench_cache:
             spec = BENCHMARKS[market_key]
-            bm = "csi300" if market_key == "csi300" else market_key
             sym = spec.get("tushare") if (market_key == "csi300" and isinstance(provider, (TushareProvider, ChainProvider))) else spec["yf"]
             # ChainProvider/Tushare 对 csi300 走指数接口；其余走 yf 代码
             market = "a" if market_key == "csi300" else ("hk" if market_key == "hsi" else "us")

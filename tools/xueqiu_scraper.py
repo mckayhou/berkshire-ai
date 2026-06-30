@@ -36,6 +36,7 @@ import random
 import re
 from datetime import datetime
 from pathlib import Path
+
 from playwright.async_api import async_playwright
 
 
@@ -52,7 +53,8 @@ def parse_ts(ts):
 
 
 def clean(s):
-    if not s: return ''
+    if not s:
+        return ''
     s = re.sub(r'<[^>]+>', '', s)
     for ent, rep in [('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&nbsp;', ' ')]:
         s = s.replace(ent, rep)
@@ -330,7 +332,7 @@ def format_md(collected, user_id, keywords):
         f"> **整理时间**：{datetime.now().strftime('%Y-%m-%d')}",
         f"> **收录条数**：{len(posts)} 条",
         f"> **关键词筛选**：{', '.join(keywords)}",
-        f"> **采集方式**：Playwright 登录态 + user_timeline.json 全量遍历（仅本人原发言）",
+        "> **采集方式**：Playwright 登录态 + user_timeline.json 全量遍历（仅本人原发言）",
         "",
         "---",
         "",

@@ -19,7 +19,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 import prompt_optimizer as po  # noqa: E402
-from graph import BerkshireGraph, Variable, Gradient  # noqa: E402
+from graph import BerkshireGraph, Gradient, Variable  # noqa: E402
 from optimizer import TextualGradientDescent  # noqa: E402
 
 

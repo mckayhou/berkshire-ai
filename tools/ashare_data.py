@@ -15,11 +15,10 @@
 
 import argparse
 import json
-import os
 import subprocess
 import sys
 import time
-from decimal import Decimal, ROUND_HALF_EVEN
+from decimal import Decimal
 
 _TIMEOUT = 15
 _RETRIES = 2
@@ -258,7 +257,7 @@ def cmd_valuation(code: str):
         cap = Decimal(market_cap_yi) * Decimal("1e8")
         shares = cap / p
         print(f"\n  推算总股本: {_fmt_yi(float(shares))}股 （= 市值/股价，仅供参考）")
-        print(f"  ⚠️ 独立市值校验请用 financial_rigor.py verify-market-cap（需独立来源总股本）")
+        print("  ⚠️ 独立市值校验请用 financial_rigor.py verify-market-cap（需独立来源总股本）")
     except Exception:
         pass
 

@@ -5,11 +5,11 @@
 """
 
 import argparse
+import csv
 import json
+import os
 import subprocess
 import time
-import csv
-import os
 from datetime import datetime
 
 
@@ -50,7 +50,7 @@ def fetch_page(page: int, retries: int = 2) -> dict:
                 capture_output=True, text=True, timeout=30,
             )
         except subprocess.TimeoutExpired:
-            last = f"请求超时 (>30s)"
+            last = "请求超时 (>30s)"
             time.sleep(0.5 * (attempt + 1))
             continue
         if result.returncode != 0 or not (result.stdout or "").strip():
@@ -168,7 +168,7 @@ def main(max_pages: int | None = None, top: int = 100):
     # 统计摘要
     undervalued = [s for s in stocks if s["upside_pct"] > 0]
     overvalued = [s for s in stocks if s["upside_pct"] < 0]
-    print(f"  📊 统计摘要:")
+    print("  📊 统计摘要:")
     print(f"     低估股票: {len(undervalued)} 只 ({len(undervalued)/len(stocks)*100:.0f}%)")
     print(f"     高估股票: {len(overvalued)} 只 ({len(overvalued)/len(stocks)*100:.0f}%)")
     if undervalued:

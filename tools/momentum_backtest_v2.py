@@ -9,10 +9,9 @@ AMD/MU：从JSON文件加载真实日线数据
 """
 
 import json
-import sys
 import os
-from datetime import datetime
 from collections import OrderedDict
+from datetime import datetime
 
 # ============================================================
 # 基本面数据（手工录入，比API更准确）
@@ -205,7 +204,7 @@ def backtest(ticker, prices):
             reject_signals.append(entry)
 
     # 输出关键信号
-    print(f"\n  --- 买入信号（价值验证≥3/5）---")
+    print("\n  --- 买入信号（价值验证≥3/5）---")
     first_buy = None
     for bs in buy_signals:
         if bs["date"] < "2022-06-01":
@@ -223,7 +222,7 @@ def backtest(ticker, prices):
     # 展示部分被拒绝的信号（帮助理解筛选效果）
     early_rejects = [r for r in reject_signals if "2022-06" <= r["date"] <= "2023-06"]
     if early_rejects:
-        print(f"\n  --- 被拒绝的信号（价值验证<3/5）---")
+        print("\n  --- 被拒绝的信号（价值验证<3/5）---")
         for r in early_rejects[:3]:
             checks_str = " ".join(
                 f"{'✅' if v else '❌'}{k}" for k, v in r["checks"].items()
@@ -236,7 +235,7 @@ def backtest(ticker, prices):
         final = prices[-1]
         ret = (final["close"] - first_buy["close"]) / first_buy["close"] * 100
         print(f"\n  {'='*60}")
-        print(f"  📊 首次买入信号收益：")
+        print("  📊 首次买入信号收益：")
         print(f"     买入：{first_buy['date']} @ ${first_buy['close']}")
         print(f"     持有至：{final['date']} @ ${round(final['close'], 2)}")
         print(f"     总回报：{round(ret, 1)}%")
@@ -251,8 +250,8 @@ def backtest(ticker, prices):
 
 def nvda_manual_analysis():
     print(f"\n{'='*70}")
-    print(f"  英伟达 (NVDA) 手工回测分析")
-    print(f"  （Yahoo API受限，使用已知历史价格节点）")
+    print("  英伟达 (NVDA) 手工回测分析")
+    print("  （Yahoo API受限，使用已知历史价格节点）")
     print(f"{'='*70}")
 
     # NVDA关键价格节点（拆股调整后）
@@ -270,54 +269,54 @@ def nvda_manual_analysis():
         ("2025-01-06", 149.4, "2025年初"),
     ]
 
-    print(f"\n  关键价格节点：")
+    print("\n  关键价格节点：")
     for date, price, note in key_prices:
         print(f"  {date}  ${price:>7.1f}  {note}")
 
     # 分析动量信号
-    print(f"\n  --- 动量信号分析 ---")
+    print("\n  --- 动量信号分析 ---")
 
-    print(f"\n  📅 2023-01-27  $19.9  ★第一个动量触发点")
-    print(f"     价格信号：从$11.2涨到$19.9（+78%/3个月），创60日新高+明显放量")
-    print(f"     当时基本面（FY23Q3 Oct22）：营收同比-17% | 毛利率53.6% | EPS超预期7.4%")
+    print("\n  📅 2023-01-27  $19.9  ★第一个动量触发点")
+    print("     价格信号：从$11.2涨到$19.9（+78%/3个月），创60日新高+明显放量")
+    print("     当时基本面（FY23Q3 Oct22）：营收同比-17% | 毛利率53.6% | EPS超预期7.4%")
 
     fund1, prev1 = find_fund("NVDA", "2023-01-27")
     s1, c1 = verify(fund1, prev1)
     checks_str1 = " ".join(f"{'✅' if v else '❌'}{k}" for k, v in c1.items())
     print(f"     价值验证 {s1}/5：{checks_str1}")
     if s1 >= 3:
-        print(f"     判断：✅ 买入信号！")
+        print("     判断：✅ 买入信号！")
     else:
-        print(f"     判断：❌ 不通过（营收仍在下滑，但毛利率已拐头）")
-        print(f"     点评：这是一个 边缘信号——框架没给买入，但毛利率63.3%拐点是真信号")
+        print("     判断：❌ 不通过（营收仍在下滑，但毛利率已拐头）")
+        print("     点评：这是一个 边缘信号——框架没给买入，但毛利率63.3%拐点是真信号")
 
-    print(f"\n  📅 2023-02-22  $23.4  FY23Q4财报发布")
+    print("\n  📅 2023-02-22  $23.4  FY23Q4财报发布")
     fund2, prev2 = find_fund("NVDA", "2023-02-23")
     s2, c2 = verify(fund2, prev2)
     checks_str2 = " ".join(f"{'✅' if v else '❌'}{k}" for k, v in c2.items())
     print(f"     基本面（{fund2[1]['label']}）：营收同比{fund2[1]['rev_yoy']}% | 毛利率{fund2[1]['gm']}% | EPS超预期{fund2[1]['eps_beat']}%")
     print(f"     价值验证 {s2}/5：{checks_str2}")
     if s2 >= 3:
-        print(f"     判断：✅ 买入信号！毛利率拐点确认+EPS超预期")
+        print("     判断：✅ 买入信号！毛利率拐点确认+EPS超预期")
     else:
-        print(f"     判断：❌ 不通过")
+        print("     判断：❌ 不通过")
 
-    print(f"\n  📅 2023-05-25  $37.9  ★★FY24Q1'AI炸弹'财报")
+    print("\n  📅 2023-05-25  $37.9  ★★FY24Q1'AI炸弹'财报")
     fund3, prev3 = find_fund("NVDA", "2023-05-25")
     s3, c3 = verify(fund3, prev3)
     checks_str3 = " ".join(f"{'✅' if v else '❌'}{k}" for k, v in c3.items())
     print(f"     基本面（{fund3[1]['label']}）：营收同比{fund3[1]['rev_yoy']}% | 毛利率{fund3[1]['gm']}% | EPS超预期{fund3[1]['eps_beat']}%")
     print(f"     价值验证 {s3}/5：{checks_str3}")
     if s3 >= 3:
-        print(f"     判断：✅ 强买入信号！营收加速+毛利率+EPS大超预期全通过")
+        print("     判断：✅ 强买入信号！营收加速+毛利率+EPS大超预期全通过")
 
-    print(f"\n  📅 2023-08-24  $49.3  ★★★FY24Q2财报：营收翻倍")
+    print("\n  📅 2023-08-24  $49.3  ★★★FY24Q2财报：营收翻倍")
     fund4, prev4 = find_fund("NVDA", "2023-08-24")
     s4, c4 = verify(fund4, prev4)
     checks_str4 = " ".join(f"{'✅' if v else '❌'}{k}" for k, v in c4.items())
     print(f"     基本面（{fund4[1]['label']}）：营收同比{fund4[1]['rev_yoy']}% | 毛利率{fund4[1]['gm']}% | EPS超预期{fund4[1]['eps_beat']}%")
     print(f"     价值验证 {s4}/5：{checks_str4}")
-    print(f"     判断：✅ 满分信号！5/5全通过")
+    print("     判断：✅ 满分信号！5/5全通过")
 
     # 收益计算
     scenarios = [
@@ -326,7 +325,7 @@ def nvda_manual_analysis():
         ("2023-05-25（AI炸弹）", 37.9, 149.4, "2025-01"),
     ]
     print(f"\n  {'='*60}")
-    print(f"  📊 不同买入时点的回报（持有到2025-01 $149.4）：")
+    print("  📊 不同买入时点的回报（持有到2025-01 $149.4）：")
     print(f"  {'—'*60}")
     for label, buy_p, sell_p, sell_d in scenarios:
         ret = (sell_p - buy_p) / buy_p * 100
@@ -365,9 +364,9 @@ if __name__ == "__main__":
 
     # 总结
     print(f"\n\n{'='*70}")
-    print(f"  📋 回测总结：框架能否捕捉AI芯片三巨头？")
+    print("  📋 回测总结：框架能否捕捉AI芯片三巨头？")
     print(f"{'='*70}")
-    print(f"""
+    print("""
   ┌────────────────────────────────────────────────────────────────┐
   │  NVDA：✅ 能捕捉                                              │
   │  - 最早信号：2023-01-27（边缘）或 2023-02-22（确认）          │

@@ -4,18 +4,25 @@ Berkshire AI V10 engine package.
 Exports the main classes for TextGrad-based 4-masters analysis.
 """
 
-from .graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
-from .optimizer import TextualGradientDescent
+from .debate import DebateCase, DebateResult, run_debate
 from .decision_log import DecisionRecord, append_decision, load_decisions
+from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+from .optimizer import TextualGradientDescent
+from .prompt_optimizer import (
+    LLMClient,
+    OpenAICompatibleLLMClient,
+    StaticLLMClient,
+    apply_gradient,
+    build_rewrite_messages,
+)
 from .realized_feedback import (
+    PriceProvider,
+    ReturnStats,
+    StaticPriceProvider,
+    compute_returns,
     realized_scores,
     realized_scores_via_provider,
-    compute_returns,
-    PriceProvider,
-    StaticPriceProvider,
-    ReturnStats,
 )
-from .debate import run_debate, DebateResult, DebateCase
 
 __all__ = [
     "BerkshireGraph",
@@ -36,4 +43,9 @@ __all__ = [
     "run_debate",
     "DebateResult",
     "DebateCase",
+    "LLMClient",
+    "StaticLLMClient",
+    "OpenAICompatibleLLMClient",
+    "apply_gradient",
+    "build_rewrite_messages",
 ]

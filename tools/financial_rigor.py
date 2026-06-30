@@ -20,8 +20,7 @@ import ast
 import json
 import math
 import operator
-import sys
-from decimal import Decimal, Context, ROUND_HALF_EVEN, InvalidOperation
+from decimal import ROUND_HALF_EVEN, Context, Decimal
 
 # ---------------------------------------------------------------------------
 # Exact Decimal Engine (no floating-point drift)
@@ -81,9 +80,9 @@ def verify_market_cap(price, shares, reported_cap, currency=""):
 
     if deviation > 5:
         print(f"  ❌ 警告: 偏差 {deviation:.1f}% > 5%, 请检查:")
-        print(f"     - 股本是否为最新（回购/增发）?")
-        print(f"     - 单位是否一致（港币 vs 人民币 vs 美元）?")
-        print(f"     - 股价是否为最新?")
+        print("     - 股本是否为最新（回购/增发）?")
+        print("     - 单位是否一致（港币 vs 人民币 vs 美元）?")
+        print("     - 股价是否为最新?")
         return False
     elif deviation > 1:
         print(f"  ⚠️  偏差 {deviation:.1f}% 在可接受范围, 可能因股价波动/股本变化")
@@ -120,7 +119,7 @@ def verify_valuation(price, eps=None, bvps=None, fcf_per_share=None,
             ey = _CTX.divide(e, p) * 100
             print(f"  盈利收益率: {ey:.2f}%")
         else:
-            print(f"  PE: EPS为0, 无法计算")
+            print("  PE: EPS为0, 无法计算")
 
     if bvps is not None:
         b = exact(bvps)
@@ -202,7 +201,7 @@ def cross_validate(field_name, source_values: dict, unit="", tolerance_pct=2.0):
         print(f"  ✅ 所有来源偏差 ≤ {tolerance_pct}%, 数据一致")
     else:
         print(f"  ⚠️  存在来源偏差 > {tolerance_pct}%, 请核实差异原因")
-        print(f"     建议: 优先采用公司年报/交易所数据")
+        print("     建议: 优先采用公司年报/交易所数据")
 
     # Consensus value
     consensus = median
@@ -370,7 +369,6 @@ def three_scenario_valuation(current_price, current_eps, shares_billion,
 
     p = exact(current_price)
     eps = exact(current_eps)
-    shares = exact(shares_billion)
 
     scenarios = [
         ("乐观 (Bull)", growth_optimistic, pe_optimistic),

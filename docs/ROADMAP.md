@@ -33,10 +33,11 @@
 
 ## P2：长期（6个月+）
 
-### 测试覆盖 — 🟡 部分实现
-- 183 pytest（引擎、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
-- GitHub Actions CI（`.github/workflows/test.yml`）
-- 待补：Skill 输出回归（golden 行动卡/报告片段）
+### 测试覆盖 + 工程门禁 — 🟡 部分实现（V10.14 升级）
+- 232 pytest（引擎、prompt_optimizer、config、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
+- GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 45% + pip-audit + gitleaks；`.github/dependabot.yml` 周更
+- 集中工具配置 `pyproject.toml`；中心配置 + 启动自检 `src/config.py`
+- 待补：Skill 输出回归（golden 行动卡/报告片段）；逐步提高覆盖率门 / 收紧 mypy（check_untyped_defs）
 
 ### 组合级分析 — 🟡 部分实现（V10.9–10.10）
 - `portfolio_risk.py`：集中度、现金、主题、相关性 CSV

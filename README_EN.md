@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.13** (real variable rewriting, Option B: `apply_gradient` rewrites prompts via LLM; cumulative with V10.11 realized-return feedback loop + bull/bear debate + A-share multi-source fallback data + multi-channel delivery + V10.12 SENSITIVITY calibration). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.14** (production hardening, tier A: CI gates ruff/mypy/coverage + `pyproject.toml` packaging + `src/config.py` central config & startup doctor; cumulative with V10.13 Option B LLM prompt rewriting + V10.11 realized-return feedback loop / bull-bear debate + V10.12 SENSITIVITY calibration). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 

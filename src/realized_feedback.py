@@ -35,11 +35,11 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
 try:
-    from graph import MASTER_PREFIXES
     from decision_log import DecisionRecord
+    from graph import MASTER_PREFIXES
 except ImportError:  # pragma: no cover - 包内导入回退
-    from .graph import MASTER_PREFIXES
     from .decision_log import DecisionRecord
+    from .graph import MASTER_PREFIXES
 
 
 # 基线灵敏度。该值由 tools/calibrate_sensitivity.py 用真实历史行情做「尺度校准」
@@ -132,6 +132,9 @@ def compute_returns(
         decision.benchmark_anchor is not None and benchmark_realized_price is not None
     )
     if has_benchmark:
+        # has_benchmark 已保证二者非空，显式断言让类型检查器收窄类型
+        assert benchmark_realized_price is not None
+        assert decision.benchmark_anchor is not None
         if float(benchmark_realized_price) <= 0:
             raise ValueError("benchmark_realized_price 必须为正数")
         benchmark_return = (

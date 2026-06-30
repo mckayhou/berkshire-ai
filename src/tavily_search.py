@@ -3,13 +3,14 @@
 Berkshire AI V9.3 - Tavily Search Integration (Multi-Key Round-Robin)
 为四大师分析提供实时数据支持，支持多 Key 轮询 + 429 自动切换
 """
-import os
 import json
-import time
-import httpx
+import os
 import threading
-from typing import Dict, List, Optional
+import time
 from datetime import datetime
+from typing import Dict, List, Optional
+
+import httpx
 
 # Tavily API 配置
 TAVILY_API_URL = "https://api.tavily.com/search"
@@ -84,7 +85,7 @@ class TavilySearcher:
                         }
                     )
                 if response.status_code == 429:
-                    print(f"  [Tavily] 429 限流，切换 Key...")
+                    print("  [Tavily] 429 限流，切换 Key...")
                     self._rotate_key()
                     continue
                 if response.status_code in _TRANSIENT_STATUS:
@@ -211,7 +212,7 @@ def test_tavily_integration():
         if "error" in result:
             print(f"❌ 错误: {result['error']}")
         else:
-            print(f"✅ 成功")
+            print("✅ 成功")
             print(f"   摘要: {result['answer'][:200]}...")
             print(f"   来源数: {len(result['sources'])}")
         
@@ -223,7 +224,7 @@ def test_tavily_integration():
         if "error" in result:
             print(f"❌ 错误: {result['error']}")
         else:
-            print(f"✅ 成功")
+            print("✅ 成功")
             print(f"   摘要: {result['answer'][:200]}...")
         
         print("\n" + "="*70)

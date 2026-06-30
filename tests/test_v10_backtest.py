@@ -3,10 +3,10 @@
 Berkshire AI V10.0 - 回测验证
 使用历史轨迹数据验证 TextGrad 诊断效果
 """
+import glob
+import json
 import os
 import sys
-import json
-import glob
 from collections import defaultdict
 from datetime import datetime
 
@@ -26,7 +26,7 @@ def load_traces(trace_dir: str) -> list:
                 data = json.load(fp)
                 data["_file"] = os.path.basename(f)
                 traces.append(data)
-        except:
+        except Exception:
             pass
     return traces
 
@@ -130,7 +130,7 @@ def run_backtest():
         print(f"  评分: {r['scores']}")
         print(f"  平均: {r['avg_score']:.3f}")
         print(f"  V9.3 诊断: 整体评分 {r['avg_score']:.3f} {'✅' if r['avg_score'] >= 0.85 else '❌'}")
-        print(f"  V10.0 诊断:")
+        print("  V10.0 诊断:")
         print(f"    - 发现问题数: {r['issues_found']}")
         print(f"    - 需修改 Prompt: {r['prompts_to_fix']}")
     

@@ -15,6 +15,9 @@ description: >
   V10.13: 变量真实改写（Option B）- src/prompt_optimizer.py：apply_gradient 经 LLM 改写 Prompt；
           TextualGradientDescent(graph, llm=...) 注入后 step() 真实改写未达标 prompt 变量的 value，
           LLM 可注入/可 mock（StaticLLMClient / OpenAICompatibleLLMClient），失败优雅降级、不注入则向后兼容。
+  V10.14: 生产化硬化 档A - pyproject.toml（ruff/mypy/pytest/coverage 集中配置 + extras）；CI 升级
+          （py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 + pip-audit + gitleaks + Dependabot）；
+          src/config.py 中心配置（ENV_SPEC 单一来源 + .env 加载 + doctor 启动自检，不泄密钥）+ .env.example。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。

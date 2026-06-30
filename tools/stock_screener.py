@@ -22,7 +22,6 @@ import os
 import subprocess
 import sys
 from datetime import datetime, timedelta
-from collections import OrderedDict
 
 # ============================================================
 # 配置
@@ -73,7 +72,7 @@ def fetch_prices_curl(ticker, days=120):
                 dt = datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
                 rows.append({"date": dt, "close": c, "high": h, "volume": v})
         return rows if len(rows) > 60 else None
-    except Exception as e:
+    except Exception:
         return None
 
 
@@ -375,7 +374,7 @@ def main():
 
     # 汇总
     print(f"\n{'='*70}")
-    print(f"  📋 扫描结果汇总")
+    print("  📋 扫描结果汇总")
     print(f"{'='*70}")
 
     if buy_signals:
@@ -384,7 +383,7 @@ def main():
             m = s["momentum"]
             print(f"     {s['grade']:<8} {s['ticker']:<8} ${m['close']:<8} {s['reason']}")
     else:
-        print(f"\n  无买入信号")
+        print("\n  无买入信号")
 
     if watch_signals:
         print(f"\n  👀 观察（需补基本面）：{len(watch_signals)} 个")
@@ -394,7 +393,7 @@ def main():
 
     print(f"\n  基本面数据文件：{FUND_FILE}")
     print(f"  Watchlist文件：{WATCHLIST_FILE}")
-    print(f"  用 --update TICKER 补充/更新基本面\n")
+    print("  用 --update TICKER 补充/更新基本面\n")
 
 
 if __name__ == "__main__":

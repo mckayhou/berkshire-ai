@@ -14,9 +14,10 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 
-import tavily_search as tv          # noqa: E402
-import ashare_data as ad            # noqa: E402
+import ashare_data as ad  # noqa: E402
 import morningstar_fair_value as mf  # noqa: E402
+
+import tavily_search as tv  # noqa: E402
 
 
 # ===========================================================================

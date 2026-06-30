@@ -3,15 +3,15 @@
 Textual Gradient Descent Optimizer for Berkshire V10 engine.
 """
 
-from typing import Dict, List, Optional
 from datetime import datetime
+from typing import Dict, List, Optional
 
 # Absolute for src/ path insert compatibility
 try:
-    from graph import BerkshireGraph, Variable, Gradient
+    from graph import BerkshireGraph, Gradient, Variable
     from prompt_optimizer import LLMClient, apply_gradient
 except ImportError:
-    from .graph import BerkshireGraph, Variable, Gradient
+    from .graph import BerkshireGraph, Gradient, Variable
     from .prompt_optimizer import LLMClient, apply_gradient
 
 

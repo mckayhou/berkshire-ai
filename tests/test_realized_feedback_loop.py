@@ -16,9 +16,9 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
+import debate as db  # noqa: E402
 import decision_log as dl  # noqa: E402
 import realized_feedback as rf  # noqa: E402
-import debate as db  # noqa: E402
 from evolution_loop_v10 import run_with_realized_feedback  # noqa: E402
 from graph import MASTER_PREFIXES, SCORE_THRESHOLD  # noqa: E402
 

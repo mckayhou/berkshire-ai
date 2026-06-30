@@ -28,9 +28,9 @@ import time
 from typing import Callable, Dict, List, Optional
 
 try:
-    from graph import Variable, Gradient
+    from graph import Gradient, Variable
 except ImportError:  # pragma: no cover - 包内导入回退
-    from .graph import Variable, Gradient
+    from .graph import Gradient, Variable
 
 
 # ---------------------------------------------------------------------------

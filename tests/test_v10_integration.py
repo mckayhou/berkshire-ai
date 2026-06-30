@@ -3,17 +3,17 @@
 Berkshire AI V10.0 - 集成测试
 端到端流程验证
 """
-import os
-import sys
 import json
+import os
 import subprocess
+import sys
 from datetime import datetime
 
 # 路径配置
 BERKSHIRE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BERKSHIRE_DIR, "src"))
 
-from evolution_loop_v10 import BerkshireGraph, TextualGradientDescent
+from evolution_loop_v10 import BerkshireGraph
 from tavily_search import TavilySearcher
 
 
@@ -56,7 +56,7 @@ def test_tavily_integration():
 
     assert "answer" in result, "缺少 answer 字段"
     assert len(result.get("sources", [])) > 0, "无搜索结果"
-    print(f"  ✅ 股票数据获取成功")
+    print("  ✅ 股票数据获取成功")
     print(f"     摘要: {result['answer'][:80]}...")
 
 
@@ -101,9 +101,9 @@ def test_evolution_loop():
     )
 
     assert result.returncode == 0, f"执行失败: {result.stderr}"
-    print(f"  ✅ 进化循环执行成功")
+    print("  ✅ 进化循环执行成功")
     assert "Graph created" in result.stdout, f"缺少预期输出，实际: {result.stdout[:120]}"
-    print(f"  ✅ 输出包含预期标识")
+    print("  ✅ 输出包含预期标识")
 
 
 def test_trace_recording():

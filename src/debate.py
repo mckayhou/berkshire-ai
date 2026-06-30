@@ -21,9 +21,9 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 try:
-    from graph import MASTERS, ROLE_NAMES
+    from graph import MASTERS
 except ImportError:  # pragma: no cover - 包内导入回退
-    from .graph import MASTERS, ROLE_NAMES
+    from .graph import MASTERS
 
 
 # 净判断的中性区间：|net_score| < NET_MARGIN 视为 neutral

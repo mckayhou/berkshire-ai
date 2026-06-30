@@ -250,7 +250,12 @@ def main():
         with open(args.from_scan, encoding="utf-8") as f:
             scan_summary = json.load(f)
     elif args.run_scan:
-        from portfolio_scan import load_watchlist, flatten_tickers, run_scan, summarize  # noqa: E402
+        from portfolio_scan import (  # noqa: E402
+            flatten_tickers,
+            load_watchlist,
+            run_scan,
+            summarize,
+        )
         wl = load_watchlist()
         pairs = flatten_tickers(wl)
         results = run_scan(pairs, verbose=not args.quiet)
