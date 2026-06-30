@@ -10,6 +10,8 @@ description: >
   V10.3: 集成 graphify 知识图谱 (graphify-out/graph.json)，用于项目代码/技能结构查询。
   V10.11: 已实现收益反馈闭环 + 多空辩论（吸收自 TradingAgents：decision_log/realized_feedback/debate）；
           A股多源降级数据层 tools/data_sources.py + 多通道推送 tools/notify.py（吸收自 JusticePlutus）。
+  V10.12: SENSITIVITY 尺度校准 - 用真实历史行情把收益反馈映射默认 SENSITIVITY 2.5→0.5（旧值约78%样本过饱和）；
+          新增 tools/calibrate_sensitivity.py，可用 BERKSHIRE_SENSITIVITY 覆盖。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
