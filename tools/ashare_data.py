@@ -112,6 +112,52 @@ def _parse_qq_quote(raw: str) -> dict:
     }
 
 
+def _em_secid(code: str) -> str:
+    """股票代码 → 东方财富 secid（market.code，1=沪 0=深/北）。"""
+    code = code.strip().replace(".SH", "").replace(".SZ", "").replace(".BJ", "")
+    if code.startswith(("6", "9", "5")):
+        return f"1.{code}"
+    return f"0.{code}"
+
+
+def fetch_daily(code: str, limit: int = 250) -> list:
+    """近 N 日不复权日线（东方财富 push2his K线接口）。
+
+    返回 [{date, open, close, high, low, volume}, ...]（时间升序）。
+    解析失败/无数据返回空列表，不抛异常——便于上层降级。
+    """
+    secid = _em_secid(code)
+    params = {
+        "secid": secid,
+        "fields1": "f1,f2,f3,f4,f5",
+        "fields2": "f51,f52,f53,f54,f55,f56,f57",
+        "klt": "101",   # 日线
+        "fqt": "0",     # 不复权
+        "end": "20500101",
+        "lmt": str(int(limit)),
+    }
+    try:
+        data = _curl_json("https://push2his.eastmoney.com/api/qt/stock/kline/get", params)
+    except Exception:
+        return []
+    klines = (data or {}).get("data", {})
+    klines = klines.get("klines", []) if isinstance(klines, dict) else []
+    out = []
+    for row in klines:
+        parts = row.split(",")
+        if len(parts) < 6:
+            continue
+        out.append({
+            "date": parts[0],
+            "open": parts[1],
+            "close": parts[2],
+            "high": parts[3],
+            "low": parts[4],
+            "volume": parts[5],
+        })
+    return out
+
+
 def _fmt_yi(value) -> str:
     if value is None or value == "-" or value == "":
         return "-"
@@ -292,6 +338,21 @@ def cmd_financials(code: str):
             print(f"  ROE(加权):      {_fmt_pct(roe)}")
 
 
+def cmd_daily(code: str, limit: int = 60):
+    """近 N 日日线快照。"""
+    rows = fetch_daily(code, limit=limit)
+    if not rows:
+        print(f"❌ 未获取到 {code} 的日线数据")
+        return
+    print("=" * 60)
+    print(f"日线数据: {code} （最近 {len(rows)} 条，升序）")
+    print("=" * 60)
+    print(f"  {'日期':<12}{'开':>10}{'收':>10}{'高':>10}{'低':>10}{'量(手)':>14}")
+    for r in rows[-limit:]:
+        print(f"  {r['date']:<12}{r['open']:>10}{r['close']:>10}"
+              f"{r['high']:>10}{r['low']:>10}{r['volume']:>14}")
+
+
 def cmd_search(keyword: str):
     """搜索股票代码。"""
     url = "https://searchadapter.eastmoney.com/api/suggest/get"
@@ -339,6 +400,10 @@ def main():
     p_val = sub.add_parser("valuation", help="估值指标")
     p_val.add_argument("code", help="股票代码")
 
+    p_daily = sub.add_parser("daily", help="近 N 日日线")
+    p_daily.add_argument("code", help="股票代码")
+    p_daily.add_argument("--limit", type=int, default=60, help="返回条数，默认 60")
+
     p_search = sub.add_parser("search", help="搜索股票代码")
     p_search.add_argument("keyword", help="公司名或关键词")
 
@@ -352,6 +417,7 @@ def main():
         "quote": lambda: cmd_quote(args.code),
         "financials": lambda: cmd_financials(args.code),
         "valuation": lambda: cmd_valuation(args.code),
+        "daily": lambda: cmd_daily(args.code, args.limit),
         "search": lambda: cmd_search(args.keyword),
     }
     cmds[args.command]()

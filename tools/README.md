@@ -6,7 +6,9 @@
 |---|---|:---:|---|
 | `financial_rigor.py` | 金融数据严谨性验证（核心） | 否 | 无 |
 | `report_audit.py` | 研究报告数据抽检 / 准出判决 | 否 | 无 |
-| `ashare_data.py` | A股行情/财务/估值/搜索 | 是 | curl |
+| `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
+| `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
+| `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
@@ -58,9 +60,71 @@ python3 tools/report_audit.py verdict --report 腾讯-research.md --results '[{"
 python3 tools/ashare_data.py quote 600519        # 实时行情
 python3 tools/ashare_data.py financials 600519   # 近5年核心财务
 python3 tools/ashare_data.py valuation 600519    # 估值指标
+python3 tools/ashare_data.py daily 600519 --limit 60  # 近 N 日日线（东方财富 K线）
 python3 tools/ashare_data.py search 茅台          # 搜索代码
 ```
 注：`valuation` 的"推算总股本"是由市值/股价反推，仅供参考；真实市值校验请用 `financial_rigor.py verify-market-cap`。
+
+## data_sources.py（在线，多源降级链）
+
+A股数据获取的**统一降级层**：按优先级依次尝试数据源，任一源失败/为空自动降级到
+下一个；**全部失败返回明确的 `ok=False` 结构，绝不抛崩主流程**。覆盖 `daily`（日线）、
+`quote`（实时行情）、`fundamentals`（基本面）。
+
+**默认优先级链**（可用 `--sources` 或 `BERKSHIRE_DATA_SOURCES` 覆盖/排序）：
+
+```
+native(内置,零依赖) → tushare(增强,需开关+token) → efinance → akshare → baostock → yfinance
+```
+
+```bash
+python3 tools/data_sources.py sources                  # 列出各源可用状态（不联网）
+python3 tools/data_sources.py daily 600519 --limit 60  # 日线（走降级链）
+python3 tools/data_sources.py quote 600519             # 实时行情
+python3 tools/data_sources.py fundamentals 600519      # 基本面字段
+python3 tools/data_sources.py daily 600519 --json --sources efinance,native
+```
+
+**可选依赖与开关（import 守卫，缺库自动跳过该源）：**
+
+| 源 | 需要 | 启用条件 | 关闭方式 |
+|---|---|---|---|
+| `native` | 仅 curl | 始终启用（零配置可用） | `BERKSHIRE_DISABLE_NATIVE=1` |
+| `tushare` | `pip install tushare` | `BERKSHIRE_ENABLE_TUSHARE=1` **且** `TUSHARE_TOKEN` | 默认关闭（零侵入） |
+| `efinance` | `pip install efinance` | 装库即启用 | `BERKSHIRE_DISABLE_EFINANCE=1` |
+| `akshare` | `pip install akshare` | 装库即启用 | `BERKSHIRE_DISABLE_AKSHARE=1` |
+| `baostock` | `pip install baostock` | 装库即启用 | `BERKSHIRE_DISABLE_BAOSTOCK=1` |
+| `yfinance` | `pip install yfinance` | 装库即启用 | `BERKSHIRE_DISABLE_YFINANCE=1` |
+
+> 设计范式（吸收自 JusticePlutus）：「增强源」`tushare` 是可选层——开关关闭就**完全不
+> 初始化、不导入、不请求**；开关开但缺 token 只记 warning 回退；缺库的源被 import 守卫
+> 静默跳过。**零配置时只用内置 `native` 源，行为与改造前一致。**
+
+新增数据源 = 继承 `DataSource`、实现 `enabled()` 与 `daily/quote/fundamentals` 之一，
+再注册进 `_REGISTRY` / `_DEFAULT_ORDER` 即可（可插拔适配器）。
+
+## notify.py（在线*，多通道交付）
+
+报告 / 信号的**多通道推送**。全部走环境变量配置，**零配置时只把内容落到本地文件、不报错**
+（行为不变）；任一通道未配置即静默跳过；单通道异常不影响其它通道与主流程。
+
+```bash
+python3 tools/notify.py channels                            # 查看通道状态
+python3 tools/notify.py send --title "标题" --text "正文"
+python3 tools/notify.py send --title "组合周报" --file reports/x.md
+cat reports/x.md | python3 tools/notify.py send --title "周报"
+python3 tools/notify.py send --title "x" --text "y" --channels feishu --local
+```
+
+**通道与环境变量：**
+
+| 通道 | 环境变量 | 说明 |
+|---|---|---|
+| Telegram | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | 超 3800 字自动拆分多条 |
+| 飞书自定义机器人 | `FEISHU_WEBHOOK`，可选 `FEISHU_SECRET` | **优先卡片，失败回退纯文本**；超 3000 字自动拆分；配 secret 自动加签 |
+| 本地兜底 | `BERKSHIRE_NOTIFY_DIR`（默认 `reports/notifications`） | 始终可用；无远程通道或全部失败时落地 Markdown |
+
+> 切勿把真实 token/webhook 写进代码或提交，统一用环境变量（`.env` 已被 `.gitignore` 忽略）。
 
 ## momentum_backtest.py / momentum_backtest_v2.py（在线）
 
