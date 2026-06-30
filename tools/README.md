@@ -8,6 +8,7 @@
 | `report_audit.py` | 研究报告数据抽检 / 准出判决 | 否 | 无 |
 | `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
+| `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
 | `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
@@ -102,6 +103,39 @@ python3 tools/data_sources.py daily 600519 --json --sources efinance,native
 
 新增数据源 = 继承 `DataSource`、实现 `enabled()` 与 `daily/quote/fundamentals` 之一，
 再注册进 `_REGISTRY` / `_DEFAULT_ORDER` 即可（可插拔适配器）。
+
+## calibrate_sensitivity.py（在线*，SENSITIVITY 尺度校准）
+
+用真实历史日线对 `src/realized_feedback.py` 的 `SENSITIVITY` 做 **data-only 尺度校准**：
+在真实观测到的 alpha 分布上选一个 `SENSITIVITY`，让 `realized_base = clip(0.5 +
+alpha·S)` 用满 [0,1] 区间而不过度饱和。**核心数学（目标函数 + 搜索）离线、有单测**；
+真实取数走 CLI（需联网）。详见 `docs/textgrad_design.md`「SENSITIVITY 尺度校准」。
+
+目标函数（对肥尾稳健）：`J(S) = |spread(p10..p90 of realized_base; S) − 0.80|`，让中位
+80% 决策映射到 `realized_base∈[0.1,0.9]`，极端尾部有意留给饱和。搜索 = 网格扫描记录
+`J(S)` 曲线 → 黄金分割在 bracket 内细化收敛。
+
+```bash
+# 汇总标的（不联网，看 watchlist+holdings 去重结果与市场/yf 代码）
+python3 tools/calibrate_sensitivity.py universe
+
+# 联网取数 + 校准 + 报告（主窗 365 天，附 182 天对照）
+pip install yfinance akshare tushare
+python3 tools/calibrate_sensitivity.py run --lookback 365 --also 182
+python3 tools/calibrate_sensitivity.py run --json --out reports/sensitivity.txt
+```
+
+**数据源（按市场）：** 美股直接代码（基准 `^GSPC`）；港股 `XXXX.HK`（基准 `^HSI`）；
+A股 走 `tushare→akshare→yfinance(.SS/.SZ)` 降级，基准沪深300。
+
+| 用途 | 环境变量 | 说明 |
+|---|---|---|
+| A股增强源 Tushare | `BERKSHIRE_ENABLE_TUSHARE=1` + `TUSHARE_TOKEN` | **仅作环境变量**，切勿写进文件/提交/日志；报告里用 `<redacted>` |
+| 覆盖引擎灵敏度 | `BERKSHIRE_SENSITIVITY` | 不改代码即可覆盖 `realized_feedback` 默认 `SENSITIVITY`（默认 0.5） |
+
+> 校准结论（V10.12，27 标的真实日线）：旧默认 2.5 使 ~78% 的 realized_base 被 clip 到
+> 0/1；推荐 **0.5**（12m≈0.41 / 6m≈0.68 的稳健折中），已更新为新默认，保留 env 覆盖。
+> Tushare 免费 token 无 `daily`/`index_daily` 接口权限时自动降级到 akshare，不阻断。
 
 ## notify.py（在线*，多通道交付）
 

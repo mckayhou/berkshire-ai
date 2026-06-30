@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782801772.401799,
-    "ast_hash": "30c5615bcbd54b1f97ea64e2c8a04fdd",
+    "mtime": 1782806931.7328188,
+    "ast_hash": "f00838449c4b520fbd0c2397f9a3034e",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
-    "mtime": 1782802131.2192588,
-    "ast_hash": "0a43d61656bf0a3f8ec0f44ee63078ff",
+    "mtime": 1782806976.8513308,
+    "ast_hash": "03e7b3726e849592a961cefd25603e75",
     "semantic_hash": ""
   },
   "skills/bottleneck-hunter.md": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782802076.225042,
-    "ast_hash": "56cdae5ceeac2feb41e4b62ddfd47965",
+    "mtime": 1782807059.9939494,
+    "ast_hash": "6eb6da2c873a25b764ee3c4f573606dd",
     "semantic_hash": ""
   },
   "docs/report-conventions.md": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782801483.311809,
-    "ast_hash": "841c2a25ce7993d2cd34f4a8d0ca7a1f",
+    "mtime": 1782807029.7311573,
+    "ast_hash": "1ba2d0bd1e6721c8ba193608bbb2e024",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -375,13 +375,23 @@
     "semantic_hash": ""
   },
   "src/realized_feedback.py": {
-    "mtime": 1782801454.9133713,
-    "ast_hash": "0dc5c837dbfd83f9881c40fcfc9da3e7",
+    "mtime": 1782806806.376111,
+    "ast_hash": "1fa69e08d181579620198b8270b08b2d",
     "semantic_hash": ""
   },
   "tests/test_realized_feedback_loop.py": {
-    "mtime": 1782801454.9136498,
-    "ast_hash": "54234d7d572cc27b6f01515a63caf197",
+    "mtime": 1782806830.1044948,
+    "ast_hash": "96f58ce4403fb726b87dddb4c4d16dee",
+    "semantic_hash": ""
+  },
+  "tests/test_calibrate_sensitivity.py": {
+    "mtime": 1782805589.3825355,
+    "ast_hash": "c338f4b4fde45db4740460771e1b01d7",
+    "semantic_hash": ""
+  },
+  "tools/calibrate_sensitivity.py": {
+    "mtime": 1782805589.3825202,
+    "ast_hash": "0e239c7129d686e5482695c068211e92",
     "semantic_hash": ""
   }
 }
