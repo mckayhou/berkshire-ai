@@ -313,6 +313,20 @@ class BerkshireGraph:
             node=var_name, ok=False, text=text, issues=list(downstream.issues)
         )
 
+    def debate(self, scores: Dict[str, float],
+               issues_by_master: Optional[Dict[str, List[str]]] = None):
+        """多空辩论环节：位于 Layer 2（四大师）与输出之间的一步。
+
+        综合四大师信心分产出结构化的 bull/bear/净判断（DebateResult）。
+        逻辑在 debate.py（延迟导入以避免与本模块循环依赖），
+        复用 MASTERS 单一来源。
+        """
+        try:
+            from debate import run_debate
+        except ImportError:  # pragma: no cover - 包内导入回退
+            from .debate import run_debate
+        return run_debate(scores, issues_by_master=issues_by_master)
+
     def visualize(self) -> str:
         """可视化计算图"""
         lines = ["=" * 70]
