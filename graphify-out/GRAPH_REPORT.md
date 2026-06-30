@@ -1,7 +1,7 @@
 # Graph Report - berkshire-ai  (2026-06-27)
 
 ## Corpus Check
-- 66 files · ~49,796 words
+- 66 files · ~49,798 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0a5b25f1`
+- Built from commit: `96199325`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -73,19 +73,19 @@
 7. `测试指南与 E2E 报告（TESTING）` - 3 edges
 8. `Berkshire AI V10.0 - TextGrad 化设计` - 3 edges
 9. `reports/ — 研究报告输出目录` - 3 edges
-10. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
+10. `Berkshire AI - Global State & Thesis Tracker` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
-  README.md → README_EN.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
-  README.md → docs/ROADMAP.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南与 E2E 报告（TESTING）`  [EXTRACTED]
-  README.md → TESTING.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
   README.md → VERSION_HISTORY.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `结构化行动卡（Action Card）`  [EXTRACTED]
-  README.md → docs/action-card.md
+- `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
+  README_EN.md → VERSION_HISTORY.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
+  README.md → docs/ROADMAP.md
+- `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
+  README_EN.md → docs/ROADMAP.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
+  README.md → README_EN.md
 
 ## Import Cycles
 - None detected.
