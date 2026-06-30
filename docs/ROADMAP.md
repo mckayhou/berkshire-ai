@@ -61,3 +61,32 @@
 
 ### ai-hedge-fund 吸收 — ✅ PM/Risk 层（V10.8–10.10）
 - 行动卡、`portfolio_scan`、`portfolio_risk`、`thesis_queue`；不采纳自动交易图
+
+### SENSITIVITY 尺度校准 — ✅ V10.12
+- `tools/calibrate_sensitivity.py`：用真实历史行情校准 `realized_feedback` 的 `SENSITIVITY`
+- 目标函数 `J(S)=|spread₁₀₋₉₀(realized_base)−0.80|`（对肥尾稳健）；网格 + 黄金分割搜索
+- 结论：默认 2.5 严重过饱和（~78% clip），更新为 **0.5**（12m≈0.41/6m≈0.68 折中），保留 `BERKSHIRE_SENSITIVITY` env 覆盖
+- 待补：拿到历史大师 conviction 后升级为「信心 vs alpha」误差校准
+
+## 可选 / 未排期：aktools-pro 作为 MCP 数据/回测后端 + financial_rigor 校验层
+
+### 背景
+- **aktools-pro** 是基于 akshare 的 MCP 服务器（`uvx aktools-pro`），提供 A股 / 港股 /
+  美股 / 加密 / 贵金属 / 外汇 / 期货 / 基金 / 宏观 共 ~65 个工具，自带**双层缓存**、
+  **回测引擎**、**模拟盘**、**分析师 SOP**。
+- 已加入 Cursor MCP 配置并完成冒烟测试。
+
+### 方案
+- 为 `tools/data_sources.py` 增加可选 `AktoolsSource` 适配器（经 MCP/HTTP 调用），
+  优先用它取数、失败回退现有 import 降级链（tushare/efinance/akshare/baostock/yfinance）。
+- 数字仍统一过 `financial_rigor` 校验，保持「数据源可换、校验层不变」。
+
+### 已知限制
+- 该版本复合诊断工具 `composite_stock_diagnostic`（及 `*_composite_*`）报内部 bug
+  `'function' object has no attribute 'fn'`——先绕开，用原子工具（`market_prices` /
+  `stock_indicators_*` / `stock_news` 等）组合。
+- **北向资金净买额**为数据源侧停披露（返回空值），靠 `financial_rigor` 拦截空/异常值。
+
+### 收益
+- 多 agent / 多语言共享同一数据源；服务层统一缓存 / 限流；贴合 OpenClaw / QwenPaw
+  的工具调用与 MCP 风格，便于后续把取数从「进程内 import」迁到「服务化 MCP」。
