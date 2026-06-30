@@ -4,5 +4,18 @@
 # - tools/ 下的金融工具（financial_rigor.py / report_audit.py 等）仅用 Python 标准库，无需安装任何依赖。
 # - src/ 的 TextGrad 引擎（graph.py / optimizer.py）同样零依赖。
 # - 仅 src/tavily_search.py 的实时检索需要 httpx。
+# - tools/data_sources.py 的多源降级链与 tools/notify.py 的多通道推送：
+#   内置源/通道仅用系统 curl，无需任何第三方库；下方「可选增强」按需安装即可，
+#   缺库时对应数据源被 import 守卫静默跳过，核心功能不受影响。
 
 httpx>=0.27,<1.0
+
+# ---------------------------------------------------------------------------
+# 可选增强（按需安装，全部非必需；不装也能用内置 native 源 + 本地兜底通道）
+# ---------------------------------------------------------------------------
+# A股数据降级链备用源（tools/data_sources.py）：
+#   tushare        # 需 BERKSHIRE_ENABLE_TUSHARE=1 + TUSHARE_TOKEN
+#   efinance
+#   akshare
+#   baostock
+#   yfinance
