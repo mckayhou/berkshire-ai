@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.12**（SENSITIVITY 尺度校准；基于 V10.11 收益反馈闭环 + 多空辩论 + A股多源降级数据 + 多通道推送）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.13**（变量真实改写 Option B：`apply_gradient` 经 LLM 改写 Prompt；累积 V10.11 收益反馈闭环 + 多空辩论 + A股多源降级数据 + 多通道推送 + V10.12 SENSITIVITY 校准）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -187,7 +187,8 @@ berkshire-ai/
 ├── VERSION_HISTORY.md
 ├── src/                         # TextGrad V10 自进化引擎（本地核心）
 │   ├── evolution_loop_v10.py    # run_example + run_with_realized_feedback（收益反馈闭环）
-│   ├── graph.py / optimizer.py  # 计算图（含 debate()）+ 文本梯度优化器
+│   ├── graph.py / optimizer.py  # 计算图（含 debate()）+ 文本梯度优化器（可注入 LLM 真实改写）
+│   ├── prompt_optimizer.py      # 变量真实改写 Option B：apply_gradient 经 LLM 改写 Prompt（LLMClient 可注入/可 mock）
 │   ├── decision_log.py          # 决策快照 JSONL 持久化（DecisionRecord）
 │   ├── realized_feedback.py     # 已实现收益 → 评分（PriceProvider 可注入）
 │   ├── debate.py                # 多空对抗辩论（DebateResult，净判断）
@@ -261,7 +262,8 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 - ✅ **上游全能力整合**：完整 skills/ (18个) + tools/ from xbtlin/ai-berkshire 并入 (已规范化路径引用)
 - ✅ **已实现收益反馈闭环 + 多空辩论**（吸收自 TradingAgents）：`decision_log` / `realized_feedback` / `debate` + `run_with_realized_feedback`
 - ✅ **A股多源降级数据层 + 多通道推送**（吸收自 JusticePlutus）：`tools/data_sources.py` / `tools/notify.py`
-- ✅ 测试 183 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
+- ✅ **变量真实改写（V10.13 / Option B）**：`prompt_optimizer.apply_gradient` 经 LLM 改写 Prompt，`TextualGradientDescent(graph, llm=...)` 真实更新变量值（可注入/可 mock，失败优雅降级）
+- ✅ 测试 223 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
 
 ## 🔗 相关链接
 

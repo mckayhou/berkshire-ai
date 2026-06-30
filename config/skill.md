@@ -12,6 +12,9 @@ description: >
           A股多源降级数据层 tools/data_sources.py + 多通道推送 tools/notify.py（吸收自 JusticePlutus）。
   V10.12: SENSITIVITY 尺度校准 - 用真实历史行情把收益反馈映射默认 SENSITIVITY 2.5→0.5（旧值约78%样本过饱和）；
           新增 tools/calibrate_sensitivity.py，可用 BERKSHIRE_SENSITIVITY 覆盖。
+  V10.13: 变量真实改写（Option B）- src/prompt_optimizer.py：apply_gradient 经 LLM 改写 Prompt；
+          TextualGradientDescent(graph, llm=...) 注入后 step() 真实改写未达标 prompt 变量的 value，
+          LLM 可注入/可 mock（StaticLLMClient / OpenAICompatibleLLMClient），失败优雅降级、不注入则向后兼容。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -188,8 +191,9 @@ python3 tools/financial_rigor.py cross-validate \
 > **核心思想**: 借鉴 TextGrad (Nature 2025) 的自动微分思想，实现节点级诊断和针对性优化。
 
 > ⚠️ **实现状态（重要，避免文档与代码脱节）**
-> - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。当前"梯度"是**基于评分的规则化诊断模板**，非 LLM 驱动的真·文本梯度。
-> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、对比反思自动化、Cron 自动进化。请勿在生产流程中依赖这些命令，直到落地。
+> - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。当前"梯度（批评）"仍是**基于评分的规则化诊断模板**，非 LLM 生成。
+> - ✅ **变量真实改写（V10.13 / Option B）**：`src/prompt_optimizer.py` 的 `apply_gradient` 经 LLM 把诊断落到 Prompt 上；`TextualGradientDescent(graph, llm=...)` 注入后 `step()` 真实改写未达标 prompt 变量的 `value`（LLM 可注入/可 mock，失败优雅降级；不注入则向后兼容）。
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：LLM 生成「批评/梯度」(`∇_LLM`)、多轮自动迭代、`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。
 
 **计算图结构**:
 ```

@@ -12,6 +12,13 @@ See update-platforms.sh for deployment to OpenClaw/QwenPaw.
 try:
     from graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
     from optimizer import TextualGradientDescent
+    from prompt_optimizer import (
+        LLMClient,
+        StaticLLMClient,
+        OpenAICompatibleLLMClient,
+        apply_gradient,
+        build_rewrite_messages,
+    )
     from decision_log import DecisionRecord, append_decision
     from realized_feedback import (
         realized_scores,
@@ -24,6 +31,13 @@ try:
 except ImportError:
     from .graph import BerkshireGraph, Variable, Gradient, Master, MASTERS
     from .optimizer import TextualGradientDescent
+    from .prompt_optimizer import (
+        LLMClient,
+        StaticLLMClient,
+        OpenAICompatibleLLMClient,
+        apply_gradient,
+        build_rewrite_messages,
+    )
     from .decision_log import DecisionRecord, append_decision
     from .realized_feedback import (
         realized_scores,
@@ -41,6 +55,11 @@ __all__ = [
     "Master",
     "MASTERS",
     "TextualGradientDescent",
+    "LLMClient",
+    "StaticLLMClient",
+    "OpenAICompatibleLLMClient",
+    "apply_gradient",
+    "build_rewrite_messages",
     "DecisionRecord",
     "append_decision",
     "realized_scores",
@@ -77,6 +96,7 @@ def run_with_realized_feedback(
     sensitivity=None,
     persist=False,
     log_path=None,
+    llm=None,
 ):
     """已实现收益 → 评分 → backward 的反馈闭环。
 
@@ -97,6 +117,9 @@ def run_with_realized_feedback(
         sensitivity: 收益→真相分灵敏度（默认用 realized_feedback 的默认值）。
         persist: 是否把该决策追加到决策日志。
         log_path: 决策日志路径（默认 BERKSHIRE_DECISION_LOG / ~/.berkshire）。
+        llm: 可选 LLMClient（Option B）。传入后，优化器会对未达标的 prompt 变量
+             调用 LLM 真实改写 `Variable.value`；未传则仅记录优化动作（向后兼容）。
+             注意：被改写的 prompt 变量需先有 `value`（底稿），否则该变量记为跳过。
 
     Returns:
         dict: {graph, scores, stats(ReturnStats), gradients, updates, debate(DebateResult)}
@@ -126,7 +149,7 @@ def run_with_realized_feedback(
     debate = graph.debate(decision.scores)
     # 反馈：用已实现收益映射出的校准分驱动 backward
     gradients = graph.backward(scores)
-    optimizer = TextualGradientDescent(graph)
+    optimizer = TextualGradientDescent(graph, llm=llm)
     updates = optimizer.step(gradients)
 
     return {

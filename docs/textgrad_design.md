@@ -12,13 +12,14 @@
 | 单一来源 `MASTERS` | ✅ 已实现 (V10.5) | 变量/边/梯度全部从 `MASTERS` 派生，新增大师只改一处 |
 | 结构化梯度 `Gradient` | ✅ 已实现 (V10.5) | `ok`/`score`/`issues`/`text`，控制流读 `ok`，不解析 emoji |
 | `backward(scores)` 反向传播 | ✅ 已实现 | 输入为各大师评分 `Dict[str, float]`，输出 `Dict[str, Gradient]` |
-| 优化器 `TextualGradientDescent.step()` | 🟡 半实现 | 依据 `Gradient.ok` 产出「更新计划」并记日志，**尚未真正改写 Prompt 值** |
+| 优化器 `TextualGradientDescent.step()` | ✅ 已实现 (V10.13) | 注入 `llm` 后对未达标的 prompt 变量调用 `apply_gradient` **真实改写 `Variable.value`**；不注入则仅记录更新计划（向后兼容） |
 | 已实现收益反馈闭环 | ✅ 已实现 (V10.11) | `decision_log` + `realized_feedback`：真实收益 → alpha → 各大师校准评分 → `backward()`（吸收自 TradingAgents） |
 | 多空对抗辩论 | ✅ 已实现 (V10.11) | `debate.py` + `BerkshireGraph.debate()`：bull/bear case + 结构化净判断 `DebateResult` |
-| LLM 驱动的文本梯度 (`∇_LLM`) | ⬜ 未实现 (Option B) | 当前梯度为基于评分的启发式模板，非 LLM 生成的批评 |
-| 真正的迭代进化循环 | ⬜ 未实现 (Option B) | `evolution_loop_v10.py` 提供 `run_example()` 演示 + `run_with_realized_feedback()` 收益闭环；尚无 LLM 改写 Prompt 的全自动迭代 |
+| LLM 驱动的 Prompt 改写（Option B）| ✅ 已实现 (V10.13) | `prompt_optimizer.apply_gradient`：LLM 读「下游诊断 + 当前 Prompt」产出改进版 Prompt 回填变量。客户端可注入/可 mock（`StaticLLMClient` / `OpenAICompatibleLLMClient`），核心可离线单测 |
+| LLM 驱动的「批评/梯度」生成 (`∇_LLM`) | 🟡 部分 | 改写步已用 LLM；但梯度（批评）本身仍是基于评分的启发式模板（`_compute_*_gradient`），尚未由 LLM 生成 |
+| 真正的迭代进化循环 | 🟡 部分 (V10.13) | 单步「backward → LLM 改写 → 回填」已闭环；多轮自动迭代（改写后重跑分析→再评分）仍待接线 |
 
-> 结论：当前是「干净、可测试的概念脚手架」。`Gradient.issues` 已是结构化列表，未来走 Option B 时把启发式诊断替换为 LLM 批评即可，**消费方（优化器/回测/测试）无需改动**。
+> 结论：Option B 的「变量真实改写」已落地——文本梯度第一次真正作用到 Prompt 上。下一步是把启发式「批评」也换成 LLM 生成（`∇_LLM`），以及把单步闭环扩成多轮自动迭代。结构化的 `Gradient.issues` 与可注入的 `LLMClient` 让这两步都能无侵入演进，**消费方（回测/测试）无需改动**。
 
 ## 📖 TextGrad 核心概念
 
@@ -209,46 +210,66 @@ def _compute_master_gradient(self, prefix, score) -> Gradient:
 
 ### 4. 优化器 (Textual Gradient Descent) — `src/optimizer.py`
 
-控制流读 `gradient.ok`（结构化），产出「更新计划」并记日志。
+控制流读 `gradient.ok`（结构化）。优化器有两种工作模式：
 
-> 🟡 现状：`step()` 只产出更新计划 + 日志，**尚未真正改写变量值**。真正的 `apply_gradient`（LLM 改写 Prompt）属 Option B，见下。
+- **无 `llm`（默认，向后兼容）**：仅产出「更新计划」并记日志，不改写变量值。
+- **有 `llm`（V10.13 / Option B）**：对未达标的 prompt 变量调用 `apply_gradient`
+  **真实改写 `Variable.value`**，并把 `old_value`/`new_value`/`rewritten=True` 记入 update。
+  LLM 失败 / 无底稿时优雅降级回「仅记录」（`rewrite_error` / `rewrite_skipped`），不崩链路。
 
 ```python
+def __init__(self, graph, lr=1.0, llm: Optional[LLMClient] = None):
+    self.llm = llm
+    ...
+
 def step(self, gradients: Dict[str, Gradient]) -> List[Dict]:
     updates = []
     for var_name, gradient in gradients.items():
         if gradient.ok:
-            continue                      # 达标节点跳过（不再 "❌" in gradient）
+            continue                      # 达标节点跳过（读 ok，不解析 emoji）
         var = self.graph.variables.get(var_name)
         if not var:
             continue
-        update = {
-            "variable": var_name, "type": var.type, "role": var.role,
-            "gradient": gradient.text, "issues": list(gradient.issues),
-            "timestamp": datetime.now().isoformat(),
-            "action": self._determine_action(var, gradient),
-        }
-        updates.append(update)
-        self.update_log.append(update)
+        update = {... "rewritten": False, ...}
+        if self.llm is not None and var.type == "prompt":
+            self._rewrite_prompt(var, gradient, update)  # 真实改写 var.value
+        updates.append(update); self.update_log.append(update)
     return updates
 ```
 
-### 5. ⬜ Option B（未来）：LLM 驱动的自进化
+### 5. ✅ Option B（V10.13）：变量真实改写 — `src/prompt_optimizer.py`
 
-把启发式诊断替换为 LLM 批评、把 `step()` 升级为真正改写 Prompt 的迭代循环。由于 `Gradient.issues` 已结构化，下列替换不影响任何消费方：
+文本梯度第一次真正作用到 Prompt 上：`apply_gradient` 让 LLM 读「下游诊断（梯度）+
+当前 Prompt」产出改进版 Prompt 回填变量。LLM 客户端可注入/可 mock，核心可离线单测。
 
 ```python
-# ∇_LLM：用 LLM 为变量生成文本梯度（替代 MASTER_CHECKS 启发式）
-def compute_text_gradient(node, downstream: Gradient) -> Gradient:
-    critique = llm.call(f"""节点 {node.name} 角色 {node.role}
-下游反馈：{downstream.text}
-请输出 issues 列表 + 修改建议""")
-    return Gradient(node=node.name, ok=False, text=critique.text, issues=critique.issues)
+class LLMClient:                       # 抽象接口：complete(system, user) -> str
+    def complete(self, system, user): ...
 
-# apply_gradient：真正改写 Prompt（替代当前“只记日志”）
-def apply_gradient(var, gradient: Gradient) -> str:
-    return llm.call(f"当前值：{var.value}\n改进方向：{gradient.text}\n请改写，保持核心结构")
+class StaticLLMClient(LLMClient):      # 测试/离线：固定响应 / 回调 / echo
+class OpenAICompatibleLLMClient(LLMClient):  # 真实：OpenAI 兼容 /chat/completions
+    # env: BERKSHIRE_LLM_API_KEY(兜底 OPENAI_API_KEY) / _BASE_URL / _MODEL；缺 key 即报错
+
+def apply_gradient(variable, gradient, llm, *, base_prompt=None) -> Optional[str]:
+    if gradient.ok: return None                       # 无需改写
+    current = base_prompt or variable.value
+    if not current: return None                       # 无底稿 → 交上层降级
+    msgs = build_rewrite_messages(variable, gradient, current)
+    return _clean(llm.complete(msgs["system"], msgs["user"])) or None
 ```
+
+用法（反馈闭环中启用真实改写）：
+
+```python
+from prompt_optimizer import OpenAICompatibleLLMClient
+graph.variables["buffett_prompt"].value = "<当前巴菲特分析 Prompt 底稿>"
+run_with_realized_feedback(decision, realized_price=..., llm=OpenAICompatibleLLMClient())
+# 未达标的 buffett_prompt 会被 LLM 针对诊断改写并回填
+```
+
+> 仍属未来工作：(a) 把启发式「批评/梯度」也换成 LLM 生成（`∇_LLM`，替代 `MASTER_CHECKS`）；
+> (b) 把单步「backward→改写→回填」扩成多轮自动迭代（改写后重跑分析→再评分）。
+> 二者均可在不改消费方的前提下渐进接线。
 
 ## 🔁 已实现收益反馈闭环 + 多空辩论 (V10.11，吸收自 TradingAgents)
 
@@ -410,10 +431,10 @@ export BERKSHIRE_SENSITIVITY=0.41
 - [x] 实现节点级梯度计算（结构化 `Gradient`，启发式 `MASTER_CHECKS`）
 - [ ] 集成 LLM 诊断（Option B：`∇_LLM` 取代启发式）
 
-### Phase 3: 优化器 🟡 半实现
+### Phase 3: 优化器 ✅ 已实现（含 Option B 变量改写）
 - [x] 实现 `TextualGradientDescent`（依据 `Gradient.ok` 产出更新计划）
 - [x] 添加更新日志
-- [ ] 实现变量真实改写（Option B：`apply_gradient` 经 LLM 改写 Prompt）
+- [x] 实现变量真实改写（V10.13 / Option B：`apply_gradient` 经 LLM 改写 Prompt，可注入/可 mock，失败优雅降级）
 
 ### Phase 4: 测试与验证 ✅ 已完成（回归用）
 - [x] 单元/集成/回测全部跑通（12 通过/1 跳过，覆盖率 100%）
@@ -437,6 +458,6 @@ export BERKSHIRE_SENSITIVITY=0.41
 
 ---
 
-**当前状态 (V10.5)**: 计算图脚手架 + 单一来源 `MASTERS` + 结构化 `Gradient` 已落地并测试通过。
+**当前状态 (V10.13)**: 计算图脚手架 + 单一来源 `MASTERS` + 结构化 `Gradient` + 已实现收益反馈闭环（V10.11）+ SENSITIVITY 校准（V10.12）+ **变量真实改写（V10.13 / Option B：`apply_gradient` 经 LLM 改写 Prompt）** 均已落地并测试通过。
 
-**下一步 (Option B)**: 将启发式 `MASTER_CHECKS` 替换为 LLM 生成的文本梯度，并把 `step()` 升级为真正改写 Prompt 的迭代进化循环。`Gradient.issues` 已结构化，消费方零改动即可平滑切换。
+**下一步**: (a) 将启发式 `MASTER_CHECKS` 替换为 LLM 生成的文本梯度（`∇_LLM`）；(b) 把单步「backward→改写→回填」扩成多轮自动迭代（改写后重跑分析→再评分）。`Gradient.issues` 与可注入的 `LLMClient` 让两步都能无侵入演进。

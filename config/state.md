@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.12**（SENSITIVITY 尺度校准；基于 V10.11 收益反馈闭环 + 多空辩论 + A股多源降级数据 + 多通道推送）
+> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.13**（变量真实改写 Option B：apply_gradient 经 LLM 改写 Prompt；累积 V10.11 收益反馈闭环 + 多空辩论 + A股多源降级数据 + 多通道推送 + V10.12 SENSITIVITY 校准）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |
@@ -21,6 +21,7 @@
 
 | Date | Issue | Lesson Learned | Applied To Skill |
 |------|-------|----------------|------------------|
+| 2026-06-30 | **V10.13 - 变量真实改写（Option B）** | 把文本梯度真正落到 Prompt：新增 `src/prompt_optimizer.py`（`LLMClient`/`StaticLLMClient`/`OpenAICompatibleLLMClient` + `apply_gradient`）；`TextualGradientDescent(graph, llm=...)` 注入 LLM 后 `step()` 真实改写未达标 prompt 变量的 `value`，失败优雅降级、不注入则向后兼容。 | `src/prompt_optimizer.py`, `src/optimizer.py` |
 | 2026-06-30 | **V10.12 - SENSITIVITY 尺度校准** | 用真实历史行情（27 标的）校准收益反馈映射 `realized_base = clip(0.5 + alpha*SENSITIVITY, 0, 1)`：旧默认 2.5 使约 78% 样本贴边过饱和、丢失区分度，校准为 0.5；新增 `tools/calibrate_sensitivity.py` 与单测，可用 `BERKSHIRE_SENSITIVITY` 覆盖。 | `src/realized_feedback.py`, `tools/calibrate_sensitivity.py` |
 | 2026-06-30 | **V10.11 - 收益反馈闭环 + 多空辩论** | 吸收 TradingAgents：决策落盘（`decision_log`）→ 真实收益算 alpha（`realized_feedback`）→ 各大师校准评分喂回 `backward()`；并加显式多空对抗（`debate`）。把"反思"变成可微 reward。 | `src/*` v10.11 |
 | 2026-06-30 | **V10.11 - A股多源降级 + 多通道推送** | 吸收 JusticePlutus：数据走 `native→tushare→efinance→akshare→baostock→yfinance` 降级链全失败不抛崩；报告经 Telegram/飞书/本地兜底交付，零配置只落地。 | `tools/data_sources.py`, `tools/notify.py` |

@@ -36,6 +36,27 @@
 
 ## 📜 版本历史
 
+### V10.13 - 2026-06-30 (变量真实改写 Option B：apply_gradient 经 LLM 改写 Prompt)
+
+**变更内容**:
+
+- 新增 `src/prompt_optimizer.py`：把「文本梯度」第一次真正落到 Prompt 上。
+  - `LLMClient` 抽象 + `StaticLLMClient`（离线/测试：固定响应 / 回调 / echo）+ `OpenAICompatibleLLMClient`（真实：OpenAI 兼容 `/chat/completions`，env 配置 `BERKSHIRE_LLM_API_KEY`(兜底 `OPENAI_API_KEY`)/`_BASE_URL`/`_MODEL`，含瞬时错误退避重试，缺 key 即报错不静默）
+  - `build_rewrite_messages(variable, gradient, base_prompt)` 纯函数构造改写提示；`apply_gradient(variable, gradient, llm)` 由 LLM 读「下游诊断 + 当前 Prompt」产出改进版 Prompt（含代码块清洗）
+- 修改 `src/optimizer.py`：`TextualGradientDescent(graph, llm=...)`。注入 `llm` 后 `step()` 对未达标的 prompt 变量**真实改写 `Variable.value`**，记录 `old_value/new_value/rewritten`；LLM 失败/无底稿优雅降级（`rewrite_error`/`rewrite_skipped`），不崩链路。不注入 `llm` 则与旧行为完全一致（向后兼容）。
+- 修改 `src/evolution_loop_v10.py`：`run_with_realized_feedback(..., llm=None)` 透传；导出新符号。
+- 新增 `tests/test_prompt_optimizer.py`：18 个离线单测（改写/ok 跳过/无底稿/代码块清洗/空返回/缺 key 报错/env 解析/OPENAI_API_KEY 兜底/step 真实改写/无 llm 兼容/LLM 异常降级/只改未达标变量），全部 mock，不打真实网络。
+
+**设计原则**: 与 `realized_feedback` 一致——LLM 经可注入/可 mock 接口获取，核心可离线单测；全部配置走环境变量；失败优雅降级绝不崩链路。
+
+**仍属未来工作**: (a) 把启发式「批评/梯度」也换成 LLM 生成（`∇_LLM`，替代 `MASTER_CHECKS`）；(b) 把单步「backward→改写→回填」扩成多轮自动迭代。
+
+**测试结果**: 223 通过（205 既有 + 18 新增，`python3 -m pytest tests/ -q`，0 失败）
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.12 - 2026-06-30 (SENSITIVITY 尺度校准：用真实历史行情校准收益反馈映射)
 
 **变更内容**:

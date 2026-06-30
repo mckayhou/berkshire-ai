@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.12** (SENSITIVITY scale calibration; on top of V10.11 realized-return feedback loop + bull/bear debate + A-share multi-source fallback data + multi-channel delivery). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.13** (real variable rewriting, Option B: `apply_gradient` rewrites prompts via LLM; cumulative with V10.11 realized-return feedback loop + bull/bear debate + A-share multi-source fallback data + multi-channel delivery + V10.12 SENSITIVITY calibration). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -33,6 +33,8 @@
 **Realized-return feedback loop + bull/bear debate** (absorbed from TradingAgents): each decision is persisted → real prices later compute alpha → mapped into per-master "calibration scores" fed back into backpropagation; plus an explicit bull/bear debate step on top of the parallel four-masters analysis, producing bull/bear cases and a net stance.
 
 **A-share multi-source fallback data layer + multi-channel delivery** (absorbed from JusticePlutus): data fetching walks a `native→tushare→efinance→akshare→baostock→yfinance` fallback chain and degrades gracefully (never crashes the main flow); reports/signals can be delivered via Telegram / Feishu / local fallback, and with zero config it just writes to a local file without erroring.
+
+**Real variable rewriting (V10.13 / Option B)**: `prompt_optimizer.apply_gradient` makes the textual gradient actually land on the prompt — an LLM reads the downstream diagnosis + current prompt and produces an improved prompt. `TextualGradientDescent(graph, llm=...)` then truly rewrites `Variable.value` for under-performing prompt nodes. The `LLMClient` is injectable/mockable (`StaticLLMClient` / `OpenAICompatibleLLMClient`), so the core is fully offline-testable and degrades gracefully on LLM failure; without an injected `llm` the behavior is unchanged (backward compatible).
 
 ## 📊 System Architecture
 
@@ -175,7 +177,8 @@ berkshire-ai/
 ├── VERSION_HISTORY.md
 ├── src/                         # TextGrad V10 self-evolution engine (local core)
 │   ├── evolution_loop_v10.py    # run_example + run_with_realized_feedback (feedback loop)
-│   ├── graph.py / optimizer.py  # computation graph (incl. debate()) + textual-gradient optimizer
+│   ├── graph.py / optimizer.py  # computation graph (incl. debate()) + textual-gradient optimizer (LLM-injectable real rewrite)
+│   ├── prompt_optimizer.py      # real variable rewriting (Option B): apply_gradient rewrites prompts via LLM (injectable/mockable LLMClient)
 │   ├── decision_log.py          # decision snapshot JSONL persistence (DecisionRecord)
 │   ├── realized_feedback.py     # realized return → scores (injectable PriceProvider)
 │   ├── debate.py                # bull/bear debate (DebateResult, net stance)
