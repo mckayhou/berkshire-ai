@@ -7,7 +7,7 @@
 
     raw_return    = (realized - anchor) / anchor
     alpha         = raw_return - benchmark_return            # 相对基准的超额收益
-    realized_base = clip(0.5 + alpha * SENSITIVITY, 0, 1)    # 默认 SENSITIVITY=2.5
+    realized_base = clip(0.5 + alpha * SENSITIVITY, 0, 1)    # 默认 SENSITIVITY=0.5（V10.12 校准值）
 
 我们暂时没有历史「大师 conviction」数据，无法做「信心 vs alpha」的误差校准。
 所以本工具做的是**尺度校准（data-only）**：在真实观测到的 alpha 分布上选一个

@@ -278,7 +278,7 @@ class DecisionRecord:
 
 ```
 alpha          = raw_return - benchmark_return
-realized_base  = clip(0.5 + alpha * SENSITIVITY, 0, 1)     # 默认 SENSITIVITY = 2.5
+realized_base  = clip(0.5 + alpha * SENSITIVITY, 0, 1)     # 默认 SENSITIVITY = 0.5（V10.12 校准，见下「尺度校准」节）
 master_score   = clip(1 - |conviction - realized_base|, 0, 1)
 ```
 

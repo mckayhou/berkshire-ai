@@ -228,7 +228,7 @@ python3 src/evolution_loop_v10.py   # 打印计算图节点数与本轮需更新
 > ✅ **已实现**：用真实已实现收益反推"校准评分"替代硬编码 scores，并在四大师并行之上加显式多空对抗。详见 `docs/textgrad_design.md`。
 
 - **决策落盘** `src/decision_log.py`：`DecisionRecord`（四大师信心 + 价格锚点）追加 JSONL，路径 `BERKSHIRE_DECISION_LOG`（默认 `~/.berkshire/decisions.jsonl`）。
-- **收益 → 评分** `src/realized_feedback.py`：`alpha = raw_return - benchmark_return`；`realized_base = clip(0.5 + alpha*SENSITIVITY, 0, 1)`（默认 2.5）；`master_score = clip(1 - |conviction - realized_base|, 0, 1)`。价格经可注入/可 mock 的 `PriceProvider`/`StaticPriceProvider`，核心不连网络。
+- **收益 → 评分** `src/realized_feedback.py`：`alpha = raw_return - benchmark_return`；`realized_base = clip(0.5 + alpha*SENSITIVITY, 0, 1)`（默认 0.5，V10.12 校准，可用 `BERKSHIRE_SENSITIVITY` 覆盖）；`master_score = clip(1 - |conviction - realized_base|, 0, 1)`。价格经可注入/可 mock 的 `PriceProvider`/`StaticPriceProvider`，核心不连网络。
 - **多空辩论** `src/debate.py` + `BerkshireGraph.debate()`：`net_score∈[-1,1]`，中性区 `NET_MARGIN=0.15`，结构化 `DebateResult`（读 `net_stance`/`ok`）。
 - **串联** `run_with_realized_feedback(...)`：收益 → 评分 → `backward()` → `optimizer.step()`，附带辩论净判断。
 
