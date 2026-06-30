@@ -4,6 +4,7 @@ Berkshire AI V10 engine package.
 Exports the main classes for TextGrad-based 4-masters analysis.
 """
 
+from .access_control import RateLimiter, check_api_key, key_fingerprint
 from .debate import DebateCase, DebateResult, run_debate
 from .decision_log import DecisionRecord, append_decision, load_decisions
 from .eval_harness import (
@@ -14,6 +15,13 @@ from .eval_harness import (
     run_multi_round,
 )
 from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+from .llm_gradient import (
+    LLMGradientGenerator,
+    build_critique_messages,
+    enrich_gradients_with_llm,
+    parse_issues,
+)
+from .metrics_export import ServiceMetrics, render_prometheus
 from .observability import (
     LLMCallMetrics,
     MetricsCollector,
@@ -90,4 +98,13 @@ __all__ = [
     "get_run_id",
     "new_run_id",
     "run_context",
+    "RateLimiter",
+    "check_api_key",
+    "key_fingerprint",
+    "ServiceMetrics",
+    "render_prometheus",
+    "LLMGradientGenerator",
+    "build_critique_messages",
+    "enrich_gradients_with_llm",
+    "parse_issues",
 ]

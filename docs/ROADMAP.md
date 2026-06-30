@@ -33,11 +33,12 @@
 
 ## P2：长期（6个月+）
 
-### 测试覆盖 + 工程门禁 — 🟡 部分实现（V10.14 升级）
-- 286 pytest（引擎、prompt_optimizer、config、prompt_validation、eval_harness、observability、sanitize、service、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
-- GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 45% + pip-audit + gitleaks；`.github/dependabot.yml` 周更
+### 测试覆盖 + 工程门禁 — 🟢 大幅完善（V10.17 收紧）
+- 319 pytest（引擎、prompt_optimizer、config、prompt_validation、eval_harness（含 golden 回归）、observability、sanitize、service（含鉴权/限流/指标）、access_control、metrics_export、llm_gradient、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
+- GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src, **check_untyped_defs**) + 覆盖率门 **50%** + pip-audit + gitleaks + **e2e-llm（带 secret 才跑）** + **build-image（Docker 构建冒烟）**；`.github/dependabot.yml` 周更
 - 集中工具配置 `pyproject.toml`；中心配置 + 启动自检 `src/config.py`
-- 待补：Skill 输出回归（golden 行动卡/报告片段）；逐步提高覆盖率门 / 收紧 mypy（check_untyped_defs）
+- ✅ V10.17 golden 回归：`tests/test_eval_harness_golden.py`（逐轮均值质量精确可断言）
+- 待补：Skill 输出回归（golden 行动卡/报告片段）；继续提高覆盖率门
 
 ### 组合级分析 — 🟡 部分实现（V10.9–10.10）
 - `portfolio_risk.py`：集中度、现金、主题、相关性 CSV
@@ -52,12 +53,16 @@
 - ✅ V10.15 验证门控改写：`src/prompt_validation.py`（改写后评分，只有不劣于旧版才接受否则回滚）
 - ✅ V10.15 多轮迭代 + 离线评测台：`src/eval_harness.py::run_multi_round`（`EvolutionReport` 证明单调不退化且收敛）
 - ✅ V10.16 提示注入防护：`src/sanitize.py`（清洗喂给改写 LLM 的不可信诊断，`UNTRUSTED_` 分隔符兜底）
-- 待补：LLM 生成「批评/梯度」(`∇_LLM`)；`reflect` / `optimize` / `status` CLI 完整化（见 `config/skill.md`）
+- ✅ V10.17 LLM 生成「批评/梯度」(`∇_LLM`)：`src/llm_gradient.py::enrich_gradients_with_llm`（`backward()` 后用 LLM 生成真实批评增强未达标节点，失败降级回规则化）
+- 待补：`reflect` / `optimize` / `status` CLI 完整化、轨迹自动记录、Cron 自动进化（见 `config/skill.md`）
 
-### 可观测 + 服务化 — ✅ V10.16（生产化硬化 档C）
+### 可观测 + 服务化 + 部署 — ✅ V10.16–10.17（生产化硬化 档C/D）
 - `src/observability.py`：结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）
-- `src/service.py`：服务边界 —`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/score` `/debate`（`pip install .[service]`）
-- 待补：鉴权/限流中间件、Prometheus/OTel 导出、容器化与部署清单
+- `src/service.py`：服务边界 —`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/config/doctor` `/metrics` `/score` `/debate`（`pip install .[service]`）+ `run()`/`berkshire-serve` uvicorn 入口
+- ✅ V10.17 访问控制：`src/access_control.py`（API Key 鉴权 + 每客户端限流，经 `create_app` 挂到受保护端点）
+- ✅ V10.17 指标导出：`src/metrics_export.py`（`/metrics` Prometheus 文本，零依赖）
+- ✅ V10.17 容器化：`Dockerfile`（多阶段、非 root、HEALTHCHECK）+ `docker-compose.yml` + `.dockerignore`
+- 待补：多副本共享限流（Redis）、OTel 导出、TLS/反向代理与部署运维清单
 
 ### 已实现收益反馈闭环 + 多空辩论 — ✅ V10.11（吸收自 TradingAgents）
 - `src/decision_log.py`：决策快照 JSONL 持久化（`BERKSHIRE_DECISION_LOG` 可覆盖）

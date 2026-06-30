@@ -43,7 +43,36 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
       - name: Run tests with coverage gate
-        run: pytest tests/ -q --tb=short --cov --cov-report=term-missing --cov-fail-under=45
+        run: pytest tests/ -q --tb=short --cov --cov-report=term-missing --cov-fail-under=50
+
+  # 真实 LLM 端到端冒烟：仅在配置了 secret 时运行（PR fork 无 secret 自动跳过）。
+  e2e-llm:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run e2e LLM smoke (skips if no key)
+        env:
+          BERKSHIRE_LLM_API_KEY: ${{ secrets.BERKSHIRE_LLM_API_KEY }}
+          BERKSHIRE_LLM_BASE_URL: ${{ secrets.BERKSHIRE_LLM_BASE_URL }}
+          BERKSHIRE_LLM_MODEL: ${{ secrets.BERKSHIRE_LLM_MODEL }}
+        run: pytest tests/e2e/ -q --tb=short
+
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image (smoke)
+        run: docker build -t berkshire-ai:ci .
 
   security:
     runs-on: ubuntu-latest

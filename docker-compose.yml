@@ -1,0 +1,31 @@
+# Berkshire AI 服务编排（生产化硬化 档D）
+# 用法：
+#   cp .env.example .env   # 填好 BERKSHIRE_API_KEYS / BERKSHIRE_LLM_* 等
+#   docker compose up --build
+# 然后访问 http://localhost:8000/health 与 /metrics。
+
+services:
+  berkshire:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: berkshire-ai:latest
+    ports:
+      - "${BERKSHIRE_PORT:-8000}:8000"
+    environment:
+      BERKSHIRE_HOST: "0.0.0.0"
+      BERKSHIRE_PORT: "8000"
+      # 鉴权 + 限流（强烈建议生产开启）
+      BERKSHIRE_API_KEYS: "${BERKSHIRE_API_KEYS:-}"
+      BERKSHIRE_RATE_LIMIT_PER_MIN: "${BERKSHIRE_RATE_LIMIT_PER_MIN:-120}"
+      # LLM（Option B 改写 / 自进化），缺省则改写降级为仅记录
+      BERKSHIRE_LLM_API_KEY: "${BERKSHIRE_LLM_API_KEY:-}"
+      BERKSHIRE_LLM_BASE_URL: "${BERKSHIRE_LLM_BASE_URL:-}"
+      BERKSHIRE_LLM_MODEL: "${BERKSHIRE_LLM_MODEL:-}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,os,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:'+os.getenv('BERKSHIRE_PORT','8000')+'/health',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -83,3 +83,49 @@ def test_fastapi_app_smoke():
     # 缺字段 → 400
     bad = client.post("/score", json={"ticker": "X"})
     assert bad.status_code == 400
+
+
+def test_fastapi_metrics_endpoint():
+    pytest.importorskip("fastapi")
+    from fastapi.testclient import TestClient
+
+    app = service.create_app()
+    client = TestClient(app)
+    # 打一次 debate，再看 /metrics 是否计数
+    client.post("/debate", json={"scores": {"duan": 0.9, "buffett": 0.9, "munger": 0.9, "lilu": 0.9}})
+    body = client.get("/metrics").text
+    assert "berkshire_debate_requests_total" in body
+    assert "berkshire_debate_ok_total" in body
+
+
+def test_fastapi_auth_required_when_keys_set():
+    pytest.importorskip("fastapi")
+    from fastapi.testclient import TestClient
+
+    app = service.create_app(api_keys=["s3cret"])
+    client = TestClient(app)
+    payload = {"scores": {"duan": 0.9, "buffett": 0.9, "munger": 0.9, "lilu": 0.9}}
+
+    # 无 key → 401
+    assert client.post("/debate", json=payload).status_code == 401
+    # 错 key → 401
+    assert client.post("/debate", json=payload, headers={"X-API-Key": "nope"}).status_code == 401
+    # 对 key → 200
+    ok = client.post("/debate", json=payload, headers={"X-API-Key": "s3cret"})
+    assert ok.status_code == 200
+    # 健康检查不需要鉴权
+    assert client.get("/health").status_code == 200
+
+
+def test_fastapi_rate_limit():
+    pytest.importorskip("fastapi")
+    from fastapi.testclient import TestClient
+
+    app = service.create_app(rate_limit_per_min=2)
+    client = TestClient(app)
+    payload = {"scores": {"duan": 0.9, "buffett": 0.9, "munger": 0.9, "lilu": 0.9}}
+
+    assert client.post("/debate", json=payload).status_code == 200
+    assert client.post("/debate", json=payload).status_code == 200
+    # 第三次超额 → 429
+    assert client.post("/debate", json=payload).status_code == 429

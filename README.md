@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.16**（生产化硬化 档C：结构化日志 + run_id 贯穿 + LLM 成本/token/延迟埋点 `observability` + 服务边界 `service`（FastAPI，可选）+ 提示注入防护 `sanitize`；累积 档A 工程门禁/打包/中心配置 + 档B 验证门控改写/真实行情/多轮评测台）。生产化三档 A→B→C 全部落地。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.17**（生产化硬化 档D：容器化部署 `Dockerfile`/`docker-compose` + 访问控制 `access_control`（API Key 鉴权 + 限流）+ 指标导出 `metrics_export`（`/metrics` Prometheus）+ ∇_LLM 真梯度 `llm_gradient`（LLM 生成批评，失败降级）+ mypy `check_untyped_defs` 收紧 + golden 回归；累积 档A 工程门禁/打包/中心配置 + 档B 验证门控改写/真实行情/多轮评测台 + 档C 可观测/服务边界/注入防护）。生产化档 A→B→C→D 全部落地。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -266,7 +266,33 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 - ✅ **生产化硬化（V10.14 档A）**：`pyproject.toml` 集中配置 + CI 门禁（ruff / mypy / 覆盖率 / pip-audit / gitleaks，py3.10-3.12 矩阵）+ `src/config.py` 中心配置与启动自检（`python3 src/config.py`）
 - ✅ **自进化硬化（V10.15 档B）**：验证门控改写 `prompt_validation`（改写后评分，只有不劣于旧版才接受否则回滚）+ 真实行情 `NetworkPriceProvider`（多源降级链 + 缓存 + 非交易日回退）+ 多轮迭代 `eval_harness.run_multi_round`（离线证明进化单调不退化并收敛）
 - ✅ **可观测 + 服务化（V10.16 档C）**：结构化 JSON 日志 + run_id 贯穿 + LLM 成本/token/延迟埋点 `observability`；服务边界 `service.create_app()`（FastAPI，`/health` `/score` `/debate`，可选 extra）；提示注入防护 `sanitize`（清洗喂给改写 LLM 的不可信诊断）
-- ✅ 测试 286 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
+- ✅ **部署上线 + 访问控制 + 真梯度（V10.17 档D）**：容器化 `Dockerfile` + `docker-compose.yml`（非 root + HEALTHCHECK）；访问控制 `access_control`（API Key 鉴权 + 每客户端限流）；指标导出 `metrics_export`（`/metrics` Prometheus 文本）；∇_LLM 真梯度 `llm_gradient`（LLM 生成批评，失败降级回规则化）；mypy 收紧 `check_untyped_defs` + golden 回归基线
+- ✅ 测试 319 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
+
+## 🚀 服务部署（V10.17 档D）
+
+把引擎作为带鉴权/限流/指标的 HTTP 服务跑起来：
+
+```bash
+# 1) 配置（强烈建议生产开启鉴权 + 限流）
+cp .env.example .env
+#   在 .env 填：BERKSHIRE_API_KEYS=key1,key2   BERKSHIRE_RATE_LIMIT_PER_MIN=120
+#   （可选）BERKSHIRE_LLM_API_KEY 等用于 Option B 改写 / 自进化
+
+# 2) 一键起服务（Docker，非 root + 内置 HEALTHCHECK）
+docker compose up --build
+#   或本地：pip install '.[service]' && berkshire-serve
+
+# 3) 验证
+curl localhost:8000/health
+curl localhost:8000/metrics                       # Prometheus 文本格式
+curl -X POST localhost:8000/debate \
+  -H 'X-API-Key: key1' -H 'Content-Type: application/json' \
+  -d '{"scores":{"duan":0.9,"buffett":0.85,"munger":0.8,"lilu":0.8}}'
+```
+
+端点：`GET /health`、`GET /config/doctor`、`GET /metrics`、`POST /score`、`POST /debate`。
+`/score` `/debate` 在配置了 `BERKSHIRE_API_KEYS` 时要求请求头 `X-API-Key`；超过 `BERKSHIRE_RATE_LIMIT_PER_MIN` 返回 429。
 
 ## 🔗 相关链接
 

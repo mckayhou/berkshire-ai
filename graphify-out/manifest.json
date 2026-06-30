@@ -1,7 +1,7 @@
 {
   "src/__init__.py": {
-    "mtime": 1782819586.8994179,
-    "ast_hash": "4d1608bca0a16b13f9cfc08b6350dca3",
+    "mtime": 1782821211.4712834,
+    "ast_hash": "183af40f701018b49aadb31e9ebe3ee2",
     "semantic_hash": ""
   },
   "src/evolution_loop_v10.py": {
@@ -90,23 +90,23 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782820011.8745768,
-    "ast_hash": "aa22d424807f5d5a5eb62593ff14baf6",
+    "mtime": 1782821963.190245,
+    "ast_hash": "08a55f9830a85941de497ae665ae88c2",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782819976.0465214,
-    "ast_hash": "d31dac699cbbe6b76d1ff82ebaaee41e",
+    "mtime": 1782821851.781934,
+    "ast_hash": "36410656d7277b971c4056d468a10e36",
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782820260.9755156,
-    "ast_hash": "020c55638882dc0024ef60141f501c76",
+    "mtime": 1782822113.1191096,
+    "ast_hash": "dfb7138152c272ce06331da5ed8967ae",
     "semantic_hash": ""
   },
   "config/state.md": {
-    "mtime": 1782820063.2049923,
-    "ast_hash": "3261909b51503598452d734cab1a538f",
+    "mtime": 1782822016.128753,
+    "ast_hash": "a139439cb9729fb98eef10fc1a98bb80",
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
@@ -225,13 +225,13 @@
     "semantic_hash": ""
   },
   "README_EN.md": {
-    "mtime": 1782820047.825936,
-    "ast_hash": "cce411221b9e2915c2c96cb07dc7cbac",
+    "mtime": 1782822001.1565027,
+    "ast_hash": "ee94912848ea958461fa78c12939416d",
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782820315.0484405,
-    "ast_hash": "261d1302b5581c464fea246a023e5d90",
+    "mtime": 1782822161.3363261,
+    "ast_hash": "bad5ddb07627012a12859758ceaf1ff4",
     "semantic_hash": ""
   },
   "docs/report-conventions.md": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/test.yml": {
-    "mtime": 1782817478.7918582,
-    "ast_hash": "84e7aab5c46308e1f3ad51dca00ee95d",
+    "mtime": 1782821797.2466836,
+    "ast_hash": "12a85ec10d45984b6cdfce0fac0b4ad1",
     "semantic_hash": ""
   },
   "data/holdings.example.json": {
@@ -405,13 +405,13 @@
     "semantic_hash": ""
   },
   "pyproject.toml": {
-    "mtime": 1782820356.8542483,
-    "ast_hash": "a4fbcbd1966208e98a6272a64bc84574",
+    "mtime": 1782821561.0220277,
+    "ast_hash": "a9d337cb081c4bf2c0826f3f7a2e61ae",
     "semantic_hash": ""
   },
   "src/config.py": {
-    "mtime": 1782817563.5564244,
-    "ast_hash": "bc7dd14f77ed5dacbf21073e94e2f8aa",
+    "mtime": 1782821109.7352252,
+    "ast_hash": "5328c54656f21443c565cc0865ad22cc",
     "semantic_hash": ""
   },
   "tests/test_config.py": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "src/service.py": {
-    "mtime": 1782819916.9706216,
-    "ast_hash": "4d084ef9eaa903ee1ef9559c0c9f305c",
+    "mtime": 1782821738.7690384,
+    "ast_hash": "5b85c5be4c7fa165ac83a290a41449d4",
     "semantic_hash": ""
   },
   "tests/test_observability.py": {
@@ -475,8 +475,63 @@
     "semantic_hash": ""
   },
   "tests/test_service.py": {
-    "mtime": 1782819861.3090444,
-    "ast_hash": "a28d5ab1dbc77c0710b73c4eb5fcee51",
+    "mtime": 1782821503.9518197,
+    "ast_hash": "e323fcc8fe3440daa8f86c93006af021",
+    "semantic_hash": ""
+  },
+  "src/access_control.py": {
+    "mtime": 1782820916.905127,
+    "ast_hash": "98dae4a08c1514f2af6c6db993941c53",
+    "semantic_hash": ""
+  },
+  "src/llm_gradient.py": {
+    "mtime": 1782821183.4527273,
+    "ast_hash": "716a67e7b30964d9166f1ba9f30824d2",
+    "semantic_hash": ""
+  },
+  "src/metrics_export.py": {
+    "mtime": 1782820943.0972347,
+    "ast_hash": "4c2c77af78d24391c97d9ecfa2070ac9",
+    "semantic_hash": ""
+  },
+  "tests/e2e/test_llm_smoke.py": {
+    "mtime": 1782821527.2783494,
+    "ast_hash": "37f58a89e8c5683722903e3a3f013da3",
+    "semantic_hash": ""
+  },
+  "tests/test_access_control.py": {
+    "mtime": 1782821348.8559523,
+    "ast_hash": "5f8a8510f70675c32121f9a8a979cb8f",
+    "semantic_hash": ""
+  },
+  "tests/test_eval_harness_golden.py": {
+    "mtime": 1782821456.165127,
+    "ast_hash": "47a328f3a97d04c22c20382d34ab20be",
+    "semantic_hash": ""
+  },
+  "tests/test_llm_gradient.py": {
+    "mtime": 1782821404.4717727,
+    "ast_hash": "c8a58eda2e855fda03f4f52fd703c6d8",
+    "semantic_hash": ""
+  },
+  "tests/test_metrics_export.py": {
+    "mtime": 1782821373.0158694,
+    "ast_hash": "1b367a17db82ec481f66ad1dcaba4756",
+    "semantic_hash": ""
+  },
+  "docker-compose.yml": {
+    "mtime": 1782820994.9720914,
+    "ast_hash": "5b276d6e80293d4dc6f5ca152c1cd71e",
+    "semantic_hash": ""
+  },
+  "docs/qlib_evaluation.md": {
+    "mtime": 1782821737.6675105,
+    "ast_hash": "a84b2473a88b206c6370432e99f208c8",
+    "semantic_hash": ""
+  },
+  "docs/rdagent_reference.md": {
+    "mtime": 1782821772.8400142,
+    "ast_hash": "826d6a399da2251448b2003557309fd5",
     "semantic_hash": ""
   }
 }

@@ -28,7 +28,13 @@ description: >
           OpenAICompatibleLLMClient）；src/service.py 服务边界（health/doctor/score/debate 纯函数处理器 +
           可选 FastAPI create_app 暴露 /health /score /debate，extras[service]）；src/sanitize.py 提示注入防护
           （sanitize_untrusted 清洗喂给改写 LLM 的不可信诊断：清控制符/中和越狱句/剥假角色标签，UNTRUSTED_ 分隔符兜底）。
-          生产化三档 A→B→C 全部落地，286 测试通过。
+  V10.17: 生产化硬化 档D（部署上线 + 访问控制 + 可监控 + 真梯度）- Dockerfile/docker-compose.yml 容器化
+          （多阶段构建、非 root、HEALTHCHECK）+ service.run()/berkshire-serve uvicorn 入口；src/access_control.py
+          访问控制（check_api_key 常量时间比较 API Key 鉴权 + RateLimiter 每客户端限流，经 create_app 挂到 /score /debate）；
+          src/metrics_export.py 指标导出（ServiceMetrics + render_prometheus，/metrics 端点，零依赖）；
+          src/llm_gradient.py ∇_LLM 真梯度（LLMGradientGenerator 让 LLM 生成批评 + enrich_gradients_with_llm 增强未达标节点梯度，
+          失败优雅降级回规则化）；mypy 开 check_untyped_defs、覆盖率门升 50%、固化 golden 回归。
+          生产化档 A→B→C→D 全部落地，319 测试通过。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -205,11 +211,12 @@ python3 tools/financial_rigor.py cross-validate \
 > **核心思想**: 借鉴 TextGrad (Nature 2025) 的自动微分思想，实现节点级诊断和针对性优化。
 
 > ⚠️ **实现状态（重要，避免文档与代码脱节）**
-> - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。当前"梯度（批评）"仍是**基于评分的规则化诊断模板**，非 LLM 生成。
+> - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。`backward()` 默认产出**规则化诊断模板**；V10.17 起可经 `src/llm_gradient.py::enrich_gradients_with_llm` 用 LLM 生成真实批评（∇_LLM）增强，失败自动降级回规则化。
 > - ✅ **变量真实改写（V10.13 / Option B）**：`src/prompt_optimizer.py` 的 `apply_gradient` 经 LLM 把诊断落到 Prompt 上；`TextualGradientDescent(graph, llm=...)` 注入后 `step()` 真实改写未达标 prompt 变量的 `value`（LLM 可注入/可 mock，失败优雅降级；不注入则向后兼容）。
 > - ✅ **验证门控改写 + 多轮迭代（V10.15 / 档B）**：`src/prompt_validation.py` 的 `validated_apply_gradient`（改写后评分，只有不劣于旧版+`min_improvement` 才接受否则回滚）；`TextualGradientDescent(graph, llm=..., scorer=...)` 注入 scorer 即门控；`src/eval_harness.py` 的 `run_multi_round` 跑多轮并产出 `EvolutionReport`（离线证明单调不退化且收敛）；`src/realized_feedback.py::NetworkPriceProvider` 接真实行情（多源降级链+缓存+非交易日回退，fetcher 可注入）。
 > - ✅ **可观测 + 服务化 + 注入防护（V10.16 / 档C）**：`src/observability.py` 结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）；`src/service.py` 服务边界（`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/score` `/debate`，`extras[service]`）；`src/sanitize.py` 提示注入防护（`sanitize_untrusted` 清洗喂给改写 LLM 的不可信诊断，配合 `UNTRUSTED_` 分隔符兜底）。
-> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：LLM 生成「批评/梯度」(`∇_LLM`，当前梯度仍是规则化模板)、`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。
+> - ✅ **部署 + 访问控制 + 可监控 + 真梯度（V10.17 / 档D）**：容器化 `Dockerfile`/`docker-compose.yml`（非 root + HEALTHCHECK）+ `service.run()`/`berkshire-serve` uvicorn 入口；`src/access_control.py`（`check_api_key` API Key 鉴权 + `RateLimiter` 限流，经 `create_app` 挂到 `/score` `/debate`）；`src/metrics_export.py`（`/metrics` Prometheus 文本，零依赖）；`src/llm_gradient.py` 的 `enrich_gradients_with_llm` 让 LLM 生成真实批评（∇_LLM）增强未达标节点梯度，失败优雅降级回规则化；mypy 开 `check_untyped_defs`、覆盖率门 50%、golden 回归基线。
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。（注：`∇_LLM` LLM 生成批评已于 V10.17 经 `src/llm_gradient.py` 落地，作为 `backward()` 后的可选增强层，默认仍可降级回规则化梯度。）
 
 **计算图结构**:
 ```

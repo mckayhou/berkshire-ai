@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "berkshire-ai"
-version = "10.16.0"
+version = "10.17.0"
 description = "四大师并行投研系统 + V10 TextGrad 自进化引擎（OpenClaw / QwenPaw 适配）"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -23,6 +23,10 @@ ashare = ["akshare", "tushare", "efinance", "baostock", "yfinance"]
 service = ["fastapi>=0.110", "uvicorn>=0.29"]
 # 开发 / CI 工具链
 dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.10"]
+
+[project.scripts]
+# 容器/CLI 入口：起 uvicorn 服务（需 [service] extra）
+berkshire-serve = "service:run"
 
 [project.urls]
 Homepage = "https://github.com/mckayhou/berkshire-ai"
@@ -62,6 +66,8 @@ ignore_missing_imports = true
 warn_redundant_casts = true
 warn_unused_ignores = false
 no_implicit_optional = true
+# V10.17 收紧：检查未加注解函数的函数体（此前默认跳过，漏掉大量隐性类型错误）。
+check_untyped_defs = true
 # src/ 内模块用 try/except 双导入（绝对 + 相对）以兼容 sys.path 注入，
 # 关闭重复模块名检查避免误报。
 explicit_package_bases = true

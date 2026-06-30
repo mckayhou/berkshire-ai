@@ -36,6 +36,39 @@
 
 ## 📜 版本历史
 
+### V10.17 - 2026-06-30 (生产化硬化 档D：部署上线 + 访问控制 + 指标导出 + 真梯度)
+
+把引擎从「可服务化」推进到「**可部署、可防护、可监控、批评更真实**」的上线形态。
+
+**1) 容器化部署** `Dockerfile` / `docker-compose.yml` / `.dockerignore`
+- 多阶段构建（builder 装 `.[service]` 依赖 → runtime 仅带运行所需），**非 root**（uid 10001）运行。
+- 内置 `HEALTHCHECK` 命中 `/health`；`docker compose up --build` 一键起服务。
+- 入口 `service.run()` 起 uvicorn（读 `BERKSHIRE_HOST/PORT`），并暴露 console_script `berkshire-serve`。
+
+**2) 访问控制** `src/access_control.py`
+- **API Key 鉴权**：`check_api_key()` 常量时间比较（`hmac.compare_digest`），命中返回脱敏指纹；`allowed` 为空=不鉴权（内网/开发）。
+- **每客户端限流**：`RateLimiter` 固定窗口（每分钟 N 次），按 key 指纹或 IP 分桶，线程安全。
+- 经 `service.create_app(api_keys=, rate_limit_per_min=)` 挂到 `/score` `/debate`（缺省读 `BERKSHIRE_API_KEYS` / `BERKSHIRE_RATE_LIMIT_PER_MIN`）；未配置则放行（向后兼容）。健康/指标端点不鉴权。
+
+**3) 指标导出** `src/metrics_export.py`
+- `ServiceMetrics` 线程安全计数器（各端点请求/成功/失败/鉴权拒绝/限流）。
+- `render_prometheus()` 输出 Prometheus 文本格式，经 `/metrics` 暴露；可附带 `MetricsCollector` 的 LLM 成本/token/延迟 gauge。零第三方依赖（不引入 prometheus_client）。
+
+**4) ∇_LLM 真梯度** `src/llm_gradient.py`
+- `LLMGradientGenerator.critique()`：LLM 读「该大师分析为何不达标」生成自然语言批评（替代规则化 `MASTER_CHECKS` 模板）。分析正文经 `sanitize_untrusted` 中和注入。
+- `enrich_gradients_with_llm()`：在 `backward()` 后用 LLM 批评**增强**未达标大师节点及其 prompt 节点的梯度；任何失败（无 LLM / 调用异常 / 解析空）**优雅降级回规则化梯度**，不崩链路。产物仍是结构化 `Gradient`，与 `apply_gradient` / `validated_apply_gradient` 完全兼容。
+
+**5) 工程门禁收紧**
+- mypy 开启 `check_untyped_defs`（检查未注解函数体，此前默认跳过）——`src/` 18 文件无问题。
+- 覆盖率门 45% → **50%**（当前 57%）；CI 新增 `e2e-llm`（带 secret 才跑真实 LLM 冒烟，fork 自动跳过）+ `build-image`（Docker 构建冒烟）。
+- 固化 **golden 回归** `tests/test_eval_harness_golden.py`：逐轮均值质量 0.00→0.25→0.50→0.75 精确可断言 + 坏 LLM 全回滚不退化。
+
+**测试结果**: **319 通过 + 2 跳过**（新增 33：访问控制 12 + 指标导出 6 + ∇_LLM 11 + golden 2 + 服务安全 3 - 调整；e2e 1 默认跳过）；ruff 全绿、mypy（含 check_untyped_defs）无问题、覆盖率 57%。
+
+**结论**: ✅ 上线（生产化档 D：部署 + 访问控制 + 可监控 + 真梯度）
+
+---
+
 ### V10.16 - 2026-06-30 (生产化硬化 档C：可观测性 + 服务边界 + 注入防护)
 
 把引擎从「库 + CLI」推进到「**可观测、可服务化、有安全边界**」的生产形态。

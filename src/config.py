@@ -45,6 +45,11 @@ ENV_SPEC: tuple = (
     # 引擎
     EnvVar("BERKSHIRE_SENSITIVITY", "engine", False, "收益→真相分灵敏度覆盖（默认 0.5）"),
     EnvVar("BERKSHIRE_DECISION_LOG", "engine", False, "决策日志路径（默认 ~/.berkshire）"),
+    # 服务边界（src/service.py 的 FastAPI 传输层）
+    EnvVar("BERKSHIRE_API_KEYS", "service", True, "受保护端点的 API Key（逗号分隔；空=不鉴权）"),
+    EnvVar("BERKSHIRE_RATE_LIMIT_PER_MIN", "service", False, "每客户端每分钟限流（0/空=关闭）"),
+    EnvVar("BERKSHIRE_HOST", "service", False, "服务监听地址（默认 0.0.0.0）"),
+    EnvVar("BERKSHIRE_PORT", "service", False, "服务监听端口（默认 8000）"),
     # A 股数据降级链
     EnvVar("BERKSHIRE_DATA_SOURCES", "ashare", False, "数据源优先级（逗号分隔，覆盖默认链）"),
     EnvVar("BERKSHIRE_ENABLE_TUSHARE", "ashare", False, "置 1 启用 tushare 源"),
@@ -114,6 +119,9 @@ class Settings:
     # engine
     sensitivity: Optional[float] = None
     decision_log: Optional[str] = None
+    # service
+    api_keys: List[str] = field(default_factory=list)
+    rate_limit_per_min: int = 0
     # ashare
     enable_tushare: bool = False
     tushare_token: Optional[str] = None
@@ -149,6 +157,16 @@ def get_settings() -> Settings:
 
     enable_tushare = (_env("BERKSHIRE_ENABLE_TUSHARE") or "").lower() in {"1", "true", "yes", "on"}
 
+    api_keys_raw = _env("BERKSHIRE_API_KEYS") or ""
+    api_keys = [k.strip() for k in api_keys_raw.split(",") if k.strip()]
+    rate_limit = 0
+    raw_rl = _env("BERKSHIRE_RATE_LIMIT_PER_MIN")
+    if raw_rl:
+        try:
+            rate_limit = max(0, int(raw_rl))
+        except ValueError:
+            rate_limit = 0
+
     return Settings(
         tavily_keys=tavily_keys,
         llm_api_key=_env("BERKSHIRE_LLM_API_KEY", ("OPENAI_API_KEY",)),
@@ -156,6 +174,8 @@ def get_settings() -> Settings:
         llm_model=_env("BERKSHIRE_LLM_MODEL") or "gpt-4o-mini",
         sensitivity=sensitivity,
         decision_log=_env("BERKSHIRE_DECISION_LOG"),
+        api_keys=api_keys,
+        rate_limit_per_min=rate_limit,
         enable_tushare=enable_tushare,
         tushare_token=_env("TUSHARE_TOKEN"),
         data_sources=_env("BERKSHIRE_DATA_SOURCES"),
@@ -210,6 +230,17 @@ def doctor(settings: Optional[Settings] = None) -> Dict[str, Dict[str, object]]:
 
     engine_detail = f"sensitivity={'默认0.5' if s.sensitivity is None else s.sensitivity}"
     report["engine"] = {"status": "ready", "detail": engine_detail}
+
+    # 服务安全态势：鉴权 + 限流是否开启（暴露公网时强烈建议开启）
+    auth = f"{len(s.api_keys)} key(s)" if s.api_keys else "未鉴权"
+    rl = f"{s.rate_limit_per_min}/min" if s.rate_limit_per_min else "无限流"
+    if s.api_keys and s.rate_limit_per_min:
+        svc_status = "ready"
+    elif s.api_keys or s.rate_limit_per_min:
+        svc_status = "degraded"
+    else:
+        svc_status = "degraded"
+    report["service"] = {"status": svc_status, "detail": f"鉴权={auth}, 限流={rl}"}
 
     return report
 

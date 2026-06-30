@@ -16,21 +16,28 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any, Dict
 
 try:
     # 绝对导入解析到 src/config.py；与仓库根 config/ 目录同名，mypy 误判故忽略
+    from access_control import RateLimiter, check_api_key  # type: ignore[attr-defined]
     from config import doctor as config_doctor  # type: ignore[attr-defined]
     from debate import run_debate
     from decision_log import DecisionRecord
+    from metrics_export import ServiceMetrics, render_prometheus
+    from observability import get_logger
     from realized_feedback import realized_scores
 except ImportError:  # pragma: no cover - 包内导入回退
+    from .access_control import RateLimiter, check_api_key
     from .config import doctor as config_doctor
     from .debate import run_debate
     from .decision_log import DecisionRecord
+    from .metrics_export import ServiceMetrics, render_prometheus
+    from .observability import get_logger
     from .realized_feedback import realized_scores
 
-APP_VERSION = "10.16"
+APP_VERSION = "10.17"
 SERVICE_NAME = "berkshire-ai"
 
 
@@ -122,24 +129,72 @@ def debate(payload: Dict[str, Any]) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 # FastAPI 传输层（可选；pip install 'berkshire-ai[service]'）
 # ---------------------------------------------------------------------------
-def create_app():
-    """构建 FastAPI 应用（把纯处理函数挂到路由）。未装 FastAPI 时抛清晰错误。"""
+def create_app(
+    *,
+    api_keys: "list[str] | None" = None,
+    rate_limit_per_min: "int | None" = None,
+    metrics: "ServiceMetrics | None" = None,
+):
+    """构建 FastAPI 应用（把纯处理函数挂到路由）。未装 FastAPI 时抛清晰错误。
+
+    生产防护（均可选，缺省回退到环境变量 / 关闭）：
+      - api_keys：受保护端点（/score /debate）要求 `X-API-Key` 命中其一；
+        缺省读 `BERKSHIRE_API_KEYS`（逗号分隔）；都没有则不鉴权（开发/内网）。
+      - rate_limit_per_min：每个 API key（或匿名按客户端 IP）每分钟最大请求数；
+        缺省读 `BERKSHIRE_RATE_LIMIT_PER_MIN`；0/None 关闭。
+      - metrics：进程级请求/错误计数器；缺省自动新建并经 `/metrics` 暴露。
+    """
     try:
-        from fastapi import FastAPI, HTTPException
-        from fastapi.responses import JSONResponse
+        from fastapi import FastAPI, HTTPException, Request
+        from fastapi.responses import JSONResponse, PlainTextResponse
     except ImportError as e:  # pragma: no cover - 仅在未装 fastapi 时触发
         raise RuntimeError(
             "FastAPI 未安装。请 `pip install 'berkshire-ai[service]'`（fastapi + uvicorn）。"
         ) from e
 
-    app = FastAPI(title=SERVICE_NAME, version=APP_VERSION)
+    # `from __future__ import annotations` 把路由参数注解变成字符串，FastAPI 需从
+    # 模块全局解析它们；Request 在本函数内才导入，注入模块全局以便注解解析，
+    # 否则 `request: Request` 会被误判为查询参数（422）。
+    globals()["Request"] = Request
 
-    def _guard(fn, body=None):
+    keys = api_keys if api_keys is not None else _keys_from_env()
+    rpm = rate_limit_per_min if rate_limit_per_min is not None else _rpm_from_env()
+    limiter = RateLimiter(max_per_min=rpm) if rpm else None
+    svc_metrics = metrics or ServiceMetrics()
+    logger = get_logger("service")
+
+    app = FastAPI(title=SERVICE_NAME, version=APP_VERSION)
+    app.state.metrics = svc_metrics
+
+    def _auth(request: "Request") -> str:
+        """鉴权 + 限流；返回限流配额键（key 指纹或 ip）。失败抛 HTTPException。
+
+        从请求头读 X-API-Key、从连接读客户端 IP，避免把鉴权参数混入请求体 schema。
+        """
+        provided = request.headers.get("x-api-key")
+        request_ip = request.client.host if request.client else "unknown"
+        ok, ident = check_api_key(provided, keys)
+        if not ok:
+            svc_metrics.incr("auth_rejected")
+            raise HTTPException(status_code=401, detail="无效或缺失 X-API-Key")
+        bucket = ident or request_ip
+        if limiter is not None and not limiter.allow(bucket):
+            svc_metrics.incr("rate_limited")
+            raise HTTPException(status_code=429, detail="请求过于频繁，请稍后再试")
+        return bucket
+
+    def _guard(name: str, fn, body=None):
+        svc_metrics.incr(f"{name}_requests")
         try:
-            return fn() if body is None else fn(body)
+            result = fn() if body is None else fn(body)
+            svc_metrics.incr(f"{name}_ok")
+            return result
         except ValueError as e:
+            svc_metrics.incr(f"{name}_bad_request")
             raise HTTPException(status_code=400, detail=str(e)) from e
         except Exception as e:  # noqa: BLE001
+            svc_metrics.incr(f"{name}_error")
+            logger.warning("handler_error", extra={"endpoint": name, "error": str(e)})
             return JSONResponse(status_code=500, content={"error": str(e)})
 
     @app.get("/health")
@@ -150,12 +205,58 @@ def create_app():
     def _doctor():
         return doctor()
 
+    @app.get("/metrics")
+    def _metrics():
+        return PlainTextResponse(render_prometheus(svc_metrics))
+
     @app.post("/score")
-    async def _score(payload: dict):
-        return _guard(score, payload)
+    async def _score(payload: dict, request: Request):
+        _auth(request)
+        return _guard("score", score, payload)
 
     @app.post("/debate")
-    async def _debate(payload: dict):
-        return _guard(debate, payload)
+    async def _debate(payload: dict, request: Request):
+        _auth(request)
+        return _guard("debate", debate, payload)
 
     return app
+
+
+def _keys_from_env() -> "list[str]":
+    raw = os.getenv("BERKSHIRE_API_KEYS", "").strip()
+    return [k.strip() for k in raw.split(",") if k.strip()]
+
+
+def _rpm_from_env() -> int:
+    raw = os.getenv("BERKSHIRE_RATE_LIMIT_PER_MIN", "").strip()
+    try:
+        return max(0, int(raw)) if raw else 0
+    except ValueError:
+        return 0
+
+
+def run() -> None:  # pragma: no cover - 进程入口，由容器/CLI 调用
+    """uvicorn 进程入口：`python -m src.service` 或 console_script `berkshire-serve`。
+
+    监听地址/端口走环境变量：BERKSHIRE_HOST(默认 0.0.0.0) / BERKSHIRE_PORT(默认 8000)。
+    """
+    try:
+        import uvicorn
+    except ImportError as e:
+        raise RuntimeError(
+            "uvicorn 未安装。请 `pip install 'berkshire-ai[service]'`。"
+        ) from e
+
+    try:
+        from config import load_dotenv  # type: ignore[attr-defined]
+    except ImportError:  # pragma: no cover
+        from .config import load_dotenv
+    load_dotenv()
+
+    host = os.getenv("BERKSHIRE_HOST", "0.0.0.0")  # noqa: S104 - 容器内监听
+    port = int(os.getenv("BERKSHIRE_PORT", "8000"))
+    uvicorn.run(create_app(), host=host, port=port)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    run()

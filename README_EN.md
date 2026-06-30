@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.16** (production hardening, tier C: structured logging + run_id propagation + LLM cost/token/latency metrics `observability` + service boundary `service` (FastAPI, optional) + prompt-injection defense `sanitize`; cumulative with tier A CI/packaging/central-config + tier B validation-gated rewriting/real-market data/eval harness). Production hardening tiers A→B→C all shipped. Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.17** (production hardening, tier D: containerized deploy `Dockerfile`/`docker-compose` + access control `access_control` (API-key auth + per-client rate limit) + metrics export `metrics_export` (`/metrics` Prometheus) + ∇_LLM real gradient `llm_gradient` (LLM-generated critique, graceful fallback) + mypy `check_untyped_defs` + golden regression; cumulative with tier A CI/packaging/central-config + tier B validation-gated rewriting/real-market data/eval harness + tier C observability/service/injection-defense). Production hardening tiers A→B→C→D all shipped. Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -39,6 +39,16 @@
 **Validation-gated evolution (V10.15 / tier B)**: rewriting alone isn't enough — "the LLM claims it's better" must be proven. `prompt_validation.validated_apply_gradient` scores the old vs. candidate prompt on a held-out set and accepts the candidate **only if it is not worse (+`min_improvement`), else rolls back** — preventing prompt drift. `NetworkPriceProvider` wires the realized-return feedback loop to real market data via the `tools/data_sources` fallback chain (in-memory cache + prior-trading-day fallback, injectable fetcher for offline tests). `eval_harness.run_multi_round` drives the multi-round loop and yields an `EvolutionReport` whose tests assert evolution is **monotonic non-decreasing and convergent**.
 
 **Observability, service boundary & injection defense (V10.16 / tier C)**: `observability` provides structured JSON logging, a `run_id` propagated via `contextvar` (`run_context()`), and LLM cost/token/latency metrics (`MetricsCollector`, wired into `OpenAICompatibleLLMClient`). `service.create_app()` exposes the engine over FastAPI (`/health`, `/config/doctor`, `/score`, `/debate`) — the core handlers are framework-free pure functions, fully offline-testable. `sanitize.sanitize_untrusted` neutralizes prompt-injection in the untrusted downstream diagnosis fed to the rewriter (control-char stripping, jailbreak-phrase neutralization, fake role-tag stripping), wrapped in explicit `UNTRUSTED_*` delimiters as defense-in-depth alongside validation gating.
+
+**Deploy, access control, metrics & real gradient (V10.17 / tier D)**: ships a multi-stage `Dockerfile` (non-root, `HEALTHCHECK`) + `docker-compose.yml` and a `berkshire-serve`/`service.run()` uvicorn entrypoint. `access_control` adds constant-time API-key auth (`check_api_key`) + a thread-safe fixed-window `RateLimiter`, wired into `/score` `/debate` via `create_app(api_keys=, rate_limit_per_min=)` (env `BERKSHIRE_API_KEYS` / `BERKSHIRE_RATE_LIMIT_PER_MIN`). `metrics_export` exposes a dependency-free Prometheus `/metrics` endpoint. `llm_gradient.enrich_gradients_with_llm` upgrades the rule-based "gradient" template into a real **LLM-generated critique** (∇_LLM), with graceful fallback to the rule-based gradient on any failure. Engineering gates tightened: mypy `check_untyped_defs`, coverage gate 50%, a deterministic golden regression for the evolution trajectory, plus CI jobs for Docker build + optional real-LLM e2e smoke.
+
+### Deployment
+
+```bash
+cp .env.example .env   # set BERKSHIRE_API_KEYS=k1,k2 and BERKSHIRE_RATE_LIMIT_PER_MIN=120
+docker compose up --build
+curl localhost:8000/health && curl localhost:8000/metrics
+```
 
 ## 📊 System Architecture
 
