@@ -90,27 +90,27 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782801946.0850098,
-    "ast_hash": "dd8f1de2a16f17aa8d21cc620a91cbae",
+    "mtime": 1782811551.040529,
+    "ast_hash": "6cb304e9416811040e22a7bfdc39231a",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782806931.7328188,
+    "mtime": 1782808364.049185,
     "ast_hash": "f00838449c4b520fbd0c2397f9a3034e",
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782808221.4740164,
-    "ast_hash": "14ee8749d8305f8c76440e66965df8e3",
+    "mtime": 1782809737.8684616,
+    "ast_hash": "c2fce8f9621bd7741d3b9df524511b2b",
     "semantic_hash": ""
   },
   "config/state.md": {
-    "mtime": 1782802321.5289204,
-    "ast_hash": "9868618885b43341035d66f1ef9663e9",
+    "mtime": 1782809671.3924744,
+    "ast_hash": "682878868f9894f58b7ed3c66577c800",
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
-    "mtime": 1782808144.4565098,
+    "mtime": 1782808364.049961,
     "ast_hash": "820fe260dd51d41119a2c01fa3fcaef6",
     "semantic_hash": ""
   },
@@ -225,12 +225,12 @@
     "semantic_hash": ""
   },
   "README_EN.md": {
-    "mtime": 1782802024.8858929,
-    "ast_hash": "b7ae0b7574d42fe33a8d36fc3ec17504",
+    "mtime": 1782811568.047958,
+    "ast_hash": "7ee9ca0c36758f54e15ab67c9af6ec88",
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782807059.9939494,
+    "mtime": 1782808364.04975,
     "ast_hash": "6eb6da2c873a25b764ee3c4f573606dd",
     "semantic_hash": ""
   },
@@ -270,7 +270,7 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782807029.7311573,
+    "mtime": 1782808364.0512638,
     "ast_hash": "1ba2d0bd1e6721c8ba193608bbb2e024",
     "semantic_hash": ""
   },
@@ -375,22 +375,22 @@
     "semantic_hash": ""
   },
   "src/realized_feedback.py": {
-    "mtime": 1782806806.376111,
+    "mtime": 1782808364.0507188,
     "ast_hash": "1fa69e08d181579620198b8270b08b2d",
     "semantic_hash": ""
   },
   "tests/test_realized_feedback_loop.py": {
-    "mtime": 1782806830.1044948,
+    "mtime": 1782808364.0510921,
     "ast_hash": "96f58ce4403fb726b87dddb4c4d16dee",
     "semantic_hash": ""
   },
   "tests/test_calibrate_sensitivity.py": {
-    "mtime": 1782805589.3825355,
+    "mtime": 1782808364.0508866,
     "ast_hash": "c338f4b4fde45db4740460771e1b01d7",
     "semantic_hash": ""
   },
   "tools/calibrate_sensitivity.py": {
-    "mtime": 1782808202.1802757,
+    "mtime": 1782808364.0514123,
     "ast_hash": "5a9934a088024095e367b1a15d7c8c86",
     "semantic_hash": ""
   }

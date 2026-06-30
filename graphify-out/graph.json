@@ -4,466 +4,12 @@
   "graph": {},
   "nodes": [
     {
-      "label": "portfolio-weekly.sh",
-      "file_type": "code",
-      "source_file": "scripts/portfolio-weekly.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "_origin": "ast",
-      "id": "portfolio-weekly",
-      "community": 45,
-      "norm_label": "portfolio-weekly.sh"
-    },
-    {
-      "label": "portfolio-weekly.sh script",
-      "file_type": "code",
-      "source_file": "scripts/portfolio-weekly.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "_origin": "ast",
-      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry",
-      "community": 45,
-      "norm_label": "portfolio-weekly.sh script"
-    },
-    {
-      "label": "Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-",
-      "file_type": "rationale",
-      "source_file": "src/__init__.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "__init__",
-      "community": 5,
-      "norm_label": "berkshire ai v10 engine package.  exports the main classes for textgrad-based 4-"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/debate.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "debate",
-      "community": 23,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/decision_log.py",
-      "source_location": "L40",
-      "_origin": "ast",
-      "id": "decision_log",
-      "community": 49,
-      "norm_label": ""
-    },
-    {
-      "label": "Simple runner for the engine.",
-      "file_type": "rationale",
-      "source_file": "src/evolution_loop_v10.py",
-      "source_location": "L59",
-      "_origin": "ast",
-      "id": "evolution_loop_v10",
-      "community": 12,
-      "norm_label": "simple runner for the engine."
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/graph.py",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "graph",
-      "community": 15,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/optimizer.py",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "optimizer",
-      "community": 26,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/realized_feedback.py",
-      "source_location": "L85",
-      "_origin": "ast",
-      "id": "realized_feedback",
-      "community": 54,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/tavily_search.py",
-      "source_location": "L36",
-      "_origin": "ast",
-      "id": "tavily_search",
-      "community": 34,
-      "norm_label": ""
-    },
-    {
-      "label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf\uff1a\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5\uff0c\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002",
-      "file_type": "rationale",
-      "source_file": "tests/test_calibrate_sensitivity.py",
-      "source_location": "L174",
-      "_origin": "ast",
-      "id": "test_calibrate_sensitivity",
-      "community": 64,
-      "norm_label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf:\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5,\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002"
-    },
-    {
-      "label": "test_realized_feedback_loop.py",
-      "file_type": "code",
-      "source_file": "tests/test_realized_feedback_loop.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_realized_feedback_loop",
-      "community": 55,
-      "norm_label": "test_realized_feedback_loop.py"
-    },
-    {
-      "label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf\uff0c\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002",
-      "file_type": "rationale",
-      "source_file": "tests/test_tools_data_sources.py",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "test_tools_data_sources",
-      "community": 58,
-      "norm_label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf,\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002"
-    },
-    {
-      "label": "test_tools_financial_rigor.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_financial_rigor.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_financial_rigor",
-      "community": 3,
-      "norm_label": "test_tools_financial_rigor.py"
-    },
-    {
-      "label": "test_tools_misc.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_misc.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_misc",
-      "community": 46,
-      "norm_label": "test_tools_misc.py"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "tests/test_tools_network.py",
-      "source_location": "L66",
-      "_origin": "ast",
-      "id": "test_tools_network",
-      "community": 47,
-      "norm_label": ""
-    },
-    {
-      "label": "test_tools_notify.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_notify.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_notify",
-      "community": 59,
-      "norm_label": "test_tools_notify.py"
-    },
-    {
-      "label": "test_tools_portfolio_risk.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_portfolio_risk.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_portfolio_risk",
-      "community": 60,
-      "norm_label": "test_tools_portfolio_risk.py"
-    },
-    {
-      "label": "test_tools_portfolio_scan.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_portfolio_scan.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_portfolio_scan",
-      "community": 61,
-      "norm_label": "test_tools_portfolio_scan.py"
-    },
-    {
-      "label": "test_tools_report_audit.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_report_audit.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_report_audit",
-      "community": 38,
-      "norm_label": "test_tools_report_audit.py"
-    },
-    {
-      "label": "test_tools_thesis_queue.py",
-      "file_type": "code",
-      "source_file": "tests/test_tools_thesis_queue.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_tools_thesis_queue",
-      "community": 52,
-      "norm_label": "test_tools_thesis_queue.py"
-    },
-    {
-      "label": "test_v10_backtest.py",
-      "file_type": "code",
-      "source_file": "tests/test_v10_backtest.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_v10_backtest",
-      "community": 35,
-      "norm_label": "test_v10_backtest.py"
-    },
-    {
-      "label": "\u5728 pytest \u4e0b\u89e6\u53d1 skip\uff1b\u4f5c\u4e3a\u811a\u672c\u8fd0\u884c\u65f6\u9759\u9ed8\u5ffd\u7565\u3002",
-      "file_type": "rationale",
-      "source_file": "tests/test_v10_integration.py",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "test_v10_integration",
-      "community": 36,
-      "norm_label": "\u5728 pytest \u4e0b\u89e6\u53d1 skip;\u4f5c\u4e3a\u811a\u672c\u8fd0\u884c\u65f6\u9759\u9ed8\u5ffd\u7565\u3002"
-    },
-    {
-      "label": "MASTERS \u662f\u552f\u4e00\u6765\u6e90\uff1a\u6bcf\u4f4d\u5927\u5e08\u90fd\u6d3e\u751f\u51fa prompt/model/analysis \u4e09\u4e2a\u8282\u70b9",
-      "file_type": "rationale",
-      "source_file": "tests/test_v10_unit.py",
-      "source_location": "L90",
-      "_origin": "ast",
-      "id": "test_v10_unit",
-      "community": 37,
-      "norm_label": "masters \u662f\u552f\u4e00\u6765\u6e90:\u6bcf\u4f4d\u5927\u5e08\u90fd\u6d3e\u751f\u51fa prompt/model/analysis \u4e09\u4e2a\u8282\u70b9"
-    },
-    {
-      "label": "\u7528 curl --noproxy \u76f4\u8fde\uff0c\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25\uff08\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94\uff09\u81ea\u52a8\u91cd\u8bd5\uff0c\u6700\u7ec8\u5931\u8d25\u629b ConnectionError\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/ashare_data.py",
-      "source_location": "L29",
-      "_origin": "ast",
-      "id": "ashare_data",
-      "community": 6,
-      "norm_label": "\u7528 curl --noproxy \u76f4\u8fde,\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25(\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94)\u81ea\u52a8\u91cd\u8bd5,\u6700\u7ec8\u5931\u8d25\u629b connectionerror\u3002"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "tools/calibrate_sensitivity.py",
-      "source_location": "L264",
-      "_origin": "ast",
-      "id": "calibrate_sensitivity",
-      "community": 63,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "tools/data_sources.py",
-      "source_location": "L60",
-      "_origin": "ast",
-      "id": "data_sources",
-      "community": 56,
-      "norm_label": ""
-    },
-    {
-      "label": "Convert any numeric to exact Decimal, avoiding float traps.",
-      "file_type": "rationale",
-      "source_file": "tools/financial_rigor.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "financial_rigor",
-      "community": 14,
-      "norm_label": "convert any numeric to exact decimal, avoiding float traps."
-    },
-    {
-      "label": "log-command.sh",
-      "file_type": "code",
-      "source_file": "tools/log-command.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "_origin": "ast",
-      "id": "log-command",
-      "community": 0,
-      "norm_label": "log-command.sh"
-    },
-    {
-      "label": "log-command.sh script",
-      "file_type": "code",
-      "source_file": "tools/log-command.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "_origin": "ast",
-      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry",
-      "community": 0,
-      "norm_label": "log-command.sh script"
-    },
-    {
-      "label": "\u901a\u8fc7Yahoo Finance API\u83b7\u53d6\u65e5\u7ebf\u6570\u636e",
-      "file_type": "rationale",
-      "source_file": "tools/momentum_backtest.py",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "momentum_backtest",
-      "community": 22,
-      "norm_label": "\u901a\u8fc7yahoo finance api\u83b7\u53d6\u65e5\u7ebf\u6570\u636e"
-    },
-    {
-      "label": "momentum_backtest_v2.py",
-      "file_type": "code",
-      "source_file": "tools/momentum_backtest_v2.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "momentum_backtest_v2",
-      "community": 51,
-      "norm_label": "momentum_backtest_v2.py"
-    },
-    {
-      "label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7\uff1a\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / None\uff0c\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de N/A\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/morningstar_fair_value.py",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "morningstar_fair_value",
-      "community": 24,
-      "norm_label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7:\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / none,\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de n/a\u3002"
-    },
-    {
-      "label": "\u7528 curl \u53d1 POST JSON\uff0c\u8fd4\u56de (status_code:int, body:str)\u3002      \u7f51\u7edc\u5f02\u5e38/\u8d85\u65f6\u4e0d\u629b\u51fa\uff0c\u8fd4\u56de (0, \u9519\u8bef\u4fe1\u606f)\uff0c",
-      "file_type": "rationale",
-      "source_file": "tools/notify.py",
-      "source_location": "L48",
-      "_origin": "ast",
-      "id": "notify",
-      "community": 57,
-      "norm_label": "\u7528 curl \u53d1 post json,\u8fd4\u56de (status_code:int, body:str)\u3002      \u7f51\u7edc\u5f02\u5e38/\u8d85\u65f6\u4e0d\u629b\u51fa,\u8fd4\u56de (0, \u9519\u8bef\u4fe1\u606f),"
-    },
-    {
-      "label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/portfolio_risk.py",
-      "source_location": "L52",
-      "_origin": "ast",
-      "id": "portfolio_risk",
-      "community": 50,
-      "norm_label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002"
-    },
-    {
-      "label": "\u52a0\u8f7d watchlist\uff1bgroups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/portfolio_scan.py",
-      "source_location": "L45",
-      "_origin": "ast",
-      "id": "portfolio_scan",
-      "community": 48,
-      "norm_label": "\u52a0\u8f7d watchlist;groups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002"
-    },
-    {
-      "label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/report_audit.py",
-      "source_location": "L65",
-      "_origin": "ast",
-      "id": "report_audit",
-      "community": 30,
-      "norm_label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002"
-    },
-    {
-      "label": "\u7528curl\u83b7\u53d6Yahoo Finance\u65e5\u7ebf\u6570\u636e",
-      "file_type": "rationale",
-      "source_file": "tools/stock_screener.py",
-      "source_location": "L49",
-      "_origin": "ast",
-      "id": "stock_screener",
-      "community": 33,
-      "norm_label": "\u7528curl\u83b7\u53d6yahoo finance\u65e5\u7ebf\u6570\u636e"
-    },
-    {
-      "label": "\u89e3\u6790 \u00a71 Active Portfolio Theses \u8868\u683c\u884c\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/thesis_queue.py",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "thesis_queue",
-      "community": 53,
-      "norm_label": "\u89e3\u6790 \u00a71 active portfolio theses \u8868\u683c\u884c\u3002"
-    },
-    {
-      "label": "\u4f18\u5148\u9875\u9762 JS fetch\uff1b\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/xueqiu_scraper.py",
-      "source_location": "L63",
-      "_origin": "ast",
-      "id": "xueqiu_scraper",
-      "community": 41,
-      "norm_label": "\u4f18\u5148\u9875\u9762 js fetch;\u5931\u8d25\u56de\u9000\u5230 context.request\u3002"
-    },
-    {
-      "label": "update-platforms.sh",
-      "file_type": "code",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "_origin": "ast",
-      "id": "update-platforms",
-      "community": 1,
-      "norm_label": "update-platforms.sh"
-    },
-    {
-      "label": "update-platforms.sh script",
-      "file_type": "code",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "_origin": "ast",
-      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry",
-      "community": 1,
-      "norm_label": "update-platforms.sh script"
-    },
-    {
-      "label": "graphify",
-      "file_type": "document",
-      "source_file": "AGENTS.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "AGENTS",
-      "community": 2,
-      "norm_label": "graphify"
-    },
-    {
       "label": "Berkshire AI - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf\uff08\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38\uff09",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "README.md",
+      "id": "README",
       "community": 4,
       "norm_label": "berkshire ai - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf(\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38)"
     },
@@ -478,14 +24,468 @@
       "norm_label": "berkshire ai \u2014 four-masters parallel investment research (upstream fully integrated)"
     },
     {
+      "label": "portfolio-weekly.sh",
+      "file_type": "code",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "community": 45,
+      "norm_label": "portfolio-weekly.sh",
+      "id": "portfolio-weekly"
+    },
+    {
+      "label": "portfolio-weekly.sh script",
+      "file_type": "code",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "community": 45,
+      "norm_label": "portfolio-weekly.sh script",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "label": "Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-",
+      "file_type": "rationale",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "berkshire ai v10 engine package.  exports the main classes for textgrad-based 4-",
+      "id": "__init__"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/debate.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "community": 23,
+      "norm_label": "",
+      "id": "debate"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/decision_log.py",
+      "source_location": "L40",
+      "_origin": "ast",
+      "community": 49,
+      "norm_label": "",
+      "id": "decision_log"
+    },
+    {
+      "label": "Simple runner for the engine.",
+      "file_type": "rationale",
+      "source_file": "src/evolution_loop_v10.py",
+      "source_location": "L59",
+      "_origin": "ast",
+      "community": 12,
+      "norm_label": "simple runner for the engine.",
+      "id": "evolution_loop_v10"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/graph.py",
+      "source_location": "L19",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "",
+      "id": "graph"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/optimizer.py",
+      "source_location": "L16",
+      "_origin": "ast",
+      "community": 26,
+      "norm_label": "",
+      "id": "optimizer"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/realized_feedback.py",
+      "source_location": "L85",
+      "_origin": "ast",
+      "community": 54,
+      "norm_label": "",
+      "id": "realized_feedback"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/tavily_search.py",
+      "source_location": "L36",
+      "_origin": "ast",
+      "community": 34,
+      "norm_label": "",
+      "id": "tavily_search"
+    },
+    {
+      "label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf\uff1a\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5\uff0c\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002",
+      "file_type": "rationale",
+      "source_file": "tests/test_calibrate_sensitivity.py",
+      "source_location": "L174",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf:\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5,\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002",
+      "id": "test_calibrate_sensitivity"
+    },
+    {
+      "label": "test_realized_feedback_loop.py",
+      "file_type": "code",
+      "source_file": "tests/test_realized_feedback_loop.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 55,
+      "norm_label": "test_realized_feedback_loop.py",
+      "id": "test_realized_feedback_loop"
+    },
+    {
+      "label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf\uff0c\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002",
+      "file_type": "rationale",
+      "source_file": "tests/test_tools_data_sources.py",
+      "source_location": "L25",
+      "_origin": "ast",
+      "community": 58,
+      "norm_label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf,\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002",
+      "id": "test_tools_data_sources"
+    },
+    {
+      "label": "test_tools_financial_rigor.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_financial_rigor.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "test_tools_financial_rigor.py",
+      "id": "test_tools_financial_rigor"
+    },
+    {
+      "label": "test_tools_misc.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_misc.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 46,
+      "norm_label": "test_tools_misc.py",
+      "id": "test_tools_misc"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tests/test_tools_network.py",
+      "source_location": "L66",
+      "_origin": "ast",
+      "community": 47,
+      "norm_label": "",
+      "id": "test_tools_network"
+    },
+    {
+      "label": "test_tools_notify.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_notify.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 59,
+      "norm_label": "test_tools_notify.py",
+      "id": "test_tools_notify"
+    },
+    {
+      "label": "test_tools_portfolio_risk.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_portfolio_risk.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 60,
+      "norm_label": "test_tools_portfolio_risk.py",
+      "id": "test_tools_portfolio_risk"
+    },
+    {
+      "label": "test_tools_portfolio_scan.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_portfolio_scan.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 61,
+      "norm_label": "test_tools_portfolio_scan.py",
+      "id": "test_tools_portfolio_scan"
+    },
+    {
+      "label": "test_tools_report_audit.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_report_audit.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 38,
+      "norm_label": "test_tools_report_audit.py",
+      "id": "test_tools_report_audit"
+    },
+    {
+      "label": "test_tools_thesis_queue.py",
+      "file_type": "code",
+      "source_file": "tests/test_tools_thesis_queue.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 52,
+      "norm_label": "test_tools_thesis_queue.py",
+      "id": "test_tools_thesis_queue"
+    },
+    {
+      "label": "test_v10_backtest.py",
+      "file_type": "code",
+      "source_file": "tests/test_v10_backtest.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 35,
+      "norm_label": "test_v10_backtest.py",
+      "id": "test_v10_backtest"
+    },
+    {
+      "label": "\u5728 pytest \u4e0b\u89e6\u53d1 skip\uff1b\u4f5c\u4e3a\u811a\u672c\u8fd0\u884c\u65f6\u9759\u9ed8\u5ffd\u7565\u3002",
+      "file_type": "rationale",
+      "source_file": "tests/test_v10_integration.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 36,
+      "norm_label": "\u5728 pytest \u4e0b\u89e6\u53d1 skip;\u4f5c\u4e3a\u811a\u672c\u8fd0\u884c\u65f6\u9759\u9ed8\u5ffd\u7565\u3002",
+      "id": "test_v10_integration"
+    },
+    {
+      "label": "MASTERS \u662f\u552f\u4e00\u6765\u6e90\uff1a\u6bcf\u4f4d\u5927\u5e08\u90fd\u6d3e\u751f\u51fa prompt/model/analysis \u4e09\u4e2a\u8282\u70b9",
+      "file_type": "rationale",
+      "source_file": "tests/test_v10_unit.py",
+      "source_location": "L90",
+      "_origin": "ast",
+      "community": 37,
+      "norm_label": "masters \u662f\u552f\u4e00\u6765\u6e90:\u6bcf\u4f4d\u5927\u5e08\u90fd\u6d3e\u751f\u51fa prompt/model/analysis \u4e09\u4e2a\u8282\u70b9",
+      "id": "test_v10_unit"
+    },
+    {
+      "label": "\u7528 curl --noproxy \u76f4\u8fde\uff0c\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25\uff08\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94\uff09\u81ea\u52a8\u91cd\u8bd5\uff0c\u6700\u7ec8\u5931\u8d25\u629b ConnectionError\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_data.py",
+      "source_location": "L29",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "\u7528 curl --noproxy \u76f4\u8fde,\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25(\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94)\u81ea\u52a8\u91cd\u8bd5,\u6700\u7ec8\u5931\u8d25\u629b connectionerror\u3002",
+      "id": "ashare_data"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/calibrate_sensitivity.py",
+      "source_location": "L264",
+      "_origin": "ast",
+      "community": 63,
+      "norm_label": "",
+      "id": "calibrate_sensitivity"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/data_sources.py",
+      "source_location": "L60",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "",
+      "id": "data_sources"
+    },
+    {
+      "label": "Convert any numeric to exact Decimal, avoiding float traps.",
+      "file_type": "rationale",
+      "source_file": "tools/financial_rigor.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "community": 14,
+      "norm_label": "convert any numeric to exact decimal, avoiding float traps.",
+      "id": "financial_rigor"
+    },
+    {
+      "label": "log-command.sh",
+      "file_type": "code",
+      "source_file": "tools/log-command.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "log-command.sh",
+      "id": "log-command"
+    },
+    {
+      "label": "log-command.sh script",
+      "file_type": "code",
+      "source_file": "tools/log-command.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "log-command.sh script",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry"
+    },
+    {
+      "label": "\u901a\u8fc7Yahoo Finance API\u83b7\u53d6\u65e5\u7ebf\u6570\u636e",
+      "file_type": "rationale",
+      "source_file": "tools/momentum_backtest.py",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 22,
+      "norm_label": "\u901a\u8fc7yahoo finance api\u83b7\u53d6\u65e5\u7ebf\u6570\u636e",
+      "id": "momentum_backtest"
+    },
+    {
+      "label": "momentum_backtest_v2.py",
+      "file_type": "code",
+      "source_file": "tools/momentum_backtest_v2.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 51,
+      "norm_label": "momentum_backtest_v2.py",
+      "id": "momentum_backtest_v2"
+    },
+    {
+      "label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7\uff1a\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / None\uff0c\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de N/A\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/morningstar_fair_value.py",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 24,
+      "norm_label": "\u5b89\u5168\u6e32\u67d3\u661f\u7ea7:\u517c\u5bb9 int / float / \u5b57\u7b26\u4e32 / none,\u65e0\u6cd5\u89e3\u6790\u65f6\u8fd4\u56de n/a\u3002",
+      "id": "morningstar_fair_value"
+    },
+    {
+      "label": "\u7528 curl \u53d1 POST JSON\uff0c\u8fd4\u56de (status_code:int, body:str)\u3002      \u7f51\u7edc\u5f02\u5e38/\u8d85\u65f6\u4e0d\u629b\u51fa\uff0c\u8fd4\u56de (0, \u9519\u8bef\u4fe1\u606f)\uff0c",
+      "file_type": "rationale",
+      "source_file": "tools/notify.py",
+      "source_location": "L48",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "\u7528 curl \u53d1 post json,\u8fd4\u56de (status_code:int, body:str)\u3002      \u7f51\u7edc\u5f02\u5e38/\u8d85\u65f6\u4e0d\u629b\u51fa,\u8fd4\u56de (0, \u9519\u8bef\u4fe1\u606f),",
+      "id": "notify"
+    },
+    {
+      "label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/portfolio_risk.py",
+      "source_location": "L52",
+      "_origin": "ast",
+      "community": 50,
+      "norm_label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
+      "id": "portfolio_risk"
+    },
+    {
+      "label": "\u52a0\u8f7d watchlist\uff1bgroups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/portfolio_scan.py",
+      "source_location": "L45",
+      "_origin": "ast",
+      "community": 48,
+      "norm_label": "\u52a0\u8f7d watchlist;groups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
+      "id": "portfolio_scan"
+    },
+    {
+      "label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/report_audit.py",
+      "source_location": "L65",
+      "_origin": "ast",
+      "community": 30,
+      "norm_label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002",
+      "id": "report_audit"
+    },
+    {
+      "label": "\u7528curl\u83b7\u53d6Yahoo Finance\u65e5\u7ebf\u6570\u636e",
+      "file_type": "rationale",
+      "source_file": "tools/stock_screener.py",
+      "source_location": "L49",
+      "_origin": "ast",
+      "community": 33,
+      "norm_label": "\u7528curl\u83b7\u53d6yahoo finance\u65e5\u7ebf\u6570\u636e",
+      "id": "stock_screener"
+    },
+    {
+      "label": "\u89e3\u6790 \u00a71 Active Portfolio Theses \u8868\u683c\u884c\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/thesis_queue.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "community": 53,
+      "norm_label": "\u89e3\u6790 \u00a71 active portfolio theses \u8868\u683c\u884c\u3002",
+      "id": "thesis_queue"
+    },
+    {
+      "label": "\u4f18\u5148\u9875\u9762 JS fetch\uff1b\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/xueqiu_scraper.py",
+      "source_location": "L63",
+      "_origin": "ast",
+      "community": 41,
+      "norm_label": "\u4f18\u5148\u9875\u9762 js fetch;\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
+      "id": "xueqiu_scraper"
+    },
+    {
+      "label": "update-platforms.sh",
+      "file_type": "code",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "update-platforms.sh",
+      "id": "update-platforms"
+    },
+    {
+      "label": "update-platforms.sh script",
+      "file_type": "code",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "update-platforms.sh script",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 2,
+      "norm_label": "graphify",
+      "id": "AGENTS"
+    },
+    {
       "label": "\u6d4b\u8bd5\u6307\u5357\u4e0e E2E \u62a5\u544a\uff08TESTING\uff09",
       "file_type": "document",
       "source_file": "TESTING.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "TESTING",
-      "community": 4,
-      "norm_label": "\u6d4b\u8bd5\u6307\u5357\u4e0e e2e \u62a5\u544a(testing)"
+      "community": 66,
+      "norm_label": "\u6d4b\u8bd5\u6307\u5357\u4e0e e2e \u62a5\u544a(testing)",
+      "id": "TESTING"
     },
     {
       "label": "Berkshire AI \u7248\u672c\u5386\u53f2",
@@ -493,9 +493,9 @@
       "source_file": "VERSION_HISTORY.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "VERSION_HISTORY",
       "community": 4,
-      "norm_label": "berkshire ai \u7248\u672c\u5386\u53f2"
+      "norm_label": "berkshire ai \u7248\u672c\u5386\u53f2",
+      "id": "VERSION_HISTORY"
     },
     {
       "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
@@ -503,9 +503,9 @@
       "source_file": "config/skill.md",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "skill",
       "community": 31,
-      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)"
+      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)",
+      "id": "skill"
     },
     {
       "label": "Berkshire AI - Global State & Thesis Tracker",
@@ -513,9 +513,9 @@
       "source_file": "config/state.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "state",
       "community": 32,
-      "norm_label": "berkshire ai - global state & thesis tracker"
+      "norm_label": "berkshire ai - global state & thesis tracker",
+      "id": "state"
     },
     {
       "label": "berkshire-ai Roadmap",
@@ -523,9 +523,9 @@
       "source_file": "docs/ROADMAP.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "ROADMAP",
       "community": 4,
-      "norm_label": "berkshire-ai roadmap"
+      "norm_label": "berkshire-ai roadmap",
+      "id": "ROADMAP"
     },
     {
       "label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361\uff08Action Card\uff09",
@@ -533,9 +533,9 @@
       "source_file": "docs/action-card.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "action-card",
-      "community": 4,
-      "norm_label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361(action card)"
+      "community": 65,
+      "norm_label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361(action card)",
+      "id": "action-card"
     },
     {
       "label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303\uff08report conventions\uff09",
@@ -543,9 +543,9 @@
       "source_file": "docs/report-conventions.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "report-conventions",
-      "community": 4,
-      "norm_label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303(report conventions)"
+      "community": 65,
+      "norm_label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303(report conventions)",
+      "id": "report-conventions"
     },
     {
       "label": "Berkshire AI V10.0 - TextGrad \u5316\u8bbe\u8ba1",
@@ -553,9 +553,9 @@
       "source_file": "docs/textgrad_design.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "textgrad_design",
-      "community": 4,
-      "norm_label": "berkshire ai v10.0 - textgrad \u5316\u8bbe\u8ba1"
+      "community": 67,
+      "norm_label": "berkshire ai v10.0 - textgrad \u5316\u8bbe\u8ba1",
+      "id": "textgrad_design"
     },
     {
       "label": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\uff0c\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b\uff1f",
@@ -563,9 +563,9 @@
       "source_file": "docs/\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b",
       "community": 43,
-      "norm_label": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218:\u591a\u6a21\u6001\u662f\u5fc5\u7136,\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b?"
+      "norm_label": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218:\u591a\u6a21\u6001\u662f\u5fc5\u7136,\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b?",
+      "id": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b"
     },
     {
       "label": "reports/ \u2014 \u7814\u7a76\u62a5\u544a\u8f93\u51fa\u76ee\u5f55",
@@ -573,9 +573,9 @@
       "source_file": "reports/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "reports_README.md",
-      "community": 4,
-      "norm_label": "reports/ \u2014 \u7814\u7a76\u62a5\u544a\u8f93\u51fa\u76ee\u5f55"
+      "community": 65,
+      "norm_label": "reports/ \u2014 \u7814\u7a76\u62a5\u544a\u8f93\u51fa\u76ee\u5f55",
+      "id": "reports_README.md"
     },
     {
       "label": "Rocket Lab USA (RKLB) \u6295\u8d44\u7814\u7a76\u62a5\u544a",
@@ -583,9 +583,9 @@
       "source_file": "reports/RocketLab/RKLB-investment-research.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "RKLB-investment-research",
       "community": 42,
-      "norm_label": "rocket lab usa (rklb) \u6295\u8d44\u7814\u7a76\u62a5\u544a"
+      "norm_label": "rocket lab usa (rklb) \u6295\u8d44\u7814\u7a76\u62a5\u544a",
+      "id": "RKLB-investment-research"
     },
     {
       "label": "\u8d5b\u529b\u65af\uff08601127.SH / 9927.HK\uff09\u6295\u8d44\u7814\u7a76\u62a5\u544a",
@@ -593,9 +593,9 @@
       "source_file": "reports/\u8d5b\u529b\u65af/\u8d5b\u529b\u65af-research-sample.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "\u8d5b\u529b\u65af-research-sample",
       "community": 44,
-      "norm_label": "\u8d5b\u529b\u65af(601127.sh / 9927.hk)\u6295\u8d44\u7814\u7a76\u62a5\u544a"
+      "norm_label": "\u8d5b\u529b\u65af(601127.sh / 9927.hk)\u6295\u8d44\u7814\u7a76\u62a5\u544a",
+      "id": "\u8d5b\u529b\u65af-research-sample"
     },
     {
       "label": "\u4f9b\u5e94\u94fe\u74f6\u9888\u730e\u624b\uff1aAI\u9a71\u52a8\u7684\u5168\u7403\u4ea7\u4e1a\u94fe\u74f6\u9888\u5957\u5229",
@@ -603,9 +603,9 @@
       "source_file": "skills/bottleneck-hunter.md",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "bottleneck-hunter",
       "community": 7,
-      "norm_label": "\u4f9b\u5e94\u94fe\u74f6\u9888\u730e\u624b:ai\u9a71\u52a8\u7684\u5168\u7403\u4ea7\u4e1a\u94fe\u74f6\u9888\u5957\u5229"
+      "norm_label": "\u4f9b\u5e94\u94fe\u74f6\u9888\u730e\u624b:ai\u9a71\u52a8\u7684\u5168\u7403\u4ea7\u4e1a\u94fe\u74f6\u9888\u5957\u5229",
+      "id": "bottleneck-hunter"
     },
     {
       "label": "\u6df1\u5ea6\u516c\u53f8\u7cfb\u5217\uff1a8 \u7bc7\u957f\u6587\u62c6\u4e00\u5bb6\u516c\u53f8",
@@ -613,9 +613,9 @@
       "source_file": "skills/deep-company-series.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "deep-company-series",
       "community": 8,
-      "norm_label": "\u6df1\u5ea6\u516c\u53f8\u7cfb\u5217:8 \u7bc7\u957f\u6587\u62c6\u4e00\u5bb6\u516c\u53f8"
+      "norm_label": "\u6df1\u5ea6\u516c\u53f8\u7cfb\u5217:8 \u7bc7\u957f\u6587\u62c6\u4e00\u5bb6\u516c\u53f8",
+      "id": "deep-company-series"
     },
     {
       "label": "\u6bb5\u6c38\u5e73\u95ee\u7b54\uff1a\u4ee5\u4ed6\u7684\u65b9\u5f0f\u601d\u8003",
@@ -623,9 +623,9 @@
       "source_file": "skills/dyp-ask.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "dyp-ask",
       "community": 9,
-      "norm_label": "\u6bb5\u6c38\u5e73\u95ee\u7b54:\u4ee5\u4ed6\u7684\u65b9\u5f0f\u601d\u8003"
+      "norm_label": "\u6bb5\u6c38\u5e73\u95ee\u7b54:\u4ee5\u4ed6\u7684\u65b9\u5f0f\u601d\u8003",
+      "id": "dyp-ask"
     },
     {
       "label": "\u8d22\u62a5\u7cbe\u8bfb\uff1a\u4e00\u624b\u8d44\u6599\u6df1\u5ea6\u89e3\u8bfb",
@@ -633,9 +633,9 @@
       "source_file": "skills/earnings-review.md",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "earnings-review",
       "community": 10,
-      "norm_label": "\u8d22\u62a5\u7cbe\u8bfb:\u4e00\u624b\u8d44\u6599\u6df1\u5ea6\u89e3\u8bfb"
+      "norm_label": "\u8d22\u62a5\u7cbe\u8bfb:\u4e00\u624b\u8d44\u6599\u6df1\u5ea6\u89e3\u8bfb",
+      "id": "earnings-review"
     },
     {
       "label": "\u8d22\u62a5\u7cbe\u8bfb\u56e2\u961f\uff1a\u56db\u5927\u5e08\u5e76\u884c\u89e3\u8bfb + \u516c\u4f17\u53f7\u53d1\u5e03\u6846\u67b6",
@@ -643,9 +643,9 @@
       "source_file": "skills/earnings-team.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "earnings-team",
       "community": 11,
-      "norm_label": "\u8d22\u62a5\u7cbe\u8bfb\u56e2\u961f:\u56db\u5927\u5e08\u5e76\u884c\u89e3\u8bfb + \u516c\u4f17\u53f7\u53d1\u5e03\u6846\u67b6"
+      "norm_label": "\u8d22\u62a5\u7cbe\u8bfb\u56e2\u961f:\u56db\u5927\u5e08\u5e76\u884c\u89e3\u8bfb + \u516c\u4f17\u53f7\u53d1\u5e03\u6846\u67b6",
+      "id": "earnings-team"
     },
     {
       "label": "\u8d22\u52a1\u6570\u636e\u83b7\u53d6\u4e0e\u4ea4\u53c9\u9a8c\u8bc1\u89c4\u8303",
@@ -653,9 +653,9 @@
       "source_file": "skills/financial-data.md",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "financial-data",
       "community": 13,
-      "norm_label": "\u8d22\u52a1\u6570\u636e\u83b7\u53d6\u4e0e\u4ea4\u53c9\u9a8c\u8bc1\u89c4\u8303"
+      "norm_label": "\u8d22\u52a1\u6570\u636e\u83b7\u53d6\u4e0e\u4ea4\u53c9\u9a8c\u8bc1\u89c4\u8303",
+      "id": "financial-data"
     },
     {
       "label": "\u884c\u4e1a\u6f0f\u6597\u7b5b\u9009\uff1a\u4ece\u5168\u5e02\u573a\u5230 3 \u5bb6\u7684\u4ef7\u503c\u6295\u8d44\u7cbe\u9009\u6d41\u7a0b",
@@ -663,9 +663,9 @@
       "source_file": "skills/industry-funnel.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "industry-funnel",
       "community": 16,
-      "norm_label": "\u884c\u4e1a\u6f0f\u6597\u7b5b\u9009:\u4ece\u5168\u5e02\u573a\u5230 3 \u5bb6\u7684\u4ef7\u503c\u6295\u8d44\u7cbe\u9009\u6d41\u7a0b"
+      "norm_label": "\u884c\u4e1a\u6f0f\u6597\u7b5b\u9009:\u4ece\u5168\u5e02\u573a\u5230 3 \u5bb6\u7684\u4ef7\u503c\u6295\u8d44\u7cbe\u9009\u6d41\u7a0b",
+      "id": "industry-funnel"
     },
     {
       "label": "\u884c\u4e1a\u6295\u8d44\u7814\u7a76\uff1a\u4ea7\u4e1a\u94fe\u5168\u666f\u626b\u63cf + \u56db\u5927\u5e08\u4e2a\u80a1\u5206\u6790\u6846\u67b6",
@@ -673,9 +673,9 @@
       "source_file": "skills/industry-research.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "industry-research",
       "community": 17,
-      "norm_label": "\u884c\u4e1a\u6295\u8d44\u7814\u7a76:\u4ea7\u4e1a\u94fe\u5168\u666f\u626b\u63cf + \u56db\u5927\u5e08\u4e2a\u80a1\u5206\u6790\u6846\u67b6"
+      "norm_label": "\u884c\u4e1a\u6295\u8d44\u7814\u7a76:\u4ea7\u4e1a\u94fe\u5168\u666f\u626b\u63cf + \u56db\u5927\u5e08\u4e2a\u80a1\u5206\u6790\u6846\u67b6",
+      "id": "industry-research"
     },
     {
       "label": "\u5df4\u83f2\u7279\u4ef7\u503c\u6295\u8d44\u4e70\u5165\u524d Checklist",
@@ -683,9 +683,9 @@
       "source_file": "skills/investment-checklist.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "investment-checklist",
       "community": 18,
-      "norm_label": "\u5df4\u83f2\u7279\u4ef7\u503c\u6295\u8d44\u4e70\u5165\u524d checklist"
+      "norm_label": "\u5df4\u83f2\u7279\u4ef7\u503c\u6295\u8d44\u4e70\u5165\u524d checklist",
+      "id": "investment-checklist"
     },
     {
       "label": "\u6295\u8d44\u7814\u7a76\uff1a\u5df4\u83f2\u7279-\u8292\u683c-\u6bb5\u6c38\u5e73-\u674e\u5f55 \u56db\u5927\u5e08\u7efc\u5408\u5206\u6790\u6846\u67b6",
@@ -693,9 +693,9 @@
       "source_file": "skills/investment-research.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "investment-research",
       "community": 19,
-      "norm_label": "\u6295\u8d44\u7814\u7a76:\u5df4\u83f2\u7279-\u8292\u683c-\u6bb5\u6c38\u5e73-\u674e\u5f55 \u56db\u5927\u5e08\u7efc\u5408\u5206\u6790\u6846\u67b6"
+      "norm_label": "\u6295\u8d44\u7814\u7a76:\u5df4\u83f2\u7279-\u8292\u683c-\u6bb5\u6c38\u5e73-\u674e\u5f55 \u56db\u5927\u5e08\u7efc\u5408\u5206\u6790\u6846\u67b6",
+      "id": "investment-research"
     },
     {
       "label": "\u6295\u7814\u56e2\u961f\uff1a\u56db\u89d2\u8272\u5e76\u884c\u5206\u6790\u6846\u67b6",
@@ -703,9 +703,9 @@
       "source_file": "skills/investment-team.md",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "investment-team",
       "community": 20,
-      "norm_label": "\u6295\u7814\u56e2\u961f:\u56db\u89d2\u8272\u5e76\u884c\u5206\u6790\u6846\u67b6"
+      "norm_label": "\u6295\u7814\u56e2\u961f:\u56db\u89d2\u8272\u5e76\u884c\u5206\u6790\u6846\u67b6",
+      "id": "investment-team"
     },
     {
       "label": "\u7ba1\u7406\u5c42\u7eb5\u6df1\u7814\u7a76\uff1a\u4e70\u80a1\u7968\u5c31\u662f\u4e70\u4eba",
@@ -713,9 +713,9 @@
       "source_file": "skills/management-deep-dive.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "management-deep-dive",
       "community": 21,
-      "norm_label": "\u7ba1\u7406\u5c42\u7eb5\u6df1\u7814\u7a76:\u4e70\u80a1\u7968\u5c31\u662f\u4e70\u4eba"
+      "norm_label": "\u7ba1\u7406\u5c42\u7eb5\u6df1\u7814\u7a76:\u4e70\u80a1\u7968\u5c31\u662f\u4e70\u4eba",
+      "id": "management-deep-dive"
     },
     {
       "label": "\u516c\u53f8\u65b0\u95fb\u8109\u640f\uff1a\u80a1\u4ef7\u5f02\u52a8\u5feb\u901f\u5f52\u56e0\u6846\u67b6",
@@ -723,9 +723,9 @@
       "source_file": "skills/news-pulse.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "news-pulse",
       "community": 25,
-      "norm_label": "\u516c\u53f8\u65b0\u95fb\u8109\u640f:\u80a1\u4ef7\u5f02\u52a8\u5feb\u901f\u5f52\u56e0\u6846\u67b6"
+      "norm_label": "\u516c\u53f8\u65b0\u95fb\u8109\u640f:\u80a1\u4ef7\u5f02\u52a8\u5feb\u901f\u5f52\u56e0\u6846\u67b6",
+      "id": "news-pulse"
     },
     {
       "label": "\u7ec4\u5408\u7ba1\u7406\uff1a\u4ece\"\u7814\u7a76\u516c\u53f8\"\u5230\"\u7ba1\u7406\u7ec4\u5408\"",
@@ -733,9 +733,9 @@
       "source_file": "skills/portfolio-review.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "portfolio-review",
       "community": 27,
-      "norm_label": "\u7ec4\u5408\u7ba1\u7406:\u4ece\"\u7814\u7a76\u516c\u53f8\"\u5230\"\u7ba1\u7406\u7ec4\u5408\""
+      "norm_label": "\u7ec4\u5408\u7ba1\u7406:\u4ece\"\u7814\u7a76\u516c\u53f8\"\u5230\"\u7ba1\u7406\u7ec4\u5408\"",
+      "id": "portfolio-review"
     },
     {
       "label": "\u672a\u4e0a\u5e02\u516c\u53f8\u7814\u7a76\uff1a\u591aAgent\u5e76\u884c\u6df1\u5ea6\u7814\u7a76\u6846\u67b6",
@@ -743,9 +743,9 @@
       "source_file": "skills/private-company-research.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "private-company-research",
       "community": 28,
-      "norm_label": "\u672a\u4e0a\u5e02\u516c\u53f8\u7814\u7a76:\u591aagent\u5e76\u884c\u6df1\u5ea6\u7814\u7a76\u6846\u67b6"
+      "norm_label": "\u672a\u4e0a\u5e02\u516c\u53f8\u7814\u7a76:\u591aagent\u5e76\u884c\u6df1\u5ea6\u7814\u7a76\u6846\u67b6",
+      "id": "private-company-research"
     },
     {
       "label": "\u53bb\u52a3\u7b5b\u9009\uff1a7\u6761\u6307\u6807\u5feb\u901f\u6392\u9664\u975e\u4e00\u6d41\u516c\u53f8",
@@ -753,9 +753,9 @@
       "source_file": "skills/quality-screen.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "quality-screen",
       "community": 29,
-      "norm_label": "\u53bb\u52a3\u7b5b\u9009:7\u6761\u6307\u6807\u5feb\u901f\u6392\u9664\u975e\u4e00\u6d41\u516c\u53f8"
+      "norm_label": "\u53bb\u52a3\u7b5b\u9009:7\u6761\u6307\u6807\u5feb\u901f\u6392\u9664\u975e\u4e00\u6d41\u516c\u53f8",
+      "id": "quality-screen"
     },
     {
       "label": "\u6295\u8d44\u8bba\u6587\u8ffd\u8e2a\uff1a\u4e70\u5165\u540e\u7684\u7eaa\u5f8b\u7cfb\u7edf",
@@ -763,9 +763,9 @@
       "source_file": "skills/thesis-tracker.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "thesis-tracker",
       "community": 39,
-      "norm_label": "\u6295\u8d44\u8bba\u6587\u8ffd\u8e2a:\u4e70\u5165\u540e\u7684\u7eaa\u5f8b\u7cfb\u7edf"
+      "norm_label": "\u6295\u8d44\u8bba\u6587\u8ffd\u8e2a:\u4e70\u5165\u540e\u7684\u7eaa\u5f8b\u7cfb\u7edf",
+      "id": "thesis-tracker"
     },
     {
       "label": "\u5fae\u4fe1\u516c\u4f17\u53f7\u6587\u7ae0\uff1a\u4f5c\u8005-\u7f16\u8f91-\u8bfb\u8005\u4e09Agent\u534f\u4f5c",
@@ -773,9 +773,9 @@
       "source_file": "skills/wechat-article.md",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "wechat-article",
       "community": 40,
-      "norm_label": "\u5fae\u4fe1\u516c\u4f17\u53f7\u6587\u7ae0:\u4f5c\u8005-\u7f16\u8f91-\u8bfb\u8005\u4e09agent\u534f\u4f5c"
+      "norm_label": "\u5fae\u4fe1\u516c\u4f17\u53f7\u6587\u7ae0:\u4f5c\u8005-\u7f16\u8f91-\u8bfb\u8005\u4e09agent\u534f\u4f5c",
+      "id": "wechat-article"
     },
     {
       "label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e",
@@ -783,310 +783,20 @@
       "source_file": "tools/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "tools_README.md",
       "community": 62,
-      "norm_label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e"
+      "norm_label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e",
+      "id": "tools_README.md"
     }
   ],
   "links": [
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "scripts/portfolio-weekly.sh",
+      "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "portfolio-weekly",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "__init__",
-      "target": "__init__",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/debate.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "source": "debate",
-      "target": "debate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/decision_log.py",
-      "source_location": "L41",
-      "weight": 1.0,
-      "source": "decision_log",
-      "target": "decision_log",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/evolution_loop_v10.py",
-      "source_location": "L59",
-      "weight": 1.0,
-      "source": "evolution_loop_v10",
-      "target": "evolution_loop_v10",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/graph.py",
-      "source_location": "L75",
-      "weight": 1.0,
-      "source": "graph",
-      "target": "graph",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/optimizer.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "optimizer",
-      "target": "optimizer",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/realized_feedback.py",
-      "source_location": "L59",
-      "weight": 1.0,
-      "source": "realized_feedback",
-      "target": "realized_feedback",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/tavily_search.py",
-      "source_location": "L37",
-      "weight": 1.0,
-      "source": "tavily_search",
-      "target": "tavily_search",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_calibrate_sensitivity.py",
-      "source_location": "L174",
-      "weight": 1.0,
-      "source": "test_calibrate_sensitivity",
-      "target": "test_calibrate_sensitivity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_tools_data_sources.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "test_tools_data_sources",
-      "target": "test_tools_data_sources",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_tools_network.py",
-      "source_location": "L80",
-      "weight": 1.0,
-      "source": "test_tools_network",
-      "target": "test_tools_network",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_v10_integration.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "test_v10_integration",
-      "target": "test_v10_integration",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_v10_unit.py",
-      "source_location": "L90",
-      "weight": 1.0,
-      "source": "test_v10_unit",
-      "target": "test_v10_unit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_data.py",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "ashare_data",
-      "target": "ashare_data",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/calibrate_sensitivity.py",
-      "source_location": "L86",
-      "weight": 1.0,
-      "source": "calibrate_sensitivity",
-      "target": "calibrate_sensitivity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/data_sources.py",
-      "source_location": "L52",
-      "weight": 1.0,
-      "source": "data_sources",
-      "target": "data_sources",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/financial_rigor.py",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "financial_rigor",
-      "target": "financial_rigor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/log-command.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "log-command",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/momentum_backtest.py",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "momentum_backtest",
-      "target": "momentum_backtest",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/morningstar_fair_value.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "morningstar_fair_value",
-      "target": "morningstar_fair_value",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/notify.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "source": "notify",
-      "target": "notify",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/portfolio_risk.py",
-      "source_location": "L52",
-      "weight": 1.0,
-      "source": "portfolio_risk",
-      "target": "portfolio_risk",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/portfolio_scan.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "source": "portfolio_scan",
-      "target": "portfolio_scan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/report_audit.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "source": "report_audit",
-      "target": "report_audit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/stock_screener.py",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "stock_screener",
-      "target": "stock_screener",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/thesis_queue.py",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "thesis_queue",
-      "target": "thesis_queue",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/xueqiu_scraper.py",
-      "source_location": "L63",
-      "weight": 1.0,
-      "source": "xueqiu_scraper",
-      "target": "xueqiu_scraper",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "update-platforms",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "AGENTS.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "AGENTS",
-      "target": "AGENTS",
+      "source": "README",
+      "target": "README",
       "confidence_score": 1.0
     },
     {
@@ -1095,79 +805,9 @@
       "source_file": "README.md",
       "source_location": "L224",
       "weight": 1.0,
-      "source": "README.md",
-      "target": "README.md",
+      "source": "README",
+      "target": "README_EN",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L176",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "README_EN"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L180",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "ROADMAP"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L177",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "TESTING"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "VERSION_HISTORY"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "action-card"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "report-conventions"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L181",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "textgrad_design"
     },
     {
       "relation": "contains",
@@ -1212,12 +852,312 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio-weekly",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "__init__",
+      "target": "__init__"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "debate",
+      "target": "debate"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/decision_log.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "decision_log",
+      "target": "decision_log"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/evolution_loop_v10.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "evolution_loop_v10",
+      "target": "evolution_loop_v10"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/graph.py",
+      "source_location": "L75",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "graph",
+      "target": "graph"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/optimizer.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "optimizer",
+      "target": "optimizer"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/realized_feedback.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "realized_feedback",
+      "target": "realized_feedback"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/tavily_search.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tavily_search",
+      "target": "tavily_search"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_calibrate_sensitivity.py",
+      "source_location": "L174",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_calibrate_sensitivity",
+      "target": "test_calibrate_sensitivity"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_tools_data_sources.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_tools_data_sources",
+      "target": "test_tools_data_sources"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_tools_network.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_tools_network",
+      "target": "test_tools_network"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_v10_integration.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_v10_integration",
+      "target": "test_v10_integration"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_v10_unit.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_v10_unit",
+      "target": "test_v10_unit"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_data.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ashare_data",
+      "target": "ashare_data"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/calibrate_sensitivity.py",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calibrate_sensitivity",
+      "target": "calibrate_sensitivity"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/data_sources.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "data_sources",
+      "target": "data_sources"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/financial_rigor.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "financial_rigor",
+      "target": "financial_rigor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/log-command.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "log-command",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/momentum_backtest.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "momentum_backtest",
+      "target": "momentum_backtest"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/morningstar_fair_value.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "morningstar_fair_value",
+      "target": "morningstar_fair_value"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/notify.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notify",
+      "target": "notify"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_risk.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio_risk",
+      "target": "portfolio_risk"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_scan.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio_scan",
+      "target": "portfolio_scan"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/report_audit.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "report_audit",
+      "target": "report_audit"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/stock_screener.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "stock_screener",
+      "target": "stock_screener"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/thesis_queue.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "thesis_queue",
+      "target": "thesis_queue"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/xueqiu_scraper.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "xueqiu_scraper",
+      "target": "xueqiu_scraper"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "update-platforms",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "AGENTS",
+      "target": "AGENTS"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "TESTING.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "TESTING",
-      "target": "TESTING",
-      "confidence_score": 1.0
+      "target": "TESTING"
     },
     {
       "relation": "contains",
@@ -1225,9 +1165,9 @@
       "source_file": "VERSION_HISTORY.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "VERSION_HISTORY",
-      "target": "VERSION_HISTORY",
-      "confidence_score": 1.0
+      "target": "VERSION_HISTORY"
     },
     {
       "relation": "contains",
@@ -1235,9 +1175,9 @@
       "source_file": "config/skill.md",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "skill",
-      "target": "skill",
-      "confidence_score": 1.0
+      "target": "skill"
     },
     {
       "relation": "contains",
@@ -1245,9 +1185,9 @@
       "source_file": "config/state.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "state",
-      "target": "state",
-      "confidence_score": 1.0
+      "target": "state"
     },
     {
       "relation": "contains",
@@ -1255,9 +1195,9 @@
       "source_file": "docs/ROADMAP.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "ROADMAP",
-      "target": "ROADMAP",
-      "confidence_score": 1.0
+      "target": "ROADMAP"
     },
     {
       "relation": "contains",
@@ -1265,9 +1205,9 @@
       "source_file": "docs/action-card.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "action-card",
-      "target": "action-card",
-      "confidence_score": 1.0
+      "target": "action-card"
     },
     {
       "relation": "references",
@@ -1285,9 +1225,9 @@
       "source_file": "docs/report-conventions.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "report-conventions",
-      "target": "report-conventions",
-      "confidence_score": 1.0
+      "target": "report-conventions"
     },
     {
       "relation": "references",
@@ -1305,9 +1245,9 @@
       "source_file": "docs/textgrad_design.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "textgrad_design",
-      "target": "textgrad_design",
-      "confidence_score": 1.0
+      "target": "textgrad_design"
     },
     {
       "relation": "contains",
@@ -1315,9 +1255,9 @@
       "source_file": "docs/\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b",
-      "target": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b",
-      "confidence_score": 1.0
+      "target": "\u5927\u6a21\u578b\u7684\u4e0b\u4e00\u6218\uff1a\u591a\u6a21\u6001\u662f\u5fc5\u7136\u8fd8\u662f\u8fc7\u70ed\u7684\u53d9\u4e8b"
     },
     {
       "relation": "contains",
@@ -1325,9 +1265,9 @@
       "source_file": "reports/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "reports_README.md",
-      "target": "reports_README.md",
-      "confidence_score": 1.0
+      "target": "reports_README.md"
     },
     {
       "relation": "contains",
@@ -1335,9 +1275,9 @@
       "source_file": "reports/RocketLab/RKLB-investment-research.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "RKLB-investment-research",
-      "target": "RKLB-investment-research",
-      "confidence_score": 1.0
+      "target": "RKLB-investment-research"
     },
     {
       "relation": "contains",
@@ -1345,9 +1285,9 @@
       "source_file": "reports/\u8d5b\u529b\u65af/\u8d5b\u529b\u65af-research-sample.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "\u8d5b\u529b\u65af-research-sample",
-      "target": "\u8d5b\u529b\u65af-research-sample",
-      "confidence_score": 1.0
+      "target": "\u8d5b\u529b\u65af-research-sample"
     },
     {
       "relation": "contains",
@@ -1355,9 +1295,9 @@
       "source_file": "skills/bottleneck-hunter.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "bottleneck-hunter",
-      "target": "bottleneck-hunter",
-      "confidence_score": 1.0
+      "target": "bottleneck-hunter"
     },
     {
       "relation": "contains",
@@ -1365,9 +1305,9 @@
       "source_file": "skills/deep-company-series.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "deep-company-series",
-      "target": "deep-company-series",
-      "confidence_score": 1.0
+      "target": "deep-company-series"
     },
     {
       "relation": "contains",
@@ -1375,9 +1315,9 @@
       "source_file": "skills/dyp-ask.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dyp-ask",
-      "target": "dyp-ask",
-      "confidence_score": 1.0
+      "target": "dyp-ask"
     },
     {
       "relation": "contains",
@@ -1385,9 +1325,9 @@
       "source_file": "skills/earnings-review.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "earnings-review",
-      "target": "earnings-review",
-      "confidence_score": 1.0
+      "target": "earnings-review"
     },
     {
       "relation": "contains",
@@ -1395,9 +1335,9 @@
       "source_file": "skills/earnings-team.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "earnings-team",
-      "target": "earnings-team",
-      "confidence_score": 1.0
+      "target": "earnings-team"
     },
     {
       "relation": "contains",
@@ -1405,9 +1345,9 @@
       "source_file": "skills/financial-data.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "financial-data",
-      "target": "financial-data",
-      "confidence_score": 1.0
+      "target": "financial-data"
     },
     {
       "relation": "contains",
@@ -1415,9 +1355,9 @@
       "source_file": "skills/industry-funnel.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "industry-funnel",
-      "target": "industry-funnel",
-      "confidence_score": 1.0
+      "target": "industry-funnel"
     },
     {
       "relation": "contains",
@@ -1425,9 +1365,9 @@
       "source_file": "skills/industry-research.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "industry-research",
-      "target": "industry-research",
-      "confidence_score": 1.0
+      "target": "industry-research"
     },
     {
       "relation": "contains",
@@ -1435,9 +1375,9 @@
       "source_file": "skills/investment-checklist.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "investment-checklist",
-      "target": "investment-checklist",
-      "confidence_score": 1.0
+      "target": "investment-checklist"
     },
     {
       "relation": "contains",
@@ -1445,9 +1385,9 @@
       "source_file": "skills/investment-research.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "investment-research",
-      "target": "investment-research",
-      "confidence_score": 1.0
+      "target": "investment-research"
     },
     {
       "relation": "contains",
@@ -1455,9 +1395,9 @@
       "source_file": "skills/investment-team.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "investment-team",
-      "target": "investment-team",
-      "confidence_score": 1.0
+      "target": "investment-team"
     },
     {
       "relation": "contains",
@@ -1465,9 +1405,9 @@
       "source_file": "skills/management-deep-dive.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "management-deep-dive",
-      "target": "management-deep-dive",
-      "confidence_score": 1.0
+      "target": "management-deep-dive"
     },
     {
       "relation": "contains",
@@ -1475,9 +1415,9 @@
       "source_file": "skills/news-pulse.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "news-pulse",
-      "target": "news-pulse",
-      "confidence_score": 1.0
+      "target": "news-pulse"
     },
     {
       "relation": "contains",
@@ -1485,9 +1425,9 @@
       "source_file": "skills/portfolio-review.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "portfolio-review",
-      "target": "portfolio-review",
-      "confidence_score": 1.0
+      "target": "portfolio-review"
     },
     {
       "relation": "contains",
@@ -1495,9 +1435,9 @@
       "source_file": "skills/private-company-research.md",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "private-company-research",
-      "target": "private-company-research",
-      "confidence_score": 1.0
+      "target": "private-company-research"
     },
     {
       "relation": "contains",
@@ -1505,9 +1445,9 @@
       "source_file": "skills/quality-screen.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quality-screen",
-      "target": "quality-screen",
-      "confidence_score": 1.0
+      "target": "quality-screen"
     },
     {
       "relation": "contains",
@@ -1515,9 +1455,9 @@
       "source_file": "skills/thesis-tracker.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "thesis-tracker",
-      "target": "thesis-tracker",
-      "confidence_score": 1.0
+      "target": "thesis-tracker"
     },
     {
       "relation": "contains",
@@ -1525,9 +1465,9 @@
       "source_file": "skills/wechat-article.md",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "wechat-article",
-      "target": "wechat-article",
-      "confidence_score": 1.0
+      "target": "wechat-article"
     },
     {
       "relation": "contains",
@@ -1535,11 +1475,11 @@
       "source_file": "tools/README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tools_README.md",
-      "target": "tools_README.md",
-      "confidence_score": 1.0
+      "target": "tools_README.md"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1b3a8204f798f81665e7c6599602e6abb12ac83f"
+  "built_at_commit": "0cf855ed7f127ea22d33d346d592d03314cfa210"
 }
