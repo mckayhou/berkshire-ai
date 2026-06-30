@@ -6,7 +6,9 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Status**: full upstream capability + the V10 engine are merged into this repo. **V10.2 is adapted for OpenClaw / QwenPaw-style agent runtimes.**
+**Current version**: **V10.12** (SENSITIVITY scale calibration; on top of V10.11 realized-return feedback loop + bull/bear debate + A-share multi-source fallback data + multi-channel delivery). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+
+**Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
 **Important**: this fork is **not used inside Claude Code**. It is designed for **OpenClaw / QwenPaw**-class AI agent products/runtimes.
 

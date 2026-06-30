@@ -4,7 +4,9 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前状态**：上游全能力 + V10 引擎已并入本仓库。**V10.2 重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
+**当前版本**：**V10.12**（SENSITIVITY 尺度校准；基于 V10.11 收益反馈闭环 + 多空辩论 + A股多源降级数据 + 多通道推送）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+
+**当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
 **重要**：用户明确说明 **不在 Claude Code 中使用**，而是在 **OpenClaw / QwenPaw 这一类 AI Agent 产品/运行时**中使用。
 
