@@ -36,6 +36,32 @@
 
 ## 📜 版本历史
 
+### V10.11 - 2026-06-30 (已实现收益反馈闭环 + 多空辩论 · A股多源降级数据层 + 多通道推送)
+
+**变更内容**:
+
+A) 分析脑 — 已实现收益反馈闭环 + 多空对抗辩论（吸收自 TradingAgents）
+- 新增 `src/decision_log.py`：决策快照 JSONL 持久化（`DecisionRecord`），路径环境变量 `BERKSHIRE_DECISION_LOG`（默认 `~/.berkshire/decisions.jsonl`），复用 `MASTERS` 单一来源校验大师评分
+- 新增 `src/realized_feedback.py`：已实现收益 → 评分转换器。`raw_return`/`alpha`；`realized_base=clip(0.5+alpha*SENSITIVITY,0,1)`（默认 `SENSITIVITY=2.5`）；`master_score=clip(1-|conviction-realized_base|,0,1)`；价格通过可注入/可 mock 的 `PriceProvider`/`StaticPriceProvider` 获取（核心不连网络）
+- 新增 `src/debate.py`：多空对抗辩论。`net_score∈[-1,1]`，中性区 `NET_MARGIN=0.15`，结构化 `DebateResult`（控制流读 `net_stance`/`ok`，不解析文本）
+- 修改 `src/graph.py`：新增 `BerkshireGraph.debate()`（Layer 2 与输出之间的一步）
+- 修改 `src/evolution_loop_v10.py`：新增 `run_with_realized_feedback(...)`（收益→评分→backward 闭环，附带辩论净判断），保留 `run_example()`
+- 修改 `src/__init__.py`：导出上述新符号
+- 新增 `tests/test_realized_feedback_loop.py`
+
+B) 数据/交付层 — A股多源降级数据层 + 多通道推送（吸收自 JusticePlutus）
+- 新增 `tools/data_sources.py`：A股数据多源降级链 `native→tushare→efinance→akshare→baostock→yfinance`（可用 `--sources` / `BERKSHIRE_DATA_SOURCES` 覆盖排序）；覆盖 daily/quote/fundamentals；全部失败返回 `ok=False`+attempts 而不抛崩；可插拔 `DataSource` 适配器；tushare 增强源需 `BERKSHIRE_ENABLE_TUSHARE=1`+`TUSHARE_TOKEN`，其余源 import 守卫缺库自动跳过
+- 新增 `tools/notify.py`：多通道交付。Telegram（`TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID`，超长拆分）、飞书（`FEISHU_WEBHOOK`+可选 `FEISHU_SECRET`，卡片→文本回退+加签+长消息拆分）、本地兜底（`BERKSHIRE_NOTIFY_DIR`，默认 `reports/notifications`）；零配置只落地不报错；用系统 curl 零依赖
+- 修改 `tools/ashare_data.py`：新增 `fetch_daily()` + `daily` 子命令
+- 修改 `tools/README.md`、`requirements.txt`（标注可选库）、`.gitignore`（忽略 `reports/notifications/`）
+- 新增 `tests/test_tools_data_sources.py`、`tests/test_tools_notify.py`
+
+**测试结果**: 183 通过（`python3 -m pytest tests/ -q`，0 失败）
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.10 - 2026-06-27 (接线：holdings + portfolio-review + 周度脚本)
 
 **变更内容**:

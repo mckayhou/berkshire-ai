@@ -26,6 +26,10 @@
 
 **TextGrad 自进化**: 借鉴 Nature 2025 论文，实现节点级诊断 + 文本梯度反向传播
 
+**已实现收益反馈闭环 + 多空辩论**（吸收自 TradingAgents）: 把每次决策落盘 → 事后用真实价格算 alpha → 转成各大师"校准评分"喂回反向传播；并在四大师并行之上插入一个显式的多空对抗辩论环节，给出 bull/bear case 与净判断。
+
+**A股多源降级数据层 + 多通道推送**（吸收自 JusticePlutus）: 数据获取走 `native→tushare→efinance→akshare→baostock→yfinance` 降级链，全失败优雅返回不抛崩；报告/信号可经 Telegram / 飞书 / 本地兜底多通道交付，零配置只落地不报错。
+
 ## 📊 系统架构
 
 ```
@@ -35,15 +39,18 @@
 │                                                             │
 │  Layer 0: 输入 (ticker, tavily_query, date_anchor)         │
 │      ↓                                                      │
-│  Layer 1: 数据获取 (Tavily 双Key轮询)                      │
+│  Layer 1: 数据获取 (Tavily 双Key轮询 / A股多源降级链)      │
 │      ↓                                                      │
 │  Layer 2: 四大师分析 (段永平/巴菲特/芒格/李录)             │
 │      ↓                                                      │
+│  Layer 2.5: 多空对抗辩论 (bull/bear case + 净判断)         │
+│      ↓                                                      │
 │  Layer 3: 财务验证 (financial_rigor.py)                    │
 │      ↓                                                      │
-│  Layer 4: 输出 (final_report)                              │
+│  Layer 4: 输出 (final_report) → 多通道交付 (notify.py)     │
 │                                                             │
 │  ← TextGrad 反向传播 (节点级诊断 + 梯度优化)              │
+│  ← 已实现收益反馈 (decision_log → realized_feedback → 评分)│
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -101,6 +108,39 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 ```
 
+### 已实现收益反馈闭环 + 多空辩论
+
+```python
+from src import (DecisionRecord, append_decision, run_with_realized_feedback,
+                 StaticPriceProvider, BerkshireGraph)
+
+# 1) 决策时落盘快照（含四大师信心 + 价格锚点）
+d = DecisionRecord(ticker="600519", date="2026-01-02",
+                   scores={"duan":0.9,"buffett":0.8,"munger":0.6,"lilu":0.7},
+                   price_anchor=1500.0, benchmark="000300", benchmark_anchor=3800.0)
+append_decision(d)  # → ~/.berkshire/decisions.jsonl（BERKSHIRE_DECISION_LOG 可覆盖）
+
+# 2) 事后用真实价格回填 → 算 alpha → 转评分 → 反向传播（不连网络，可注入价格）
+provider = StaticPriceProvider({("600519","2026-03-31"):1650.0, ("000300","2026-03-31"):3900.0})
+result = run_with_realized_feedback(d, realized_date="2026-03-31", price_provider=provider)
+
+# 3) 决策时信心的多空净判断（也可单独调用）
+debate = BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0.7})
+print(debate.net_stance, debate.net_score)   # bullish / +0.x（中性区 |net|<0.15）
+```
+
+### A股多源降级数据 + 多通道交付
+
+```bash
+# 数据：按 native→tushare→efinance→akshare→baostock→yfinance 降级，全失败不抛崩
+python3 tools/data_sources.py sources                  # 列出各源可用状态（离线）
+python3 tools/data_sources.py daily 600519 --limit 60  # 日线（走降级链）
+
+# 交付：Telegram / 飞书 / 本地兜底；零配置只落地到 reports/notifications/
+python3 tools/notify.py channels
+python3 tools/notify.py send --title "组合周报" --file reports/portfolio-latest.md
+```
+
 ### Agent 内工具调用（OpenClaw / QwenPaw 推荐）
 
 Agent 技能会指导你使用 shell / 集成工具执行：
@@ -144,7 +184,11 @@ berkshire-ai/
 ├── README.md                    # 本文件（整合说明）
 ├── VERSION_HISTORY.md
 ├── src/                         # TextGrad V10 自进化引擎（本地核心）
-│   ├── evolution_loop_v10.py
+│   ├── evolution_loop_v10.py    # run_example + run_with_realized_feedback（收益反馈闭环）
+│   ├── graph.py / optimizer.py  # 计算图（含 debate()）+ 文本梯度优化器
+│   ├── decision_log.py          # 决策快照 JSONL 持久化（DecisionRecord）
+│   ├── realized_feedback.py     # 已实现收益 → 评分（PriceProvider 可注入）
+│   ├── debate.py                # 多空对抗辩论（DebateResult，净判断）
 │   └── tavily_search.py
 ├── skills/                      # ★ 完整上游 18 个技能（已并入，OpenClaw 兼容）
 │   ├── investment-research.md   # 带 frontmatter，可直接作为 SKILL.md 使用
@@ -157,8 +201,10 @@ berkshire-ai/
 ├── tools/                       # ★ 完整上游工具链（已并入）
 │   ├── financial_rigor.py       # 精确市值/估值/交叉验证（核心）
 │   ├── report_audit.py          # 报告数据抽检（15%）
-│   ├── ashare_data.py
-│   └── ... (stock_screener, xueqiu_scraper, momentum backtests, etc.)
+│   ├── ashare_data.py           # A股行情/财务/估值/日线
+│   ├── data_sources.py          # A股多源降级数据层（可插拔适配器）
+│   ├── notify.py                # 多通道交付（Telegram/飞书/本地兜底）
+│   └── ... (stock_screener, portfolio_*, xueqiu_scraper, momentum backtests, etc.)
 ├── config/
 │   ├── skill.md                 # V10.1 整合版 meta-skill
 │   └── state.md
@@ -175,7 +221,7 @@ berkshire-ai/
 |---|---|
 | [README_EN.md](README_EN.md) | English version |
 | [TESTING.md](TESTING.md) | 测试指南 + 最近一次全量 E2E 报告 |
-| [tools/README.md](tools/README.md) | 10 个工具的 CLI 用法目录 |
+| [tools/README.md](tools/README.md) | 工具链 CLI 用法目录（含 data_sources / notify 降级与多通道交付） |
 | [docs/action-card.md](docs/action-card.md) | 结构化行动卡（PM 汇总层，可执行结论模板） |
 | [docs/report-conventions.md](docs/report-conventions.md) | 报告目录/命名规范、投研核心原则 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图（含本 fork 实现状态） |
@@ -205,12 +251,15 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 
 ## 📊 当前版本
 
-**V10.1** (2026-06-26)
+**V10.11** (2026-06-30)
 - ✅ TextGrad 化 (节点级诊断 + 梯度反向传播)
 - ✅ Tavily 双Key轮询 (2000次/月)
 - ✅ 四大师全覆盖 (100%)
 - ✅ 回测诊断覆盖率 100%
-- ✅ **上游全能力整合**：完整 skills/ (18个) + tools/ (9个) from xbtlin/ai-berkshire 并入 (已规范化路径引用)
+- ✅ **上游全能力整合**：完整 skills/ (18个) + tools/ from xbtlin/ai-berkshire 并入 (已规范化路径引用)
+- ✅ **已实现收益反馈闭环 + 多空辩论**（吸收自 TradingAgents）：`decision_log` / `realized_feedback` / `debate` + `run_with_realized_feedback`
+- ✅ **A股多源降级数据层 + 多通道推送**（吸收自 JusticePlutus）：`tools/data_sources.py` / `tools/notify.py`
+- ✅ 测试 183 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
 
 ## 🔗 相关链接
 
@@ -221,4 +270,4 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 ## 📝 维护者
 
 - Mckay (houqing)
-- 最后更新: 2026-06-26 (full upstream skills+tools integrated)
+- 最后更新: 2026-06-30 (V10.11: 收益反馈闭环 + 多空辩论；A股多源降级数据 + 多通道推送)

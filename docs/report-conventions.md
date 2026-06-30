@@ -84,3 +84,24 @@ reports/{公司名}/
 - 组合报告使用其中的「组合行动摘要」专节
 
 扫描工具 `portfolio_scan.py` 可生成候选信号草案，但不能替代行动卡与 `report_audit` 准出。
+
+## 报告交付（多通道推送）
+
+报告/信号定稿后，可经 `tools/notify.py` 推送到多个出口；**零配置时只把内容落地到本地
+`reports/notifications/`（`BERKSHIRE_NOTIFY_DIR` 可覆盖），不报错、不阻塞主流程**。
+
+```bash
+python3 tools/notify.py channels                                  # 查看通道状态
+python3 tools/notify.py send --title "组合周报" --file reports/portfolio-latest.md
+```
+
+| 通道 | 环境变量 | 说明 |
+|------|----------|------|
+| Telegram | `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | 超长自动拆分 |
+| 飞书自定义机器人 | `FEISHU_WEBHOOK`（可选 `FEISHU_SECRET`） | 卡片→纯文本回退 + 加签 + 长消息拆分 |
+| 本地兜底 | `BERKSHIRE_NOTIFY_DIR`（默认 `reports/notifications`） | 始终可用 |
+
+> 切勿把真实 token/webhook 写进报告或提交，统一用环境变量（详见 [`tools/README.md`](../tools/README.md)）。
+
+A股数据获取建议走 `tools/data_sources.py` 的多源降级链（`native→tushare→efinance→akshare→baostock→yfinance`），
+任一源失败自动降级，全失败返回明确 `ok=False` 而非崩溃。

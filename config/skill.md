@@ -8,6 +8,8 @@ description: >
   V10.0: TextGrad 化 - 显式计算图 + 节点级诊断 + 文本梯度反向传播。
   V10.1: 上游全能力整合（skills/ 18个 + tools/ 9个 from xbtlin/ai-berkshire 完整并入，已规范化路径为本地 tools/ 相对引用）。
   V10.3: 集成 graphify 知识图谱 (graphify-out/graph.json)，用于项目代码/技能结构查询。
+  V10.11: 已实现收益反馈闭环 + 多空辩论（吸收自 TradingAgents：decision_log/realized_feedback/debate）；
+          A股多源降级数据层 tools/data_sources.py + 多通道推送 tools/notify.py（吸收自 JusticePlutus）。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -221,6 +223,24 @@ gradients = graph.backward(scores)
 python3 src/evolution_loop_v10.py   # 打印计算图节点数与本轮需更新的变量数
 ```
 
+### 5.0.1 已实现收益反馈闭环 + 多空辩论 (V10.11，吸收自 TradingAgents)
+
+> ✅ **已实现**：用真实已实现收益反推"校准评分"替代硬编码 scores，并在四大师并行之上加显式多空对抗。详见 `docs/textgrad_design.md`。
+
+- **决策落盘** `src/decision_log.py`：`DecisionRecord`（四大师信心 + 价格锚点）追加 JSONL，路径 `BERKSHIRE_DECISION_LOG`（默认 `~/.berkshire/decisions.jsonl`）。
+- **收益 → 评分** `src/realized_feedback.py`：`alpha = raw_return - benchmark_return`；`realized_base = clip(0.5 + alpha*SENSITIVITY, 0, 1)`（默认 2.5）；`master_score = clip(1 - |conviction - realized_base|, 0, 1)`。价格经可注入/可 mock 的 `PriceProvider`/`StaticPriceProvider`，核心不连网络。
+- **多空辩论** `src/debate.py` + `BerkshireGraph.debate()`：`net_score∈[-1,1]`，中性区 `NET_MARGIN=0.15`，结构化 `DebateResult`（读 `net_stance`/`ok`）。
+- **串联** `run_with_realized_feedback(...)`：收益 → 评分 → `backward()` → `optimizer.step()`，附带辩论净判断。
+
+```python
+from src import DecisionRecord, run_with_realized_feedback, StaticPriceProvider, BerkshireGraph
+d = DecisionRecord("600519","2026-01-02",{"duan":0.9,"buffett":0.8,"munger":0.6,"lilu":0.7},
+                   price_anchor=1500.0, benchmark="000300", benchmark_anchor=3800.0)
+provider = StaticPriceProvider({("600519","2026-03-31"):1650.0,("000300","2026-03-31"):3900.0})
+run_with_realized_feedback(d, realized_date="2026-03-31", price_provider=provider)
+BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0.7}).net_stance
+```
+
 ### 5.1 轨迹记录 (Trajectory Recording)
 
 每次投研任务执行后，**必须**记录轨迹至 `~/.qwenpaw/berkshire_traces/`：
@@ -341,18 +361,22 @@ python3 src/evolution_loop_v10.py optimize <ticker>
 | **数据工具** | `financial-data`, `news-pulse` |
 | **特色** | `dyp-ask` (段永平问答), `wechat-article`, `private-company-research` |
 
-## 🔧 7. 继承的工具 (8个)
+## 🔧 7. 工具链
 
 | 工具 | 功能 |
 |:-----|:-----|
 | `financial_rigor.py` | 金融严谨性验证（市值/估值/交叉验证/三情景） |
 | `report_audit.py` | 报告数据抽检（15%随机抽样） |
-| `ashare_data.py` | A股数据获取 |
+| `ashare_data.py` | A股数据获取（行情/财务/估值/日线） |
+| `data_sources.py` | **A股多源降级数据层**（native→tushare→efinance→akshare→baostock→yfinance；全失败不抛崩） |
+| `notify.py` | **多通道交付**（Telegram/飞书/本地兜底；零配置只落地不报错） |
 | `stock_screener.py` | 股票筛选 |
+| `portfolio_scan.py` / `portfolio_risk.py` / `thesis_queue.py` | PM/Risk 层：扫描 + 行动卡草案 / 组合风险 / 研究队列 |
 | `xueqiu_scraper.py` | 雪球数据抓取 |
 | `morningstar_fair_value.py` | 晨星公允价值计算 |
-| `momentum_backtest.py` | 动量回测 |
-| `momentum_backtest_v2.py` | 动量回测 V2 |
+| `momentum_backtest.py` / `momentum_backtest_v2.py` | 动量回测 |
+
+完整 CLI 用法与可选依赖表见 [`tools/README.md`](../tools/README.md)。
 
 ## 📍 8. 数据路径
 

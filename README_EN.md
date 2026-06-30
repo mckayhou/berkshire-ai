@@ -28,6 +28,10 @@
 
 **TextGrad self-evolution**: inspired by the Nature 2025 work, implementing node-level diagnosis + textual-gradient backpropagation.
 
+**Realized-return feedback loop + bull/bear debate** (absorbed from TradingAgents): each decision is persisted → real prices later compute alpha → mapped into per-master "calibration scores" fed back into backpropagation; plus an explicit bull/bear debate step on top of the parallel four-masters analysis, producing bull/bear cases and a net stance.
+
+**A-share multi-source fallback data layer + multi-channel delivery** (absorbed from JusticePlutus): data fetching walks a `native→tushare→efinance→akshare→baostock→yfinance` fallback chain and degrades gracefully (never crashes the main flow); reports/signals can be delivered via Telegram / Feishu / local fallback, and with zero config it just writes to a local file without erroring.
+
 ## 📊 System Architecture
 
 See [`assets/architecture.mmd`](assets/architecture.mmd) (Mermaid source) / [`assets/architecture.png`](assets/architecture.png).
@@ -38,15 +42,18 @@ See [`assets/architecture.mmd`](assets/architecture.mmd) (Mermaid source) / [`as
 ├─────────────────────────────────────────────────────────────┤
 │  Layer 0: Input (ticker, query, date_anchor)                │
 │      ↓                                                       │
-│  Layer 1: Data fetch (Tavily multi-key round-robin)         │
+│  Layer 1: Data fetch (Tavily round-robin / A-share fallback)│
 │      ↓                                                       │
 │  Layer 2: Four-masters analysis (Duan/Buffett/Munger/Li Lu) │
 │      ↓                                                       │
+│  Layer 2.5: Bull/Bear debate (cases + net stance)           │
+│      ↓                                                       │
 │  Layer 3: Financial verification (financial_rigor.py)       │
 │      ↓                                                       │
-│  Layer 4: Output (final_report)                             │
+│  Layer 4: Output (final_report) → multi-channel (notify.py) │
 │                                                             │
 │  ← TextGrad backprop (node-level diagnosis + gradient opt)  │
+│  ← Realized-return feedback (decision_log → realized scores)│
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -99,6 +106,39 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 ```
 
+### Realized-return feedback loop + bull/bear debate
+
+```python
+from src import (DecisionRecord, append_decision, run_with_realized_feedback,
+                 StaticPriceProvider, BerkshireGraph)
+
+# 1) Persist a decision snapshot (per-master convictions + price anchor)
+d = DecisionRecord(ticker="600519", date="2026-01-02",
+                   scores={"duan":0.9,"buffett":0.8,"munger":0.6,"lilu":0.7},
+                   price_anchor=1500.0, benchmark="000300", benchmark_anchor=3800.0)
+append_decision(d)  # → ~/.berkshire/decisions.jsonl (override via BERKSHIRE_DECISION_LOG)
+
+# 2) Later: backfill real prices → alpha → calibration scores → backprop (offline, injectable prices)
+provider = StaticPriceProvider({("600519","2026-03-31"):1650.0, ("000300","2026-03-31"):3900.0})
+result = run_with_realized_feedback(d, realized_date="2026-03-31", price_provider=provider)
+
+# 3) Net bull/bear stance for the decision-time convictions (also callable standalone)
+debate = BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0.7})
+print(debate.net_stance, debate.net_score)   # bullish / +0.x (neutral band |net|<0.15)
+```
+
+### A-share multi-source fallback data + multi-channel delivery
+
+```bash
+# Data: native→tushare→efinance→akshare→baostock→yfinance fallback; never crashes on total failure
+python3 tools/data_sources.py sources                  # list source availability (offline)
+python3 tools/data_sources.py daily 600519 --limit 60  # daily bars (via fallback chain)
+
+# Delivery: Telegram / Feishu / local fallback; zero config writes to reports/notifications/
+python3 tools/notify.py channels
+python3 tools/notify.py send --title "Weekly portfolio" --file reports/portfolio-latest.md
+```
+
 ### Tool calls inside the agent (OpenClaw / QwenPaw)
 
 Skills instruct the agent to run, via shell / integrated tools:
@@ -132,11 +172,14 @@ berkshire-ai/
 ├── LICENSE                      # MIT
 ├── VERSION_HISTORY.md
 ├── src/                         # TextGrad V10 self-evolution engine (local core)
-│   ├── evolution_loop_v10.py
-│   ├── graph.py / optimizer.py
+│   ├── evolution_loop_v10.py    # run_example + run_with_realized_feedback (feedback loop)
+│   ├── graph.py / optimizer.py  # computation graph (incl. debate()) + textual-gradient optimizer
+│   ├── decision_log.py          # decision snapshot JSONL persistence (DecisionRecord)
+│   ├── realized_feedback.py     # realized return → scores (injectable PriceProvider)
+│   ├── debate.py                # bull/bear debate (DebateResult, net stance)
 │   └── tavily_search.py
 ├── skills/                      # 18 upstream skills (merged, OpenClaw-compatible, with frontmatter)
-├── tools/                       # full upstream toolchain (financial_rigor, report_audit, ashare_data, ...)
+├── tools/                       # full toolchain (financial_rigor, report_audit, ashare_data, data_sources, notify, ...)
 ├── config/                      # skill.md (meta-skill) + state.md
 ├── docs/                        # textgrad_design, ROADMAP, report-conventions, articles
 ├── assets/                      # architecture.mmd / architecture.png

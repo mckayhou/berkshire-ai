@@ -13,8 +13,10 @@
 | 结构化梯度 `Gradient` | ✅ 已实现 (V10.5) | `ok`/`score`/`issues`/`text`，控制流读 `ok`，不解析 emoji |
 | `backward(scores)` 反向传播 | ✅ 已实现 | 输入为各大师评分 `Dict[str, float]`，输出 `Dict[str, Gradient]` |
 | 优化器 `TextualGradientDescent.step()` | 🟡 半实现 | 依据 `Gradient.ok` 产出「更新计划」并记日志，**尚未真正改写 Prompt 值** |
+| 已实现收益反馈闭环 | ✅ 已实现 (V10.11) | `decision_log` + `realized_feedback`：真实收益 → alpha → 各大师校准评分 → `backward()`（吸收自 TradingAgents） |
+| 多空对抗辩论 | ✅ 已实现 (V10.11) | `debate.py` + `BerkshireGraph.debate()`：bull/bear case + 结构化净判断 `DebateResult` |
 | LLM 驱动的文本梯度 (`∇_LLM`) | ⬜ 未实现 (Option B) | 当前梯度为基于评分的启发式模板，非 LLM 生成的批评 |
-| 真正的迭代进化循环 | ⬜ 未实现 (Option B) | `evolution_loop_v10.py` 目前是单次 example 演示 |
+| 真正的迭代进化循环 | ⬜ 未实现 (Option B) | `evolution_loop_v10.py` 提供 `run_example()` 演示 + `run_with_realized_feedback()` 收益闭环；尚无 LLM 改写 Prompt 的全自动迭代 |
 
 > 结论：当前是「干净、可测试的概念脚手架」。`Gradient.issues` 已是结构化列表，未来走 Option B 时把启发式诊断替换为 LLM 批评即可，**消费方（优化器/回测/测试）无需改动**。
 
@@ -247,6 +249,77 @@ def compute_text_gradient(node, downstream: Gradient) -> Gradient:
 def apply_gradient(var, gradient: Gradient) -> str:
     return llm.call(f"当前值：{var.value}\n改进方向：{gradient.text}\n请改写，保持核心结构")
 ```
+
+## 🔁 已实现收益反馈闭环 + 多空辩论 (V10.11，吸收自 TradingAgents)
+
+原 `backward()` 的输入是硬编码的 `{"duan":0.92, ...}`。V10.11 把这一信号替换为
+**由真实已实现收益反推的"校准评分"**，让反思变成可微的 reward。
+
+### 1. 决策落盘 — `src/decision_log.py`
+
+每次决策落盘一条结构化 `DecisionRecord`（JSONL 追加，零外部依赖）：
+
+```python
+@dataclass
+class DecisionRecord:
+    ticker: str
+    date: str                       # YYYY-MM-DD
+    scores: Dict[str, float]        # 四大师当时信心（key 必属 MASTER_PREFIXES 单一来源）
+    price_anchor: float             # 决策时标的价格锚点
+    benchmark: Optional[str] = None
+    benchmark_anchor: Optional[float] = None
+    ...
+```
+
+路径默认 `~/.berkshire/decisions.jsonl`，可用环境变量 `BERKSHIRE_DECISION_LOG` 覆盖。
+`append_decision` / `load_decisions` / `decisions_for_ticker` / `latest_decision` 读写。
+
+### 2. 收益 → 评分 — `src/realized_feedback.py`
+
+```
+alpha          = raw_return - benchmark_return
+realized_base  = clip(0.5 + alpha * SENSITIVITY, 0, 1)     # 默认 SENSITIVITY = 2.5
+master_score   = clip(1 - |conviction - realized_base|, 0, 1)
+```
+
+- `alpha=0`（与基准持平）→ `realized_base=0.5`（中性）；alpha 越正越接近 1，越负越接近 0。
+- 大师信心与"真相"一致（看多且涨 / 看空且跌）→ 高分（无需优化）；系统性过度自信被证伪 → 低分（触发 TextGrad 优化其 prompt）。
+- 价格通过可注入/可 mock 的 `PriceProvider` / `StaticPriceProvider` 获取，**核心引擎不连网络**。
+- 输出结构化 `ReturnStats`（`raw_return`/`benchmark_return`/`alpha`/`realized_base`/`has_benchmark`），控制流读字段而非解析文本。
+
+### 3. 多空对抗辩论 — `src/debate.py` / `BerkshireGraph.debate()`
+
+四大师原本并行、缺显式反方。`debate()` 在 Layer 2（四大师）与 Layer 3/4（验证/输出）
+之间插入一步，综合各大师 conviction（>0.5 偏多、<0.5 偏空）产出确定性、可测的强度：
+
+```
+bull_strength = mean_over_masters( max(0, score - 0.5) ) / 0.5
+bear_strength = mean_over_masters( max(0, 0.5 - score) ) / 0.5
+net_score     = bull_strength - bear_strength ∈ [-1, 1]
+net_stance    = bullish / bearish / neutral   (|net_score| < NET_MARGIN=0.15 视为 neutral)
+```
+
+输出结构化 `DebateResult`（含 `bull`/`bear` 的 `DebateCase`、`net_stance`、`net_score`、`ok`），
+控制流读 `net_stance`/`ok`，`__str__` 仅用于展示。复用 `MASTERS` 单一来源，不硬编码大师列表。
+
+### 4. 串联 — `run_with_realized_feedback(...)`（`src/evolution_loop_v10.py`）
+
+```python
+from src import DecisionRecord, run_with_realized_feedback, StaticPriceProvider
+
+d = DecisionRecord("600519", "2026-01-02",
+                   {"duan":0.9,"buffett":0.8,"munger":0.6,"lilu":0.7},
+                   price_anchor=1500.0, benchmark="000300", benchmark_anchor=3800.0)
+provider = StaticPriceProvider({("600519","2026-03-31"):1650.0, ("000300","2026-03-31"):3900.0})
+result = run_with_realized_feedback(d, realized_date="2026-03-31", price_provider=provider)
+# 收益 → 评分 → graph.backward() → optimizer.step()，并附带决策时信心的 debate 净判断
+```
+
+取价两种方式二选一：直接传 `realized_price`(+`benchmark_realized_price`)，或传
+`realized_date`+`price_provider`（可注入/可 mock，不连网络）。`persist=True` 时把决策落盘。
+
+> 设计一致性：`realized_feedback` 产出的 `{prefix: score}` 与原硬编码 scores 形状完全一致，
+> 因此 `backward()` / `optimizer.step()` / 测试**零改动**即可消费收益反馈信号。
 
 ## 📊 预期收益
 

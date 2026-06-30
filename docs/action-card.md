@@ -16,6 +16,7 @@
 | **标的** | {代码} {公司名} |
 | **信息丰富度** | A / B / C |
 | **综合立场** | 强烈看好 / 看好 / 中性 / 谨慎 / 回避 |
+| **多空净判断** | bullish / bearish / neutral（可由 `BerkshireGraph.debate()` 的 `net_stance`/`net_score` 佐证，中性区 \|net\|<0.15） |
 | **操作建议** | 新建仓 / 加仓 / 持有 / 减仓 / 清仓 / 仅观察 |
 | **建议仓位区间** | 新建仓：0–3% / 3–5% / 5–8%（或「不加仓，维持 X%」） |
 | **目标价区间** | {悲观} – {中性} – {乐观}（币种） |
@@ -97,4 +98,7 @@
 - 组合风险检查：`python3 tools/portfolio_risk.py --holdings '{"NVDA":25,"CASH":15}' --json`
 - 扫描 + 风险一并输出：`python3 tools/portfolio_scan.py --json --holdings '{"NVDA":25,"CASH":15}'`
 - 研究队列同步：`python3 tools/thesis_queue.py --json`（或 `--run-scan` 联网合并扫描）
+- A股数据（多源降级，全失败不抛崩）：`python3 tools/data_sources.py daily <code>`
+- 行动卡 / 组合周报多通道交付：`python3 tools/notify.py send --title "..." --file reports/x.md`（Telegram/飞书/本地兜底，零配置只落地）
+- 多空净判断佐证：`BerkshireGraph().debate({"duan":..,"buffett":..,"munger":..,"lilu":..})` → `net_stance`
 - 单标的深度研究后，用行动卡固化结论；扫描信号仅作**候选池**，不可替代研报与 `report_audit` 准出。

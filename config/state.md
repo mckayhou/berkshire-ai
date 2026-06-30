@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-06-26 09:10 | V10.0 首次运行完成 | 2026-06-26 | Loop Engine: Active (L2 - Assisted) | **Version: V10.0**
+> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.11**（收益反馈闭环 + 多空辩论；A股多源降级数据 + 多通道推送）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |
@@ -21,6 +21,8 @@
 
 | Date | Issue | Lesson Learned | Applied To Skill |
 |------|-------|----------------|------------------|
+| 2026-06-30 | **V10.11 - 收益反馈闭环 + 多空辩论** | 吸收 TradingAgents：决策落盘（`decision_log`）→ 真实收益算 alpha（`realized_feedback`）→ 各大师校准评分喂回 `backward()`；并加显式多空对抗（`debate`）。把"反思"变成可微 reward。 | `src/*` v10.11 |
+| 2026-06-30 | **V10.11 - A股多源降级 + 多通道推送** | 吸收 JusticePlutus：数据走 `native→tushare→efinance→akshare→baostock→yfinance` 降级链全失败不抛崩；报告经 Telegram/飞书/本地兜底交付，零配置只落地。 | `tools/data_sources.py`, `tools/notify.py` |
 | 2026-06-26 | **Tracker V10.0 - PDD 触发器命中** | Q1 营收低于预期 + 欧盟罚款 Temu，触发 "Q2 Revenue < Consensus -5%" 条件。需重新评估投资逻辑。 | `thesis-tracker` v10.0 |
 | 2026-06-26 | **Tracker V10.0 - AVGO 风险信号** | 6/4 急跌 15%，麦格理下调至中性，担忧谷歌自研芯片影响 ASIC 市场份额。需关注 Q2 财报验证。 | `thesis-tracker` v10.0 |
 | 2026-06-25 | **V10.0 - TextGrad 化** | 借鉴 Nature 2025 论文，实现显式计算图 + 节点级诊断 + 文本梯度反向传播。诊断精度从整体评分提升到节点级定位。**Cron 任务已升级**: `99ac7a57` (每周五 20:00) | `investment-research` v10.0 |
@@ -50,7 +52,9 @@
 | **Portfolio Scan** | `tools/portfolio_scan.py` | watchlist 扫描 + 行动卡草案 |
 | **Portfolio Risk** | `tools/portfolio_risk.py` | 组合集中度/主题/相关性检查 |
 | **Thesis Queue** | `tools/thesis_queue.py` | state.md + 扫描 → 研究待办 |
-| **A-Share Data** | `tools/ashare_data.py` | A股数据获取 |
+| **A-Share Data** | `tools/ashare_data.py` | A股数据获取（行情/财务/估值/日线） |
+| **Data Sources** | `tools/data_sources.py` | A股多源降级数据层（全失败不抛崩） |
+| **Notify** | `tools/notify.py` | 多通道交付（Telegram/飞书/本地兜底） |
 | **Stock Screener** | `tools/stock_screener.py` | 股票筛选 |
 | **Xueqiu Scraper** | `tools/xueqiu_scraper.py` | 雪球数据抓取 |
 | **Morningstar FV** | `tools/morningstar_fair_value.py` | 晨星公允价值榜单 |
