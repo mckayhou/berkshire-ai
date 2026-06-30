@@ -37,7 +37,7 @@
       "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
       "file_type": "document",
       "source_file": "config/skill.md",
-      "source_location": "L44",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "skill",
       "community": 31,
@@ -70,7 +70,7 @@
       "ecosystem": "python",
       "source_file": "pyproject.toml",
       "source_location": "L1",
-      "version": "10.17.0",
+      "version": "10.18.0",
       "_origin": "ast",
       "id": "pkg_berkshire_ai",
       "community": 70,
@@ -89,112 +89,82 @@
     {
       "label": "",
       "file_type": "code",
-      "source_file": "src/access_control.py",
+      "source_file": "src/experience_store.py",
       "source_location": "L56",
       "_origin": "ast",
-      "id": "access_control",
-      "community": 81,
+      "id": "experience_store",
+      "community": 91,
       "norm_label": ""
     },
     {
       "label": "",
       "file_type": "code",
-      "source_file": "src/config.py",
-      "source_location": "L30",
+      "source_file": "src/hypothesis.py",
+      "source_location": "L54",
       "_origin": "ast",
-      "id": "config",
-      "community": 69,
+      "id": "hypothesis",
+      "community": 92,
       "norm_label": ""
     },
     {
       "label": "",
       "file_type": "code",
-      "source_file": "src/llm_gradient.py",
-      "source_location": "L107",
+      "source_file": "src/prompt_optimizer.py",
+      "source_location": "L57",
       "_origin": "ast",
-      "id": "llm_gradient",
-      "community": 82,
+      "id": "prompt_optimizer",
+      "community": 65,
       "norm_label": ""
     },
     {
       "label": "",
       "file_type": "code",
-      "source_file": "src/metrics_export.py",
-      "source_location": "L31",
+      "source_file": "tests/test_experience_store.py",
+      "source_location": "L58",
       "_origin": "ast",
-      "id": "metrics_export",
-      "community": 83,
+      "id": "test_experience_store",
+      "community": 94,
       "norm_label": ""
     },
     {
-      "label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
-      "file_type": "rationale",
-      "source_file": "src/service.py",
-      "source_location": "L63",
+      "label": "",
+      "file_type": "code",
+      "source_file": "tests/test_hypothesis.py",
+      "source_location": "L100",
       "_origin": "ast",
-      "id": "service",
-      "community": 77,
-      "norm_label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1"
+      "id": "test_hypothesis",
+      "community": 95,
+      "norm_label": ""
     },
     {
-      "label": "test_llm_smoke.py",
+      "label": "test_rewrite_fewshot.py",
       "file_type": "code",
-      "source_file": "tests/e2e/test_llm_smoke.py",
+      "source_file": "tests/test_rewrite_fewshot.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "test_llm_smoke",
-      "community": 89,
-      "norm_label": "test_llm_smoke.py"
+      "id": "test_rewrite_fewshot",
+      "community": 96,
+      "norm_label": "test_rewrite_fewshot.py"
     },
     {
-      "label": "test_access_control.py",
+      "label": "",
       "file_type": "code",
-      "source_file": "tests/test_access_control.py",
-      "source_location": "L1",
+      "source_file": "tests/test_tools_perf_metrics.py",
+      "source_location": "L152",
       "_origin": "ast",
-      "id": "test_access_control",
-      "community": 86,
-      "norm_label": "test_access_control.py"
+      "id": "test_tools_perf_metrics",
+      "community": 97,
+      "norm_label": ""
     },
     {
-      "label": "\u4ece\u6539\u5199\u63d0\u793a\u91cc\u53d6\u51fa\u300c\u5f53\u524d Prompt\u300d\u5e76\u8ffd\u52a0\u4e00\u4e2a \u2713\uff08\u786e\u5b9a\u6027 +0.25 \u8d28\u91cf\uff09\u3002",
-      "file_type": "rationale",
-      "source_file": "tests/test_eval_harness_golden.py",
-      "source_location": "L31",
-      "_origin": "ast",
-      "id": "test_eval_harness_golden",
-      "community": 87,
-      "norm_label": "\u4ece\u6539\u5199\u63d0\u793a\u91cc\u53d6\u51fa\u300c\u5f53\u524d prompt\u300d\u5e76\u8ffd\u52a0\u4e00\u4e2a \u2713(\u786e\u5b9a\u6027 +0.25 \u8d28\u91cf)\u3002"
-    },
-    {
-      "label": "test_llm_gradient.py",
+      "label": "",
       "file_type": "code",
-      "source_file": "tests/test_llm_gradient.py",
-      "source_location": "L1",
+      "source_file": "tools/perf_metrics.py",
+      "source_location": "L152",
       "_origin": "ast",
-      "id": "test_llm_gradient",
-      "community": 88,
-      "norm_label": "test_llm_gradient.py"
-    },
-    {
-      "label": "test_metrics_export.py",
-      "file_type": "code",
-      "source_file": "tests/test_metrics_export.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_metrics_export",
-      "community": 90,
-      "norm_label": "test_metrics_export.py"
-    },
-    {
-      "label": "test_service.py",
-      "file_type": "code",
-      "source_file": "tests/test_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "test_service",
-      "community": 80,
-      "norm_label": "test_service.py"
+      "id": "perf_metrics",
+      "community": 93,
+      "norm_label": ""
     },
     {
       "label": "portfolio-weekly.sh",
@@ -223,6 +193,26 @@
       "community": 45,
       "norm_label": "portfolio-weekly.sh script",
       "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/access_control.py",
+      "source_location": "L56",
+      "_origin": "ast",
+      "community": 81,
+      "norm_label": "",
+      "id": "access_control"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/config.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "community": 69,
+      "norm_label": "",
+      "id": "config"
     },
     {
       "label": "",
@@ -277,6 +267,26 @@
     {
       "label": "",
       "file_type": "code",
+      "source_file": "src/llm_gradient.py",
+      "source_location": "L107",
+      "_origin": "ast",
+      "community": 82,
+      "norm_label": "",
+      "id": "llm_gradient"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/metrics_export.py",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 83,
+      "norm_label": "",
+      "id": "metrics_export"
+    },
+    {
+      "label": "",
+      "file_type": "code",
       "source_file": "src/observability.py",
       "source_location": "L70",
       "_origin": "ast",
@@ -293,16 +303,6 @@
       "community": 26,
       "norm_label": "",
       "id": "optimizer"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/prompt_optimizer.py",
-      "source_location": "L57",
-      "_origin": "ast",
-      "community": 65,
-      "norm_label": "",
-      "id": "prompt_optimizer"
     },
     {
       "label": "",
@@ -335,6 +335,16 @@
       "id": "sanitize"
     },
     {
+      "label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
+      "file_type": "rationale",
+      "source_file": "src/service.py",
+      "source_location": "L63",
+      "_origin": "ast",
+      "community": 77,
+      "norm_label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
+      "id": "service"
+    },
+    {
       "label": "",
       "file_type": "code",
       "source_file": "src/tavily_search.py",
@@ -343,6 +353,26 @@
       "community": 34,
       "norm_label": "",
       "id": "tavily_search"
+    },
+    {
+      "label": "test_llm_smoke.py",
+      "file_type": "code",
+      "source_file": "tests/e2e/test_llm_smoke.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 89,
+      "norm_label": "test_llm_smoke.py",
+      "id": "test_llm_smoke"
+    },
+    {
+      "label": "test_access_control.py",
+      "file_type": "code",
+      "source_file": "tests/test_access_control.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 86,
+      "norm_label": "test_access_control.py",
+      "id": "test_access_control"
     },
     {
       "label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf\uff1a\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5\uff0c\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002",
@@ -373,6 +403,36 @@
       "community": 74,
       "norm_label": "",
       "id": "test_eval_harness"
+    },
+    {
+      "label": "\u4ece\u6539\u5199\u63d0\u793a\u91cc\u53d6\u51fa\u300c\u5f53\u524d Prompt\u300d\u5e76\u8ffd\u52a0\u4e00\u4e2a \u2713\uff08\u786e\u5b9a\u6027 +0.25 \u8d28\u91cf\uff09\u3002",
+      "file_type": "rationale",
+      "source_file": "tests/test_eval_harness_golden.py",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 87,
+      "norm_label": "\u4ece\u6539\u5199\u63d0\u793a\u91cc\u53d6\u51fa\u300c\u5f53\u524d prompt\u300d\u5e76\u8ffd\u52a0\u4e00\u4e2a \u2713(\u786e\u5b9a\u6027 +0.25 \u8d28\u91cf)\u3002",
+      "id": "test_eval_harness_golden"
+    },
+    {
+      "label": "test_llm_gradient.py",
+      "file_type": "code",
+      "source_file": "tests/test_llm_gradient.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 88,
+      "norm_label": "test_llm_gradient.py",
+      "id": "test_llm_gradient"
+    },
+    {
+      "label": "test_metrics_export.py",
+      "file_type": "code",
+      "source_file": "tests/test_metrics_export.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 90,
+      "norm_label": "test_metrics_export.py",
+      "id": "test_metrics_export"
     },
     {
       "label": "test_network_price_provider.py",
@@ -433,6 +493,16 @@
       "community": 79,
       "norm_label": "test_sanitize.py",
       "id": "test_sanitize"
+    },
+    {
+      "label": "test_service.py",
+      "file_type": "code",
+      "source_file": "tests/test_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "test_service.py",
+      "id": "test_service"
     },
     {
       "label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf\uff0c\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002",
@@ -766,7 +836,7 @@
       "source_file": "TESTING.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 92,
+      "community": 99,
       "norm_label": "\u6d4b\u8bd5\u6307\u5357\u4e0e e2e \u62a5\u544a(testing)",
       "id": "TESTING"
     },
@@ -776,7 +846,7 @@
       "source_file": "docs/action-card.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 91,
+      "community": 98,
       "norm_label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361(action card)",
       "id": "action-card"
     },
@@ -806,7 +876,7 @@
       "source_file": "docs/report-conventions.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 91,
+      "community": 98,
       "norm_label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303(report conventions)",
       "id": "report-conventions"
     },
@@ -816,7 +886,7 @@
       "source_file": "docs/textgrad_design.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 93,
+      "community": 100,
       "norm_label": "berkshire ai v10.0 - textgrad \u5316\u8bbe\u8ba1",
       "id": "textgrad_design"
     },
@@ -836,7 +906,7 @@
       "source_file": "reports/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 91,
+      "community": 98,
       "norm_label": "reports/ \u2014 \u7814\u7a76\u62a5\u544a\u8f93\u51fa\u76ee\u5f55",
       "id": "reports_README.md"
     },
@@ -1146,7 +1216,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "config/skill.md",
-      "source_location": "L44",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "skill",
       "target": "skill",
@@ -1185,61 +1255,71 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/access_control.py",
-      "source_location": "L30",
+      "source_file": "src/experience_store.py",
+      "source_location": "L42",
       "weight": 1.0,
-      "source": "access_control",
-      "target": "access_control",
+      "source": "experience_store",
+      "target": "experience_store",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/config.py",
-      "source_location": "L66",
+      "source_file": "src/hypothesis.py",
+      "source_location": "L55",
       "weight": 1.0,
-      "source": "config",
-      "target": "config",
+      "source": "hypothesis",
+      "target": "hypothesis",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/llm_gradient.py",
+      "source_file": "src/prompt_optimizer.py",
       "source_location": "L58",
       "weight": 1.0,
-      "source": "llm_gradient",
-      "target": "llm_gradient",
+      "source": "prompt_optimizer",
+      "target": "prompt_optimizer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_experience_store.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "test_experience_store",
+      "target": "test_experience_store",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_hypothesis.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "test_hypothesis",
+      "target": "test_hypothesis",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/metrics_export.py",
-      "source_location": "L52",
+      "source_file": "tests/test_tools_perf_metrics.py",
+      "source_location": "L153",
       "weight": 1.0,
-      "source": "metrics_export",
-      "target": "metrics_export",
+      "source": "test_tools_perf_metrics",
+      "target": "test_tools_perf_metrics",
       "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/service.py",
-      "source_location": "L63",
+      "source_file": "tools/perf_metrics.py",
+      "source_location": "L39",
       "weight": 1.0,
-      "source": "service",
-      "target": "service",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_eval_harness_golden.py",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "test_eval_harness_golden",
-      "target": "test_eval_harness_golden",
+      "source": "perf_metrics",
+      "target": "perf_metrics",
       "confidence_score": 1.0
     },
     {
@@ -1251,6 +1331,26 @@
       "confidence_score": 1.0,
       "source": "portfolio-weekly",
       "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/access_control.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "access_control",
+      "target": "access_control"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "config",
+      "target": "config"
     },
     {
       "relation": "rationale_for",
@@ -1305,6 +1405,26 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "src/llm_gradient.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "llm_gradient",
+      "target": "llm_gradient"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/metrics_export.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metrics_export",
+      "target": "metrics_export"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "src/observability.py",
       "source_location": "L53",
       "weight": 1.0,
@@ -1321,16 +1441,6 @@
       "confidence_score": 1.0,
       "source": "optimizer",
       "target": "optimizer"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/prompt_optimizer.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "prompt_optimizer",
-      "target": "prompt_optimizer"
     },
     {
       "relation": "rationale_for",
@@ -1365,6 +1475,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "src/service.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "service",
+      "target": "service"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "src/tavily_search.py",
       "source_location": "L38",
       "weight": 1.0,
@@ -1391,6 +1511,16 @@
       "confidence_score": 1.0,
       "source": "test_eval_harness",
       "target": "test_eval_harness"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_eval_harness_golden.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_eval_harness_golden",
+      "target": "test_eval_harness_golden"
     },
     {
       "relation": "rationale_for",
@@ -1904,5 +2034,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b32041015469aafe512f2a18f648eeb062929dd6"
+  "built_at_commit": "07a4a76785dfa9637729e4770743901784108016"
 }
