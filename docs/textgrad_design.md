@@ -278,7 +278,7 @@ class DecisionRecord:
 
 ```
 alpha          = raw_return - benchmark_return
-realized_base  = clip(0.5 + alpha * SENSITIVITY, 0, 1)     # 默认 SENSITIVITY = 2.5
+realized_base  = clip(0.5 + alpha * SENSITIVITY, 0, 1)     # 默认 SENSITIVITY = 0.5（V10.12 校准，见下「尺度校准」节）
 master_score   = clip(1 - |conviction - realized_base|, 0, 1)
 ```
 
@@ -320,6 +320,74 @@ result = run_with_realized_feedback(d, realized_date="2026-03-31", price_provide
 
 > 设计一致性：`realized_feedback` 产出的 `{prefix: score}` 与原硬编码 scores 形状完全一致，
 > 因此 `backward()` / `optimizer.step()` / 测试**零改动**即可消费收益反馈信号。
+
+## 🎚️ SENSITIVITY 尺度校准 (V10.12，data-only)
+
+`realized_base = clip(0.5 + alpha·SENSITIVITY, 0, 1)` 里的 `SENSITIVITY` 决定了
+「多大的超额收益算强信号」。原默认 2.5 是拍脑袋值。我们暂时没有历史「大师
+conviction」数据，无法做「信心 vs alpha」的误差校准，于是改做**尺度校准**：
+在真实观测到的 alpha 分布上选 `SENSITIVITY`，让 `realized_base` 用满 [0,1] 区间
+而不过度饱和。脚本：`tools/calibrate_sensitivity.py`。
+
+### 1. 数据
+
+- 标的：汇总 `data/watchlist.json` + `data/holdings.example.json`（去重，忽略
+  `CASH` 与 `_` 开头元字段）。
+- 日线：美股直接代码（基准 `^GSPC`）、港股 `XXXX.HK`（基准 `^HSI`）、A股
+  沪深300为基准。取数走可注入 `HistoryProvider`：`YFinanceProvider`（美/港股）、
+  `TushareProvider`→`AkshareProvider`→`YFinanceProvider` 降级（A股 + 沪深300指数），
+  `ChainProvider` 按市场选链。**核心数学不连网络**，离线用 `DictHistoryProvider`。
+- 窗口：锚点 ≈ N 天前最近交易日，realized = 最新交易日；主窗 365 天，对照窗 182 天。
+
+### 2. 目标函数（对肥尾稳健）
+
+```
+J(S) = | spread₁₀₋₉₀(realized_base; S) − TARGET_SPREAD |     # TARGET_SPREAD = 0.80
+spread₁₀₋₉₀ = p90(realized_base) − p10(realized_base)
+```
+
+让**中位 80% 的决策**用满约 `realized_base ∈ [0.1, 0.9]`，而极端 ±10% 尾部
+（IPO/加密暴涨暴跌）**有意留给饱和**。
+
+> 为什么不用标准差：真实 alpha 严重右偏、肥尾（少数标的一年内 +数倍），标准差会
+> 被离群点主导，把 S 压到极小，导致典型 ±15% 决策几乎没有反馈信号。而涨 8 倍的
+> 决策本就**应该**读成接近 1.0——所以让尾部饱和是正确行为。基于 p10/p90 的中位
+> 宽度对离群点稳健，只刻画「大多数决策」的尺度。
+
+`J(S)` 单峰（spread 随 S 单调递增直到饱和到 ≤1.0）：先网格扫描记录 `J(S)` 曲线
+（本次的「loop」），再用**黄金分割**在含极小点的网格 bracket 内细化收敛。取「最小
+的、达到目标 spread 的 S」，它在同等中位宽度下天然使饱和比例最低。
+
+### 3. 校准结论（27 个标的真实日线，2025–2026）
+
+| 指标 | 默认 2.5 | 推荐 0.5 |
+|:-----|:--------:|:--------:|
+| realized_base 饱和比例 (clip 到 0/1) | **77.8%** | **~14.8%** |
+| realized_base spread (p10..p90) | 1.000（完全饱和） | 0.867 |
+| realized_base std | 0.444 | 0.311 |
+
+- 覆盖：27/27（美股 22 + 港股 4 + A股 1），0 未覆盖。A股 `600900` 与沪深300基准经
+  akshare 兜底（Tushare 免费 token 无 `daily`/`index_daily` 接口权限，自动降级）。
+- 观测 alpha：n=27，mean=+0.36，std=1.75，p05/p50/p95 = −0.78/−0.11/+2.54，max=+8.12。
+- 最优 `SENSITIVITY`：12 个月窗 ≈ **0.41**，6 个月窗 ≈ **0.68**（稳健性对照）。
+- 取稳健折中 **0.5** 作为新默认：介于两窗之间、取整、直觉清晰（±100% 相对超额收益
+  即触达 [0,1] 边界 `0.5 ± alpha·0.5`），把饱和比例从 ~78% 降到 ~15%。
+
+> 结论：旧默认 2.5 对当前市场 regime **严重过饱和**，校准后 0.5 显著更优，已更新
+> `src/realized_feedback.py` 的默认值，并保留 `BERKSHIRE_SENSITIVITY` 环境变量覆盖
+> （零侵入）。当未来拿到历史大师 conviction 数据，可在此基础上升级为「信心 vs alpha」
+> 误差校准。
+
+### 4. 复现
+
+```bash
+pip install yfinance akshare tushare
+# A 股增强源（可选）：仅作环境变量，切勿写进文件/提交
+export BERKSHIRE_ENABLE_TUSHARE=1 TUSHARE_TOKEN=<redacted>
+python3 tools/calibrate_sensitivity.py run --lookback 365 --also 182
+# 覆盖默认灵敏度而不改代码：
+export BERKSHIRE_SENSITIVITY=0.41
+```
 
 ## 📊 预期收益
 

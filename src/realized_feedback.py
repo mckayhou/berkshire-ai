@@ -30,6 +30,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
@@ -41,8 +42,37 @@ except ImportError:  # pragma: no cover - 包内导入回退
     from .decision_log import DecisionRecord
 
 
-# 默认灵敏度：alpha = +0.20 时 realized_base 达到 1.0（强烈正反馈）
-DEFAULT_SENSITIVITY = 2.5
+# 基线灵敏度。该值由 tools/calibrate_sensitivity.py 用真实历史行情做「尺度校准」
+# 得出：让 realized_base = clip(0.5 + alpha*SENSITIVITY) 对真实观测到的 alpha 分布
+# 用满 [0,1] 区间而不过度饱和（详见 docs/textgrad_design.md「SENSITIVITY 尺度校准」）。
+#
+# 校准结论（27 个标的真实日线，2025-2026）：旧默认 2.5 严重过饱和——~78% 的
+# realized_base 被 clip 到 0/1。在「中位 80% 决策映射到 realized_base∈[0.1,0.9]」
+# 目标下，12 个月窗最优 ≈0.41、6 个月窗最优 ≈0.68；取稳健折中 0.5（直觉：±100%
+# 的相对超额收益即为最大信号，0.5 ± alpha*0.5 触达 [0,1] 边界）。
+# 环境变量 BERKSHIRE_SENSITIVITY 可在不改代码的前提下覆盖（零侵入）。
+ENV_SENSITIVITY = "BERKSHIRE_SENSITIVITY"
+_BASE_SENSITIVITY = 0.5
+
+
+def _resolve_default_sensitivity() -> float:
+    """默认灵敏度：环境变量 BERKSHIRE_SENSITIVITY 优先，否则用校准基线。
+
+    仅接受正数；非法/非正值静默回退到基线，绝不抛错（零侵入）。
+    """
+    raw = os.environ.get(ENV_SENSITIVITY, "").strip()
+    if raw:
+        try:
+            val = float(raw)
+            if val > 0:
+                return val
+        except ValueError:
+            pass
+    return _BASE_SENSITIVITY
+
+
+# alpha = +(0.5/SENSITIVITY) 时 realized_base 达到 1.0（强烈正反馈）
+DEFAULT_SENSITIVITY = _resolve_default_sensitivity()
 
 
 def _clip01(x: float) -> float:

@@ -73,8 +73,9 @@ def test_load_decisions_missing_file_returns_empty(tmp_path):
 # --------------------------- realized_feedback ---------------------------
 def test_compute_returns_alpha_and_base():
     d = _sample_decision(price_anchor=100.0, benchmark_anchor=5000.0)
-    # 标的 +20%，基准 +5% → alpha = +15%
-    stats = rf.compute_returns(d, realized_price=120.0, benchmark_realized_price=5250.0)
+    # 标的 +20%，基准 +5% → alpha = +15%（固定 sensitivity=2.5 测映射公式本身）
+    stats = rf.compute_returns(
+        d, realized_price=120.0, benchmark_realized_price=5250.0, sensitivity=2.5)
     assert stats.raw_return == pytest.approx(0.20)
     assert stats.benchmark_return == pytest.approx(0.05)
     assert stats.alpha == pytest.approx(0.15)
@@ -85,20 +86,20 @@ def test_compute_returns_alpha_and_base():
 
 def test_compute_returns_clips_and_no_benchmark():
     d = _sample_decision(benchmark=None, benchmark_anchor=None)
-    # 暴涨 +100% 无基准 → alpha=raw=1.0 → base clip 到 1.0
-    stats = rf.compute_returns(d, realized_price=200.0)
+    # 暴涨 +100% 无基准 → alpha=raw=1.0 → base clip 到 1.0（固定 sensitivity=2.5）
+    stats = rf.compute_returns(d, realized_price=200.0, sensitivity=2.5)
     assert stats.has_benchmark is False
     assert stats.benchmark_return == 0.0
     assert stats.realized_base == 1.0
     # 暴跌 -60% → base clip 到 0.0
-    stats2 = rf.compute_returns(d, realized_price=40.0)
+    stats2 = rf.compute_returns(d, realized_price=40.0, sensitivity=2.5)
     assert stats2.realized_base == 0.0
 
 
 def test_realized_scores_rewards_calibration():
-    # 标的 +20% / 基准 +5% → realized_base ≈ 0.875（决策被证明正确）
+    # 标的 +20% / 基准 +5% → realized_base ≈ 0.875（决策被证明正确，固定 sensitivity=2.5）
     d = _sample_decision(scores={"duan": 0.9, "buffett": 0.85, "munger": 0.1, "lilu": 0.5})
-    scores, stats = rf.realized_scores(d, 120.0, 5250.0)
+    scores, stats = rf.realized_scores(d, 120.0, 5250.0, sensitivity=2.5)
     assert set(scores) == set(MASTER_PREFIXES)
     # buffett 信心 0.85 ≈ 真相 0.875 → 校准好，高分（应达标）
     assert scores["buffett"] >= SCORE_THRESHOLD

@@ -36,6 +36,29 @@
 
 ## 📜 版本历史
 
+### V10.12 - 2026-06-30 (SENSITIVITY 尺度校准：用真实历史行情校准收益反馈映射)
+
+**变更内容**:
+
+- 新增 `tools/calibrate_sensitivity.py`：用真实历史日线对 `realized_feedback` 的 `SENSITIVITY` 做 **data-only 尺度校准**。
+  - 取数走可注入 `HistoryProvider`（`DictHistoryProvider` 离线 / `YFinanceProvider` 美港股 / `TushareProvider` + `AkshareProvider` A股 + 沪深300指数 / `ChainProvider` 按市场降级），核心数学不连网络
+  - 标的：汇总 `data/watchlist.json` + `data/holdings.example.json`（去重、忽略 `CASH` 与 `_` 元字段）；per-market 基准：美股 `^GSPC`、港股 `^HSI`、A股 沪深300
+  - 目标函数（对肥尾稳健）：`J(S)=|spread₁₀₋₉₀(realized_base;S) − 0.80|`，让中位 80% 决策映射到 `realized_base∈[0.1,0.9]`，极端 ±10% 尾部有意留给饱和
+  - 搜索 loop：网格扫描记录 `J(S)` 曲线 → 黄金分割在 bracket 内细化收敛
+- 修改 `src/realized_feedback.py`：默认 `SENSITIVITY` **2.5 → 0.5**（校准结论），新增环境变量 `BERKSHIRE_SENSITIVITY` 覆盖（零侵入，非法/非正值静默回退）
+- 新增 `tests/test_calibrate_sensitivity.py`：22 个离线单测（目标函数/搜索收敛/肥尾稳健/市场分类/取数管线/env 覆盖），全部 mock，不打真实网络
+- 文档：`docs/textgrad_design.md`（校准方法与结论）、`tools/README.md`（`calibrate_sensitivity` 用法）、`docs/ROADMAP.md`（aktools-pro 数据后端 backlog）
+
+**真实数据覆盖**: 27/27 标的（美股 22 + 港股 4 + A股 1），0 未覆盖。A股 `600900` 与沪深300基准经 akshare 兜底（Tushare 免费 token 无 `daily`/`index_daily` 接口权限，自动降级）。
+
+**校准结论**: 观测 alpha 严重右偏肥尾（std≈1.75，max≈+811%，AI/加密/次新股驱动）。旧默认 2.5 使 ~78% 的 realized_base 被 clip 到 0/1（spread 饱和到 1.0）。推荐 S：12 个月窗 ≈0.41、6 个月窗 ≈0.68；取稳健折中 **0.5**（sat_ratio 78% → ~15%）。
+
+**测试结果**: 205 通过（183 既有 + 22 新增，`python3 -m pytest tests/ -q`，0 失败）
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.11 - 2026-06-30 (已实现收益反馈闭环 + 多空辩论 · A股多源降级数据层 + 多通道推送)
 
 **变更内容**:
