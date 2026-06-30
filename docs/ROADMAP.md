@@ -34,7 +34,7 @@
 ## P2：长期（6个月+）
 
 ### 测试覆盖 + 工程门禁 — 🟡 部分实现（V10.14 升级）
-- 232 pytest（引擎、prompt_optimizer、config、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
+- 286 pytest（引擎、prompt_optimizer、config、prompt_validation、eval_harness、observability、sanitize、service、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
 - GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 45% + pip-audit + gitleaks；`.github/dependabot.yml` 周更
 - 集中工具配置 `pyproject.toml`；中心配置 + 启动自检 `src/config.py`
 - 待补：Skill 输出回归（golden 行动卡/报告片段）；逐步提高覆盖率门 / 收紧 mypy（check_untyped_defs）
@@ -46,12 +46,18 @@
 
 ## 本 fork 专属方向
 
-### TextGrad V10 自进化引擎 — 🟡 设计 + 雏形（V10.13–10.15 大幅推进）
+### TextGrad V10 自进化引擎 — 🟡 设计 + 雏形（V10.13–10.16 大幅推进）
 - `src/graph.py` + `src/optimizer.py`：结构化 `Gradient`，`backward()` 文本梯度
 - ✅ V10.13 变量真实改写（Option B）：`src/prompt_optimizer.py` 经 LLM 改写 Prompt
 - ✅ V10.15 验证门控改写：`src/prompt_validation.py`（改写后评分，只有不劣于旧版才接受否则回滚）
 - ✅ V10.15 多轮迭代 + 离线评测台：`src/eval_harness.py::run_multi_round`（`EvolutionReport` 证明单调不退化且收敛）
+- ✅ V10.16 提示注入防护：`src/sanitize.py`（清洗喂给改写 LLM 的不可信诊断，`UNTRUSTED_` 分隔符兜底）
 - 待补：LLM 生成「批评/梯度」(`∇_LLM`)；`reflect` / `optimize` / `status` CLI 完整化（见 `config/skill.md`）
+
+### 可观测 + 服务化 — ✅ V10.16（生产化硬化 档C）
+- `src/observability.py`：结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）
+- `src/service.py`：服务边界 —`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/score` `/debate`（`pip install .[service]`）
+- 待补：鉴权/限流中间件、Prometheus/OTel 导出、容器化与部署清单
 
 ### 已实现收益反馈闭环 + 多空辩论 — ✅ V10.11（吸收自 TradingAgents）
 - `src/decision_log.py`：决策快照 JSONL 持久化（`BERKSHIRE_DECISION_LOG` 可覆盖）

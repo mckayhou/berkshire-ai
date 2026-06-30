@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.15** (production hardening, tier B: validation-gated rewriting `prompt_validation` (accept only if not worse, else rollback) + real-market price source `NetworkPriceProvider` + multi-round loop & offline eval harness `eval_harness` (proves evolution is monotonic non-decreasing); cumulative with tier A CI/packaging/central-config + V10.13 Option B LLM rewriting). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.16** (production hardening, tier C: structured logging + run_id propagation + LLM cost/token/latency metrics `observability` + service boundary `service` (FastAPI, optional) + prompt-injection defense `sanitize`; cumulative with tier A CI/packaging/central-config + tier B validation-gated rewriting/real-market data/eval harness). Production hardening tiers A→B→C all shipped. Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -37,6 +37,8 @@
 **Real variable rewriting (V10.13 / Option B)**: `prompt_optimizer.apply_gradient` makes the textual gradient actually land on the prompt — an LLM reads the downstream diagnosis + current prompt and produces an improved prompt. `TextualGradientDescent(graph, llm=...)` then truly rewrites `Variable.value` for under-performing prompt nodes. The `LLMClient` is injectable/mockable (`StaticLLMClient` / `OpenAICompatibleLLMClient`), so the core is fully offline-testable and degrades gracefully on LLM failure; without an injected `llm` the behavior is unchanged (backward compatible).
 
 **Validation-gated evolution (V10.15 / tier B)**: rewriting alone isn't enough — "the LLM claims it's better" must be proven. `prompt_validation.validated_apply_gradient` scores the old vs. candidate prompt on a held-out set and accepts the candidate **only if it is not worse (+`min_improvement`), else rolls back** — preventing prompt drift. `NetworkPriceProvider` wires the realized-return feedback loop to real market data via the `tools/data_sources` fallback chain (in-memory cache + prior-trading-day fallback, injectable fetcher for offline tests). `eval_harness.run_multi_round` drives the multi-round loop and yields an `EvolutionReport` whose tests assert evolution is **monotonic non-decreasing and convergent**.
+
+**Observability, service boundary & injection defense (V10.16 / tier C)**: `observability` provides structured JSON logging, a `run_id` propagated via `contextvar` (`run_context()`), and LLM cost/token/latency metrics (`MetricsCollector`, wired into `OpenAICompatibleLLMClient`). `service.create_app()` exposes the engine over FastAPI (`/health`, `/config/doctor`, `/score`, `/debate`) — the core handlers are framework-free pure functions, fully offline-testable. `sanitize.sanitize_untrusted` neutralizes prompt-injection in the untrusted downstream diagnosis fed to the rewriter (control-char stripping, jailbreak-phrase neutralization, fake role-tag stripping), wrapped in explicit `UNTRUSTED_*` delimiters as defense-in-depth alongside validation gating.
 
 ## 📊 System Architecture
 

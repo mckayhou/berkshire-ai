@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.15**（生产化硬化 档B：验证门控改写 prompt_validation + 真实行情 NetworkPriceProvider + 多轮迭代/离线评测台 eval_harness；累积 档A CI/打包/中心配置 + V10.13 Option B LLM 改写）
+> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.16**（生产化硬化 档C：结构化日志/run_id/LLM 成本埋点 observability + 服务边界 service(FastAPI) + 提示注入防护 sanitize；生产化三档 A→B→C 全部落地）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |

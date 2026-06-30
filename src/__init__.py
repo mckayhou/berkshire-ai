@@ -14,6 +14,16 @@ from .eval_harness import (
     run_multi_round,
 )
 from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+from .observability import (
+    LLMCallMetrics,
+    MetricsCollector,
+    configure_logging,
+    estimate_cost,
+    get_logger,
+    get_run_id,
+    new_run_id,
+    run_context,
+)
 from .optimizer import TextualGradientDescent
 from .prompt_optimizer import (
     LLMClient,
@@ -72,4 +82,12 @@ __all__ = [
     "build_quality_gradients",
     "mean_prompt_quality",
     "run_multi_round",
+    "LLMCallMetrics",
+    "MetricsCollector",
+    "configure_logging",
+    "estimate_cost",
+    "get_logger",
+    "get_run_id",
+    "new_run_id",
+    "run_context",
 ]

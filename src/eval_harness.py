@@ -31,11 +31,13 @@ from typing import Callable, Dict, List, Optional
 
 try:
     from graph import BerkshireGraph, Gradient
+    from observability import get_logger, run_context
     from optimizer import TextualGradientDescent
     from prompt_optimizer import LLMClient
     from prompt_validation import StaticPromptScorer
 except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import BerkshireGraph, Gradient
+    from .observability import get_logger, run_context
     from .optimizer import TextualGradientDescent
     from .prompt_optimizer import LLMClient
     from .prompt_validation import StaticPromptScorer
@@ -103,6 +105,7 @@ class EvolutionReport:
     rounds: List[RoundMetrics] = field(default_factory=list)
     converged: bool = False
     initial_quality: float = 0.0
+    run_id: Optional[str] = None
 
     @property
     def final_quality(self) -> float:
@@ -128,6 +131,7 @@ def run_multi_round(
     threshold: float = 0.70,
     min_improvement: float = 0.0,
     prompt_nodes: Optional[List[str]] = None,
+    run_id: Optional[str] = None,
 ) -> EvolutionReport:
     """跑多轮验证门控进化，返回逐轮指标 + 是否收敛。
 
@@ -139,39 +143,54 @@ def run_multi_round(
         threshold: 达标阈值；全部变量 ≥ threshold 即收敛。
         min_improvement: 验证门控接受所需最小增益。
         prompt_nodes: 仅优化这些节点（None=全部 prompt 变量）。
+        run_id: 可选；用于把本次进化的所有日志关联到同一 run（默认自动生成）。
     """
     scorer = StaticPromptScorer(fn=quality_fn)
     optimizer = TextualGradientDescent(
         graph, llm=llm, scorer=scorer, min_improvement=min_improvement
     )
+    logger = get_logger("eval_harness")
     report = EvolutionReport(
         initial_quality=mean_prompt_quality(graph, quality_fn, prompt_nodes)
     )
 
-    for r in range(1, rounds + 1):
-        grads = build_quality_gradients(graph, quality_fn, threshold, prompt_nodes)
-        all_passed = bool(grads) and all(g.ok for g in grads.values())
-        if all_passed:
-            report.rounds.append(
-                RoundMetrics(r, mean_prompt_quality(graph, quality_fn, prompt_nodes),
-                             0, 0, True)
-            )
-            report.converged = True
-            break
-
-        updates = optimizer.step(grads)
-        accepted = sum(1 for u in updates if u.get("rewritten"))
-        rejected = sum(1 for u in updates if u.get("rewrite_rejected"))
-        report.rounds.append(
-            RoundMetrics(
-                r, mean_prompt_quality(graph, quality_fn, prompt_nodes),
-                accepted, rejected, False,
-            )
+    with run_context(run_id) as rid:
+        logger.info(
+            "evolution_start",
+            extra={"event": "evolution_start", "rounds": rounds,
+                   "threshold": threshold, "initial_quality": report.initial_quality},
         )
-        if accepted == 0:
-            # 本轮无任何可接受改写 → 已到验证门控能达到的上限，收敛
-            report.converged = True
-            break
+        for r in range(1, rounds + 1):
+            grads = build_quality_gradients(graph, quality_fn, threshold, prompt_nodes)
+            all_passed = bool(grads) and all(g.ok for g in grads.values())
+            if all_passed:
+                q = mean_prompt_quality(graph, quality_fn, prompt_nodes)
+                report.rounds.append(RoundMetrics(r, q, 0, 0, True))
+                report.converged = True
+                break
+
+            updates = optimizer.step(grads)
+            accepted = sum(1 for u in updates if u.get("rewritten"))
+            rejected = sum(1 for u in updates if u.get("rewrite_rejected"))
+            q = mean_prompt_quality(graph, quality_fn, prompt_nodes)
+            report.rounds.append(RoundMetrics(r, q, accepted, rejected, False))
+            logger.info(
+                "evolution_round",
+                extra={"event": "evolution_round", "round": r, "mean_quality": q,
+                       "accepted": accepted, "rejected": rejected},
+            )
+            if accepted == 0:
+                # 本轮无任何可接受改写 → 已到验证门控能达到的上限，收敛
+                report.converged = True
+                break
+
+        logger.info(
+            "evolution_end",
+            extra={"event": "evolution_end", "final_quality": report.final_quality,
+                   "improvement": report.improvement, "converged": report.converged,
+                   "monotonic": report.monotonic_non_decreasing},
+        )
+        report.run_id = rid
 
     return report
 
