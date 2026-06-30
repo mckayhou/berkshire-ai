@@ -33,8 +33,8 @@
 
 ## P2：长期（6个月+）
 
-### 测试覆盖 + 工程门禁 — 🟢 大幅完善（V10.17 收紧）
-- 319 pytest（引擎、prompt_optimizer、config、prompt_validation、eval_harness（含 golden 回归）、observability、sanitize、service（含鉴权/限流/指标）、access_control、metrics_export、llm_gradient、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
+### 测试覆盖 + 工程门禁 — 🟢 大幅完善（V10.17 收紧，V10.18 扩充）
+- 382 pytest（引擎、prompt_optimizer（含 few-shot 注入）、config、prompt_validation、eval_harness（含 golden 回归）、observability、sanitize、service（含鉴权/限流/指标）、access_control、metrics_export、llm_gradient、**perf_metrics**、**experience_store**、**hypothesis**、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
 - GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src, **check_untyped_defs**) + 覆盖率门 **50%** + pip-audit + gitleaks + **e2e-llm（带 secret 才跑）** + **build-image（Docker 构建冒烟）**；`.github/dependabot.yml` 周更
 - 集中工具配置 `pyproject.toml`；中心配置 + 启动自检 `src/config.py`
 - ✅ V10.17 golden 回归：`tests/test_eval_harness_golden.py`（逐轮均值质量精确可断言）
@@ -54,7 +54,15 @@
 - ✅ V10.15 多轮迭代 + 离线评测台：`src/eval_harness.py::run_multi_round`（`EvolutionReport` 证明单调不退化且收敛）
 - ✅ V10.16 提示注入防护：`src/sanitize.py`（清洗喂给改写 LLM 的不可信诊断，`UNTRUSTED_` 分隔符兜底）
 - ✅ V10.17 LLM 生成「批评/梯度」(`∇_LLM`)：`src/llm_gradient.py::enrich_gradients_with_llm`（`backward()` 后用 LLM 生成真实批评增强未达标节点，失败降级回规则化）
+- ✅ V10.18 经验 few-shot 回灌：`build_rewrite_messages(..., examples=None)` 把召回的历史经验作为 few-shot 注入改写（`examples=None` 逐字节不变、sanitize 包裹、失败降级）
 - 待补：`reflect` / `optimize` / `status` CLI 完整化、轨迹自动记录、Cron 自动进化（见 `config/skill.md`）
+
+### 借鉴 RD-Agent / Qlib（V10.18，依据 `docs/qlib_evaluation.md` / `docs/rdagent_reference.md`）
+- ✅ 本地绩效指标库 `tools/perf_metrics.py`（借 Qlib `risk_analysis` 口径，纯 stdlib）：年化收益/波动、信息比率/夏普、最大回撤、累计收益（求和口径）、胜率、相对基准超额(CAR)/α、含/不含成本；接 `decision_log` + 可注入 `PriceProvider`，`render_markdown`/`to_json`。（对应 qlib 评估 A1 / 切口1）
+- ✅ 经验库 RAG-lite `src/experience_store.py`（借 RD-Agent knowledge base / CoSTEER sampler）：`Experience` + `ExperienceStore`(JSONL) + `KeywordExperienceRetriever`（零依赖关键词召回）+ `StaticExperienceRetriever`；`experience_from_stats` 把 `realized_feedback` 成败信号转为可检索经验。（对应 rdagent P0-A / 切口一）
+- ✅ 显式假设对象 `src/hypothesis.py`（借 RD-Agent 一等公民 Hypothesis）：`Hypothesis`（可证伪命题）+ `HypothesisStore` + `group_experiences_by_hypothesis`（经验按假设聚合预留接口）。本次仅落地对象+存储，不接主链路。（对应 rdagent P0-B / 切口二）
+- ⬜ 明确不抄：CoSTEER 代码生成+Docker 沙箱、多 trace 调度/Web viewer、qlib 因子/ML/数据二进制栈/qrun/RL/组合优化直依赖
+- 待补（按需）：R/D 双循环主动 Proposer（rdagent P1-C）、Scenario 抽象（P1-D）、轻量 Run Recorder / 磁盘价格缓存（qlib B1/B3）
 
 ### 可观测 + 服务化 + 部署 — ✅ V10.16–10.17（生产化硬化 档C/D）
 - `src/observability.py`：结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）

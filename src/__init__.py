@@ -14,7 +14,21 @@ from .eval_harness import (
     mean_prompt_quality,
     run_multi_round,
 )
+from .experience_store import (
+    Experience,
+    ExperienceRetriever,
+    ExperienceStore,
+    KeywordExperienceRetriever,
+    StaticExperienceRetriever,
+    classify_verdict,
+    experience_from_stats,
+)
 from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+from .hypothesis import (
+    Hypothesis,
+    HypothesisStore,
+    group_experiences_by_hypothesis,
+)
 from .llm_gradient import (
     LLMGradientGenerator,
     build_critique_messages,
@@ -107,4 +121,14 @@ __all__ = [
     "build_critique_messages",
     "enrich_gradients_with_llm",
     "parse_issues",
+    "Experience",
+    "ExperienceStore",
+    "ExperienceRetriever",
+    "KeywordExperienceRetriever",
+    "StaticExperienceRetriever",
+    "classify_verdict",
+    "experience_from_stats",
+    "Hypothesis",
+    "HypothesisStore",
+    "group_experiences_by_hypothesis",
 ]

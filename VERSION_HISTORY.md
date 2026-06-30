@@ -36,6 +36,37 @@
 
 ## 📜 版本历史
 
+### V10.18 - 2026-06-30 (借鉴 RD-Agent / Qlib：绩效度量 + 经验库 + 假设对象)
+
+基于 `docs/qlib_evaluation.md` 与 `docs/rdagent_reference.md` 的只读评估结论，按依赖
+顺序落地三项「值得借鉴」的最小切口（借口径/借理念，**不引第三方重依赖、不进核心依赖**）。
+
+**1) 本地绩效指标库** `tools/perf_metrics.py`（借鉴 Qlib `risk_analysis` 口径，纯 stdlib 零依赖）
+- 年化收益、年化波动、信息比率(IR)/夏普、最大回撤、累计收益（**求和口径**对齐 Qlib 避免指数失真）、胜率、相对基准超额(CAR)/α；提供**含/不含成本**两套口径。
+- 桥接 `decision_log` 决策快照 + **可注入/可 mock 的 PriceProvider**（鸭子类型 `.get_price`）拼净值/超额曲线；纯函数、离线可测、`render_markdown`/`to_json` 导出。
+- 填补现状：此前回测只有「总收益率%」，无任何风险调整指标。
+
+**2) 经验库（RAG-lite）** `src/experience_store.py`（借鉴 RD-Agent knowledge base / CoSTEER sampler）
+- `Experience`（结构化成败经验）+ `ExperienceStore`（JSONL 落盘，复用 `decision_log` 风格，`BERKSHIRE_EXPERIENCE_LOG` 可覆盖）+ `ExperienceRetriever` 协议。
+- 默认 `KeywordExperienceRetriever`（ticker>sector>tag 确定性关键词召回，**零新依赖**），`StaticExperienceRetriever` 供测试/注入；检索失败一律降级为 `[]` 不崩主链路。
+- `experience_from_stats()` 把 `realized_feedback` 已算出却被丢弃的 alpha/realized_base 成败信号转成可检索经验。
+- **few-shot 注入**：`build_rewrite_messages(..., examples=None)` 新增可选参数，注入内容经 `sanitize_untrusted` 包裹；**`examples=None` 时输出与改动前逐字节一致**（单测断言）。`apply_gradient` 透传 `examples`。
+
+**3) 显式假设对象** `src/hypothesis.py`（借鉴 RD-Agent 一等公民 Hypothesis）
+- `Hypothesis`（命题/依据/证伪条件/状态/proposed_by/关联决策）+ 最小 `HypothesisStore`（JSONL）。校验 `proposed_by` 属 `MASTER_PREFIXES` 或 `system`。
+- 预留 `group_experiences_by_hypothesis()`（经验按假设聚合）为后续 R/D 双循环铺路；**本次不接主链路，避免过度工程**。
+
+**明确不做**（报告判定不该抄）：CoSTEER 代码生成 + Docker 沙箱、多 trace 调度/Web viewer、qlib 因子/ML/数据二进制栈/qrun/RL/组合优化直依赖。
+
+**测试结果**:
+- [x] 单元测试: **382 passed, 2 skipped**（较 V10.17 +63；新增 perf_metrics / experience_store / hypothesis / few-shot 注入用例）
+- [x] ruff check src tests tools 全绿；mypy 全绿（20 files）；coverage 59.96%（门槛 50%）
+- [x] `examples=None` 逐字节回归断言通过，现有测试零破坏
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.17 - 2026-06-30 (生产化硬化 档D：部署上线 + 访问控制 + 指标导出 + 真梯度)
 
 把引擎从「可服务化」推进到「**可部署、可防护、可监控、批评更真实**」的上线形态。
