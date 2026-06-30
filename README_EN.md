@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.14** (production hardening, tier A: CI gates ruff/mypy/coverage + `pyproject.toml` packaging + `src/config.py` central config & startup doctor; cumulative with V10.13 Option B LLM prompt rewriting + V10.11 realized-return feedback loop / bull-bear debate + V10.12 SENSITIVITY calibration). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.15** (production hardening, tier B: validation-gated rewriting `prompt_validation` (accept only if not worse, else rollback) + real-market price source `NetworkPriceProvider` + multi-round loop & offline eval harness `eval_harness` (proves evolution is monotonic non-decreasing); cumulative with tier A CI/packaging/central-config + V10.13 Option B LLM rewriting). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -35,6 +35,8 @@
 **A-share multi-source fallback data layer + multi-channel delivery** (absorbed from JusticePlutus): data fetching walks a `native→tushare→efinance→akshare→baostock→yfinance` fallback chain and degrades gracefully (never crashes the main flow); reports/signals can be delivered via Telegram / Feishu / local fallback, and with zero config it just writes to a local file without erroring.
 
 **Real variable rewriting (V10.13 / Option B)**: `prompt_optimizer.apply_gradient` makes the textual gradient actually land on the prompt — an LLM reads the downstream diagnosis + current prompt and produces an improved prompt. `TextualGradientDescent(graph, llm=...)` then truly rewrites `Variable.value` for under-performing prompt nodes. The `LLMClient` is injectable/mockable (`StaticLLMClient` / `OpenAICompatibleLLMClient`), so the core is fully offline-testable and degrades gracefully on LLM failure; without an injected `llm` the behavior is unchanged (backward compatible).
+
+**Validation-gated evolution (V10.15 / tier B)**: rewriting alone isn't enough — "the LLM claims it's better" must be proven. `prompt_validation.validated_apply_gradient` scores the old vs. candidate prompt on a held-out set and accepts the candidate **only if it is not worse (+`min_improvement`), else rolls back** — preventing prompt drift. `NetworkPriceProvider` wires the realized-return feedback loop to real market data via the `tools/data_sources` fallback chain (in-memory cache + prior-trading-day fallback, injectable fetcher for offline tests). `eval_harness.run_multi_round` drives the multi-round loop and yields an `EvolutionReport` whose tests assert evolution is **monotonic non-decreasing and convergent**.
 
 ## 📊 System Architecture
 

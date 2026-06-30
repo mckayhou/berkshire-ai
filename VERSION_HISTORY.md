@@ -36,6 +36,32 @@
 
 ## 📜 版本历史
 
+### V10.15 - 2026-06-30 (生产化硬化 档B：让自进化真正成立)
+
+把「能改 Prompt」升级为「**改得更好、可证明、接真实行情**」——本项目核心卖点的硬化。
+
+**1) 验证门控改写（production TextGrad）** `src/prompt_validation.py`
+- `PromptScorer`（可注入/可 mock，`StaticPromptScorer`）+ `validated_apply_gradient()`：改写产出候选后，在评测集上给新旧 Prompt 各打一分，**只有候选不劣于旧版(+`min_improvement`)才接受，否则回滚**——杜绝多轮 prompt 漂移。
+- `TextualGradientDescent(graph, llm=..., scorer=..., min_improvement=...)`：注入 scorer 即走验证门控路径；不注入则保持 V10.13 行为（向后兼容）。验证结果记入 `update["validation"]`（accepted/old_score/new_score/improvement）便于审计。
+- LLM / 评分器异常 → 保守回滚，不崩链路。
+
+**2) 真实行情价格源** `src/realized_feedback.py::NetworkPriceProvider`
+- 经 `tools/data_sources` 多源降级链（native→tushare→…→yfinance）取日线，**内存缓存**（每 ticker 只取一次），**非交易日回退到前一交易日**收盘。
+- 取数经**可注入 fetcher**（默认惰性接入 data_sources，测试完全离线）；整段无数据/失败 → KeyError，行为与 `StaticPriceProvider` 一致。把收益反馈闭环从 mock 接到真实行情。
+
+**3) 多轮迭代循环 + 离线评测台** `src/eval_harness.py`
+- `run_multi_round()`：逐轮「打分→未达标梯度→验证门控改写→记录」，全部达标 / 本轮零接受即收敛。
+- `EvolutionReport`：逐轮均值质量 + 接受/回滚数 + `monotonic_non_decreasing` + `improvement`。
+- **回归证据**：测试断言「好改写→质量单调上升并收敛」「坏改写→全回滚、质量不退化、立即收敛」——把「自进化确有收益且不退化」变成可复现的离线回归。
+
+**测试结果**: **261 通过 + 1 跳过**（新增 29：验证门控 13 + 真实价格源 9 + 评测台 7）；ruff 全绿、mypy `src/` 无问题、覆盖率 53%。
+
+**遗留**: 真实分析侧的 `quality_fn` / LLM 评分器仍需对接「在 held-out 标的上跑大师分析并打分」的生产实现（当前接口已就绪、可注入）。
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.14 - 2026-06-30 (生产化硬化 档A：工程门禁 + 打包 + 中心配置)
 
 **变更内容**:

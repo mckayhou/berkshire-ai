@@ -32,7 +32,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
-from typing import Dict, Optional, Tuple
+from typing import Callable, Dict, Optional, Tuple
 
 try:
     from decision_log import DecisionRecord
@@ -103,6 +103,106 @@ class StaticPriceProvider(PriceProvider):
         if key not in self._prices:
             raise KeyError(f"无价格数据: {key}")
         return self._prices[key]
+
+
+def _norm_date(value: object) -> Optional[str]:
+    """把各源日期统一成 'YYYY-MM-DD'（可按字典序比较 = 按时间比较）。
+
+    兼容 '20240105' / '2024-01-05' / '2024-01-05 00:00:00' 等；无法解析返回 None。
+    """
+    digits = "".join(ch for ch in str(value) if ch.isdigit())
+    if len(digits) < 8:
+        return None
+    y, m, d = digits[0:4], digits[4:6], digits[6:8]
+    return f"{y}-{m}-{d}"
+
+
+# data_sources.daily 风格的取数回调：fetcher(code, limit) -> {ok, data:[{date,close,...}], ...}
+DailyFetcher = Callable[[str, int], dict]
+
+
+def _default_daily_fetcher(code: str, limit: int) -> dict:
+    """默认取数：惰性接入 tools/data_sources（多源降级链）。
+
+    src/ 不在导入期硬依赖 tools/，仅在真正取数时才尝试导入；不可用时返回
+    ok=False 的明确结构（与 data_sources.fetch 失败结构一致），不抛 ImportError。
+    """
+    try:
+        import os as _os
+        import sys as _sys
+
+        _tools = _os.path.join(_os.path.dirname(__file__), "..", "tools")
+        if _tools not in _sys.path:
+            _sys.path.insert(0, _tools)
+        import data_sources  # type: ignore
+    except Exception as e:  # noqa: BLE001 - 缺 tools/ 路径或库 → 优雅失败
+        return {"ok": False, "data": None, "error": f"data_sources 不可用: {e}"}
+    return data_sources.daily(code, limit=limit)
+
+
+class NetworkPriceProvider(PriceProvider):
+    """接真实行情的价格源：经 tools/data_sources 多源降级链取日线，内存缓存。
+
+    设计（与既有工程约束一致）：
+    - **可注入 fetcher**：默认走 data_sources.daily（native→tushare→…→yfinance 降级链）；
+      测试传入 mock fetcher 即可完全离线。
+    - **内存缓存**：每个 ticker 的整条日线只取一次，构建 {date: close} 映射，
+      一次 run 内多次 get_price 不重复取数。
+    - **非交易日回退**：请求日无 bar 时，回退到该日**之前最近的交易日**收盘价
+      （周末/节假日/停牌常见）。可用 fallback_to_prior=False 关闭。
+    - 整段无数据 → 抛 KeyError（与 StaticPriceProvider 行为一致，让调用方可感知）。
+    """
+
+    def __init__(
+        self,
+        *,
+        fetcher: Optional[DailyFetcher] = None,
+        sources: Optional[list] = None,
+        limit: int = 250,
+        fallback_to_prior: bool = True,
+    ):
+        self._fetcher: DailyFetcher = fetcher or _default_daily_fetcher
+        self._sources = sources
+        self._limit = limit
+        self._fallback_to_prior = fallback_to_prior
+        self._cache: Dict[str, Dict[str, float]] = {}
+
+    def _series(self, ticker: str) -> Dict[str, float]:
+        key = str(ticker).strip().upper()
+        if key in self._cache:
+            return self._cache[key]
+        series: Dict[str, float] = {}
+        try:
+            res = self._fetcher(ticker, self._limit)
+        except Exception:  # noqa: BLE001 - 取数异常 → 视为空序列，不崩
+            res = None
+        if res and res.get("ok") and res.get("data"):
+            for bar in res["data"]:
+                nd = _norm_date(bar.get("date"))
+                raw_close = bar.get("close")
+                if nd is None or raw_close is None or raw_close == "":
+                    continue
+                try:
+                    series[nd] = float(raw_close)
+                except (TypeError, ValueError):
+                    continue
+        self._cache[key] = series
+        return series
+
+    def get_price(self, ticker: str, date: str) -> float:
+        series = self._series(ticker)
+        if not series:
+            raise KeyError(f"无价格数据（取数失败或为空）: {ticker}")
+        nd = _norm_date(date)
+        if nd is None:
+            raise KeyError(f"非法日期: {date!r}")
+        if nd in series:
+            return series[nd]
+        if self._fallback_to_prior:
+            prior = [d for d in series if d <= nd]
+            if prior:
+                return series[max(prior)]
+        raise KeyError(f"无 {ticker} 在 {nd}（或之前）的价格")
 
 
 @dataclass

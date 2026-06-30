@@ -46,16 +46,20 @@
 
 ## 本 fork 专属方向
 
-### TextGrad V10 自进化引擎 — 🟡 设计 + 雏形
-- `src/graph.py` + `src/optimizer.py`：结构化 `Gradient`，非 Option B 全自动进化
-- 待补：`reflect` / `optimize` CLI 完整化（见 `config/skill.md`）
+### TextGrad V10 自进化引擎 — 🟡 设计 + 雏形（V10.13–10.15 大幅推进）
+- `src/graph.py` + `src/optimizer.py`：结构化 `Gradient`，`backward()` 文本梯度
+- ✅ V10.13 变量真实改写（Option B）：`src/prompt_optimizer.py` 经 LLM 改写 Prompt
+- ✅ V10.15 验证门控改写：`src/prompt_validation.py`（改写后评分，只有不劣于旧版才接受否则回滚）
+- ✅ V10.15 多轮迭代 + 离线评测台：`src/eval_harness.py::run_multi_round`（`EvolutionReport` 证明单调不退化且收敛）
+- 待补：LLM 生成「批评/梯度」(`∇_LLM`)；`reflect` / `optimize` / `status` CLI 完整化（见 `config/skill.md`）
 
 ### 已实现收益反馈闭环 + 多空辩论 — ✅ V10.11（吸收自 TradingAgents）
 - `src/decision_log.py`：决策快照 JSONL 持久化（`BERKSHIRE_DECISION_LOG` 可覆盖）
 - `src/realized_feedback.py`：收益→评分（`alpha`/`realized_base`/`master_score`，`PriceProvider` 可注入）
 - `src/debate.py` + `BerkshireGraph.debate()`：多空净判断（`net_score`，中性区 `NET_MARGIN=0.15`）
-- `src/evolution_loop_v10.py`：`run_with_realized_feedback(...)` 串起收益→评分→backward 闭环
-- 待补：真实价格自动取数源对接（当前 `StaticPriceProvider` 为离线/可 mock 默认实现）
+- `src/evolution_loop_v10.py`：`run_with_realized_feedback(...)` 串起收益→评分→backward 闭环（V10.15 支持 `scorer`/`min_improvement` 验证门控）
+- ✅ V10.15 真实价格取数：`src/realized_feedback.py::NetworkPriceProvider` 经 `tools/data_sources` 多源降级链取数（内存缓存 + 非交易日回退；`StaticPriceProvider` 仍作离线/测试默认）
+- 待补：`quality_fn`/评分器对接「在 held-out 标的上跑大师分析并打分」的生产实现
 
 ### 多运行时部署 — ✅ 已实现
 - `update-platforms.sh` 同步 skills/tools

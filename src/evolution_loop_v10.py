@@ -21,7 +21,14 @@ try:
         apply_gradient,
         build_rewrite_messages,
     )
+    from prompt_validation import (
+        PromptScorer,
+        StaticPromptScorer,
+        ValidationResult,
+        validated_apply_gradient,
+    )
     from realized_feedback import (
+        NetworkPriceProvider,
         PriceProvider,
         ReturnStats,
         StaticPriceProvider,
@@ -40,7 +47,14 @@ except ImportError:
         apply_gradient,
         build_rewrite_messages,
     )
+    from .prompt_validation import (
+        PromptScorer,
+        StaticPromptScorer,
+        ValidationResult,
+        validated_apply_gradient,
+    )
     from .realized_feedback import (
+        NetworkPriceProvider,
         PriceProvider,
         ReturnStats,
         StaticPriceProvider,
@@ -60,12 +74,17 @@ __all__ = [
     "OpenAICompatibleLLMClient",
     "apply_gradient",
     "build_rewrite_messages",
+    "PromptScorer",
+    "StaticPromptScorer",
+    "ValidationResult",
+    "validated_apply_gradient",
     "DecisionRecord",
     "append_decision",
     "realized_scores",
     "realized_scores_via_provider",
     "PriceProvider",
     "StaticPriceProvider",
+    "NetworkPriceProvider",
     "ReturnStats",
     "run_debate",
     "DebateResult",
@@ -97,6 +116,8 @@ def run_with_realized_feedback(
     persist=False,
     log_path=None,
     llm=None,
+    scorer=None,
+    min_improvement=0.0,
 ):
     """已实现收益 → 评分 → backward 的反馈闭环。
 
@@ -120,6 +141,9 @@ def run_with_realized_feedback(
         llm: 可选 LLMClient（Option B）。传入后，优化器会对未达标的 prompt 变量
              调用 LLM 真实改写 `Variable.value`；未传则仅记录优化动作（向后兼容）。
              注意：被改写的 prompt 变量需先有 `value`（底稿），否则该变量记为跳过。
+        scorer: 可选 PromptScorer（V10.15 验证门控）。与 llm 同时传入时，改写后会在
+             评测集上打分，只有不劣于旧版(+min_improvement)才接受，否则回滚。
+        min_improvement: 验证门控接受所需最小增益（默认 0.0，即「不劣于」即接受）。
 
     Returns:
         dict: {graph, scores, stats(ReturnStats), gradients, updates, debate(DebateResult)}
@@ -149,7 +173,9 @@ def run_with_realized_feedback(
     debate = graph.debate(decision.scores)
     # 反馈：用已实现收益映射出的校准分驱动 backward
     gradients = graph.backward(scores)
-    optimizer = TextualGradientDescent(graph, llm=llm)
+    optimizer = TextualGradientDescent(
+        graph, llm=llm, scorer=scorer, min_improvement=min_improvement
+    )
     updates = optimizer.step(gradients)
 
     return {

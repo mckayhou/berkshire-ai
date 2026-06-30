@@ -18,6 +18,11 @@ description: >
   V10.14: 生产化硬化 档A - pyproject.toml（ruff/mypy/pytest/coverage 集中配置 + extras）；CI 升级
           （py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 + pip-audit + gitleaks + Dependabot）；
           src/config.py 中心配置（ENV_SPEC 单一来源 + .env 加载 + doctor 启动自检，不泄密钥）+ .env.example。
+  V10.15: 生产化硬化 档B（让自进化真正成立）- src/prompt_validation.py 验证门控改写
+          （validated_apply_gradient：改写后评分，只有不劣于旧版+min_improvement 才接受否则回滚）；
+          TextualGradientDescent(graph, llm=..., scorer=...) 注入 scorer 即门控、不注入向后兼容；
+          src/realized_feedback.py::NetworkPriceProvider 经 data_sources 接真实行情（缓存+非交易日回退，fetcher 可注入）；
+          src/eval_harness.py 多轮迭代 run_multi_round + 离线评测台（EvolutionReport 证明单调不退化且收敛）。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -196,7 +201,8 @@ python3 tools/financial_rigor.py cross-validate \
 > ⚠️ **实现状态（重要，避免文档与代码脱节）**
 > - ✅ **已实现**：`src/graph.py`（`BerkshireGraph`：5 层计算图、拓扑排序、`backward()` 文本梯度）+ `src/optimizer.py`（`TextualGradientDescent.step()`）+ `src/evolution_loop_v10.py`（`run_example()` 串起 backward→step 的演示）。当前"梯度（批评）"仍是**基于评分的规则化诊断模板**，非 LLM 生成。
 > - ✅ **变量真实改写（V10.13 / Option B）**：`src/prompt_optimizer.py` 的 `apply_gradient` 经 LLM 把诊断落到 Prompt 上；`TextualGradientDescent(graph, llm=...)` 注入后 `step()` 真实改写未达标 prompt 变量的 `value`（LLM 可注入/可 mock，失败优雅降级；不注入则向后兼容）。
-> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：LLM 生成「批评/梯度」(`∇_LLM`)、多轮自动迭代、`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。
+> - ✅ **验证门控改写 + 多轮迭代（V10.15 / 档B）**：`src/prompt_validation.py` 的 `validated_apply_gradient`（改写后评分，只有不劣于旧版+`min_improvement` 才接受否则回滚）；`TextualGradientDescent(graph, llm=..., scorer=...)` 注入 scorer 即门控；`src/eval_harness.py` 的 `run_multi_round` 跑多轮并产出 `EvolutionReport`（离线证明单调不退化且收敛）；`src/realized_feedback.py::NetworkPriceProvider` 接真实行情（多源降级链+缓存+非交易日回退，fetcher 可注入）。
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：LLM 生成「批评/梯度」(`∇_LLM`，当前梯度仍是规则化模板)、`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。
 
 **计算图结构**:
 ```

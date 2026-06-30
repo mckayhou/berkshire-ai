@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.14**（生产化硬化 档A：CI 门禁 + pyproject 打包 + src/config.py 中心配置；累积 V10.13 Option B LLM 改写 + V10.11 收益反馈闭环/多空辩论 + V10.12 SENSITIVITY 校准）
+> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.15**（生产化硬化 档B：验证门控改写 prompt_validation + 真实行情 NetworkPriceProvider + 多轮迭代/离线评测台 eval_harness；累积 档A CI/打包/中心配置 + V10.13 Option B LLM 改写）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |
@@ -21,6 +21,7 @@
 
 | Date | Issue | Lesson Learned | Applied To Skill |
 |------|-------|----------------|------------------|
+| 2026-06-30 | **V10.15 - 生产化硬化 档B（让自进化真正成立）** | 「能改 prompt」≠「改得更好」：`src/prompt_validation.py` 验证门控（改写后评分，只有不劣于旧版+min_improvement 才接受否则回滚，杜绝漂移）；`NetworkPriceProvider` 经 data_sources 接真实行情（缓存+非交易日回退）替换 mock；`src/eval_harness.py` 多轮迭代 `run_multi_round` + 离线回归证明「单调不退化且收敛」。 | `src/prompt_validation.py`, `src/realized_feedback.py`, `src/eval_harness.py` |
 | 2026-06-30 | **V10.14 - 生产化硬化 档A** | 工程门禁可信化：`pyproject.toml`（ruff/mypy/pytest/coverage 集中配置 + extras）；CI 升级（py3.10-3.12 矩阵 + ruff + mypy(src) + 覆盖率门 45% + pip-audit + gitleaks + Dependabot）；`src/config.py` 中心配置 + `.env.example` + 启动自检 doctor（不泄密钥）。 | `pyproject.toml`, `.github/*`, `src/config.py` |
 | 2026-06-30 | **V10.13 - 变量真实改写（Option B）** | 把文本梯度真正落到 Prompt：新增 `src/prompt_optimizer.py`（`LLMClient`/`StaticLLMClient`/`OpenAICompatibleLLMClient` + `apply_gradient`）；`TextualGradientDescent(graph, llm=...)` 注入 LLM 后 `step()` 真实改写未达标 prompt 变量的 `value`，失败优雅降级、不注入则向后兼容。 | `src/prompt_optimizer.py`, `src/optimizer.py` |
 | 2026-06-30 | **V10.12 - SENSITIVITY 尺度校准** | 用真实历史行情（27 标的）校准收益反馈映射 `realized_base = clip(0.5 + alpha*SENSITIVITY, 0, 1)`：旧默认 2.5 使约 78% 样本贴边过饱和、丢失区分度，校准为 0.5；新增 `tools/calibrate_sensitivity.py` 与单测，可用 `BERKSHIRE_SENSITIVITY` 覆盖。 | `src/realized_feedback.py`, `tools/calibrate_sensitivity.py` |

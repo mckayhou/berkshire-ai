@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.14**（生产化硬化 档A：CI 门禁 ruff/mypy/覆盖率 + `pyproject.toml` 打包 + `src/config.py` 中心配置/启动自检；累积 V10.13 Option B LLM 改写 Prompt + V10.11 收益反馈闭环/多空辩论 + V10.12 SENSITIVITY 校准）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.15**（生产化硬化 档B：验证门控改写 `prompt_validation`（只有更优才接受否则回滚）+ 真实行情价格源 `NetworkPriceProvider` + 多轮迭代与离线评测台 `eval_harness`（证明进化单调不退化）；累积 档A CI/打包/中心配置 + V10.13 Option B LLM 改写）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -264,7 +264,8 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 - ✅ **A股多源降级数据层 + 多通道推送**（吸收自 JusticePlutus）：`tools/data_sources.py` / `tools/notify.py`
 - ✅ **变量真实改写（V10.13 / Option B）**：`prompt_optimizer.apply_gradient` 经 LLM 改写 Prompt，`TextualGradientDescent(graph, llm=...)` 真实更新变量值（可注入/可 mock，失败优雅降级）
 - ✅ **生产化硬化（V10.14 档A）**：`pyproject.toml` 集中配置 + CI 门禁（ruff / mypy / 覆盖率 / pip-audit / gitleaks，py3.10-3.12 矩阵）+ `src/config.py` 中心配置与启动自检（`python3 src/config.py`）
-- ✅ 测试 232 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
+- ✅ **自进化硬化（V10.15 档B）**：验证门控改写 `prompt_validation`（改写后评分，只有不劣于旧版才接受否则回滚）+ 真实行情 `NetworkPriceProvider`（多源降级链 + 缓存 + 非交易日回退）+ 多轮迭代 `eval_harness.run_multi_round`（离线证明进化单调不退化并收敛）
+- ✅ 测试 261 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
 
 ## 🔗 相关链接
 
