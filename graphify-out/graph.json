@@ -37,7 +37,7 @@
       "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
       "file_type": "document",
       "source_file": "config/skill.md",
-      "source_location": "L60",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "skill",
       "community": 31,
@@ -70,71 +70,21 @@
       "ecosystem": "python",
       "source_file": "pyproject.toml",
       "source_location": "L1",
-      "version": "10.19.0",
+      "version": "10.20.0",
       "_origin": "ast",
       "id": "pkg_berkshire_ai",
       "community": 70,
       "norm_label": "berkshire-ai"
     },
     {
-      "label": "Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-",
+      "label": "Simple runner for the engine.",
       "file_type": "rationale",
-      "source_file": "src/__init__.py",
-      "source_location": "L1",
+      "source_file": "src/evolution_loop_v10.py",
+      "source_location": "L97",
       "_origin": "ast",
-      "id": "__init__",
-      "community": 5,
-      "norm_label": "berkshire ai v10 engine package.  exports the main classes for textgrad-based 4-"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/decision_log.py",
-      "source_location": "L40",
-      "_origin": "ast",
-      "id": "decision_log",
-      "community": 49,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/eval_harness.py",
-      "source_location": "L95",
-      "_origin": "ast",
-      "id": "eval_harness",
-      "community": 72,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/optimizer.py",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "optimizer",
-      "community": 26,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/prompt_validation.py",
-      "source_location": "L43",
-      "_origin": "ast",
-      "id": "prompt_validation",
-      "community": 73,
-      "norm_label": ""
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "src/research_loop.py",
-      "source_location": "L52",
-      "_origin": "ast",
-      "id": "research_loop",
-      "community": 98,
-      "norm_label": ""
+      "id": "evolution_loop_v10",
+      "community": 12,
+      "norm_label": "simple runner for the engine."
     },
     {
       "label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
@@ -147,14 +97,14 @@
       "norm_label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1"
     },
     {
-      "label": "",
-      "file_type": "code",
-      "source_file": "tests/test_research_loop.py",
-      "source_location": "L32",
+      "label": "persist=True \u65f6\u9ed8\u8ba4\u540c\u6b65\u6c89\u6dc0\u7ecf\u9a8c\uff08V10.20 \u4e3b\u7ebf\u63a5\u7ebf\uff09\u3002",
+      "file_type": "rationale",
+      "source_file": "tests/test_realized_feedback_loop.py",
+      "source_location": "L199",
       "_origin": "ast",
-      "id": "test_research_loop",
-      "community": 99,
-      "norm_label": ""
+      "id": "test_realized_feedback_loop",
+      "community": 55,
+      "norm_label": "persist=true \u65f6\u9ed8\u8ba4\u540c\u6b65\u6c89\u6dc0\u7ecf\u9a8c(v10.20 \u4e3b\u7ebf\u63a5\u7ebf)\u3002"
     },
     {
       "label": "portfolio-weekly.sh",
@@ -183,6 +133,16 @@
       "community": 45,
       "norm_label": "portfolio-weekly.sh script",
       "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "label": "Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-",
+      "file_type": "rationale",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "berkshire ai v10 engine package.  exports the main classes for textgrad-based 4-",
+      "id": "__init__"
     },
     {
       "label": "",
@@ -215,14 +175,24 @@
       "id": "debate"
     },
     {
-      "label": "Simple runner for the engine.",
-      "file_type": "rationale",
-      "source_file": "src/evolution_loop_v10.py",
-      "source_location": "L97",
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/decision_log.py",
+      "source_location": "L40",
       "_origin": "ast",
-      "community": 12,
-      "norm_label": "simple runner for the engine.",
-      "id": "evolution_loop_v10"
+      "community": 49,
+      "norm_label": "",
+      "id": "decision_log"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/eval_harness.py",
+      "source_location": "L95",
+      "_origin": "ast",
+      "community": 72,
+      "norm_label": "",
+      "id": "eval_harness"
     },
     {
       "label": "",
@@ -287,6 +257,16 @@
     {
       "label": "",
       "file_type": "code",
+      "source_file": "src/optimizer.py",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 26,
+      "norm_label": "",
+      "id": "optimizer"
+    },
+    {
+      "label": "",
+      "file_type": "code",
       "source_file": "src/prompt_optimizer.py",
       "source_location": "L57",
       "_origin": "ast",
@@ -297,12 +277,32 @@
     {
       "label": "",
       "file_type": "code",
+      "source_file": "src/prompt_validation.py",
+      "source_location": "L43",
+      "_origin": "ast",
+      "community": 73,
+      "norm_label": "",
+      "id": "prompt_validation"
+    },
+    {
+      "label": "",
+      "file_type": "code",
       "source_file": "src/realized_feedback.py",
       "source_location": "L85",
       "_origin": "ast",
       "community": 54,
       "norm_label": "",
       "id": "realized_feedback"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/research_loop.py",
+      "source_location": "L52",
+      "_origin": "ast",
+      "community": 98,
+      "norm_label": "",
+      "id": "research_loop"
     },
     {
       "label": "\u6e05\u6d17\u4e0d\u53ef\u4fe1\u6587\u672c\uff1a\u53bb\u63a7\u5236\u5b57\u7b26 \u2192 \u4e2d\u548c\u6307\u4ee4\u53e5\u5f0f/\u4f2a\u9020\u89d2\u8272\u6807\u7b7e \u2192 \u622a\u65ad\u3002      \u8fd4\u56de\u53ef\u5b89\u5168\u5d4c\u5165 LLM \u6d88\u606f\u7684\u7248\u672c\uff08\u8bed\u4e49\u5927\u4f53\u4fdd\u7559\uff0c\u6ce8\u5165\u610f\u56fe\u88ab\u4e2d\u548c\uff09\u3002",
@@ -465,14 +465,14 @@
       "id": "test_prompt_validation"
     },
     {
-      "label": "test_realized_feedback_loop.py",
+      "label": "",
       "file_type": "code",
-      "source_file": "tests/test_realized_feedback_loop.py",
-      "source_location": "L1",
+      "source_file": "tests/test_research_loop.py",
+      "source_location": "L32",
       "_origin": "ast",
-      "community": 55,
-      "norm_label": "test_realized_feedback_loop.py",
-      "id": "test_realized_feedback_loop"
+      "community": 99,
+      "norm_label": "",
+      "id": "test_research_loop"
     },
     {
       "label": "test_rewrite_fewshot.py",
@@ -1156,7 +1156,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L225",
+      "source_location": "L233",
       "weight": 1.0,
       "source": "README",
       "target": "README_EN",
@@ -1166,7 +1166,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L230",
+      "source_location": "L238",
       "weight": 1.0,
       "source": "README",
       "target": "ROADMAP",
@@ -1236,7 +1236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "config/skill.md",
-      "source_location": "L60",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "skill",
       "target": "skill",
@@ -1265,61 +1265,11 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/__init__.py",
-      "source_location": "L1",
+      "source_file": "src/evolution_loop_v10.py",
+      "source_location": "L97",
       "weight": 1.0,
-      "source": "__init__",
-      "target": "__init__",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/decision_log.py",
-      "source_location": "L41",
-      "weight": 1.0,
-      "source": "decision_log",
-      "target": "decision_log",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/eval_harness.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "source": "eval_harness",
-      "target": "eval_harness",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/optimizer.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "optimizer",
-      "target": "optimizer",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/prompt_validation.py",
-      "source_location": "L44",
-      "weight": 1.0,
-      "source": "prompt_validation",
-      "target": "prompt_validation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/research_loop.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "source": "research_loop",
-      "target": "research_loop",
+      "source": "evolution_loop_v10",
+      "target": "evolution_loop_v10",
       "confidence_score": 1.0
     },
     {
@@ -1335,11 +1285,11 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "tests/test_research_loop.py",
-      "source_location": "L42",
+      "source_file": "tests/test_realized_feedback_loop.py",
+      "source_location": "L199",
       "weight": 1.0,
-      "source": "test_research_loop",
-      "target": "test_research_loop",
+      "source": "test_realized_feedback_loop",
+      "target": "test_realized_feedback_loop",
       "confidence_score": 1.0
     },
     {
@@ -1351,6 +1301,16 @@
       "confidence_score": 1.0,
       "source": "portfolio-weekly",
       "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "__init__",
+      "target": "__init__"
     },
     {
       "relation": "rationale_for",
@@ -1385,12 +1345,22 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "src/evolution_loop_v10.py",
-      "source_location": "L97",
+      "source_file": "src/decision_log.py",
+      "source_location": "L41",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "evolution_loop_v10",
-      "target": "evolution_loop_v10"
+      "source": "decision_log",
+      "target": "decision_log"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/eval_harness.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "eval_harness",
+      "target": "eval_harness"
     },
     {
       "relation": "rationale_for",
@@ -1455,6 +1425,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "src/optimizer.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "optimizer",
+      "target": "optimizer"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "src/prompt_optimizer.py",
       "source_location": "L58",
       "weight": 1.0,
@@ -1465,12 +1445,32 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "src/prompt_validation.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "prompt_validation",
+      "target": "prompt_validation"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "src/realized_feedback.py",
       "source_location": "L59",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "realized_feedback",
       "target": "realized_feedback"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/research_loop.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_loop",
+      "target": "research_loop"
     },
     {
       "relation": "rationale_for",
@@ -1541,6 +1541,16 @@
       "confidence_score": 1.0,
       "source": "test_hypothesis",
       "target": "test_hypothesis"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_research_loop.py",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_research_loop",
+      "target": "test_research_loop"
     },
     {
       "relation": "rationale_for",
@@ -2074,5 +2084,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "18fd1ef5f6cf7e134e155cfc67b8b3cb6247446f"
+  "built_at_commit": "f2cfb91bef077b84ec9c050793e0ddb041435ad8"
 }

@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-01)
 
 ## Corpus Check
-- 111 files · ~84,638 words
+- 111 files · ~85,325 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 111 nodes · 93 edges · 103 communities (24 shown, 79 thin omitted)
+- 111 nodes · 94 edges · 103 communities (23 shown, 80 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `18fd1ef5`
+- Built from commit: `f2cfb91b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -64,6 +64,7 @@
 - [[_COMMUNITY_Community 50|Community 50]]
 - [[_COMMUNITY_Community 53|Community 53]]
 - [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 55|Community 55]]
 - [[_COMMUNITY_Community 56|Community 56]]
 - [[_COMMUNITY_Community 57|Community 57]]
 - [[_COMMUNITY_Community 58|Community 58]]
@@ -107,7 +108,7 @@
 7. `reports/ — 研究报告输出目录` - 3 edges
 8. `Investment Research Meta-Skill (V10.0 - TextGrad 化)` - 2 edges
 9. `Berkshire AI - Global State & Thesis Tracker` - 2 edges
-10. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
+10. `Simple runner for the engine.` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `报告输出规范（report conventions）`  [EXTRACTED]
@@ -124,7 +125,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (103 total, 79 thin omitted)
+## Communities (103 total, 80 thin omitted)
 
 ### Community 4 - "Community 4"
 Cohesion: 1.50
@@ -137,7 +138,7 @@ Nodes (3): 结构化行动卡（Action Card）, 报告输出规范（report conv
 ## Knowledge Gaps
 - **4 isolated node(s):** `berkshire-ai`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **79 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **80 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
