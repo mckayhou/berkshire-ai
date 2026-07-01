@@ -69,6 +69,15 @@ from .realized_feedback import (
     realized_scores,
     realized_scores_via_provider,
 )
+from .research_loop import (
+    ExperienceDrivenProposer,
+    HypothesisProposer,
+    LLMHypothesisProposer,
+    RDCycleMetrics,
+    RDCycleReport,
+    StaticHypothesisProposer,
+    run_rd_cycle,
+)
 
 __all__ = [
     "BerkshireGraph",
@@ -131,4 +140,11 @@ __all__ = [
     "Hypothesis",
     "HypothesisStore",
     "group_experiences_by_hypothesis",
+    "HypothesisProposer",
+    "StaticHypothesisProposer",
+    "ExperienceDrivenProposer",
+    "LLMHypothesisProposer",
+    "RDCycleMetrics",
+    "RDCycleReport",
+    "run_rd_cycle",
 ]

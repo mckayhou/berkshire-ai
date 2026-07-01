@@ -27,7 +27,7 @@ quality_fn / LLM 均可注入：生产用「在 held-out 标的上跑大师分�
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 try:
     from graph import BerkshireGraph, Gradient
@@ -132,6 +132,9 @@ def run_multi_round(
     min_improvement: float = 0.0,
     prompt_nodes: Optional[List[str]] = None,
     run_id: Optional[str] = None,
+    retriever: Optional[Any] = None,
+    retriever_ticker: Optional[str] = None,
+    retriever_k: int = 3,
 ) -> EvolutionReport:
     """跑多轮验证门控进化，返回逐轮指标 + 是否收敛。
 
@@ -147,7 +150,13 @@ def run_multi_round(
     """
     scorer = StaticPromptScorer(fn=quality_fn)
     optimizer = TextualGradientDescent(
-        graph, llm=llm, scorer=scorer, min_improvement=min_improvement
+        graph,
+        llm=llm,
+        scorer=scorer,
+        min_improvement=min_improvement,
+        retriever=retriever,
+        retriever_ticker=retriever_ticker,
+        retriever_k=retriever_k,
     )
     logger = get_logger("eval_harness")
     report = EvolutionReport(

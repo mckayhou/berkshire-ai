@@ -35,6 +35,7 @@ description: >
           src/llm_gradient.py ∇_LLM 真梯度（LLMGradientGenerator 让 LLM 生成批评 + enrich_gradients_with_llm 增强未达标节点梯度，
           失败优雅降级回规则化）；mypy 开 check_untyped_defs、覆盖率门升 50%、固化 golden 回归。
           生产化档 A→B→C→D 全部落地。
+          生产化三档 A→B→C 全部落地，286 测试通过。
   V10.18: 借鉴 RD-Agent / Qlib（依据 docs/qlib_evaluation.md + docs/rdagent_reference.md 只读评估）三项最小切口 -
           tools/perf_metrics.py 本地绩效指标库（借 Qlib risk_analysis 口径，纯 stdlib：年化收益/波动、信息比率/夏普、
           最大回撤、累计收益求和口径、胜率、相对基准超额 CAR/α、含/不含成本；接 decision_log + 可注入 PriceProvider，
@@ -44,6 +45,12 @@ description: >
           src/hypothesis.py 显式可证伪假设对象 + 最小 HypothesisStore + group_experiences_by_hypothesis（本次不接主链路）。
           明确不抄：CoSTEER 代码生成+Docker 沙箱、多 trace 调度/Web viewer、qlib 因子/ML/数据二进制栈/qrun/RL/组合优化直依赖。
           382 测试通过。
+  V10.19: R/D 双循环（rdagent P1-C）- src/research_loop.py：HypothesisProposer 协议 +
+          StaticHypothesisProposer / ExperienceDrivenProposer（零 LLM，从 refuted 经验归纳）/
+          LLMHypothesisProposer（可 mock）；run_rd_cycle 每轮 R（提假设→可选 HypothesisStore 落盘）→
+          D（复用 eval_harness.run_multi_round）；proposer=None 退化为纯 D（与 V10.18 等价）。
+          D 段经验召回：TextualGradientDescent(retriever=, retriever_ticker=) + validated_apply_gradient(examples=)。
+          decision_log.DecisionRecord 新增可选 hypothesis_id（向后兼容）。388 测试通过。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -225,8 +232,9 @@ python3 tools/financial_rigor.py cross-validate \
 > - ✅ **验证门控改写 + 多轮迭代（V10.15 / 档B）**：`src/prompt_validation.py` 的 `validated_apply_gradient`（改写后评分，只有不劣于旧版+`min_improvement` 才接受否则回滚）；`TextualGradientDescent(graph, llm=..., scorer=...)` 注入 scorer 即门控；`src/eval_harness.py` 的 `run_multi_round` 跑多轮并产出 `EvolutionReport`（离线证明单调不退化且收敛）；`src/realized_feedback.py::NetworkPriceProvider` 接真实行情（多源降级链+缓存+非交易日回退，fetcher 可注入）。
 > - ✅ **可观测 + 服务化 + 注入防护（V10.16 / 档C）**：`src/observability.py` 结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）；`src/service.py` 服务边界（`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/score` `/debate`，`extras[service]`）；`src/sanitize.py` 提示注入防护（`sanitize_untrusted` 清洗喂给改写 LLM 的不可信诊断，配合 `UNTRUSTED_` 分隔符兜底）。
 > - ✅ **部署 + 访问控制 + 可监控 + 真梯度（V10.17 / 档D）**：容器化 `Dockerfile`/`docker-compose.yml`（非 root + HEALTHCHECK）+ `service.run()`/`berkshire-serve` uvicorn 入口；`src/access_control.py`（`check_api_key` API Key 鉴权 + `RateLimiter` 限流，经 `create_app` 挂到 `/score` `/debate`）；`src/metrics_export.py`（`/metrics` Prometheus 文本，零依赖）；`src/llm_gradient.py` 的 `enrich_gradients_with_llm` 让 LLM 生成真实批评（∇_LLM）增强未达标节点梯度，失败优雅降级回规则化；mypy 开 `check_untyped_defs`、覆盖率门 50%、golden 回归基线。
-> - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：`tools/perf_metrics.py` 本地绩效指标库（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/求和累计/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`，`render_markdown`/`to_json`）；`src/experience_store.py` 经验库 RAG-lite（`Experience`+`ExperienceStore` JSONL+`KeywordExperienceRetriever` 零依赖召回+`experience_from_stats`；作为 few-shot 经 `build_rewrite_messages(..., examples=None)` 注入改写，`examples=None` 逐字节不变、`sanitize_untrusted` 包裹、失败降级）；`src/hypothesis.py` 显式可证伪 `Hypothesis` 对象+最小 `HypothesisStore`+`group_experiences_by_hypothesis`（本次仅落地对象+存储，**不接主链路**，为后续 R/D 双循环铺路）。
-> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化；R/D 双循环主动 Proposer（rdagent P1-C）、Scenario 抽象（P1-D）。请勿在生产流程中依赖这些，直到落地。（注：`∇_LLM` LLM 生成批评已于 V10.17 经 `src/llm_gradient.py` 落地；经验 few-shot 回灌已于 V10.18 经 `experience_store` + `build_rewrite_messages` 落地，默认 `examples=None` 行为不变。）
+> - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`。
+> - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：`tools/perf_metrics.py` 本地绩效指标库（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/求和累计/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`，`render_markdown`/`to_json`）；`src/experience_store.py` 经验库 RAG-lite（`Experience`+`ExperienceStore` JSONL+`KeywordExperienceRetriever` 零依赖召回+`experience_from_stats`；作为 few-shot 经 `build_rewrite_messages(..., examples=None)` 注入改写，`examples=None` 逐字节不变、`sanitize_untrusted` 包裹、失败降级）；`src/hypothesis.py` 显式可证伪 `Hypothesis` 对象+最小 `HypothesisStore`+`group_experiences_by_hypothesis`。
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化；Scenario 抽象（P1-D）。请勿在生产流程中依赖这些，直到落地。（注：`∇_LLM` 已于 V10.17 落地；经验 few-shot 已于 V10.18 落地；R/D 双循环已于 V10.19 落地。）
 
 **计算图结构**:
 ```

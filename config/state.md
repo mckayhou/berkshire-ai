@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.18**（借鉴 RD-Agent/Qlib：绩效度量 tools/perf_metrics.py(Qlib risk_analysis 口径，纯 stdlib) + 经验库 RAG-lite src/experience_store.py(成败经验沉淀+关键词召回+few-shot 注入 build_rewrite_messages) + 显式假设对象 src/hypothesis.py；累积生产化档 A→B→C→D 全部落地）
+> Last Updated: 2026-06-30 | Loop Engine: Active (L2 - Assisted) | **Version: V10.19**（R/D 双循环 research_loop：HypothesisProposer + run_rd_cycle；累积 V10.18 借鉴改进 + 生产化档 A→D）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |

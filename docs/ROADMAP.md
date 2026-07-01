@@ -34,7 +34,7 @@
 ## P2：长期（6个月+）
 
 ### 测试覆盖 + 工程门禁 — 🟢 大幅完善（V10.17 收紧，V10.18 扩充）
-- 382 pytest（引擎、prompt_optimizer（含 few-shot 注入）、config、prompt_validation、eval_harness（含 golden 回归）、observability、sanitize、service（含鉴权/限流/指标）、access_control、metrics_export、llm_gradient、**perf_metrics**、**experience_store**、**hypothesis**、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
+- 388 pytest（引擎、research_loop、prompt_optimizer（含 few-shot 注入）、config、prompt_validation、eval_harness（含 golden 回归）、observability、sanitize、service（含鉴权/限流/指标）、access_control、metrics_export、llm_gradient、**perf_metrics**、**experience_store**、**hypothesis**、financial_rigor、report_audit、网络层、portfolio_*、thesis_queue、收益反馈闭环、data_sources、notify）
 - GitHub Actions CI（`.github/workflows/test.yml`）：py3.10-3.12 矩阵 + ruff + mypy(src, **check_untyped_defs**) + 覆盖率门 **50%** + pip-audit + gitleaks + **e2e-llm（带 secret 才跑）** + **build-image（Docker 构建冒烟）**；`.github/dependabot.yml` 周更
 - 集中工具配置 `pyproject.toml`；中心配置 + 启动自检 `src/config.py`
 - ✅ V10.17 golden 回归：`tests/test_eval_harness_golden.py`（逐轮均值质量精确可断言）
@@ -62,7 +62,8 @@
 - ✅ 经验库 RAG-lite `src/experience_store.py`（借 RD-Agent knowledge base / CoSTEER sampler）：`Experience` + `ExperienceStore`(JSONL) + `KeywordExperienceRetriever`（零依赖关键词召回）+ `StaticExperienceRetriever`；`experience_from_stats` 把 `realized_feedback` 成败信号转为可检索经验。（对应 rdagent P0-A / 切口一）
 - ✅ 显式假设对象 `src/hypothesis.py`（借 RD-Agent 一等公民 Hypothesis）：`Hypothesis`（可证伪命题）+ `HypothesisStore` + `group_experiences_by_hypothesis`（经验按假设聚合预留接口）。本次仅落地对象+存储，不接主链路。（对应 rdagent P0-B / 切口二）
 - ⬜ 明确不抄：CoSTEER 代码生成+Docker 沙箱、多 trace 调度/Web viewer、qlib 因子/ML/数据二进制栈/qrun/RL/组合优化直依赖
-- 待补（按需）：R/D 双循环主动 Proposer（rdagent P1-C）、Scenario 抽象（P1-D）、轻量 Run Recorder / 磁盘价格缓存（qlib B1/B3）
+- ✅ V10.19 R/D 双循环：`src/research_loop.py`（`HypothesisProposer` + `run_rd_cycle`；`ExperienceDrivenProposer` / `LLMHypothesisProposer`；D 段经验召回经 optimizer）
+- 待补（按需）：Scenario 抽象（P1-D）、轻量 Run Recorder / 磁盘价格缓存（qlib B1/B3）
 
 ### 可观测 + 服务化 + 部署 — ✅ V10.16–10.17（生产化硬化 档C/D）
 - `src/observability.py`：结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）

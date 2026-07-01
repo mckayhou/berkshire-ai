@@ -49,6 +49,7 @@ class DecisionRecord:
         benchmark_anchor: 决策时的基准价格锚点，可选
         note:             备注（自由文本，仅展示，不用于控制流）
         trace_id:         关联的计算图 trace_id，可选
+        hypothesis_id:    关联的可证伪假设 id（衔接 hypothesis.py），可选
         created_at:       落盘时间（ISO）
     """
 
@@ -60,6 +61,7 @@ class DecisionRecord:
     benchmark_anchor: Optional[float] = None
     note: str = ""
     trace_id: Optional[str] = None
+    hypothesis_id: Optional[str] = None
     created_at: Optional[str] = None
 
     def __post_init__(self) -> None:

@@ -4,7 +4,7 @@ Textual Gradient Descent Optimizer for Berkshire V10 engine.
 """
 
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 # Absolute for src/ path insert compatibility
 try:
@@ -26,6 +26,7 @@ class TextualGradientDescent:
         `Variable.value`（无验证，直接回填）。
       - 有 llm + scorer（V10.15 验证门控）：改写后在评测集上打分，**只有不劣于旧版
         (+min_improvement) 才接受**，否则回滚——杜绝 prompt 漂移。
+      - 有 retriever（V10.19）：改写前召回历史经验作 few-shot（默认 None → 不召回）。
     LLM / 评分器失败均优雅降级（保守不改写），不崩链路。
     """
 
@@ -36,13 +37,31 @@ class TextualGradientDescent:
         llm: Optional[LLMClient] = None,
         scorer: Optional[PromptScorer] = None,
         min_improvement: float = 0.0,
+        retriever: Optional[Any] = None,
+        retriever_ticker: Optional[str] = None,
+        retriever_k: int = 3,
     ):
         self.graph = graph
         self.lr = lr
         self.llm = llm
         self.scorer = scorer
         self.min_improvement = min_improvement
+        self.retriever = retriever
+        self.retriever_ticker = retriever_ticker
+        self.retriever_k = retriever_k
         self.update_log: List[Dict] = []
+
+    def _fetch_examples(self) -> Optional[List[Any]]:
+        """召回 few-shot 经验；失败返回 None（降级为无 few-shot）。"""
+        if self.retriever is None or not self.retriever_ticker:
+            return None
+        try:
+            items = self.retriever.retrieve(
+                ticker=self.retriever_ticker, k=self.retriever_k
+            )
+            return items if items else None
+        except Exception:  # noqa: BLE001
+            return None
 
     def step(self, gradients: Dict[str, Gradient]) -> List[Dict]:
         """
@@ -102,8 +121,11 @@ class TextualGradientDescent:
     def _rewrite_prompt(self, var: Variable, gradient: Gradient, update: Dict) -> None:
         """用 LLM 真实改写 prompt 变量；失败/无底稿时优雅降级（仅记录）。"""
         old_value = var.value
+        examples = self._fetch_examples()
         try:
-            new_value = apply_gradient(var, gradient, self.llm)
+            new_value = apply_gradient(
+                var, gradient, self.llm, examples=examples
+            )
         except Exception as e:  # 网络/调用错误 → 降级，不崩链路
             update["rewrite_error"] = f"{type(e).__name__}: {e}"
             return
@@ -120,10 +142,12 @@ class TextualGradientDescent:
 
     def _rewrite_prompt_validated(self, var: Variable, gradient: Gradient, update: Dict) -> None:
         """验证门控改写：改写后评分，只有不劣于(+min_improvement)才回填，否则回滚。"""
+        examples = self._fetch_examples()
         try:
             result = validated_apply_gradient(
                 var, gradient, self.llm, self.scorer,
                 min_improvement=self.min_improvement,
+                examples=examples,
             )
         except Exception as e:  # LLM 调用错误 → 降级，不崩链路
             update["rewrite_error"] = f"{type(e).__name__}: {e}"

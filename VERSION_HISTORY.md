@@ -36,6 +36,30 @@
 
 ## 📜 版本历史
 
+### V10.19 - 2026-06-30 (R/D 双循环：HypothesisProposer + research_loop)
+
+基于 `docs/rdagent_reference.md` P1-C，落地 Research/Development 双循环最小编排层。
+
+**1) R/D 双循环** `src/research_loop.py`
+- `HypothesisProposer` 可注入协议；`StaticHypothesisProposer` / `ExperienceDrivenProposer`（零 LLM，从 refuted 经验归纳）/ `LLMHypothesisProposer`（可 mock）。
+- `run_rd_cycle()`：每轮 **R**（提假设 → 可选落盘 `HypothesisStore`）→ **D**（复用 `eval_harness.run_multi_round`）；`proposer=None` 时退化为纯 D（与 V10.18 等价）。
+- `RDCycleReport`：逐轮假设数 + D 段 `EvolutionReport`；`monotonic_non_decreasing` 不变式仍成立。
+
+**2) 经验召回贯穿 D 段改写**
+- `TextualGradientDescent(retriever=, retriever_ticker=)` 改写前召回 few-shot 经验；`validated_apply_gradient(..., examples=)` 透传。
+- `run_multi_round(..., retriever=, retriever_ticker=)` 可选参数，默认 None 行为不变。
+
+**3) 决策链衔接** `decision_log.DecisionRecord`
+- 新增可选 `hypothesis_id`（向后兼容，老数据不受影响）。
+
+**测试结果**:
+- [x] 单元测试: **388 passed, 2 skipped**（+6 research_loop / hypothesis_id）
+- [x] ruff / mypy 全绿（21 files）
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.18 - 2026-06-30 (借鉴 RD-Agent / Qlib：绩效度量 + 经验库 + 假设对象)
 
 基于 `docs/qlib_evaluation.md` 与 `docs/rdagent_reference.md` 的只读评估结论，按依赖
