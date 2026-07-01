@@ -30,7 +30,9 @@
 
 from __future__ import annotations
 
+import json
 import os
+import time
 from dataclasses import dataclass
 from typing import Callable, Dict, Optional, Tuple
 
@@ -117,7 +119,9 @@ def _norm_date(value: object) -> Optional[str]:
     return f"{y}-{m}-{d}"
 
 
-# data_sources.daily 风格的取数回调：fetcher(code, limit) -> {ok, data:[{date,close,...}], ...}
+ENV_PRICE_CACHE_DIR = "BERKSHIRE_PRICE_CACHE_DIR"
+ENV_PRICE_CACHE_TTL = "BERKSHIRE_PRICE_CACHE_TTL"  # 秒，默认 86400（1 天）
+_DEFAULT_CACHE_TTL = 86400
 DailyFetcher = Callable[[str, int], dict]
 
 
@@ -160,17 +164,70 @@ class NetworkPriceProvider(PriceProvider):
         sources: Optional[list] = None,
         limit: int = 250,
         fallback_to_prior: bool = True,
+        disk_cache_dir: Optional[str] = None,
+        disk_cache_ttl: Optional[int] = None,
     ):
         self._fetcher: DailyFetcher = fetcher or _default_daily_fetcher
         self._sources = sources
         self._limit = limit
         self._fallback_to_prior = fallback_to_prior
         self._cache: Dict[str, Dict[str, float]] = {}
+        self._disk_cache_dir = disk_cache_dir or os.environ.get(ENV_PRICE_CACHE_DIR, "").strip() or None
+        raw_ttl = disk_cache_ttl
+        if raw_ttl is None:
+            env_ttl = os.environ.get(ENV_PRICE_CACHE_TTL, "").strip()
+            if env_ttl:
+                try:
+                    raw_ttl = int(env_ttl)
+                except ValueError:
+                    raw_ttl = _DEFAULT_CACHE_TTL
+            else:
+                raw_ttl = _DEFAULT_CACHE_TTL
+        self._disk_cache_ttl = max(0, int(raw_ttl))
+
+    def _disk_cache_file(self, ticker: str) -> Optional[str]:
+        if not self._disk_cache_dir:
+            return None
+        key = str(ticker).strip().upper()
+        safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in key)
+        return os.path.join(self._disk_cache_dir, f"{safe}.json")
+
+    def _load_disk_cache(self, ticker: str) -> Optional[Dict[str, float]]:
+        path = self._disk_cache_file(ticker)
+        if not path or not os.path.isfile(path):
+            return None
+        if self._disk_cache_ttl > 0:
+            age = time.time() - os.path.getmtime(path)
+            if age > self._disk_cache_ttl:
+                return None
+        try:
+            with open(path, encoding="utf-8") as fh:
+                data = json.load(fh)
+            if isinstance(data, dict):
+                return {str(k): float(v) for k, v in data.items()}
+        except (OSError, json.JSONDecodeError, TypeError, ValueError):
+            return None
+        return None
+
+    def _save_disk_cache(self, ticker: str, series: Dict[str, float]) -> None:
+        path = self._disk_cache_file(ticker)
+        if not path:
+            return
+        try:
+            os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+            with open(path, "w", encoding="utf-8") as fh:
+                json.dump(series, fh, ensure_ascii=False)
+        except OSError:
+            pass
 
     def _series(self, ticker: str) -> Dict[str, float]:
         key = str(ticker).strip().upper()
         if key in self._cache:
             return self._cache[key]
+        disk_series = self._load_disk_cache(key)
+        if disk_series is not None:
+            self._cache[key] = disk_series
+            return disk_series
         series: Dict[str, float] = {}
         try:
             res = self._fetcher(ticker, self._limit)
@@ -187,6 +244,8 @@ class NetworkPriceProvider(PriceProvider):
                 except (TypeError, ValueError):
                     continue
         self._cache[key] = series
+        if series:
+            self._save_disk_cache(key, series)
         return series
 
     def get_price(self, ticker: str, date: str) -> float:

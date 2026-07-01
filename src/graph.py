@@ -2,57 +2,51 @@
 """
 Berkshire Graph: Computation Graph for TextGrad V10 engine.
 
-Defines Variable, Gradient and BerkshireGraph for 4-masters parallel analysis.
+Defines Variable, Gradient and BerkshireGraph for parallel master analysis.
+Scenario 配置见 scenario.py（P1-D 可插拔）。
 """
 
 from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
-# Note: no relative imports for compatibility when run via sys.path insert to src/
+try:
+    from scenario import (
+        DEFAULT_SCENARIO,
+        MASTER_CHECKS,
+        MASTER_PREFIXES,
+        MASTERS,
+        ROLE_NAMES,
+        SCORE_THRESHOLD,
+        Master,
+        Scenario,
+    )
+except ImportError:  # pragma: no cover
+    from .scenario import (
+        DEFAULT_SCENARIO,
+        MASTER_CHECKS,
+        MASTER_PREFIXES,
+        MASTERS,
+        ROLE_NAMES,
+        SCORE_THRESHOLD,
+        Master,
+        Scenario,
+    )
 
-
-# ---------------------------------------------------------------------------
-# 单一来源：四大师定义（变量、边、梯度全部从这里派生，避免多处重复）
-# ---------------------------------------------------------------------------
-@dataclass(frozen=True)
-class Master:
-    prefix: str   # duan / buffett / munger / lilu
-    name: str     # 中文名
-    focus: str    # 关注点
-
-
-MASTERS: Tuple[Master, ...] = (
-    Master("duan", "段永平", "生意本质"),
-    Master("buffett", "巴菲特", "护城河估值"),
-    Master("munger", "芒格", "逆向风险"),
-    Master("lilu", "李录", "文明趋势"),
-)
-
-MASTER_PREFIXES: Tuple[str, ...] = tuple(m.prefix for m in MASTERS)
-ROLE_NAMES: Dict[str, str] = {m.prefix: m.name for m in MASTERS}
-
-# 每位大师分析不达标时的针对性检查项
-MASTER_CHECKS: Dict[str, List[str]] = {
-    "duan": [
-        "检查: 是否用一句话定义了生意本质？",
-        "检查: 是否分析了收入漏斗？",
-    ],
-    "buffett": [
-        "检查: 是否包含 PE/PB/DCF 估值分析？",
-        "检查: 是否评估了护城河宽度？",
-    ],
-    "munger": [
-        "检查: 是否包含逆向思考 (失败路径)？",
-        "检查: 是否分析了监管风险？",
-    ],
-    "lilu": [
-        "检查: 是否评估了长期趋势？",
-        "检查: 是否分析了管理层质量？",
-    ],
-}
-
-SCORE_THRESHOLD = 0.85
+# 向后兼容：历史代码 from graph import MASTERS / MASTER_PREFIXES 等仍可用
+__all__ = [
+    "Master",
+    "MASTERS",
+    "MASTER_PREFIXES",
+    "ROLE_NAMES",
+    "MASTER_CHECKS",
+    "SCORE_THRESHOLD",
+    "Scenario",
+    "DEFAULT_SCENARIO",
+    "Variable",
+    "Gradient",
+    "BerkshireGraph",
+]
 
 
 @dataclass
@@ -98,25 +92,28 @@ class BerkshireGraph:
     结构:
     Layer 0: 输入 (ticker, tavily_query, date_anchor)
     Layer 1: 数据获取 (tavily_search)
-    Layer 2: 四大师分析 (duan/buffett/munger/lilu)
+    Layer 2: 大师分析 (每位大师 prompt + model + analysis)
     Layer 3: 财务验证 (financial_rigor)
     Layer 4: 输出 (final_report)
     """
 
-    def __init__(self):
-        # 定义变量
+    def __init__(self, scenario: Scenario = DEFAULT_SCENARIO):
+        self.scenario = scenario
+        self._prefixes = scenario.prefixes
+        self._role_names = scenario.role_names
+        self._checks = scenario.checks
+        self._threshold = scenario.threshold
+
         self.variables: Dict[str, Variable] = {}
         self._init_variables()
 
-        # 定义依赖关系 (edges)
         self.edges: List[Tuple[str, str]] = []
         self._init_edges()
 
-        # 运行时状态
         self.trace_id: Optional[str] = None
         self.scores: Dict[str, float] = {}
 
-    # --- 节点命名约定（单一来源派生） ---
+    # --- 节点命名约定 ---
     @staticmethod
     def analysis_node(prefix: str) -> str:
         return f"{prefix}_analysis"
@@ -131,16 +128,12 @@ class BerkshireGraph:
 
     def _init_variables(self):
         """初始化计算图变量"""
-        # Layer 0: 输入
         self.variables["ticker"] = Variable("ticker", "input", layer=0)
         self.variables["tavily_query"] = Variable("tavily_query", "input", layer=0)
         self.variables["date_anchor"] = Variable("date_anchor", "input", layer=0)
-
-        # Layer 1: 数据获取
         self.variables["tavily_search"] = Variable("tavily_search", "output", layer=1)
 
-        # Layer 2: 四大师分析 (每个大师 3 个变量: prompt + model + analysis)
-        for m in MASTERS:
+        for m in self.scenario.masters:
             self.variables[self.prompt_node(m.prefix)] = Variable(
                 self.prompt_node(m.prefix), "prompt", role=m.name, layer=2
             )
@@ -151,32 +144,25 @@ class BerkshireGraph:
                 self.analysis_node(m.prefix), "output", role=m.name, layer=2
             )
 
-        # Layer 3: 财务验证
         self.variables["financial_rigor"] = Variable("financial_rigor", "output", layer=3)
-
-        # Layer 4: 输出
         self.variables["final_report"] = Variable("final_report", "output", layer=4)
 
     def _init_edges(self):
         """初始化依赖关系"""
-        # Layer 0 → Layer 1
         self.edges.extend([
             ("ticker", "tavily_search"),
             ("tavily_query", "tavily_search"),
             ("date_anchor", "tavily_search"),
         ])
 
-        # Layer 1 → Layer 2
-        for prefix in MASTER_PREFIXES:
+        for prefix in self._prefixes:
             self.edges.append(("tavily_search", self.analysis_node(prefix)))
             self.edges.append((self.prompt_node(prefix), self.analysis_node(prefix)))
             self.edges.append((self.model_node(prefix), self.analysis_node(prefix)))
 
-        # Layer 2 → Layer 3
-        for prefix in MASTER_PREFIXES:
+        for prefix in self._prefixes:
             self.edges.append((self.analysis_node(prefix), "financial_rigor"))
 
-        # Layer 3 → Layer 4
         self.edges.append(("financial_rigor", "final_report"))
 
     def topological_sort(self) -> List[str]:
@@ -188,7 +174,6 @@ class BerkshireGraph:
             adj[src].append(dst)
             in_degree[dst] += 1
 
-        # 找到所有入度为 0 的节点
         queue = [n for n in self.variables if in_degree[n] == 0]
         result = []
 
@@ -215,11 +200,10 @@ class BerkshireGraph:
         self.scores = scores
         gradients: Dict[str, Gradient] = {}
 
-        analysis_nodes = {self.analysis_node(p): p for p in MASTER_PREFIXES}
-        prompt_nodes = {self.prompt_node(p): p for p in MASTER_PREFIXES}
-        model_nodes = {self.model_node(p): p for p in MASTER_PREFIXES}
+        analysis_nodes = {self.analysis_node(p): p for p in self._prefixes}
+        prompt_nodes = {self.prompt_node(p): p for p in self._prefixes}
+        model_nodes = {self.model_node(p): p for p in self._prefixes}
 
-        # 反向遍历 (从输出到输入)
         for node in reversed(self.topological_sort()):
             if node == "final_report":
                 gradients[node] = self._compute_output_gradient()
@@ -242,21 +226,24 @@ class BerkshireGraph:
     def _compute_output_gradient(self) -> Gradient:
         """计算输出层梯度"""
         avg_score = sum(self.scores.values()) / len(self.scores) if self.scores else 0
-        ok = avg_score >= SCORE_THRESHOLD
+        ok = avg_score >= self._threshold
 
         if ok:
             text = f"✅ 整体分析质量良好 (平均评分 {avg_score:.3f})"
         else:
-            text = f"❌ 整体分析质量不达标 (平均评分 {avg_score:.3f} < {SCORE_THRESHOLD})"
+            text = (
+                f"❌ 整体分析质量不达标 "
+                f"(平均评分 {avg_score:.3f} < {self._threshold})"
+            )
 
         return Gradient(node="final_report", ok=ok, text=text, score=avg_score)
 
     def _compute_master_gradient(self, prefix: str, score: float) -> Gradient:
-        """计算四大师分析层梯度"""
-        role_name = ROLE_NAMES.get(prefix, prefix)
+        """计算大师分析层梯度"""
+        role_name = self._role_names.get(prefix, prefix)
         node = self.analysis_node(prefix)
 
-        if score >= SCORE_THRESHOLD:
+        if score >= self._threshold:
             return Gradient(
                 node=node, ok=True, score=score,
                 text=f"✅ {role_name} 分析质量良好 (评分 {score:.3f})",
@@ -268,8 +255,7 @@ class BerkshireGraph:
         else:
             issues.append(f"评分偏低 ({score:.3f})，需要优化")
 
-        # 根据角色特性追加针对性诊断（单一来源）
-        issues.extend(MASTER_CHECKS.get(prefix, []))
+        issues.extend(self._checks.get(prefix, []))
 
         text = f"❌ {role_name} 分析存在问题:\n" + "\n".join(f"  - {i}" for i in issues)
         return Gradient(node=node, ok=False, score=score, text=text, issues=issues)
@@ -315,26 +301,20 @@ class BerkshireGraph:
 
     def debate(self, scores: Dict[str, float],
                issues_by_master: Optional[Dict[str, List[str]]] = None):
-        """多空辩论环节：位于 Layer 2（四大师）与输出之间的一步。
-
-        综合四大师信心分产出结构化的 bull/bear/净判断（DebateResult）。
-        逻辑在 debate.py（延迟导入以避免与本模块循环依赖），
-        复用 MASTERS 单一来源。
-        """
+        """多空辩论环节。"""
         try:
             from debate import run_debate
-        except ImportError:  # pragma: no cover - 包内导入回退
+        except ImportError:  # pragma: no cover
             from .debate import run_debate
         return run_debate(scores, issues_by_master=issues_by_master)
 
     def visualize(self) -> str:
         """可视化计算图"""
         lines = ["=" * 70]
-        lines.append("Berkshire Computation Graph")
+        lines.append(f"Berkshire Computation Graph — scenario={self.scenario.name}")
         lines.append("=" * 70)
         lines.append("")
 
-        # 按层分组
         layers = defaultdict(list)
         for name, var in self.variables.items():
             layers[var.layer].append(name)

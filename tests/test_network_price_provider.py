@@ -143,3 +143,20 @@ def test_integration_with_realized_scores_via_provider():
     assert stats.raw_return == pytest.approx(0.10, abs=1e-9)
     assert stats.alpha == pytest.approx(0.09, abs=1e-9)
     assert "buffett" in scores
+
+
+def test_disk_cache_hits_without_second_fetch(tmp_path):
+    calls = []
+
+    def fetcher(code, limit):
+        calls.append(code)
+        return _ok([{"date": "2024-01-03", "close": "10.0"}])
+
+    cache_dir = tmp_path / "cache"
+    p = NetworkPriceProvider(fetcher=fetcher, disk_cache_dir=str(cache_dir))
+    assert p.get_price("AAPL", "2024-01-03") == 10.0
+    assert len(calls) == 1
+
+    p2 = NetworkPriceProvider(fetcher=fetcher, disk_cache_dir=str(cache_dir))
+    assert p2.get_price("AAPL", "2024-01-03") == 10.0
+    assert len(calls) == 1  # 磁盘缓存命中，不再 fetch

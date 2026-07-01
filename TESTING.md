@@ -20,7 +20,10 @@ python3 -m pytest tests/ -v -rs
 python3 tests/test_v10_backtest.py
 
 # 3) 进化引擎入口
-python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
+python3 src/evolution_loop_v10.py                    # run_example 演示
+python3 src/evolution_loop_v10.py status             # 存储健康摘要（V10.21）
+python3 src/evolution_loop_v10.py reflect AAPL       # 对比反思
+python3 src/evolution_loop_v10.py optimize AAPL      # 反思 + 进化
 ```
 
 ## 工具 E2E 冒烟（逐个）

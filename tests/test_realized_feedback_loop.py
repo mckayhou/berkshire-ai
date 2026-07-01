@@ -199,8 +199,10 @@ def test_persist_also_appends_experience(tmp_path, monkeypatch):
     """persist=True 时默认同步沉淀经验（V10.20 主线接线）。"""
     dec_log = tmp_path / "decisions.jsonl"
     exp_log = tmp_path / "experiences.jsonl"
+    run_log = tmp_path / "runs.jsonl"
     monkeypatch.setenv(dl.ENV_LOG_PATH, str(dec_log))
     monkeypatch.setenv("BERKSHIRE_EXPERIENCE_LOG", str(exp_log))
+    monkeypatch.setenv("BERKSHIRE_RUN_LOG", str(run_log))
 
     import experience_store as es  # noqa: E402
 
@@ -214,6 +216,12 @@ def test_persist_also_appends_experience(tmp_path, monkeypatch):
     rows = es.ExperienceStore(str(exp_log)).load()
     assert len(rows) == 1
     assert rows[0].alpha == pytest.approx(out["stats"].alpha)
+
+    from run_recorder import RunRecorder  # noqa: E402
+
+    runs = RunRecorder(str(run_log)).load()
+    assert len(runs) == 1
+    assert runs[0].event == "feedback"
 
 
 def test_persist_experience_false_skips(tmp_path, monkeypatch):

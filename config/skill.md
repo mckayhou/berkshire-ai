@@ -54,6 +54,10 @@ description: >
   V10.20: 主线接线 - run_with_realized_feedback：persist 时默认 persist_experience 自动沉淀经验
           （experience_from_stats→ExperienceStore，失败降级）；include_perf 返回 perf_metrics 摘要；
           retriever/retriever_k 透传 TextualGradientDescent（D 段 few-shot）。392 测试通过。
+  V10.21: Scenario 抽象（P1-D）src/scenario.py + BerkshireGraph(scenario=DEFAULT_SCENARIO)；
+          evolution_cli status/reflect/optimize 子命令；src/reflect.py 对比反思；
+          src/run_recorder.py 轻量 Run Recorder（Qlib B1）；NetworkPriceProvider 可选磁盘缓存（B3）。
+          407 测试通过。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
@@ -235,10 +239,11 @@ python3 tools/financial_rigor.py cross-validate \
 > - ✅ **验证门控改写 + 多轮迭代（V10.15 / 档B）**：`src/prompt_validation.py` 的 `validated_apply_gradient`（改写后评分，只有不劣于旧版+`min_improvement` 才接受否则回滚）；`TextualGradientDescent(graph, llm=..., scorer=...)` 注入 scorer 即门控；`src/eval_harness.py` 的 `run_multi_round` 跑多轮并产出 `EvolutionReport`（离线证明单调不退化且收敛）；`src/realized_feedback.py::NetworkPriceProvider` 接真实行情（多源降级链+缓存+非交易日回退，fetcher 可注入）。
 > - ✅ **可观测 + 服务化 + 注入防护（V10.16 / 档C）**：`src/observability.py` 结构化 JSON 日志 + `run_id` 经 contextvar 贯穿（`run_context()`）+ LLM 成本/token/延迟埋点（`MetricsCollector`，已接入 `OpenAICompatibleLLMClient`）；`src/service.py` 服务边界（`health/doctor/score/debate` 纯函数处理器 + 可选 FastAPI `create_app()` 暴露 `/health` `/score` `/debate`，`extras[service]`）；`src/sanitize.py` 提示注入防护（`sanitize_untrusted` 清洗喂给改写 LLM 的不可信诊断，配合 `UNTRUSTED_` 分隔符兜底）。
 > - ✅ **部署 + 访问控制 + 可监控 + 真梯度（V10.17 / 档D）**：容器化 `Dockerfile`/`docker-compose.yml`（非 root + HEALTHCHECK）+ `service.run()`/`berkshire-serve` uvicorn 入口；`src/access_control.py`（`check_api_key` API Key 鉴权 + `RateLimiter` 限流，经 `create_app` 挂到 `/score` `/debate`）；`src/metrics_export.py`（`/metrics` Prometheus 文本，零依赖）；`src/llm_gradient.py` 的 `enrich_gradients_with_llm` 让 LLM 生成真实批评（∇_LLM）增强未达标节点梯度，失败优雅降级回规则化；mypy 开 `check_untyped_defs`、覆盖率门 50%、golden 回归基线。
+> - ✅ **Scenario + CLI + Recorder（V10.21）**：`src/scenario.py`；`python3 src/evolution_loop_v10.py status|reflect|optimize`；`run_recorder`；`BERKSHIRE_PRICE_CACHE_DIR` 磁盘缓存。
 > - ✅ **主线接线（V10.20）**：`run_with_realized_feedback`：`persist=True` 时自动沉淀经验；`include_perf=True` 返回绩效摘要；`retriever` 贯穿 D 段 few-shot。
 > - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`。
 > - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：`tools/perf_metrics.py` 本地绩效指标库（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/求和累计/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`，`render_markdown`/`to_json`）；`src/experience_store.py` 经验库 RAG-lite（`Experience`+`ExperienceStore` JSONL+`KeywordExperienceRetriever` 零依赖召回+`experience_from_stats`；作为 few-shot 经 `build_rewrite_messages(..., examples=None)` 注入改写，`examples=None` 逐字节不变、`sanitize_untrusted` 包裹、失败降级）；`src/hypothesis.py` 显式可证伪 `Hypothesis` 对象+最小 `HypothesisStore`+`group_experiences_by_hypothesis`。
-> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：`reflect` / `optimize` / `status` 子命令、轨迹自动记录、Cron 自动进化；Scenario 抽象（P1-D）。请勿在生产流程中依赖这些，直到落地。（注：`∇_LLM` 已于 V10.17 落地；经验 few-shot 已于 V10.18 落地；R/D 双循环已于 V10.19 落地。）
+> - 🚧 **规划中（尚未实现，下文带 `[规划]` 标记的命令暂不可用）**：轨迹自动记录（QwenPaw 侧）、Cron 自动进化。请勿在生产流程中依赖这些，直到落地。（注：`reflect` / `optimize` / `status` 已于 V10.21 落地；Scenario 已于 V10.21 落地。）
 
 **计算图结构**:
 ```
@@ -329,7 +334,6 @@ BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0.7}).net_
 **反思流程**：
 ```bash
 # 运行对比反思
-# [规划] 该子命令尚未实现
 python3 src/evolution_loop_v10.py reflect <ticker>
 ```
 
@@ -356,7 +360,6 @@ python3 src/evolution_loop_v10.py reflect <ticker>
 **执行优化**：
 ```bash
 # 运行完整优化循环
-# [规划] 该子命令尚未实现
 python3 src/evolution_loop_v10.py optimize <ticker>
 ```
 
@@ -577,7 +580,6 @@ description: 四大师并行投研框架 + Loop Engineering 自我进化
 
 ```bash
 # 检查进化循环状态
-# [规划] 该子命令尚未实现
 python3 src/evolution_loop_v10.py status
 
 # 检查轨迹数量
@@ -605,7 +607,6 @@ ls ~/.qwenpaw/berkshire_reflections/*.json | wc -l
 # 1. 运行一次完整投研任务（如分析腾讯控股）
 # 2. 记录轨迹
 # 3. 运行对比反思
-# [规划] reflect/optimize 子命令尚未实现
 python3 src/evolution_loop_v10.py reflect 0700.HK
 
 # 4. 运行优化

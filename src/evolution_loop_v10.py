@@ -232,9 +232,37 @@ def run_with_realized_feedback(
     }
     if experience is not None:
         result["experience"] = experience
+        _record_feedback_run(decision, stats, experience)
     if perf is not None:
         result["perf"] = perf
     return result
+
+
+def _record_feedback_run(decision, stats, experience) -> None:
+    """记录反馈闭环 run；失败降级。"""
+    try:
+        try:
+            from observability import get_run_id
+            from run_recorder import RunRecord, RunRecorder
+        except ImportError:
+            from .observability import get_run_id
+            from .run_recorder import RunRecord, RunRecorder
+
+        RunRecorder().append(
+            RunRecord(
+                run_id=get_run_id() or "",
+                event="feedback",
+                ticker=getattr(decision, "ticker", None),
+                metrics={
+                    "alpha": float(stats.alpha),
+                    "realized_base": float(stats.realized_base),
+                    "verdict": getattr(experience, "verdict", ""),
+                },
+                note="run_with_realized_feedback",
+            )
+        )
+    except Exception:  # noqa: BLE001
+        return None
 
 
 def _default_lesson(decision, stats) -> str:
@@ -320,4 +348,12 @@ def _compute_perf_report(
 
 
 if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] in ("status", "reflect", "optimize", "run"):
+        try:
+            from evolution_cli import main as cli_main
+        except ImportError:
+            from .evolution_cli import main as cli_main
+        sys.exit(cli_main())
     run_example()

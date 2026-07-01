@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.20** (mainline `run_with_realized_feedback` wired: auto experience persistence on `persist`, optional `include_perf` summary, `retriever` for D-phase few-shot; cumulative with V10.19 R/D dual-loop + V10.18 RD-Agent/Qlib borrowings + V10.17 deployment tier + production hardening A→D). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.21** (Scenario plug-in + `status`/`reflect`/`optimize` CLI + RunRecorder + disk price cache; cumulative with V10.20 mainline wiring + V10.19 R/D dual-loop + production hardening A→D). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -42,7 +42,17 @@
 
 **Deploy, access control, metrics & real gradient (V10.17 / tier D)**: ships a multi-stage `Dockerfile` (non-root, `HEALTHCHECK`) + `docker-compose.yml` and a `berkshire-serve`/`service.run()` uvicorn entrypoint. `access_control` adds constant-time API-key auth (`check_api_key`) + a thread-safe fixed-window `RateLimiter`, wired into `/score` `/debate` via `create_app(api_keys=, rate_limit_per_min=)` (env `BERKSHIRE_API_KEYS` / `BERKSHIRE_RATE_LIMIT_PER_MIN`). `metrics_export` exposes a dependency-free Prometheus `/metrics` endpoint. `llm_gradient.enrich_gradients_with_llm` upgrades the rule-based "gradient" template into a real **LLM-generated critique** (∇_LLM), with graceful fallback to the rule-based gradient on any failure. Engineering gates tightened: mypy `check_untyped_defs`, coverage gate 50%, a deterministic golden regression for the evolution trajectory, plus CI jobs for Docker build + optional real-LLM e2e smoke.
 
+### Evolution CLI (V10.21)
+
+```bash
+python3 src/evolution_loop_v10.py status
+python3 src/evolution_loop_v10.py reflect AAPL
+python3 src/evolution_loop_v10.py optimize AAPL --rounds 1
+```
+
 **Mainline wiring (V10.20)**: `run_with_realized_feedback` auto-persists experiences when `persist=True` (`persist_experience` defaults to match); `include_perf=True` attaches a `perf_metrics` summary; `retriever`/`retriever_k` flow through D-phase rewriting.
+
+**Scenario + CLI + Recorder (V10.21)**: `src/scenario.py` plug-in master configs; `status`/`reflect`/`optimize` subcommands; `run_recorder` JSONL; optional `BERKSHIRE_PRICE_CACHE_DIR` disk cache for `NetworkPriceProvider`.
 
 **R/D dual-loop (V10.19)**: `src/research_loop.py` provides `HypothesisProposer` + `run_rd_cycle` — each cycle runs **R** (propose hypotheses, optionally persist to `HypothesisStore`) then **D** (reuses `eval_harness.run_multi_round`). `StaticHypothesisProposer`, `ExperienceDrivenProposer` (zero-LLM, from refuted experiences), and `LLMHypothesisProposer` (injectable/mockable). `proposer=None` degrades to pure D (byte-equivalent to V10.18). D-phase rewriting can pull few-shot experiences via `optimizer.retriever`. `decision_log.DecisionRecord` gains optional `hypothesis_id`.
 

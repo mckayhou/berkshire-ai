@@ -36,6 +36,33 @@
 
 ## 📜 版本历史
 
+### V10.21 - 2026-07-01 (Scenario + CLI + RunRecorder + 磁盘价格缓存)
+
+完成 RD-Agent P1-D 与 Qlib B1/B3 剩余 backlog，并落地 `reflect` / `optimize` / `status` CLI。
+
+**1) Scenario 抽象（P1-D）** `src/scenario.py`
+- `Scenario` dataclass + `DEFAULT_SCENARIO`（与历史四大师逐字节等价）。
+- `BerkshireGraph(scenario=...)` 可插拔大师阵容；`TWO_MASTER_DEMO_SCENARIO` 供测试。
+
+**2) 进化 CLI** `src/evolution_cli.py`
+- `python3 src/evolution_loop_v10.py status` — 各 JSONL 存储健康摘要。
+- `reflect <ticker>` — 对比反思（`src/reflect.py`）。
+- `optimize <ticker>` — 反思 + `eval_harness.run_multi_round`（可 mock LLM）。
+
+**3) 轻量 Run Recorder（Qlib B1）** `src/run_recorder.py`
+- `RunRecord` + `RunRecorder` JSONL；`feedback` / `reflect` / `optimize` 自动落盘。
+
+**4) 磁盘价格缓存（Qlib B3）**
+- `NetworkPriceProvider` 可选 `BERKSHIRE_PRICE_CACHE_DIR` + TTL；默认行为不变。
+
+**测试结果**:
+- [x] 单元测试: **407 passed, 2 skipped**
+- [x] ruff / mypy 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.20 - 2026-07-01 (主线接线：经验沉淀 + 绩效摘要 + retriever)
 
 把 V10.18 的「可插拔层」接入默认 `run_with_realized_feedback()` 主链路，无需再手动调用 `experience_from_stats` / `perf_metrics`。

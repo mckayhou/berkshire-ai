@@ -69,6 +69,7 @@ from .realized_feedback import (
     realized_scores,
     realized_scores_via_provider,
 )
+from .reflect import ReflectionReport, reflect_ticker
 from .research_loop import (
     ExperienceDrivenProposer,
     HypothesisProposer,
@@ -77,6 +78,14 @@ from .research_loop import (
     RDCycleReport,
     StaticHypothesisProposer,
     run_rd_cycle,
+)
+from .run_recorder import RunRecord, RunRecorder, default_run_log_path
+from .scenario import (
+    DEFAULT_SCENARIO,
+    MASTER_CHECKS,
+    SCORE_THRESHOLD,
+    TWO_MASTER_DEMO_SCENARIO,
+    Scenario,
 )
 
 __all__ = [
@@ -147,4 +156,14 @@ __all__ = [
     "RDCycleMetrics",
     "RDCycleReport",
     "run_rd_cycle",
+    "Scenario",
+    "DEFAULT_SCENARIO",
+    "TWO_MASTER_DEMO_SCENARIO",
+    "MASTER_CHECKS",
+    "SCORE_THRESHOLD",
+    "RunRecord",
+    "RunRecorder",
+    "default_run_log_path",
+    "ReflectionReport",
+    "reflect_ticker",
 ]
