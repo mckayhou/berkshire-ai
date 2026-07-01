@@ -36,6 +36,40 @@
 
 ## 📜 版本历史
 
+### V10.22 - 2026-07-01 (路线图收尾：HTML / 对决矩阵 / Cron / 轨迹 / 主链路 / aktools)
+
+补齐 ROADMAP 与 skill.md 中所有可落地 backlog。
+
+**1) 统一主链路** `src/pipeline.py::run_full_cycle`
+- R/D 双循环 → `run_with_realized_feedback` → 经验/绩效/轨迹/run 记录（默认生产入口）。
+
+**2) Cron 自动进化** `src/cron_evolution.py` + `scripts/cron-evolution.sh`
+- `thesis-tracker` / `portfolio-weekly` / `evolution-loop` / `all`；CLI：`evolution_loop_v10.py cron <task>`。
+
+**3) 轨迹自动记录** `src/trace_recorder.py`
+- `BERKSHIRE_TRACE_DIR`（默认 `~/.qwenpaw/berkshire_traces`）；反馈闭环自动写入。
+
+**4) 生产 quality_fn** `src/quality_scorer.py`
+- 历史「信心 vs alpha」误差 → `build_experience_quality_fn`。
+
+**5) HTML 报告** `tools/report_html.py`（暗色模式 + 侧栏导航，纯 stdlib）。
+
+**6) 多股对决矩阵** `tools/stock_comparison.py`（2–4 只标准化对比）。
+
+**7) 组合风险增强** `portfolio_risk`：地域/货币暴露 + -20% 压力测试。
+
+**8) aktools 适配器** `data_sources.AktoolsSource`（`BERKSHIRE_ENABLE_AKTOOLS=1`）。
+
+**9) 文档** `docs/PROMPT_TEMPLATES.md`；行动卡 golden 回归 `test_golden_action_card.py`。
+
+**测试结果**:
+- [x] 单元测试: **420 passed, 2 skipped**
+- [x] ruff / mypy 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.21 - 2026-07-01 (Scenario + CLI + RunRecorder + 磁盘价格缓存)
 
 完成 RD-Agent P1-D 与 Qlib B1/B3 剩余 backlog，并落地 `reflect` / `optimize` / `status` CLI。

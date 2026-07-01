@@ -43,6 +43,60 @@ CORR_TICKER_MAP = {
     "PDD": "PDD",
 }
 
+# 地域 / 货币暴露（规则映射，可扩展 data/watchlist.json）
+REGION_MAP = {
+    "NVDA": "US", "AAPL": "US", "MSFT": "US", "GOOGL": "US", "TSLA": "US",
+    "0700.HK": "HK", "1024.HK": "HK", "9988.HK": "HK",
+    "600519": "CN", "000858": "CN", "300750": "CN",
+    "PDD": "US_ADR",
+}
+CURRENCY_MAP = {
+    "US": "USD", "HK": "HKD", "CN": "CNY", "US_ADR": "USD",
+}
+
+
+def region_exposure(holdings: dict[str, float]) -> dict[str, float]:
+    exp: dict[str, float] = {}
+    for ticker, pct in holdings.items():
+        if ticker in ("CASH", "现金"):
+            continue
+        region = REGION_MAP.get(_norm_ticker(ticker), "OTHER")
+        exp[region] = exp.get(region, 0) + pct
+    return exp
+
+
+def currency_exposure(holdings: dict[str, float]) -> dict[str, float]:
+    exp: dict[str, float] = {}
+    for ticker, pct in holdings.items():
+        if ticker in ("CASH", "现金"):
+            continue
+        region = REGION_MAP.get(_norm_ticker(ticker), "OTHER")
+        ccy = CURRENCY_MAP.get(region, "OTHER")
+        exp[ccy] = exp.get(ccy, 0) + pct
+    return exp
+
+
+def stress_test(
+    holdings: dict[str, float],
+    *,
+    equity_shock_pct: float = -20.0,
+    cash_yield_pct: float = 0.0,
+) -> dict:
+    """简单压力测试：权益统一下挫 equity_shock_pct%，现金不变。"""
+    h = parse_holdings(holdings) if isinstance(holdings, dict) else holdings
+    equity = {k: v for k, v in h.items() if k not in ("CASH", "现金")}
+    cash = h.get("CASH", 0) + h.get("现金", 0)
+    shocked_equity = sum(p * (1 + equity_shock_pct / 100) for p in equity.values())
+    shocked_cash = cash * (1 + cash_yield_pct / 100)
+    total_before = sum(h.values())
+    total_after = shocked_equity + shocked_cash
+    return {
+        "equity_shock_pct": equity_shock_pct,
+        "total_before": round(total_before, 2),
+        "total_after": round(total_after, 2),
+        "delta_pct": round((total_after - total_before) / total_before * 100, 2) if total_before else 0,
+    }
+
 
 def _norm_ticker(t: str) -> str:
     return t.strip().upper().replace(" ", "")
@@ -204,6 +258,9 @@ def check_holdings(
         "top1_pct": round(top1, 2),
         "top3_pct": round(top3, 2),
         "theme_exposure": theme_exposure(h, themes),
+        "region_exposure": region_exposure(h),
+        "currency_exposure": currency_exposure(h),
+        "stress_test_20pct": stress_test(h, equity_shock_pct=-20.0),
     }
 
     if top1 > rules["max_single_pct"]:
@@ -291,6 +348,13 @@ def print_report(result: dict):
     print(f"  第一大: {m.get('top1_ticker')} {m.get('top1_pct')}%  |  前三合计: {m.get('top3_pct')}%")
     if m.get("theme_exposure"):
         print("  主题暴露:", ", ".join(f"{k}={v:.1f}%" for k, v in m["theme_exposure"].items()))
+    if m.get("region_exposure"):
+        print("  地域暴露:", ", ".join(f"{k}={v:.1f}%" for k, v in m["region_exposure"].items()))
+    if m.get("currency_exposure"):
+        print("  货币暴露:", ", ".join(f"{k}={v:.1f}%" for k, v in m["currency_exposure"].items()))
+    st = m.get("stress_test_20pct")
+    if st:
+        print(f"  压力测试(-20%权益): 组合 {st['total_before']:.1f}% → {st['total_after']:.1f}% ({st['delta_pct']:+.1f}%)")
     print()
     if not result["flags"]:
         print("  ✅ 无风险告警")

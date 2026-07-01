@@ -16,7 +16,7 @@
 | 已实现收益反馈闭环 | ✅ 已实现 (V10.11) | `decision_log` + `realized_feedback`：真实收益 → alpha → 各大师校准评分 → `backward()`（吸收自 TradingAgents） |
 | 多空对抗辩论 | ✅ 已实现 (V10.11) | `debate.py` + `BerkshireGraph.debate()`：bull/bear case + 结构化净判断 `DebateResult` |
 | LLM 驱动的 Prompt 改写（Option B）| ✅ 已实现 (V10.13) | `prompt_optimizer.apply_gradient`：LLM 读「下游诊断 + 当前 Prompt」产出改进版 Prompt 回填变量。客户端可注入/可 mock（`StaticLLMClient` / `OpenAICompatibleLLMClient`），核心可离线单测 |
-| LLM 驱动的「批评/梯度」生成 (`∇_LLM`) | 🟡 部分 | 改写步已用 LLM；但梯度（批评）本身仍是基于评分的启发式模板（`_compute_*_gradient`），尚未由 LLM 生成 |
+| LLM 驱动的「批评/梯度」生成 (`∇_LLM`) | ✅ 已实现 | V10.17 `llm_gradient.enrich_gradients_with_llm`；失败降级回规则化模板 |
 | 真正的迭代进化循环 | 🟡 部分 (V10.13) | 单步「backward → LLM 改写 → 回填」已闭环；多轮自动迭代（改写后重跑分析→再评分）仍待接线 |
 
 > 结论：Option B 的「变量真实改写」已落地——文本梯度第一次真正作用到 Prompt 上。下一步是把启发式「批评」也换成 LLM 生成（`∇_LLM`），以及把单步闭环扩成多轮自动迭代。结构化的 `Gradient.issues` 与可注入的 `LLMClient` 让这两步都能无侵入演进，**消费方（回测/测试）无需改动**。

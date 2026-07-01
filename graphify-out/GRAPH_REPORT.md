@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-01)
 
 ## Corpus Check
-- 119 files · ~87,974 words
+- 134 files · ~91,722 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 119 nodes · 102 edges · 108 communities (26 shown, 82 thin omitted)
+- 135 nodes · 109 edges · 123 communities (34 shown, 89 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8372d027`
+- Built from commit: `448a9d4b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -98,6 +98,13 @@
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
 - [[_COMMUNITY_Community 103|Community 103]]
+- [[_COMMUNITY_Community 108|Community 108]]
+- [[_COMMUNITY_Community 109|Community 109]]
+- [[_COMMUNITY_Community 110|Community 110]]
+- [[_COMMUNITY_Community 111|Community 111]]
+- [[_COMMUNITY_Community 112|Community 112]]
+- [[_COMMUNITY_Community 113|Community 113]]
+- [[_COMMUNITY_Community 122|Community 122]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
@@ -126,19 +133,19 @@
 ## Import Cycles
 - None detected.
 
-## Communities (108 total, 82 thin omitted)
+## Communities (123 total, 89 thin omitted)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.58
 Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
 
 ## Knowledge Gaps
-- **4 isolated node(s):** `berkshire-ai`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
+- **5 isolated node(s):** `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **82 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **89 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `berkshire-ai`, `portfolio-weekly.sh script`, `log-command.sh script` to the rest of the system?**
-  _4 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script` to the rest of the system?**
+  _5 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.21**（Scenario 可插拔 + `status`/`reflect`/`optimize` CLI + RunRecorder + 磁盘价格缓存；累积 V10.20 主线接线 + V10.19 R/D 双循环 + V10.18 绩效度量/经验库/假设对象 + 生产化档 A→D）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.22**（路线图收尾：统一主链路 `pipeline.run_full_cycle`、Cron 自动进化、轨迹记录、HTML 报告、多股对决矩阵、生产 quality_fn、aktools 适配器；累积 V10.21 Scenario/CLI + V10.20 主线接线 + 生产化档 A→D）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -110,13 +110,22 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 ```
 
-### 进化循环 CLI（V10.21）
+### 进化循环 CLI（V10.21+）
 
 ```bash
-python3 src/evolution_loop_v10.py status              # 决策/经验/假设/run 存储摘要
-python3 src/evolution_loop_v10.py reflect AAPL      # 对比反思（需积累 ≥2 条经验更佳）
-python3 src/evolution_loop_v10.py optimize AAPL       # 反思 + 验证门控进化
-python3 src/evolution_loop_v10.py                     # 默认：run_example 演示
+python3 src/evolution_loop_v10.py status
+python3 src/evolution_loop_v10.py reflect AAPL
+python3 src/evolution_loop_v10.py optimize AAPL
+python3 src/evolution_loop_v10.py cron evolution-loop    # Cron 自动进化（V10.22）
+python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110  # 完整主链路（V10.22）
+./scripts/cron-evolution.sh thesis-tracker               # 定时任务脚本
+```
+
+### 报告与对比工具（V10.22）
+
+```bash
+python3 tools/report_html.py reports/foo.md -o reports/foo.html
+python3 tools/stock_comparison.py AAPL MSFT GOOGL --html /tmp/compare.html
 ```
 
 ### 已实现收益反馈闭环 + 多空辩论
@@ -284,7 +293,8 @@ python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
 - ✅ **自进化硬化（V10.15 档B）**：验证门控改写 `prompt_validation`（改写后评分，只有不劣于旧版才接受否则回滚）+ 真实行情 `NetworkPriceProvider`（多源降级链 + 缓存 + 非交易日回退）+ 多轮迭代 `eval_harness.run_multi_round`（离线证明进化单调不退化并收敛）
 - ✅ **可观测 + 服务化（V10.16 档C）**：结构化 JSON 日志 + run_id 贯穿 + LLM 成本/token/延迟埋点 `observability`；服务边界 `service.create_app()`（FastAPI，`/health` `/score` `/debate`，可选 extra）；提示注入防护 `sanitize`（清洗喂给改写 LLM 的不可信诊断）
 - ✅ **部署上线 + 访问控制 + 真梯度（V10.17 档D）**：容器化 `Dockerfile` + `docker-compose.yml`（非 root + HEALTHCHECK）；访问控制 `access_control`（API Key 鉴权 + 每客户端限流）；指标导出 `metrics_export`（`/metrics` Prometheus 文本）；∇_LLM 真梯度 `llm_gradient`（LLM 生成批评，失败降级回规则化）；mypy 收紧 `check_untyped_defs` + golden 回归基线
-- ✅ **Scenario + CLI + Recorder（V10.21）**：`src/scenario.py` 可插拔场景；`status`/`reflect`/`optimize` CLI；`run_recorder`；磁盘价格缓存
+- ✅ **路线图收尾（V10.22）**：`pipeline.run_full_cycle` 统一主链路；`cron_evolution` + `scripts/cron-evolution.sh`；`trace_recorder`；`quality_scorer`；`tools/report_html.py`；`tools/stock_comparison.py`；组合地域/货币/压力测试；`AktoolsSource`
+- ✅ **Scenario + CLI + Recorder（V10.21）**：`src/scenario.py`；`status`/`reflect`/`optimize`；`run_recorder`；磁盘价格缓存
 - ✅ **主线接线（V10.20）**：`run_with_realized_feedback` 在 `persist=True` 时自动 `experience_from_stats` → `ExperienceStore`；`include_perf=True` 返回 `perf` 摘要；`retriever`/`retriever_k` 透传 D 段 few-shot 改写
 - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`
 - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：本地绩效指标库 `tools/perf_metrics.py`（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/累计求和/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`）；经验库 RAG-lite `experience_store`（成败经验 JSONL 沉淀 + 确定性关键词召回 + 作为 few-shot 注入 `build_rewrite_messages`，`examples=None` 逐字节不变、失败降级）；显式假设对象 `hypothesis`（可证伪命题 + 最小存储）

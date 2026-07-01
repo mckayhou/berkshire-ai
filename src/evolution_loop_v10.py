@@ -235,6 +235,18 @@ def run_with_realized_feedback(
         _record_feedback_run(decision, stats, experience)
     if perf is not None:
         result["perf"] = perf
+
+    try:
+        from trace_recorder import record_trace
+    except ImportError:
+        from .trace_recorder import record_trace
+    record_trace(
+        getattr(decision, "ticker", ""),
+        "feedback",
+        score=float(stats.realized_base),
+        output_data={"alpha": float(stats.alpha)},
+        notes="run_with_realized_feedback",
+    )
     return result
 
 
@@ -350,7 +362,9 @@ def _compute_perf_report(
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) > 1 and sys.argv[1] in ("status", "reflect", "optimize", "run"):
+    if len(sys.argv) > 1 and sys.argv[1] in (
+        "status", "reflect", "optimize", "run", "cron", "cycle",
+    ):
         try:
             from evolution_cli import main as cli_main
         except ImportError:

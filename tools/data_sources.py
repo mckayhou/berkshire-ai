@@ -343,17 +343,67 @@ class YFinanceSource(DataSource):
 
 
 # ---------------------------------------------------------------------------
+# 可选：aktools-pro HTTP 后端（需 BERKSHIRE_ENABLE_AKTOOLS=1 + 本地服务）
+# ---------------------------------------------------------------------------
+class AktoolsSource(DataSource):
+    name = "aktools"
+    requires = ()  # HTTP only
+
+    def _base(self) -> str:
+        return os.environ.get(
+            "BERKSHIRE_AKTOOLS_BASE_URL", "http://127.0.0.1:8080"
+        ).rstrip("/")
+
+    def enabled(self):
+        if not _env_truthy("BERKSHIRE_ENABLE_AKTOOLS"):
+            return False, "disabled (set BERKSHIRE_ENABLE_AKTOOLS=1)"
+        return True, ""
+
+    def _get_json(self, path: str, params: dict) -> dict:
+        import urllib.parse
+        import urllib.request
+
+        qs = urllib.parse.urlencode(params)
+        url = f"{self._base()}{path}?{qs}"
+        req = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=15) as resp:  # noqa: S310
+            return json.loads(resp.read().decode("utf-8"))
+
+    def daily(self, code, limit=250):
+        try:
+            data = self._get_json(
+                "/api/public/market_prices",
+                {"symbol": code, "asset": "stock", "limit": str(limit)},
+            )
+        except Exception as e:  # noqa: BLE001
+            raise NotSupported(f"aktools daily failed: {e}") from e
+        rows = data if isinstance(data, list) else data.get("data") or data.get("prices") or []
+        out = []
+        for bar in rows[-limit:]:
+            if not isinstance(bar, dict):
+                continue
+            nd = bar.get("date") or bar.get("trade_date")
+            close = bar.get("close") or bar.get("Close")
+            if nd is None or close is None:
+                continue
+            out.append({"date": str(nd)[:10], "close": close})
+        if not out:
+            raise NotSupported("aktools returned empty daily")
+        return out
+
+
+# ---------------------------------------------------------------------------
 # 注册表 + 降级链
 # ---------------------------------------------------------------------------
 # 默认优先级：内置零依赖源最先（保证零配置可用），增强/第三方源依次兜底。
 _REGISTRY = {
     cls.name: cls for cls in (
-        NativeSource, TushareSource, EfinanceSource,
+        NativeSource, AktoolsSource, TushareSource, EfinanceSource,
         AkshareSource, BaostockSource, YFinanceSource,
     )
 }
 _DEFAULT_ORDER = [
-    "native", "tushare", "efinance", "akshare", "baostock", "yfinance",
+    "native", "aktools", "tushare", "efinance", "akshare", "baostock", "yfinance",
 ]
 
 

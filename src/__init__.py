@@ -5,6 +5,7 @@ Exports the main classes for TextGrad-based 4-masters analysis.
 """
 
 from .access_control import RateLimiter, check_api_key, key_fingerprint
+from .cron_evolution import CronResult, run_cron
 from .debate import DebateCase, DebateResult, run_debate
 from .decision_log import DecisionRecord, append_decision, load_decisions
 from .eval_harness import (
@@ -47,6 +48,7 @@ from .observability import (
     run_context,
 )
 from .optimizer import TextualGradientDescent
+from .pipeline import run_full_cycle
 from .prompt_optimizer import (
     LLMClient,
     OpenAICompatibleLLMClient,
@@ -60,6 +62,7 @@ from .prompt_validation import (
     ValidationResult,
     validated_apply_gradient,
 )
+from .quality_scorer import build_experience_quality_fn
 from .realized_feedback import (
     NetworkPriceProvider,
     PriceProvider,
@@ -87,6 +90,7 @@ from .scenario import (
     TWO_MASTER_DEMO_SCENARIO,
     Scenario,
 )
+from .trace_recorder import TraceRecorder, default_trace_dir, record_trace
 
 __all__ = [
     "BerkshireGraph",
@@ -166,4 +170,11 @@ __all__ = [
     "default_run_log_path",
     "ReflectionReport",
     "reflect_ticker",
+    "TraceRecorder",
+    "record_trace",
+    "default_trace_dir",
+    "build_experience_quality_fn",
+    "run_full_cycle",
+    "run_cron",
+    "CronResult",
 ]

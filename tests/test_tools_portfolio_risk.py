@@ -76,5 +76,21 @@ def test_resolve_holdings_none_when_missing(monkeypatch):
     assert pr.resolve_holdings(use_default_file=True) is None
 
 
+def test_region_and_currency_exposure():
+    h = pr.parse_holdings({"NVDA": 40, "0700.HK": 30, "CASH": 30})
+    regions = pr.region_exposure(h)
+    assert regions.get("US") == 40
+    assert regions.get("HK") == 30
+    currencies = pr.currency_exposure(h)
+    assert currencies.get("USD") == 40
+    assert currencies.get("HKD") == 30
+
+
+def test_stress_test_20pct():
+    h = pr.parse_holdings({"NVDA": 50, "CASH": 50})
+    st = pr.stress_test(h, equity_shock_pct=-20.0)
+    assert st["delta_pct"] == pytest.approx(-10.0)  # 一半权益跌 20%
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

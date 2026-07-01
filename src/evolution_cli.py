@@ -155,6 +155,54 @@ def cmd_optimize(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_cron(args: argparse.Namespace) -> int:
+    try:
+        from cron_evolution import run_cron
+    except ImportError:
+        from .cron_evolution import run_cron
+    result = run_cron(args.task)
+    payload = {
+        "task": result.task,
+        "ok": result.ok,
+        "details": result.details,
+        "errors": result.errors,
+    }
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    return 0 if result.ok else 1
+
+
+def cmd_cycle(args: argparse.Namespace) -> int:
+    try:
+        from decision_log import DecisionRecord
+        from pipeline import run_full_cycle
+    except ImportError:
+        from .decision_log import DecisionRecord
+        from .pipeline import run_full_cycle
+    d = DecisionRecord(
+        ticker=args.ticker,
+        date=args.date,
+        scores={"duan": 0.8, "buffett": 0.75, "munger": 0.7, "lilu": 0.65},
+        price_anchor=args.anchor,
+    )
+    out = run_full_cycle(
+        d,
+        realized_price=args.price,
+        run_rd=not args.no_rd,
+        rd_cycles=1,
+    )
+    fb = out.get("feedback") or {}
+    stats = fb.get("stats")
+    rd = out.get("rd")
+    summary = {
+        "ticker": args.ticker,
+        "run_id": out.get("run_id"),
+        "alpha": float(getattr(stats, "alpha", 0) or 0),
+        "rd_cycles": len(rd.cycles) if rd else 0,
+    }
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    return 0
+
+
 def cmd_run_example(_args: argparse.Namespace) -> int:
     graph = BerkshireGraph()
     print("Graph created with", len(graph.variables), "nodes")
@@ -186,6 +234,21 @@ def build_parser() -> argparse.ArgumentParser:
     p_opt.add_argument("ticker", help="标的代码")
     p_opt.add_argument("--rounds", type=int, default=1, help="进化轮数（默认 1）")
 
+    p_cron = sub.add_parser("cron", help="Cron 自动进化任务")
+    p_cron.add_argument(
+        "task",
+        choices=["thesis-tracker", "portfolio-weekly", "evolution-loop", "all"],
+        help="定时任务类型",
+    )
+    p_cron.add_argument("--json", action="store_true", help="JSON 输出")
+
+    p_cycle = sub.add_parser("cycle", help="完整主链路 run_full_cycle（R/D + 反馈）")
+    p_cycle.add_argument("ticker", help="标的代码")
+    p_cycle.add_argument("--price", type=float, required=True, help="已实现价格")
+    p_cycle.add_argument("--anchor", type=float, required=True, help="决策时价格锚点")
+    p_cycle.add_argument("--date", default="2026-01-02", help="决策日期")
+    p_cycle.add_argument("--no-rd", action="store_true", help="跳过 R/D 双循环")
+
     return parser
 
 
@@ -201,6 +264,10 @@ def main(argv: Optional[list] = None) -> int:
         return cmd_reflect(args)
     if cmd == "optimize":
         return cmd_optimize(args)
+    if cmd == "cron":
+        return cmd_cron(args)
+    if cmd == "cycle":
+        return cmd_cycle(args)
     parser.print_help()
     return 1
 

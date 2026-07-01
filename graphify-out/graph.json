@@ -10,11 +10,39 @@
       "ecosystem": "python",
       "source_file": "pyproject.toml",
       "source_location": "L1",
-      "version": "10.21.0",
+      "version": "10.22.0",
       "_origin": "ast",
       "id": "pkg_berkshire_ai",
       "community": 70,
       "norm_label": "berkshire-ai"
+    },
+    {
+      "label": "cron-evolution.sh",
+      "file_type": "code",
+      "source_file": "scripts/cron-evolution.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "cron-evolution",
+      "community": 108,
+      "norm_label": "cron-evolution.sh"
+    },
+    {
+      "label": "cron-evolution.sh script",
+      "file_type": "code",
+      "source_file": "scripts/cron-evolution.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_cron-evolution.sh__entry",
+      "community": 108,
+      "norm_label": "cron-evolution.sh script"
     },
     {
       "label": "portfolio-weekly.sh",
@@ -72,6 +100,16 @@
       "_origin": "ast",
       "id": "config",
       "community": 69,
+      "norm_label": ""
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/cron_evolution.py",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "cron_evolution",
+      "community": 110,
       "norm_label": ""
     },
     {
@@ -195,6 +233,16 @@
       "norm_label": ""
     },
     {
+      "label": "\u5b8c\u6574\u95ed\u73af\uff1a\u53ef\u9009 R/D \u2192 realized feedback \u2192 \u7ecf\u9a8c + \u7ee9\u6548 + \u8f68\u8ff9\u3002      Args:         decision: \u51b3\u7b56\u5feb",
+      "file_type": "rationale",
+      "source_file": "src/pipeline.py",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "pipeline",
+      "community": 111,
+      "norm_label": "\u5b8c\u6574\u95ed\u73af:\u53ef\u9009 r/d \u2192 realized feedback \u2192 \u7ecf\u9a8c + \u7ee9\u6548 + \u8f68\u8ff9\u3002      args:         decision: \u51b3\u7b56\u5feb"
+    },
+    {
       "label": "",
       "file_type": "code",
       "source_file": "src/prompt_optimizer.py",
@@ -213,6 +261,16 @@
       "id": "prompt_validation",
       "community": 73,
       "norm_label": ""
+    },
+    {
+      "label": "\u5404\u5927\u5e08 |stance - realized_base| \u7684\u5386\u53f2\u5747\u503c\uff08\u8d8a\u5c0f\u8d8a\u597d\uff09\u3002",
+      "file_type": "rationale",
+      "source_file": "src/quality_scorer.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "quality_scorer",
+      "community": 112,
+      "norm_label": "\u5404\u5927\u5e08 |stance - realized_base| \u7684\u5386\u53f2\u5747\u503c(\u8d8a\u5c0f\u8d8a\u597d)\u3002"
     },
     {
       "label": "",
@@ -295,6 +353,16 @@
       "norm_label": ""
     },
     {
+      "label": "",
+      "file_type": "code",
+      "source_file": "src/trace_recorder.py",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "trace_recorder",
+      "community": 122,
+      "norm_label": ""
+    },
+    {
       "label": "test_llm_smoke.py",
       "file_type": "code",
       "source_file": "tests/e2e/test_llm_smoke.py",
@@ -335,6 +403,16 @@
       "norm_label": "test_config.py"
     },
     {
+      "label": "test_cron_evolution.py",
+      "file_type": "code",
+      "source_file": "tests/test_cron_evolution.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_cron_evolution",
+      "community": 115,
+      "norm_label": "test_cron_evolution.py"
+    },
+    {
       "label": "",
       "file_type": "code",
       "source_file": "tests/test_eval_harness.py",
@@ -373,6 +451,16 @@
       "id": "test_experience_store",
       "community": 94,
       "norm_label": ""
+    },
+    {
+      "label": "test_golden_action_card.py",
+      "file_type": "code",
+      "source_file": "tests/test_golden_action_card.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_golden_action_card",
+      "community": 116,
+      "norm_label": "test_golden_action_card.py"
     },
     {
       "label": "",
@@ -425,6 +513,16 @@
       "norm_label": "test_observability.py"
     },
     {
+      "label": "test_pipeline.py",
+      "file_type": "code",
+      "source_file": "tests/test_pipeline.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_pipeline",
+      "community": 117,
+      "norm_label": "test_pipeline.py"
+    },
+    {
       "label": "test_prompt_optimizer.py",
       "file_type": "code",
       "source_file": "tests/test_prompt_optimizer.py",
@@ -445,6 +543,16 @@
       "norm_label": "test_prompt_validation.py"
     },
     {
+      "label": "test_quality_scorer.py",
+      "file_type": "code",
+      "source_file": "tests/test_quality_scorer.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_quality_scorer",
+      "community": 118,
+      "norm_label": "test_quality_scorer.py"
+    },
+    {
       "label": "persist=True \u65f6\u9ed8\u8ba4\u540c\u6b65\u6c89\u6dc0\u7ecf\u9a8c\uff08V10.20 \u4e3b\u7ebf\u63a5\u7ebf\uff09\u3002",
       "file_type": "rationale",
       "source_file": "tests/test_realized_feedback_loop.py",
@@ -463,6 +571,16 @@
       "id": "test_reflect",
       "community": 105,
       "norm_label": "test_reflect.py"
+    },
+    {
+      "label": "test_report_html.py",
+      "file_type": "code",
+      "source_file": "tests/test_report_html.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_report_html",
+      "community": 119,
+      "norm_label": "test_report_html.py"
     },
     {
       "label": "",
@@ -523,6 +641,16 @@
       "id": "test_service",
       "community": 80,
       "norm_label": "test_service.py"
+    },
+    {
+      "label": "test_stock_comparison.py",
+      "file_type": "code",
+      "source_file": "tests/test_stock_comparison.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_stock_comparison",
+      "community": 120,
+      "norm_label": "test_stock_comparison.py"
     },
     {
       "label": "\u6e05\u6389\u6240\u6709\u76f8\u5173\u73af\u5883\u53d8\u91cf\uff0c\u4fdd\u8bc1\u9ed8\u8ba4\u72b6\u6001\u53ef\u9884\u6d4b\u3002",
@@ -623,6 +751,16 @@
       "id": "test_tools_thesis_queue",
       "community": 52,
       "norm_label": "test_tools_thesis_queue.py"
+    },
+    {
+      "label": "test_trace_recorder.py",
+      "file_type": "code",
+      "source_file": "tests/test_trace_recorder.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_trace_recorder",
+      "community": 121,
+      "norm_label": "test_trace_recorder.py"
     },
     {
       "label": "test_v10_backtest.py",
@@ -773,14 +911,14 @@
       "norm_label": ""
     },
     {
-      "label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002",
+      "label": "\u7b80\u5355\u538b\u529b\u6d4b\u8bd5\uff1a\u6743\u76ca\u7edf\u4e00\u4e0b\u632b equity_shock_pct%\uff0c\u73b0\u91d1\u4e0d\u53d8\u3002",
       "file_type": "rationale",
       "source_file": "tools/portfolio_risk.py",
-      "source_location": "L52",
+      "source_location": "L85",
       "_origin": "ast",
       "id": "portfolio_risk",
       "community": 50,
-      "norm_label": "ticker -> watchlist \u5206\u7ec4\u540d\u3002"
+      "norm_label": "\u7b80\u5355\u538b\u529b\u6d4b\u8bd5:\u6743\u76ca\u7edf\u4e00\u4e0b\u632b equity_shock_pct%,\u73b0\u91d1\u4e0d\u53d8\u3002"
     },
     {
       "label": "\u52a0\u8f7d watchlist\uff1bgroups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002",
@@ -801,6 +939,26 @@
       "id": "report_audit",
       "community": 30,
       "norm_label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002"
+    },
+    {
+      "label": "\u8fd4\u56de (body_html, nav_items[(id, title)])\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/report_html.py",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "report_html",
+      "community": 113,
+      "norm_label": "\u8fd4\u56de (body_html, nav_items[(id, title)])\u3002"
+    },
+    {
+      "label": "stock_comparison.py",
+      "file_type": "code",
+      "source_file": "tools/stock_comparison.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "stock_comparison",
+      "community": 114,
+      "norm_label": "stock_comparison.py"
     },
     {
       "label": "\u7528curl\u83b7\u53d6Yahoo Finance\u65e5\u7ebf\u6570\u636e",
@@ -914,7 +1072,7 @@
       "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
       "file_type": "document",
       "source_file": "config/skill.md",
-      "source_location": "L67",
+      "source_location": "L66",
       "_origin": "ast",
       "id": "skill",
       "community": 31,
@@ -929,6 +1087,16 @@
       "id": "state",
       "community": 32,
       "norm_label": "berkshire ai - global state & thesis tracker"
+    },
+    {
+      "label": "Prompt \u6a21\u677f\uff08V10.22\uff09",
+      "file_type": "document",
+      "source_file": "docs/PROMPT_TEMPLATES.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "PROMPT_TEMPLATES",
+      "community": 109,
+      "norm_label": "prompt \u6a21\u677f(v10.22)"
     },
     {
       "label": "berkshire-ai Roadmap",
@@ -1225,6 +1393,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/cron-evolution.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "cron-evolution",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_cron-evolution.sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/portfolio-weekly.sh",
       "source_location": "L1",
       "weight": 1.0,
@@ -1260,6 +1438,16 @@
       "weight": 1.0,
       "source": "config",
       "target": "config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/cron_evolution.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "cron_evolution",
+      "target": "cron_evolution",
       "confidence_score": 1.0
     },
     {
@@ -1385,6 +1573,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "src/pipeline.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "pipeline",
+      "target": "pipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "src/prompt_optimizer.py",
       "source_location": "L58",
       "weight": 1.0,
@@ -1400,6 +1598,16 @@
       "weight": 1.0,
       "source": "prompt_validation",
       "target": "prompt_validation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/quality_scorer.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "quality_scorer",
+      "target": "quality_scorer",
       "confidence_score": 1.0
     },
     {
@@ -1480,6 +1688,16 @@
       "weight": 1.0,
       "source": "tavily_search",
       "target": "tavily_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/trace_recorder.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "trace_recorder",
+      "target": "trace_recorder",
       "confidence_score": 1.0
     },
     {
@@ -1696,7 +1914,7 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "tools/portfolio_risk.py",
-      "source_location": "L52",
+      "source_location": "L85",
       "weight": 1.0,
       "source": "portfolio_risk",
       "target": "portfolio_risk",
@@ -1720,6 +1938,16 @@
       "weight": 1.0,
       "source": "report_audit",
       "target": "report_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/report_html.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "report_html",
+      "target": "report_html",
       "confidence_score": 1.0
     },
     {
@@ -1776,7 +2004,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L244",
+      "source_location": "L253",
       "weight": 1.0,
       "source": "README.md",
       "target": "README.md",
@@ -1788,9 +2016,9 @@
       "source_file": "README.md",
       "source_location": "L242",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "README_EN",
-      "confidence_score": 1.0
+      "target": "README_EN"
     },
     {
       "relation": "references",
@@ -1798,9 +2026,9 @@
       "source_file": "README.md",
       "source_location": "L247",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "ROADMAP",
-      "confidence_score": 1.0
+      "target": "ROADMAP"
     },
     {
       "relation": "references",
@@ -1808,9 +2036,9 @@
       "source_file": "README.md",
       "source_location": "L243",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "TESTING",
-      "confidence_score": 1.0
+      "target": "TESTING"
     },
     {
       "relation": "references",
@@ -1818,9 +2046,9 @@
       "source_file": "README.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "VERSION_HISTORY",
-      "confidence_score": 1.0
+      "target": "VERSION_HISTORY"
     },
     {
       "relation": "references",
@@ -1828,9 +2056,9 @@
       "source_file": "README.md",
       "source_location": "L245",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "action-card",
-      "confidence_score": 1.0
+      "target": "action-card"
     },
     {
       "relation": "references",
@@ -1838,9 +2066,9 @@
       "source_file": "README.md",
       "source_location": "L246",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "report-conventions",
-      "confidence_score": 1.0
+      "target": "report-conventions"
     },
     {
       "relation": "references",
@@ -1848,9 +2076,9 @@
       "source_file": "README.md",
       "source_location": "L248",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "textgrad_design",
-      "confidence_score": 1.0
+      "target": "textgrad_design"
     },
     {
       "relation": "contains",
@@ -1916,7 +2144,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "config/skill.md",
-      "source_location": "L67",
+      "source_location": "L66",
       "weight": 1.0,
       "source": "skill",
       "target": "skill",
@@ -1930,6 +2158,16 @@
       "weight": 1.0,
       "source": "state",
       "target": "state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PROMPT_TEMPLATES.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "PROMPT_TEMPLATES",
+      "target": "PROMPT_TEMPLATES",
       "confidence_score": 1.0
     },
     {
@@ -2244,5 +2482,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8372d027fc00ea6bb1e451c4300cb043da8bb7d3"
+  "built_at_commit": "448a9d4b81e0b001dd361071f6936099e5aa29c7"
 }
