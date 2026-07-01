@@ -5,10 +5,11 @@
 
 ## P0：近期（1-2个月）
 
-### A股数据源接入 — ✅ 已实现（V10.11 升级为多源降级链）
+### A股数据源接入 — ✅ 已实现（V10.24 量化融合）
 - 已通过 `tools/ashare_data.py` 接入腾讯财经 / 东方财富（含 `daily` 日线）
-- V10.11：`tools/data_sources.py` 多源降级链 `native→aktools→tushare→…→yfinance`，全失败优雅返回 `ok=False`
+- V10.11：`tools/data_sources.py` 多源降级链，全失败优雅返回 `ok=False`
 - V10.22：可选 `AktoolsSource` HTTP 适配器（`BERKSHIRE_ENABLE_AKTOOLS=1`）
+- V10.24：`LocalCsvSource`（`BERKSHIRE_DATA_DIR` + `daily_ohlcv.csv`）+ 可选 `PytdxSource`；`tools/quant_screener_bridge.py`；见 `docs/quant_data_fusion.md`
 - 市值/估值校验由 `tools/financial_rigor.py` 完成
 
 ### 多通道交付 — ✅ V10.11（吸收自 JusticePlutus）
@@ -79,3 +80,9 @@
 ### aktools-pro MCP 后端 — ✅ V10.23（HTTP + 原子诊断）
 - `AktoolsSource` 经 `BERKSHIRE_AKTOOLS_BASE_URL`；失败自动降级到 import 链
 - `tools/aktools_diagnostic.py`：避开 composite bug，用 market_prices + stock_news + stock_info 组装
+
+### 量化数据融合（tdx_quant / daily_stock_data 参考）— ✅ V10.24
+- `LocalCsvSource` + `PytdxSource`（env-gated，非核心依赖）
+- `tools/quant_screener_bridge.py`：本地 CSV 动量 → thesis_queue JSON
+- `docs/quant_data_fusion.md`：三库对比 + AlphaGPT 边界（不引入 torch/qlib）
+- ⬜ 明确不做：整库 fork、AlphaGPT 训练栈、qlib 因子栈

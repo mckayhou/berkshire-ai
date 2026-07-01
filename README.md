@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.23**（生产主链路强化：∇_LLM 接入 `run_with_realized_feedback` / `run_full_cycle`、验证门控默认开启、conviction 校准工具、aktools 原子诊断；累积 V10.22 路线图收尾 + V10.21→生产化档 A→D）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.24**（量化数据融合：`LocalCsvSource` / `PytdxSource` + `quant_screener_bridge`；见 `docs/quant_data_fusion.md`；累积 V10.23 主链路强化）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -179,6 +179,7 @@ print(debate.net_stance, debate.net_score)   # bullish / +0.x（中性区 |net|<
 # 数据：按 native→tushare→efinance→akshare→baostock→yfinance 降级，全失败不抛崩
 python3 tools/data_sources.py sources                  # 列出各源可用状态（离线）
 python3 tools/data_sources.py daily 600519 --limit 60  # 日线（走降级链）
+python3 tools/quant_screener_bridge.py --json          # 本地 CSV 动量 → thesis_queue JSON（V10.24）
 
 # 交付：Telegram / 飞书 / 本地兜底；零配置只落地到 reports/notifications/
 python3 tools/notify.py channels

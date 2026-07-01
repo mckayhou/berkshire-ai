@@ -10,7 +10,7 @@
       "ecosystem": "python",
       "source_file": "pyproject.toml",
       "source_location": "L1",
-      "version": "10.23.0",
+      "version": "10.24.0",
       "_origin": "ast",
       "id": "pkg_berkshire_ai",
       "community": 70,
@@ -583,6 +583,16 @@
       "norm_label": "test_quality_scorer.py"
     },
     {
+      "label": "test_quant_data_fusion.py",
+      "file_type": "code",
+      "source_file": "tests/test_quant_data_fusion.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_quant_data_fusion",
+      "community": 130,
+      "norm_label": "test_quant_data_fusion.py"
+    },
+    {
       "label": "persist=True \u65f6\u9ed8\u8ba4\u540c\u6b65\u6c89\u6dc0\u7ecf\u9a8c\uff08V10.20 \u4e3b\u7ebf\u63a5\u7ebf\uff09\u3002",
       "file_type": "rationale",
       "source_file": "tests/test_realized_feedback_loop.py",
@@ -866,7 +876,7 @@
       "label": "",
       "file_type": "code",
       "source_file": "tools/data_sources.py",
-      "source_location": "L60",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "data_sources",
       "community": 56,
@@ -979,6 +989,16 @@
       "id": "portfolio_scan",
       "community": 48,
       "norm_label": "\u52a0\u8f7d watchlist;groups \u4e3a\u7a7a\u5219\u8fd4\u56de\u5168\u90e8\u5206\u7ec4\u3002"
+    },
+    {
+      "label": "\u6309 symbol \u805a\u5408\u65e5\u7ebf\uff0c\u6bcf symbol \u6309 date \u5347\u5e8f\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/quant_screener_bridge.py",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "quant_screener_bridge",
+      "community": 129,
+      "norm_label": "\u6309 symbol \u805a\u5408\u65e5\u7ebf,\u6bcf symbol \u6309 date \u5347\u5e8f\u3002"
     },
     {
       "label": "\u628a\u5e26\u9017\u53f7\u3001\u4e2d\u6587\u9017\u53f7\u7684\u6570\u5b57\u5b57\u7b26\u4e32\u8f6c\u4e3a float\u3002",
@@ -1177,6 +1197,16 @@
       "id": "qlib_evaluation",
       "community": 84,
       "norm_label": "microsoft qlib \u5bf9 berkshire-ai \u7684\u53ef\u501f\u9274/\u96c6\u6210\u8bc4\u4f30"
+    },
+    {
+      "label": "Quant Data Fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai V10.24 \u878d\u5408\u51b3\u7b56",
+      "file_type": "document",
+      "source_file": "docs/quant_data_fusion.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "quant_data_fusion",
+      "community": 128,
+      "norm_label": "quant data fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai v10.24 \u878d\u5408\u51b3\u7b56"
     },
     {
       "label": "\u501f\u9274 Microsoft RD-Agent \u5230 berkshire-ai\uff1a\u53ef\u6267\u884c\u5efa\u8bae\u62a5\u544a",
@@ -1914,7 +1944,7 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "tools/data_sources.py",
-      "source_location": "L52",
+      "source_location": "L54",
       "weight": 1.0,
       "source": "data_sources",
       "target": "data_sources",
@@ -2003,6 +2033,16 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "tools/quant_screener_bridge.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "quant_screener_bridge",
+      "target": "quant_screener_bridge",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "tools/report_audit.py",
       "source_location": "L65",
       "weight": 1.0,
@@ -2074,7 +2114,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L269",
+      "source_location": "L270",
       "weight": 1.0,
       "source": "README.md",
       "target": "README.md",
@@ -2278,6 +2318,16 @@
       "weight": 1.0,
       "source": "qlib_evaluation",
       "target": "qlib_evaluation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/quant_data_fusion.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "quant_data_fusion",
+      "target": "quant_data_fusion",
       "confidence_score": 1.0
     },
     {
@@ -2552,5 +2602,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "52255a1b8141cf3ecdfd123f0d29caec75ad582f"
+  "built_at_commit": "92906de875205315c1f51cd1b1738960de5f897d"
 }

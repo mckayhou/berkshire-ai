@@ -58,6 +58,8 @@ description: >
           trace_recorder；quality_scorer；report_html；stock_comparison；AktoolsSource；PROMPT_TEMPLATES。
   V10.23: 主链路强化 - run_with_realized_feedback 接入 ∇_LLM（DecisionRecord.analyses）；
           pipeline use_validation + dev_rounds=3；calibrate_conviction；aktools_diagnostic。431 测试通过。
+  V10.24: 量化数据融合 - LocalCsvSource（BERKSHIRE_DATA_DIR/daily_ohlcv.csv）+ PytdxSource（env-gated）；
+          quant_screener_bridge → thesis_queue JSON；docs/quant_data_fusion.md（AlphaGPT 仅文档边界）。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。

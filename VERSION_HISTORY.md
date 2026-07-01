@@ -36,6 +36,28 @@
 
 ## 📜 版本历史
 
+### V10.24 - 2026-07-01 (量化数据融合：LocalCsv + Pytdx + screener bridge)
+
+**1) 本地 CSV 数据源** `LocalCsvSource`
+- `BERKSHIRE_ENABLE_LOCAL_DATA=1` + `BERKSHIRE_DATA_DIR/daily_ohlcv.csv`（daily_stock_data 契约）
+
+**2) 可选 pytdx 实时源** `PytdxSource`
+- `BERKSHIRE_ENABLE_PYTDX=1`；`pip install .[quant]` 可选 extra
+
+**3) 选股桥接** `tools/quant_screener_bridge.py`
+- stdlib CSV 动量筛选 → thesis_queue 友好 JSON
+
+**4) 调研文档** `docs/quant_data_fusion.md`
+- tdx_quant / daily_stock_data / AlphaGPT 对比；明确 A 股 only、AlphaGPT 低契合
+
+**测试结果**:
+- [x] 单元测试: **438 passed, 2 skipped**
+- [x] ruff / mypy 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.23 - 2026-07-01 (主链路强化：∇_LLM 接线 + conviction 校准 + aktools 诊断)
 
 **1) ∇_LLM 接入生产反馈闭环**

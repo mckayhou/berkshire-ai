@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-07-01 | Loop Engine: Active (L2 - Assisted) | **Version: V10.23**（∇_LLM 主链路接线 + conviction 校准 + aktools 原子诊断；累积 V10.22 路线图收尾）
+> Last Updated: 2026-07-01 | Loop Engine: Active (L2 - Assisted) | **Version: V10.24**（量化数据融合：LocalCsv + Pytdx + screener bridge；累积 V10.23 主链路强化）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |
@@ -59,7 +59,8 @@
 | **Portfolio Risk** | `tools/portfolio_risk.py` | 组合集中度/主题/相关性检查 |
 | **Thesis Queue** | `tools/thesis_queue.py` | state.md + 扫描 → 研究待办 |
 | **A-Share Data** | `tools/ashare_data.py` | A股数据获取（行情/财务/估值/日线） |
-| **Data Sources** | `tools/data_sources.py` | A股多源降级数据层（全失败不抛崩） |
+| **Data Sources** | `tools/data_sources.py` | A股多源降级数据层（含 LocalCsv / Pytdx，全失败不抛崩） |
+| **Quant Screener Bridge** | `tools/quant_screener_bridge.py` | 本地 CSV 动量筛选 → thesis_queue JSON（V10.24） |
 | **Notify** | `tools/notify.py` | 多通道交付（Telegram/飞书/本地兜底） |
 | **Stock Screener** | `tools/stock_screener.py` | 股票筛选 |
 | **Xueqiu Scraper** | `tools/xueqiu_scraper.py` | 雪球数据抓取 |

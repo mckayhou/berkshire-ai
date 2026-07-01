@@ -13,8 +13,8 @@
      - 零配置时行为与改造前一致：只用内置零依赖源（东方财富/腾讯 curl）。
 
 默认优先级（可用 BERKSHIRE_DATA_SOURCES 覆盖）：
-    native(内置,零依赖) → tushare(增强,需开关+token) → efinance
-      → akshare → baostock → yfinance
+    native(内置,零依赖) → local(本地CSV/parquet,需开关) → pytdx(实时,需开关)
+      → aktools → tushare(增强,需开关+token) → efinance → akshare → baostock → yfinance
 
 返回结构（统一 schema）：
     {
@@ -36,9 +36,11 @@
 """
 
 import argparse
+import csv
 import json
 import os
 import sys
+from pathlib import Path
 
 # 内置零依赖源复用 ashare_data（curl 直连东方财富/腾讯）。
 try:
@@ -393,17 +395,140 @@ class AktoolsSource(DataSource):
 
 
 # ---------------------------------------------------------------------------
+# 可选：本地 CSV（daily_stock_data 落盘，需 BERKSHIRE_ENABLE_LOCAL_DATA=1）
+# ---------------------------------------------------------------------------
+def _code_digits(code: str) -> str:
+    """6 位数字代码，去掉 .SH/.SZ/.BJ 及 sh./sz. 前缀。"""
+    c = code.strip().lower()
+    if c.startswith(("sh.", "sz.", "bj.")):
+        c = c[3:]
+    c = c.replace(".sh", "").replace(".sz", "").replace(".bj", "")
+    return "".join(ch for ch in c if ch.isdigit())[:6]
+
+
+def _baostock_symbol(code: str) -> str:
+    """baostock 风格 symbol：sh.600000 / sz.000001。"""
+    digits = _code_digits(code)
+    if not digits:
+        return code.strip()
+    prefix = "sh" if digits.startswith(("6", "9", "5")) else "sz"
+    return f"{prefix}.{digits}"
+
+
+class LocalCsvSource(DataSource):
+    """读 BERKSHIRE_DATA_DIR/daily_ohlcv.csv（daily_stock_data 契约）。"""
+
+    name = "local"
+    requires = ()
+    needs_network = False
+
+    def _data_dir(self) -> Path:
+        return Path(os.environ.get("BERKSHIRE_DATA_DIR", "./data")).expanduser()
+
+    def _csv_path(self) -> Path:
+        return self._data_dir() / "daily_ohlcv.csv"
+
+    def enabled(self):
+        if not _env_truthy("BERKSHIRE_ENABLE_LOCAL_DATA"):
+            return False, "disabled (set BERKSHIRE_ENABLE_LOCAL_DATA=1)"
+        p = self._csv_path()
+        if not p.is_file():
+            return False, f"daily_ohlcv.csv not found at {p}"
+        return True, ""
+
+    def daily(self, code, limit=250):
+        path = self._csv_path()
+        target = _baostock_symbol(code)
+        digits = _code_digits(code)
+        rows: list[dict] = []
+        with path.open(encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                sym = (row.get("symbol") or "").strip().lower()
+                if sym != target and _code_digits(sym) != digits:
+                    continue
+                t = (row.get("time") or row.get("date") or "")[:10]
+                if not t:
+                    continue
+                rows.append({
+                    "date": t,
+                    "open": row.get("open"),
+                    "high": row.get("high"),
+                    "low": row.get("low"),
+                    "close": row.get("close"),
+                    "volume": row.get("volume"),
+                })
+        if not rows:
+            raise NotSupported(f"no rows for {code} in {path}")
+        rows.sort(key=lambda r: r["date"])
+        return rows[-limit:]
+
+
+# ---------------------------------------------------------------------------
+# 可选：pytdx 实时日线（需 BERKSHIRE_ENABLE_PYTDX=1 + pip install pytdx）
+# ---------------------------------------------------------------------------
+class PytdxSource(DataSource):
+    name = "pytdx"
+    requires = ("pytdx",)
+
+    def enabled(self):
+        if not _env_truthy("BERKSHIRE_ENABLE_PYTDX"):
+            return False, "disabled (set BERKSHIRE_ENABLE_PYTDX=1)"
+        try:
+            import pytdx  # noqa: F401
+        except ImportError:
+            return False, "pytdx not installed (pip install pytdx or .[quant])"
+        return True, ""
+
+    def _market_code(self, code: str) -> tuple[int, str]:
+        digits = _code_digits(code)
+        if not digits:
+            raise NotSupported(f"invalid code: {code}")
+        market = 1 if digits.startswith(("6", "9", "5")) else 0
+        return market, digits
+
+    def daily(self, code, limit=250):
+        from pytdx.hq import TdxHq_API
+
+        host = os.environ.get("BERKSHIRE_PYTDX_HOST", "119.147.212.81")
+        port = int(os.environ.get("BERKSHIRE_PYTDX_PORT", "7709"))
+        market, sym = self._market_code(code)
+        api = TdxHq_API()
+        if not api.connect(host, port):
+            raise ConnectionError(f"pytdx connect failed {host}:{port}")
+        try:
+            raw = api.get_security_bars(9, market, sym, 0, min(limit, 800))
+        finally:
+            api.disconnect()
+        if not raw:
+            raise NotSupported("pytdx returned empty daily")
+        out = []
+        for bar in raw[-limit:]:
+            dt = str(bar.get("datetime", ""))[:10]
+            out.append({
+                "date": dt,
+                "open": bar.get("open"),
+                "high": bar.get("high"),
+                "low": bar.get("low"),
+                "close": bar.get("close"),
+                "volume": bar.get("vol"),
+            })
+        return out
+
+
+# ---------------------------------------------------------------------------
 # 注册表 + 降级链
 # ---------------------------------------------------------------------------
 # 默认优先级：内置零依赖源最先（保证零配置可用），增强/第三方源依次兜底。
 _REGISTRY = {
     cls.name: cls for cls in (
-        NativeSource, AktoolsSource, TushareSource, EfinanceSource,
-        AkshareSource, BaostockSource, YFinanceSource,
+        NativeSource, LocalCsvSource, PytdxSource, AktoolsSource, TushareSource,
+        EfinanceSource, AkshareSource, BaostockSource, YFinanceSource,
     )
 }
 _DEFAULT_ORDER = [
-    "native", "aktools", "tushare", "efinance", "akshare", "baostock", "yfinance",
+    "native", "local", "pytdx", "aktools", "tushare", "efinance",
+    "akshare", "baostock", "yfinance",
 ]
 
 

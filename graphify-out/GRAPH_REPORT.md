@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-01)
 
 ## Corpus Check
-- 139 files · ~93,852 words
+- 142 files · ~96,041 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 140 nodes · 111 edges · 128 communities (37 shown, 91 thin omitted)
+- 143 nodes · 113 edges · 131 communities (38 shown, 93 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `52255a1b`
+- Built from commit: `92906de8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -107,6 +107,8 @@
 - [[_COMMUNITY_Community 122|Community 122]]
 - [[_COMMUNITY_Community 123|Community 123]]
 - [[_COMMUNITY_Community 124|Community 124]]
+- [[_COMMUNITY_Community 128|Community 128]]
+- [[_COMMUNITY_Community 129|Community 129]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
@@ -135,7 +137,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (128 total, 91 thin omitted)
+## Communities (131 total, 93 thin omitted)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.58
@@ -144,7 +146,7 @@ Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）
 ## Knowledge Gaps
 - **5 isolated node(s):** `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **91 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **93 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
