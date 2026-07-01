@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 119 nodes · 99 edges · 110 communities (27 shown, 83 thin omitted)
+- 119 nodes · 102 edges · 108 communities (26 shown, 82 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8ca1fa70`
+- Built from commit: `8372d027`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -98,24 +98,20 @@
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
 - [[_COMMUNITY_Community 103|Community 103]]
-- [[_COMMUNITY_Community 108|Community 108]]
-- [[_COMMUNITY_Community 109|Community 109]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 6 edges
+1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
 2. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-3. `报告输出规范（report conventions）` - 5 edges
+3. `报告输出规范（report conventions）` - 6 edges
 4. `Berkshire AI 版本历史` - 4 edges
 5. `berkshire-ai Roadmap` - 4 edges
-6. `测试指南与 E2E 报告（TESTING）` - 3 edges
-7. `结构化行动卡（Action Card）` - 3 edges
-8. `reports/ — 研究报告输出目录` - 3 edges
-9. `Investment Research Meta-Skill (V10.0 - TextGrad 化)` - 2 edges
-10. `Berkshire AI - Global State & Thesis Tracker` - 2 edges
+6. `结构化行动卡（Action Card）` - 4 edges
+7. `测试指南与 E2E 报告（TESTING）` - 3 edges
+8. `Berkshire AI V10.0 - TextGrad 化设计` - 3 edges
+9. `reports/ — 研究报告输出目录` - 3 edges
+10. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `报告输出规范（report conventions）`  [EXTRACTED]
-  README_EN.md → docs/report-conventions.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
   README.md → README_EN.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
@@ -124,31 +120,25 @@
   README.md → TESTING.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
   README.md → VERSION_HISTORY.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `结构化行动卡（Action Card）`  [EXTRACTED]
+  README.md → docs/action-card.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (110 total, 83 thin omitted)
+## Communities (108 total, 82 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 1.10
-Nodes (5): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史
-
-### Community 108 - "Community 108"
-Cohesion: 1.67
-Nodes (3): 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录
+Cohesion: 0.58
+Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
 
 ## Knowledge Gaps
 - **4 isolated node(s):** `berkshire-ai`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
   These have ≤1 connection - possible missing edges or undocumented components.
-- **83 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **82 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` connect `Community 4` to `Community 108`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `报告输出规范（report conventions）` connect `Community 108` to `Community 4`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `berkshire-ai`, `portfolio-weekly.sh script`, `log-command.sh script` to the rest of the system?**
   _4 weakly-connected nodes found - possible documentation gaps or missing edges._
