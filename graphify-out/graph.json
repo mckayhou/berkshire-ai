@@ -10,7 +10,7 @@
       "ecosystem": "python",
       "source_file": "pyproject.toml",
       "source_location": "L1",
-      "version": "10.22.0",
+      "version": "10.23.0",
       "_origin": "ast",
       "id": "pkg_berkshire_ai",
       "community": 70,
@@ -236,7 +236,7 @@
       "label": "\u5b8c\u6574\u95ed\u73af\uff1a\u53ef\u9009 R/D \u2192 realized feedback \u2192 \u7ecf\u9a8c + \u7ee9\u6548 + \u8f68\u8ff9\u3002      Args:         decision: \u51b3\u7b56\u5feb",
       "file_type": "rationale",
       "source_file": "src/pipeline.py",
-      "source_location": "L52",
+      "source_location": "L55",
       "_origin": "ast",
       "id": "pipeline",
       "community": 111,
@@ -383,6 +383,26 @@
       "norm_label": "test_access_control.py"
     },
     {
+      "label": "test_aktools_diagnostic.py",
+      "file_type": "code",
+      "source_file": "tests/test_aktools_diagnostic.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_aktools_diagnostic",
+      "community": 125,
+      "norm_label": "test_aktools_diagnostic.py"
+    },
+    {
+      "label": "test_calibrate_conviction.py",
+      "file_type": "code",
+      "source_file": "tests/test_calibrate_conviction.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_calibrate_conviction",
+      "community": 126,
+      "norm_label": "test_calibrate_conviction.py"
+    },
+    {
       "label": "\u5408\u6210\u5347\u5e8f\u65e5\u7ebf\uff1a\u4ece 2025-01-01 \u8d77 n \u4e2a\u4ea4\u6613\u65e5\uff0c\u7ebf\u6027\u6da8\u5230\u76ee\u6807\u3002",
       "file_type": "rationale",
       "source_file": "tests/test_calibrate_sensitivity.py",
@@ -441,6 +461,16 @@
       "id": "test_evolution_cli",
       "community": 104,
       "norm_label": "test_evolution_cli.py"
+    },
+    {
+      "label": "test_evolution_llm_wiring.py",
+      "file_type": "code",
+      "source_file": "tests/test_evolution_llm_wiring.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_evolution_llm_wiring",
+      "community": 127,
+      "norm_label": "test_evolution_llm_wiring.py"
     },
     {
       "label": "",
@@ -793,6 +823,16 @@
       "norm_label": "masters \u662f\u552f\u4e00\u6765\u6e90:\u6bcf\u4f4d\u5927\u5e08\u90fd\u6d3e\u751f\u51fa prompt/model/analysis \u4e09\u4e2a\u8282\u70b9"
     },
     {
+      "label": "\u539f\u5b50 API \u7ec4\u88c5\u590d\u5408\u8bca\u65ad\uff1b\u81f3\u5c11\u4e00\u9879\u6210\u529f\u5219 ok=True\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/aktools_diagnostic.py",
+      "source_location": "L158",
+      "_origin": "ast",
+      "id": "aktools_diagnostic",
+      "community": 123,
+      "norm_label": "\u539f\u5b50 api \u7ec4\u88c5\u590d\u5408\u8bca\u65ad;\u81f3\u5c11\u4e00\u9879\u6210\u529f\u5219 ok=true\u3002"
+    },
+    {
       "label": "\u7528 curl --noproxy \u76f4\u8fde\uff0c\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25\uff08\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94\uff09\u81ea\u52a8\u91cd\u8bd5\uff0c\u6700\u7ec8\u5931\u8d25\u629b ConnectionError\u3002",
       "file_type": "rationale",
       "source_file": "tools/ashare_data.py",
@@ -801,6 +841,16 @@
       "id": "ashare_data",
       "community": 6,
       "norm_label": "\u7528 curl --noproxy \u76f4\u8fde,\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25(\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94)\u81ea\u52a8\u91cd\u8bd5,\u6700\u7ec8\u5931\u8d25\u629b connectionerror\u3002"
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/calibrate_conviction.py",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "calibrate_conviction",
+      "community": 124,
+      "norm_label": ""
     },
     {
       "label": "",
@@ -1574,7 +1624,7 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "src/pipeline.py",
-      "source_location": "L52",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "pipeline",
       "target": "pipeline",
@@ -1823,11 +1873,31 @@
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
+      "source_file": "tools/aktools_diagnostic.py",
+      "source_location": "L158",
+      "weight": 1.0,
+      "source": "aktools_diagnostic",
+      "target": "aktools_diagnostic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
       "source_file": "tools/ashare_data.py",
       "source_location": "L28",
       "weight": 1.0,
       "source": "ashare_data",
       "target": "ashare_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/calibrate_conviction.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "calibrate_conviction",
+      "target": "calibrate_conviction",
       "confidence_score": 1.0
     },
     {
@@ -2004,7 +2074,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L253",
+      "source_location": "L269",
       "weight": 1.0,
       "source": "README.md",
       "target": "README.md",
@@ -2016,9 +2086,9 @@
       "source_file": "README.md",
       "source_location": "L251",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "README_EN",
-      "confidence_score": 1.0
+      "target": "README_EN"
     },
     {
       "relation": "references",
@@ -2026,9 +2096,9 @@
       "source_file": "README.md",
       "source_location": "L256",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "ROADMAP",
-      "confidence_score": 1.0
+      "target": "ROADMAP"
     },
     {
       "relation": "references",
@@ -2036,9 +2106,9 @@
       "source_file": "README.md",
       "source_location": "L252",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "TESTING",
-      "confidence_score": 1.0
+      "target": "TESTING"
     },
     {
       "relation": "references",
@@ -2046,9 +2116,9 @@
       "source_file": "README.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "VERSION_HISTORY",
-      "confidence_score": 1.0
+      "target": "VERSION_HISTORY"
     },
     {
       "relation": "references",
@@ -2056,9 +2126,9 @@
       "source_file": "README.md",
       "source_location": "L254",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "action-card",
-      "confidence_score": 1.0
+      "target": "action-card"
     },
     {
       "relation": "references",
@@ -2066,9 +2136,9 @@
       "source_file": "README.md",
       "source_location": "L255",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "report-conventions",
-      "confidence_score": 1.0
+      "target": "report-conventions"
     },
     {
       "relation": "references",
@@ -2076,9 +2146,9 @@
       "source_file": "README.md",
       "source_location": "L257",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README.md",
-      "target": "textgrad_design",
-      "confidence_score": 1.0
+      "target": "textgrad_design"
     },
     {
       "relation": "contains",
@@ -2482,5 +2552,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d9a3982e0ffb67030f02580ed48bcf1766d3afa3"
+  "built_at_commit": "52255a1b8141cf3ecdfd123f0d29caec75ad582f"
 }

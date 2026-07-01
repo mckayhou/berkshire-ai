@@ -44,10 +44,13 @@ def run_full_cycle(
     include_perf: bool = True,
     run_rd: bool = True,
     rd_cycles: int = 1,
+    dev_rounds: int = 3,
     proposer: Optional[HypothesisProposer] = None,
     llm: Optional[LLMClient] = None,
     scenario: Scenario = DEFAULT_SCENARIO,
     record_traces: bool = True,
+    use_llm_gradient: bool = True,
+    use_validation: bool = True,
 ) -> Dict[str, Any]:
     """完整闭环：可选 R/D → realized feedback → 经验 + 绩效 + 轨迹。
 
@@ -55,7 +58,9 @@ def run_full_cycle(
         decision: 决策快照。
         run_rd: 是否在反馈前跑 R/D 双循环（默认 True）。
         rd_cycles: R/D 轮数（每轮 R→D）。
+        dev_rounds: 每轮 D 段 `run_multi_round` 最大轮数（默认 3）。
         proposer: 假设提案器；None 时 D 段仍跑但 R 为空列表。
+        use_llm_gradient / use_validation: 反馈段是否启用 ∇_LLM 与验证门控。
         其余参数同 run_with_realized_feedback。
     """
     try:
@@ -83,7 +88,7 @@ def run_full_cycle(
                 proposer=proposer,
                 retriever=retriever,
                 research_cycles=rd_cycles,
-                dev_rounds=1,
+                dev_rounds=dev_rounds,
                 run_id=rid,
             )
             result["rd"] = rd_report
@@ -110,6 +115,8 @@ def run_full_cycle(
             include_perf=include_perf,
             retriever=retriever,
             llm=llm_client,
+            use_llm_gradient=use_llm_gradient,
+            use_validation=use_validation,
         )
         result["feedback"] = feedback
         result["run_id"] = rid

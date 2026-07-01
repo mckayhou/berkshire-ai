@@ -36,6 +36,29 @@
 
 ## 📜 版本历史
 
+### V10.23 - 2026-07-01 (主链路强化：∇_LLM 接线 + conviction 校准 + aktools 诊断)
+
+**1) ∇_LLM 接入生产反馈闭环**
+- `run_with_realized_feedback(..., use_llm_gradient=True)` 在 `backward()` 后调用 `enrich_gradients_with_llm`。
+- `DecisionRecord.analyses` 存各大师正文；缺省时回退 `note`。
+
+**2) 验证门控 + 多轮 D**
+- `pipeline.run_full_cycle` 默认 `use_validation=True`、`dev_rounds=3`。
+
+**3) conviction 校准** `tools/calibrate_conviction.py`
+- 经验库 `stance - realized_base` 偏差报告与建议偏移。
+
+**4) aktools 原子诊断** `tools/aktools_diagnostic.py`
+- market_prices + stock_news + stock_info 组装 Markdown（避开 composite bug）。
+
+**测试结果**:
+- [x] 单元测试: **431 passed, 2 skipped**
+- [x] ruff / mypy 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.22 - 2026-07-01 (路线图收尾：HTML / 对决矩阵 / Cron / 轨迹 / 主链路 / aktools)
 
 补齐 ROADMAP 与 skill.md 中所有可落地 backlog。

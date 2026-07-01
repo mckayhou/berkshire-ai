@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.22** (roadmap completion: unified `pipeline.run_full_cycle`, cron evolution, trace recorder, HTML reports, stock comparison matrix, production quality_fn, aktools adapter; cumulative V10.21→production tier A→D). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.23** (production mainline: ∇_LLM wired into `run_with_realized_feedback` / `run_full_cycle`, validation gating by default, conviction calibration, aktools atomic diagnostic; cumulative V10.22→production tier A→D). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 

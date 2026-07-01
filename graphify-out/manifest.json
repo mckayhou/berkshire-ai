@@ -5,8 +5,8 @@
     "semantic_hash": ""
   },
   "src/evolution_loop_v10.py": {
-    "mtime": 1782879318.7525268,
-    "ast_hash": "a9ffa6b5f31a14698f1e1259c37dfe5f",
+    "mtime": 1782888594.5110142,
+    "ast_hash": "83e455e72d3327a8cc0565e5c13ef582",
     "semantic_hash": ""
   },
   "src/graph.py": {
@@ -90,28 +90,28 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782879318.749286,
-    "ast_hash": "b48b55ce6232769cccf1701a18f005f5",
+    "mtime": 1782888520.9039464,
+    "ast_hash": "a3c9e22fbb0a45de5057bd97f4d76457",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782879318.7499561,
-    "ast_hash": "b971858275ea81e42016aa17e09b9213",
+    "mtime": 1782888636.7410083,
+    "ast_hash": "4e8ab6684496742cb55db3b2455f7a25",
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782879318.7501419,
-    "ast_hash": "3968949a08d92ae0e7fbd3c12ece5cef",
+    "mtime": 1782888757.0014458,
+    "ast_hash": "56769e7dd04efcf53a1feea4d23d0edc",
     "semantic_hash": ""
   },
   "config/state.md": {
-    "mtime": 1782879318.750423,
-    "ast_hash": "5fc8ee867aea9fa41b9ebff0dd7787f4",
+    "mtime": 1782888636.7409787,
+    "ast_hash": "d83c33d3aaebae8bff9151c79d87d63c",
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
-    "mtime": 1782879318.750869,
-    "ast_hash": "6cc42207759b1fa3b3ba58c729b4499b",
+    "mtime": 1782888642.2270527,
+    "ast_hash": "00b80209ddb5495e940372669b5bbf71",
     "semantic_hash": ""
   },
   "skills/bottleneck-hunter.md": {
@@ -225,13 +225,13 @@
     "semantic_hash": ""
   },
   "README_EN.md": {
-    "mtime": 1782879318.7495832,
-    "ast_hash": "c54f046d635400dc5f37c5df3dcc66dc",
+    "mtime": 1782888735.6151054,
+    "ast_hash": "90e03e2aeec34dd6d10e79bd6baf39c9",
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782879318.7506766,
-    "ast_hash": "8a49b8ad4f0068f5a060453a713ffdec",
+    "mtime": 1782888628.6640317,
+    "ast_hash": "bac120dccf6e803ec59897f84c4f1741",
     "semantic_hash": ""
   },
   "docs/report-conventions.md": {
@@ -370,8 +370,8 @@
     "semantic_hash": ""
   },
   "src/decision_log.py": {
-    "mtime": 1782868854.938767,
-    "ast_hash": "52185ed5693f817f9d0b27b8eab5ed83",
+    "mtime": 1782888594.1159592,
+    "ast_hash": "d781f918aea8e17a829d985c268289ad",
     "semantic_hash": ""
   },
   "src/realized_feedback.py": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "pyproject.toml": {
-    "mtime": 1782879318.7517478,
-    "ast_hash": "80a7740bd35b2860354f962a8d1b597d",
+    "mtime": 1782888461.993813,
+    "ast_hash": "9ac658d68740d18ecf737c81447bfd8a",
     "semantic_hash": ""
   },
   "src/config.py": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "src/service.py": {
-    "mtime": 1782879318.7529185,
-    "ast_hash": "a2b228fa86f0bbc622fe30a7f1d03c85",
+    "mtime": 1782888462.1042295,
+    "ast_hash": "332e08b77ddd5b4f5fbd8bbe4e1360fd",
     "semantic_hash": ""
   },
   "tests/test_observability.py": {
@@ -630,8 +630,8 @@
     "semantic_hash": ""
   },
   "src/pipeline.py": {
-    "mtime": 1782879318.7526495,
-    "ast_hash": "41e9bb55108aa7dab94c2448a9de9183",
+    "mtime": 1782888135.9288414,
+    "ast_hash": "81b0c523b084a2df854f418fd5587113",
     "semantic_hash": ""
   },
   "src/quality_scorer.py": {
@@ -692,6 +692,31 @@
   "docs/PROMPT_TEMPLATES.md": {
     "mtime": 1782879318.7505379,
     "ast_hash": "5b5d5bf0132abd7480c02497f4c1fedc",
+    "semantic_hash": ""
+  },
+  "tests/test_aktools_diagnostic.py": {
+    "mtime": 1782888318.7506306,
+    "ast_hash": "3d820c2d1aa9735e91c3f3ce95487c5b",
+    "semantic_hash": ""
+  },
+  "tests/test_calibrate_conviction.py": {
+    "mtime": 1782888312.0470514,
+    "ast_hash": "01923b271af4d4a9f093edbabc328e6e",
+    "semantic_hash": ""
+  },
+  "tests/test_evolution_llm_wiring.py": {
+    "mtime": 1782888425.0253892,
+    "ast_hash": "9c5988f235f7fa6345636b609510ff2c",
+    "semantic_hash": ""
+  },
+  "tools/aktools_diagnostic.py": {
+    "mtime": 1782888520.5456586,
+    "ast_hash": "135be6259fc0e74583014ba6603eecf0",
+    "semantic_hash": ""
+  },
+  "tools/calibrate_conviction.py": {
+    "mtime": 1782888257.0675359,
+    "ast_hash": "bb61bede1089774df3e4f2d70be91d51",
     "semantic_hash": ""
   }
 }

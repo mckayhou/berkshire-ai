@@ -426,10 +426,10 @@ export BERKSHIRE_SENSITIVITY=0.41
 - [x] 定义变量和依赖关系（从 `MASTERS` 单一来源派生）
 - [x] 实现拓扑排序
 
-### Phase 2: 反向传播 🟡 脚手架完成（LLM 诊断待办）
+### Phase 2: 反向传播 ✅ 已完成（含 ∇_LLM）
 - [x] 实现 `backward()` 方法（输入 `scores`，输出 `Dict[str, Gradient]`）
 - [x] 实现节点级梯度计算（结构化 `Gradient`，启发式 `MASTER_CHECKS`）
-- [ ] 集成 LLM 诊断（Option B：`∇_LLM` 取代启发式）
+- [x] 集成 LLM 诊断（V10.17 `∇_LLM`；V10.23 接入 `run_with_realized_feedback` 主链路）
 
 ### Phase 3: 优化器 ✅ 已实现（含 Option B 变量改写）
 - [x] 实现 `TextualGradientDescent`（依据 `Gradient.ok` 产出更新计划）
@@ -458,6 +458,6 @@ export BERKSHIRE_SENSITIVITY=0.41
 
 ---
 
-**当前状态 (V10.13)**: 计算图脚手架 + 单一来源 `MASTERS` + 结构化 `Gradient` + 已实现收益反馈闭环（V10.11）+ SENSITIVITY 校准（V10.12）+ **变量真实改写（V10.13 / Option B：`apply_gradient` 经 LLM 改写 Prompt）** 均已落地并测试通过。
+**当前状态 (V10.23)**: 计算图 + 收益反馈闭环 + SENSITIVITY 校准 + 变量真实改写 + ∇_LLM（含主链路接线）+ 验证门控多轮迭代（`eval_harness` / `pipeline`）均已落地并测试通过。
 
-**下一步**: (a) 将启发式 `MASTER_CHECKS` 替换为 LLM 生成的文本梯度（`∇_LLM`）；(b) 把单步「backward→改写→回填」扩成多轮自动迭代（改写后重跑分析→再评分）。`Gradient.issues` 与可注入的 `LLMClient` 让两步都能无侵入演进。
+**可选后续**: 在 held-out 标的上跑四大师分析作 quality_fn（需 LLM 预算）；Redis/OTel/TLS 运维清单。

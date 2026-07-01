@@ -12,7 +12,7 @@ See update-platforms.sh for deployment to OpenClaw/QwenPaw.
 try:
     from debate import DebateResult, run_debate
     from decision_log import DecisionRecord, append_decision
-    from graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+    from graph import MASTER_PREFIXES, MASTERS, BerkshireGraph, Gradient, Master, Variable
     from optimizer import TextualGradientDescent
     from prompt_optimizer import (
         LLMClient,
@@ -38,7 +38,7 @@ try:
 except ImportError:
     from .debate import DebateResult, run_debate
     from .decision_log import DecisionRecord, append_decision
-    from .graph import MASTERS, BerkshireGraph, Gradient, Master, Variable
+    from .graph import MASTER_PREFIXES, MASTERS, BerkshireGraph, Gradient, Master, Variable
     from .optimizer import TextualGradientDescent
     from .prompt_optimizer import (
         LLMClient,
@@ -126,6 +126,9 @@ def run_with_realized_feedback(
     lesson=None,
     include_perf=False,
     perf_eval_dates=None,
+    use_llm_gradient=True,
+    use_validation=False,
+    analyses=None,
 ):
     """已实现收益 → 评分 → backward 的反馈闭环。
 
@@ -160,6 +163,9 @@ def run_with_realized_feedback(
         include_perf: 是否在返回中附带 perf_metrics 绩效摘要（PerfReport）。
         perf_eval_dates: 绩效评估用的后续日期列表（配合 price_provider）；缺省时
              方式 A 用锚点+realized_price 两点路径，方式 B 用 [realized_date]。
+        use_llm_gradient: 注入 llm 时是否用 ∇_LLM 增强未达标梯度（默认 True）。
+        use_validation: 未传 scorer 时是否用经验库 quality_fn 作验证门控（默认 False）。
+        analyses: 覆盖 decision.analyses 的大师正文；缺省读 decision.analyses。
 
     Returns:
         dict: {graph, scores, stats, gradients, updates, debate,
@@ -188,10 +194,36 @@ def run_with_realized_feedback(
     graph.trace_id = decision.trace_id
     debate = graph.debate(decision.scores)
     gradients = graph.backward(scores)
+
+    if llm is not None and use_llm_gradient:
+        try:
+            from llm_gradient import enrich_gradients_with_llm
+        except ImportError:
+            from .llm_gradient import enrich_gradients_with_llm
+        analysis_map = analyses if analyses is not None else getattr(decision, "analyses", None)
+        note_text = str(getattr(decision, "note", "") or "")
+        if not analysis_map and note_text:
+            analysis_map = {p: note_text for p in MASTER_PREFIXES}
+        gradients = enrich_gradients_with_llm(
+            graph, gradients, analysis_map or {}, llm
+        )
+
+    effective_scorer = scorer
+    if effective_scorer is None and use_validation and llm is not None:
+        try:
+            from prompt_validation import StaticPromptScorer
+            from quality_scorer import build_experience_quality_fn
+        except ImportError:
+            from .prompt_validation import StaticPromptScorer
+            from .quality_scorer import build_experience_quality_fn
+        effective_scorer = StaticPromptScorer(
+            fn=build_experience_quality_fn(decision.ticker)
+        )
+
     optimizer = TextualGradientDescent(
         graph,
         llm=llm,
-        scorer=scorer,
+        scorer=effective_scorer,
         min_improvement=min_improvement,
         retriever=retriever,
         retriever_ticker=decision.ticker,

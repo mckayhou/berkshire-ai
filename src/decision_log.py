@@ -48,6 +48,7 @@ class DecisionRecord:
         benchmark:        基准代码（如 "SPX" / "000300"），可选
         benchmark_anchor: 决策时的基准价格锚点，可选
         note:             备注（自由文本，仅展示，不用于控制流）
+        analyses:         各大师分析正文 {prefix: text}，供 ∇_LLM 批评素材，可选
         trace_id:         关联的计算图 trace_id，可选
         hypothesis_id:    关联的可证伪假设 id（衔接 hypothesis.py），可选
         created_at:       落盘时间（ISO）
@@ -60,6 +61,7 @@ class DecisionRecord:
     benchmark: Optional[str] = None
     benchmark_anchor: Optional[float] = None
     note: str = ""
+    analyses: Optional[Dict[str, str]] = None
     trace_id: Optional[str] = None
     hypothesis_id: Optional[str] = None
     created_at: Optional[str] = None
@@ -82,6 +84,12 @@ class DecisionRecord:
                 raise ValueError(f"未知大师前缀 '{k}'，应属于 {MASTER_PREFIXES}")
             clean[k] = float(v)
         self.scores = clean
+        if self.analyses:
+            clean_a: Dict[str, str] = {}
+            for k, text in self.analyses.items():
+                if k in MASTER_PREFIXES and text:
+                    clean_a[k] = str(text)
+            self.analyses = clean_a or None
         if self.created_at is None:
             self.created_at = datetime.now(timezone.utc).isoformat()
 

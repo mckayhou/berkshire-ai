@@ -44,8 +44,10 @@
 
 ## 本 fork 专属方向
 
-### TextGrad V10 自进化引擎 — ✅ V10.22 生产主链路就绪
+### TextGrad V10 自进化引擎 — ✅ V10.23 生产主链路强化
 - 计算图 + 验证门控 + eval_harness + ∇_LLM + 经验 few-shot
+- ✅ V10.23 **∇_LLM 接入主链路**：`run_with_realized_feedback` / `run_full_cycle` 默认增强梯度
+- ✅ V10.23 **验证门控默认**：`pipeline` 的 `use_validation=True` + `dev_rounds=3`
 - ✅ V10.21 Scenario + `status`/`reflect`/`optimize` CLI
 - ✅ V10.22 **统一主链路** `pipeline.run_full_cycle`（R/D → 反馈 → 沉淀）
 - ✅ V10.22 **Cron 自动进化** `cron_evolution` + `scripts/cron-evolution.sh`
@@ -70,10 +72,10 @@
 ### ai-hedge-fund 吸收 — ✅ PM/Risk 层（V10.8–10.10）
 
 ### SENSITIVITY 尺度校准 — ✅ V10.12
-- 可选后续：历史 conviction 升级校准（需更多标注数据）
+- ✅ V10.23 **conviction 校准**：`tools/calibrate_conviction.py`（经验库 stance vs realized_base 偏差报告）
 
 ## 可选 / 未排期
 
-### aktools-pro MCP 后端 — 🟡 V10.22 HTTP 适配器已落地
+### aktools-pro MCP 后端 — ✅ V10.23（HTTP + 原子诊断）
 - `AktoolsSource` 经 `BERKSHIRE_AKTOOLS_BASE_URL`；失败自动降级到 import 链
-- 复合诊断工具已知 bug，使用原子 API
+- `tools/aktools_diagnostic.py`：避开 composite bug，用 market_prices + stock_news + stock_info 组装
