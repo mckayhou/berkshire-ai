@@ -36,6 +36,30 @@
 
 ## 📜 版本历史
 
+### V10.20 - 2026-07-01 (主线接线：经验沉淀 + 绩效摘要 + retriever)
+
+把 V10.18 的「可插拔层」接入默认 `run_with_realized_feedback()` 主链路，无需再手动调用 `experience_from_stats` / `perf_metrics`。
+
+**1) 经验自动沉淀**
+- `persist=True` 时默认 `persist_experience=True`，调用 `experience_from_stats` → `ExperienceStore.append`。
+- `lesson` 缺省按 alpha 自动生成；支持 `experience_store` / `experience_log_path` 注入。
+- `persist_experience=False` 可单独跳过；沉淀失败降级为 `None`，不崩主链路。
+
+**2) 绩效摘要可选输出**
+- `include_perf=True` 时在返回 dict 附带 `perf`（`PerfReport`）。
+- 方式 A：锚点 + `realized_price` 两点路径；方式 B：`price_provider` + `realized_date` / `perf_eval_dates`。
+
+**3) D 段 few-shot 召回**
+- `retriever` / `retriever_k` 透传 `TextualGradientDescent`，与 V10.19 R/D 双循环一致。
+
+**测试结果**:
+- [x] 单元测试: **392 passed, 2 skipped**
+- [x] ruff / mypy 通过
+
+**结论**: ✅ 上线
+
+---
+
 ### V10.19 - 2026-06-30 (R/D 双循环：HypothesisProposer + research_loop)
 
 基于 `docs/rdagent_reference.md` P1-C，落地 Research/Development 双循环最小编排层。

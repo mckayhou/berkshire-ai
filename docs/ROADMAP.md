@@ -62,6 +62,7 @@
 - ✅ 经验库 RAG-lite `src/experience_store.py`（借 RD-Agent knowledge base / CoSTEER sampler）：`Experience` + `ExperienceStore`(JSONL) + `KeywordExperienceRetriever`（零依赖关键词召回）+ `StaticExperienceRetriever`；`experience_from_stats` 把 `realized_feedback` 成败信号转为可检索经验。（对应 rdagent P0-A / 切口一）
 - ✅ 显式假设对象 `src/hypothesis.py`（借 RD-Agent 一等公民 Hypothesis）：`Hypothesis`（可证伪命题）+ `HypothesisStore` + `group_experiences_by_hypothesis`（经验按假设聚合预留接口）。本次仅落地对象+存储，不接主链路。（对应 rdagent P0-B / 切口二）
 - ⬜ 明确不抄：CoSTEER 代码生成+Docker 沙箱、多 trace 调度/Web viewer、qlib 因子/ML/数据二进制栈/qrun/RL/组合优化直依赖
+- ✅ V10.20 主线接线：`run_with_realized_feedback` persist 时自动沉淀经验、`include_perf` 绩效摘要、`retriever` 贯穿 D 段 few-shot
 - ✅ V10.19 R/D 双循环：`src/research_loop.py`（`HypothesisProposer` + `run_rd_cycle`；`ExperienceDrivenProposer` / `LLMHypothesisProposer`；D 段经验召回经 optimizer）
 - 待补（按需）：Scenario 抽象（P1-D）、轻量 Run Recorder / 磁盘价格缓存（qlib B1/B3）
 

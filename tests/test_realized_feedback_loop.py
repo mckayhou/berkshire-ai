@@ -195,5 +195,74 @@ def test_run_with_realized_feedback_requires_price():
         run_with_realized_feedback(d)
 
 
+def test_persist_also_appends_experience(tmp_path, monkeypatch):
+    """persist=True 时默认同步沉淀经验（V10.20 主线接线）。"""
+    dec_log = tmp_path / "decisions.jsonl"
+    exp_log = tmp_path / "experiences.jsonl"
+    monkeypatch.setenv(dl.ENV_LOG_PATH, str(dec_log))
+    monkeypatch.setenv("BERKSHIRE_EXPERIENCE_LOG", str(exp_log))
+
+    import experience_store as es  # noqa: E402
+
+    d = _sample_decision(scores={"duan": 0.95, "buffett": 0.9, "munger": 0.95, "lilu": 0.9})
+    out = run_with_realized_feedback(
+        d, realized_price=50.0, benchmark_realized_price=5000.0, persist=True
+    )
+    assert "experience" in out
+    assert out["experience"].verdict == es.VERDICT_REFUTED
+    assert out["experience"].ticker == "AAPL"
+    rows = es.ExperienceStore(str(exp_log)).load()
+    assert len(rows) == 1
+    assert rows[0].alpha == pytest.approx(out["stats"].alpha)
+
+
+def test_persist_experience_false_skips(tmp_path, monkeypatch):
+    exp_log = tmp_path / "experiences.jsonl"
+    monkeypatch.setenv("BERKSHIRE_EXPERIENCE_LOG", str(exp_log))
+
+    import experience_store as es  # noqa: E402
+
+    d = _sample_decision()
+    out = run_with_realized_feedback(
+        d,
+        realized_price=120.0,
+        benchmark_realized_price=5250.0,
+        persist=False,
+        persist_experience=False,
+    )
+    assert "experience" not in out
+    assert es.ExperienceStore(str(exp_log)).load() == []
+
+
+def test_include_perf_direct_price():
+    d = _sample_decision(price_anchor=100.0, benchmark_anchor=5000.0)
+    out = run_with_realized_feedback(
+        d,
+        realized_price=120.0,
+        benchmark_realized_price=5250.0,
+        include_perf=True,
+    )
+    assert "perf" in out
+    assert out["perf"].n == 1  # 单期收益：锚点→实现价
+    assert out["perf"].has_benchmark is True
+    assert out["perf"].cumulative_return == pytest.approx(0.20)
+
+
+def test_include_perf_via_provider():
+    d = _sample_decision()
+    provider = rf.StaticPriceProvider({
+        ("AAPL", "2026-06-01"): 120.0,
+        ("SPX", "2026-06-01"): 5250.0,
+    })
+    out = run_with_realized_feedback(
+        d,
+        realized_date="2026-06-01",
+        price_provider=provider,
+        include_perf=True,
+    )
+    assert "perf" in out
+    assert out["perf"].n >= 1
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

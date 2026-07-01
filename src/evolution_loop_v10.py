@@ -118,6 +118,14 @@ def run_with_realized_feedback(
     llm=None,
     scorer=None,
     min_improvement=0.0,
+    retriever=None,
+    retriever_k: int = 3,
+    persist_experience=None,
+    experience_store=None,
+    experience_log_path=None,
+    lesson=None,
+    include_perf=False,
+    perf_eval_dates=None,
 ):
     """已实现收益 → 评分 → backward 的反馈闭环。
 
@@ -140,13 +148,22 @@ def run_with_realized_feedback(
         log_path: 决策日志路径（默认 BERKSHIRE_DECISION_LOG / ~/.berkshire）。
         llm: 可选 LLMClient（Option B）。传入后，优化器会对未达标的 prompt 变量
              调用 LLM 真实改写 `Variable.value`；未传则仅记录优化动作（向后兼容）。
-             注意：被改写的 prompt 变量需先有 `value`（底稿），否则该变量记为跳过。
         scorer: 可选 PromptScorer（V10.15 验证门控）。与 llm 同时传入时，改写后会在
              评测集上打分，只有不劣于旧版(+min_improvement)才接受，否则回滚。
         min_improvement: 验证门控接受所需最小增益（默认 0.0，即「不劣于」即接受）。
+        retriever: 可选 ExperienceRetriever；D 段改写前召回 few-shot 经验（V10.19）。
+        retriever_k: 召回条数（默认 3）。
+        persist_experience: 是否把本次成败沉淀为 Experience（默认与 persist 相同）。
+        experience_store: 经验库实例；缺省则新建默认路径的 ExperienceStore。
+        experience_log_path: 覆盖 BERKSHIRE_EXPERIENCE_LOG 路径。
+        lesson: 经验教训自由文本；缺省则按 alpha 自动生成一句。
+        include_perf: 是否在返回中附带 perf_metrics 绩效摘要（PerfReport）。
+        perf_eval_dates: 绩效评估用的后续日期列表（配合 price_provider）；缺省时
+             方式 A 用锚点+realized_price 两点路径，方式 B 用 [realized_date]。
 
     Returns:
-        dict: {graph, scores, stats(ReturnStats), gradients, updates, debate(DebateResult)}
+        dict: {graph, scores, stats, gradients, updates, debate,
+               experience?(Experience), perf?(PerfReport)}
     """
     from realized_feedback import DEFAULT_SENSITIVITY  # local import for default
     sens = DEFAULT_SENSITIVITY if sensitivity is None else sensitivity
@@ -169,16 +186,43 @@ def run_with_realized_feedback(
 
     graph = BerkshireGraph()
     graph.trace_id = decision.trace_id
-    # 多空辩论：用决策当时的信心分，作为 final_report 前的净判断
     debate = graph.debate(decision.scores)
-    # 反馈：用已实现收益映射出的校准分驱动 backward
     gradients = graph.backward(scores)
     optimizer = TextualGradientDescent(
-        graph, llm=llm, scorer=scorer, min_improvement=min_improvement
+        graph,
+        llm=llm,
+        scorer=scorer,
+        min_improvement=min_improvement,
+        retriever=retriever,
+        retriever_ticker=decision.ticker,
+        retriever_k=retriever_k,
     )
     updates = optimizer.step(gradients)
 
-    return {
+    # --- V10.20：主线接线 — 经验沉淀 + 绩效摘要 ---
+    should_persist_exp = persist if persist_experience is None else persist_experience
+    experience = None
+    if should_persist_exp:
+        experience = _persist_experience_from_run(
+            decision,
+            stats,
+            lesson=lesson,
+            store=experience_store,
+            log_path=experience_log_path,
+        )
+
+    perf = None
+    if include_perf:
+        perf = _compute_perf_report(
+            decision,
+            realized_price=realized_price,
+            benchmark_realized_price=benchmark_realized_price,
+            price_provider=price_provider,
+            realized_date=realized_date,
+            perf_eval_dates=perf_eval_dates,
+        )
+
+    result = {
         "graph": graph,
         "scores": scores,
         "stats": stats,
@@ -186,6 +230,93 @@ def run_with_realized_feedback(
         "updates": updates,
         "debate": debate,
     }
+    if experience is not None:
+        result["experience"] = experience
+    if perf is not None:
+        result["perf"] = perf
+    return result
+
+
+def _default_lesson(decision, stats) -> str:
+    """按 alpha 自动生成一句简短教训（供经验库检索）。"""
+    alpha = float(stats.alpha)
+    tkr = getattr(decision, "ticker", "")
+    if alpha > 0:
+        return f"{tkr} 决策获正超额，alpha={alpha:.3f}"
+    if alpha < 0:
+        return f"{tkr} 高信心被证伪，alpha={alpha:.3f}"
+    return f"{tkr} 超额中性，alpha={alpha:.3f}"
+
+
+def _persist_experience_from_run(decision, stats, *, lesson=None, store=None, log_path=None):
+    """把 realized_feedback 结果沉淀为 Experience；失败返回 None，不崩主链路。"""
+    try:
+        try:
+            from experience_store import ExperienceStore, experience_from_stats
+            from observability import get_run_id
+        except ImportError:
+            from .experience_store import ExperienceStore, experience_from_stats
+            from .observability import get_run_id
+
+        exp_store = store or ExperienceStore(path=log_path)
+        text = lesson if lesson is not None else _default_lesson(decision, stats)
+        hyp_id = getattr(decision, "hypothesis_id", None)
+        exp = experience_from_stats(
+            decision,
+            stats,
+            lesson=text,
+            hypothesis_id=hyp_id,
+            run_id=get_run_id(),
+        )
+        exp_store.append(exp)
+        return exp
+    except Exception:  # noqa: BLE001 - 沉淀失败降级，不影响闭环主路径
+        return None
+
+
+def _import_perf_metrics():
+    """延迟加载 tools/perf_metrics（避免包路径强耦合）。"""
+    import sys
+    from pathlib import Path
+
+    tools_dir = Path(__file__).resolve().parent.parent / "tools"
+    tools_str = str(tools_dir)
+    if tools_str not in sys.path:
+        sys.path.insert(0, tools_str)
+    import perf_metrics  # noqa: WPS433
+
+    return perf_metrics
+
+
+def _compute_perf_report(
+    decision,
+    *,
+    realized_price=None,
+    benchmark_realized_price=None,
+    price_provider=None,
+    realized_date=None,
+    perf_eval_dates=None,
+):
+    """计算绩效摘要；数据不足或失败时返回 None。"""
+    try:
+        pm = _import_perf_metrics()
+        if price_provider is not None:
+            dates = list(perf_eval_dates or [])
+            if not dates and realized_date:
+                dates = [realized_date]
+            if dates:
+                return pm.analyze_decision(decision, dates, price_provider)
+        if realized_price is not None:
+            path = [float(decision.price_anchor), float(realized_price)]
+            bench_path = None
+            bench_px = benchmark_realized_price
+            bench_anchor = getattr(decision, "benchmark_anchor", None)
+            if bench_px is not None and bench_anchor is not None:
+                bench_path = [float(bench_anchor), float(bench_px)]
+            return pm.analyze_price_path(path, bench_path)
+    except Exception:  # noqa: BLE001
+        return None
+    return None
 
 
 if __name__ == "__main__":
