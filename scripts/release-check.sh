@@ -59,7 +59,8 @@ README_BANNER="$(grep -m1 '当前版本' README.md | sed -n 's/.*当前版本\*\
 [[ -n "$README_BANNER" ]] || fail "could not parse README.md 当前版本 banner"
 [[ "$README_BANNER" == "$EXPECTED_BANNER" ]] || fail "README.md banner ($README_BANNER) != $EXPECTED_BANNER"
 
-STATE_BANNER="$(grep -m1 'Version:' config/state.md | grep -oE 'V10\.[0-9]+' || true)"
+STATE_BANNER="$(grep -m1 'Version:' config/state.md | sed -n 's/.*\*\*Version: \(V10\.[0-9][0-9]*\)\*\*.*/\1/p')"
+[[ -n "$STATE_BANNER" ]] || fail "could not parse config/state.md Version banner"
 [[ "$STATE_BANNER" == "$EXPECTED_BANNER" ]] || fail "config/state.md ($STATE_BANNER) != $EXPECTED_BANNER"
 ok "user-facing banners match ($EXPECTED_BANNER)"
 
