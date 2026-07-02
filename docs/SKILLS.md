@@ -46,7 +46,7 @@
 
 | 阶段 | 推荐工具 |
 |------|----------|
-| 数据获取 | `data_sources.py`, `ashare_data.py`, `tavily_search.py` |
+| 数据获取 | `data_sources.py`, `ashare_data.py`, `src/tavily_search.py` |
 | 数字验证 | `financial_rigor.py`（**必须**） |
 | 报告准出 | `report_audit.py` |
 | 组合上下文 | `portfolio_scan.py`, `portfolio_risk.py` |

@@ -53,6 +53,9 @@
 **5) 五维打板评分** `tools/limitup_screener_bridge.py` + `tools/ashare_alphagpt/limitup_scoring.py`
 - thesis_queue：`--from-limitup-scan` / `--run-limitup-scan`
 
+**6) 文档体系** `docs/README.md` 文档中心 + 专题 `BACKTEST` / `QUANT` / `ENGINE` / `SKILLS`
+- `USER_GUIDE` 工作流导向；`tools/README` / `TESTING` / `README_EN` 交叉导航
+
 **测试结果**:
 - [x] 单元测试: test_ashare_alphagpt + test_factor_screener_bridge + test_limitup_scoring + thesis_queue
 

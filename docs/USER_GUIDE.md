@@ -247,8 +247,15 @@ python3 tools/aktools_diagnostic.py AAPL --json -o reports/aapl_diag.md
 
 ```bash
 export TAVILY_API_KEYS=key1,key2
-python3 src/tavily_search.py "贵州茅台 2025 业绩"
+
+# 子命令（与 config/skill.md 一致）
+python3 src/tavily_search.py stock 600519 贵州茅台
+python3 src/tavily_search.py financial 0700.HK
+python3 src/tavily_search.py news 互联网 腾讯
+python3 src/tavily_search.py test   # 集成自测
 ```
+
+多 Key 轮询；也可用单变量 `TAVILY_API_KEY`。无 Key 时相关技能应降级为公开源或跳过。
 
 ---
 
@@ -316,11 +323,17 @@ python3 tools/quant_screener_bridge.py --codes 600519,000001 --lookback 20 --vol
 ### 6.5 因子 + 打板叠加（Python）
 
 ```python
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path("tools").resolve()))  # 仓库根目录执行
 from ashare_alphagpt.screener import run_screen, enrich_with_limitup_scores
 
 factor = run_screen(source="csv", min_score=0.0)
 combined = enrich_with_limitup_scores(factor, min_limitup_score=60)
 ```
+
+> `quant_screener_bridge` 输出**尚未**接入 `thesis_queue`（无 `--from-quant-scan`）；需手工合并 JSON 或走 §8.2 的 portfolio/factor/limitup 路径。
 
 ---
 
@@ -498,11 +511,19 @@ python3 tools/notify.py send --title "x" --text "y" --channels feishu --local
 
 零配置时只写本地文件，不报错。
 
-### 11.2 Cron 脚本
+### 11.2 Cron 与周度脚本
 
 ```bash
+# 进化 / 论文跟踪（src/cron_evolution.py 封装）
 ./scripts/cron-evolution.sh thesis-tracker
-./scripts/cron-evolution.sh portfolio-weekly
+./scripts/cron-evolution.sh portfolio-weekly   # 等同 cron 子命令，非下方 shell
+./scripts/cron-evolution.sh evolution-loop
+./scripts/cron-evolution.sh all
+
+# 组合周度：portfolio_scan → thesis_queue（读 data/holdings.json 若存在）
+./scripts/portfolio-weekly.sh
+./scripts/portfolio-weekly.sh --json
+./scripts/portfolio-weekly.sh --suggest-md   # 可粘贴进 config/state.md §2
 ```
 
 ---
@@ -579,17 +600,24 @@ python3 tools/xueqiu_scraper.py --user-id <ID> --keywords 拼多多,PDD --output
 | `BERKSHIRE_SENSITIVITY` | 收益反馈灵敏度（默认 0.5） |
 | `BERKSHIRE_DECISION_LOG` | 决策 JSONL 路径 |
 | `BERKSHIRE_EXPERIENCE_LOG` | 经验库路径 |
+| `BERKSHIRE_RUN_LOG` | Run 记录 JSONL |
+| `BERKSHIRE_TRACE_DIR` | TextGrad 轨迹目录 |
+| `BERKSHIRE_PRICE_CACHE_DIR` / `TTL` | 行情缓存 |
 | `BERKSHIRE_DATA_DIR` | 本地数据根（含 `daily_ohlcv.csv`） |
 | `BERKSHIRE_ENABLE_LOCAL_DATA` | 启用本地 CSV 数据源 |
 | `BERKSHIRE_ENABLE_PYTDX` | 启用 pytdx 实时源 |
 | `BERKSHIRE_DATA_SOURCES` | 覆盖数据降级链顺序 |
 | `BERKSHIRE_ENABLE_TUSHARE` + `TUSHARE_TOKEN` | Tushare 增强源 |
-| `BERKSHIRE_ALPHAGPT_*` | 因子训练超参 |
+| `BERKSHIRE_ALPHAGPT_*` | 因子训练超参（见 `.env.example` 分组） |
 | `BERKSHIRE_LIMITUP_SCORE_MIN` | 打板最低分（默认 60） |
 | `BERKSHIRE_LIMITUP_MIN_BARS` | 打板最少 K 线（默认 22） |
-| `BERKSHIRE_ENABLE_AKTOOLS` | aktools 诊断 |
+| `BERKSHIRE_ENABLE_AKTOOLS` / `BERKSHIRE_AKTOOLS_BASE_URL` | aktools 诊断 |
+| `WENCAI_COOKIE` | 问财选股（外部 `pywencai` skill） |
+| `TDX_API_KEY` | 外部通达信脚本（本仓库不内置） |
 | `TELEGRAM_*` / `FEISHU_*` | 推送通道 |
 | `BERKSHIRE_API_KEYS` | HTTP 服务鉴权 |
+| `BERKSHIRE_RATE_LIMIT_PER_MIN` | HTTP 限流 |
+| `BERKSHIRE_HOST` / `BERKSHIRE_PORT` | HTTP 监听 |
 
 完整列表见 [.env.example](../.env.example)。
 
@@ -639,6 +667,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v
 | [report-conventions.md](report-conventions.md) | 报告规范 |
 | [tdx_mcp_tool_design.md](tdx_mcp_tool_design.md) | 通达信 MCP（不实施） |
 | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 四大师 Prompt 模板 |
+| [config/state.md](../config/state.md) | 论文状态机（thesis_queue 输入） |
 | [ROADMAP.md](ROADMAP.md) | 路线图 |
 | [README.md](../README.md) | 项目总览 |
 | [VERSION_HISTORY.md](../VERSION_HISTORY.md) | 版本历史 |

@@ -175,9 +175,15 @@ python3 tools/thesis_queue.py --run-factor-scan --json
 python3 tools/thesis_queue.py --run-limitup-scan --json
 ```
 
+> **缺口**：`quant_screener_bridge` 尚无 `--from-quant-scan` / `--run-quant-scan`；动量候选需手工合并或自写脚本。
+
 ### 5.4 因子 + 打板叠加（Python）
 
 ```python
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path("tools").resolve()))
 from ashare_alphagpt.screener import run_screen, enrich_with_limitup_scores
 
 factor = run_screen(source="csv", min_score=0.0)

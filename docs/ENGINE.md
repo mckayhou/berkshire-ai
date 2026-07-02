@@ -209,6 +209,20 @@ berkshire-serve
 
 服务内**不主动拉行情**；调用方先取价再传入。
 
+### 6.1 Docker 部署（可选）
+
+```bash
+docker compose up -d --build
+# 或本地：pip install -e '.[service]' && berkshire-serve
+```
+
+镜像非 root + 内置 `HEALTHCHECK`；环境变量与 §7 存储路径见 `.env.example`。快速 curl：
+
+```bash
+curl -s localhost:8000/health
+curl -s localhost:8000/doctor
+```
+
 ---
 
 ## 7. 存储路径

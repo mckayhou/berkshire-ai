@@ -90,6 +90,7 @@ python3 tools/ashare_factor_mining.py train --code 511260 --steps 400
 python3 tools/ashare_factor_mining.py train --code 600519 --steps 100 --plot
 python3 tools/ashare_factor_mining.py decode --tokens '[0,6,1,7]'
 python3 tools/ashare_factor_mining.py oos --formula data/alphagpt/best_ashare_formula.json
+python3 tools/ashare_factor_mining.py screen --json --top 20   # 同 factor_screener_bridge
 ```
 
 数据：优先 `data/alphagpt/{code}_ohlcv.parquet` 缓存 → `data_sources.daily` → `ashare_data.fetch_daily`；可选 `TUSHARE_TOKEN` 拉更长历史。
@@ -130,6 +131,8 @@ python3 tools/thesis_queue.py --run-limitup-scan --json
 ```
 
 环境变量：`BERKSHIRE_LIMITUP_SCORE_MIN`（默认 60）、`BERKSHIRE_LIMITUP_MIN_BARS`（默认 22）。
+
+> `quant_screener_bridge` 与 `thesis_queue` **无** `--from-quant-scan`；动量候选需手工处理或自行写合并脚本。
 
 ## quant_screener_bridge.py（本地 CSV 动量突破，无 torch）
 
@@ -349,6 +352,35 @@ print(risk_analysis(rets))  # 年化收益、波动、夏普、最大回撤等
 ```
 
 口径对齐 Qlib `risk_analysis`（求和累计收益、252 日年化）。详见 [BACKTEST.md §5](../docs/BACKTEST.md#5-决策后验绩效run_with_realized_feedback--perf_metrics) 与 [ENGINE.md §4](../docs/ENGINE.md#4-收益反馈与绩效)。
+
+---
+
+## src/tavily_search.py（在线，位于 `src/`）
+
+四大师实时检索；**不在** `tools/` 目录。
+
+```bash
+export TAVILY_API_KEYS=key1,key2
+python3 src/tavily_search.py stock 600519 贵州茅台
+python3 src/tavily_search.py financial 0700.HK
+python3 src/tavily_search.py news 互联网 腾讯
+python3 src/tavily_search.py test
+```
+
+---
+
+## scripts/（工作流脚本）
+
+| 脚本 | 作用 |
+|------|------|
+| `scripts/portfolio-weekly.sh` | `portfolio_scan` → `thesis_queue --from-scan` 周度组合审视 |
+| `scripts/cron-evolution.sh` | 包装 `evolution_loop_v10.py cron <task>` |
+
+---
+
+## log-command.sh（可选 hook）
+
+由上游 `user_prompt_submit` hook 调用，将用户指令追加到 `~/ai-berkshire/logs/command-log.jsonl`。**非投研主链路**；一般用户可忽略。
 
 ---
 

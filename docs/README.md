@@ -18,6 +18,8 @@
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
 | **理解架构与设计** | [textgrad_design.md](textgrad_design.md) | 30 min |
 | **Prompt 模板** | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 按需 |
+| **借鉴评估备忘** | [qlib_evaluation.md](qlib_evaluation.md)、[rdagent_reference.md](rdagent_reference.md) | 架构决策时 |
+| **容器化部署** | [ENGINE.md §6.1](ENGINE.md#61-docker-部署可选) | 5 min |
 
 ---
 
@@ -113,6 +115,8 @@ docs/README.md          ← 你在这里（导航）
 | 推送 | USER_GUIDE §11 | test_tools_notify | — |
 | Agent 技能 | SKILLS.md | — | config/skill.md |
 | 外部 quant skills | QUANT §6 | — | quant_data_fusion §7 |
+| 论文状态机 | config/state.md | test_tools_thesis_queue | USER_GUIDE §8 |
+| Docker 服务 | ENGINE §6.1 | test_service | ROADMAP |
 
 ---
 

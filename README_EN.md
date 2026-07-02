@@ -226,6 +226,17 @@ berkshire-ai/
 
 Report output conventions (directory layout + naming + analysis principles): see [`docs/report-conventions.md`](docs/report-conventions.md).
 
+## 📚 Documentation
+
+| Doc | Purpose |
+|-----|---------|
+| **[docs/README.md](docs/README.md)** | Documentation hub (start here) |
+| **[docs/USER_GUIDE.md](docs/USER_GUIDE.md)** | Full workflow + CLI |
+| [docs/BACKTEST.md](docs/BACKTEST.md) | Five backtest routes |
+| [docs/QUANT.md](docs/QUANT.md) | A-share quant pipeline |
+| [docs/ENGINE.md](docs/ENGINE.md) | TextGrad engine |
+| [TESTING.md](TESTING.md) | pytest, CI, smoke tests |
+
 ## 🔄 Versioning rule
 
 Every new version must pass: (1) unit tests, (2) integration tests, (3) backtest verification, (4) cron-trigger test. See [VERSION_HISTORY.md](VERSION_HISTORY.md).

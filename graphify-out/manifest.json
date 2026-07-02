@@ -95,13 +95,13 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782960714.6979437,
-    "ast_hash": "caf6547960ce664760213c09e81311a0",
+    "mtime": 1782961873.2563925,
+    "ast_hash": "18e503dad720e70bce2936c771d34654",
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782961077.8289979,
-    "ast_hash": "adbf41debfa4c91bc0b60195739583db",
+    "mtime": 1782961871.567559,
+    "ast_hash": "a7c380132f0f5500d02c37f0d1433ca6",
     "semantic_hash": ""
   },
   "config/state.md": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "README_EN.md": {
-    "mtime": 1782960714.6974754,
-    "ast_hash": "af311ac960afdf34b4ee9a17eb935ad5",
+    "mtime": 1782961592.4655278,
+    "ast_hash": "9debe3d3e749cbb9756bb55a086a9f96",
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782961060.568924,
-    "ast_hash": "f1dcb132dbd608d14ac61c1cae9d78a6",
+    "mtime": 1782961569.170161,
+    "ast_hash": "08889e653596a930fd109480a6b6e9b3",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "docs/USER_GUIDE.md": {
-    "mtime": 1782961147.309734,
-    "ast_hash": "8ba206f5cb851d0a5f440b324f6f0581",
+    "mtime": 1782961528.7301025,
+    "ast_hash": "952e2d9bde15f0b14d7fd550477911b9",
     "semantic_hash": ""
   },
   "docs/BACKTEST.md": {
@@ -1235,23 +1235,23 @@
     "semantic_hash": ""
   },
   "docs/QUANT.md": {
-    "mtime": 1782960778.0103807,
-    "ast_hash": "b6e0c0ac85d0b37da858944c49dfb8a8",
+    "mtime": 1782961610.6037335,
+    "ast_hash": "98952c7d7728cb91c46677e130ba2015",
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1782961115.6980126,
-    "ast_hash": "3e0927bc31326ed9775687c3b7e82eec",
+    "mtime": 1782961574.5513875,
+    "ast_hash": "109f14699d31844602a69f46486a5648",
     "semantic_hash": ""
   },
   "docs/ENGINE.md": {
-    "mtime": 1782960822.1678152,
-    "ast_hash": "26e8538037793adaabb4aa6aef9485b1",
+    "mtime": 1782961571.889837,
+    "ast_hash": "77c1fd98b9514ff02150639411cf5d56",
     "semantic_hash": ""
   },
   "docs/SKILLS.md": {
-    "mtime": 1782960840.6393342,
-    "ast_hash": "e5ee6181c55c2fec6ede4889742daee3",
+    "mtime": 1782961569.2964096,
+    "ast_hash": "b94ed28fbaf0776bdf7285932ed7dcbc",
     "semantic_hash": ""
   }
 }
