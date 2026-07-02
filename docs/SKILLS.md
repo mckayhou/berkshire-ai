@@ -82,6 +82,8 @@ OpenClaw：`sessions_spawn`；QwenPaw：loop_engine 并行角色。
 
 技能**不替代** `financial_rigor` 与 `report_audit`。
 
+**技能进化（SkillForge）**：[SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) — 从 bad-case / audit 打回驱动 `skills/*.md` 版本化迭代。
+
 ---
 
 ## 报告规范

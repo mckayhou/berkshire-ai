@@ -51,6 +51,10 @@ def run_full_cycle(
     record_traces: bool = True,
     use_llm_gradient: bool = True,
     use_validation: bool = True,
+    rerun_analysis: bool = False,
+    analysis_runner: Optional[Any] = None,
+    factor_scan: Optional[Dict[str, Any]] = None,
+    limitup_scan: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """完整闭环：可选 R/D → realized feedback → 经验 + 绩效 + 轨迹。
 
@@ -61,8 +65,24 @@ def run_full_cycle(
         dev_rounds: 每轮 D 段 `run_multi_round` 最大轮数（默认 3）。
         proposer: 假设提案器；None 时 D 段仍跑但 R 为空列表。
         use_llm_gradient / use_validation: 反馈段是否启用 ∇_LLM 与验证门控。
+        rerun_analysis: D 段改写后重跑分析（V10.26，默认关，耗 LLM）。
+        factor_scan / limitup_scan: V10.28 量化信号 JSON，并入 HypothesisProposer。
         其余参数同 run_with_realized_feedback。
     """
+    try:
+        from signal_proposer import proposer_from_signal_scans
+    except ImportError:
+        from .signal_proposer import proposer_from_signal_scans
+
+    effective_proposer = proposer
+    if factor_scan or limitup_scan:
+        merged = proposer_from_signal_scans(
+            factor_scan=factor_scan,
+            limitup_scan=limitup_scan,
+            base=proposer,
+        )
+        if merged is not None:
+            effective_proposer = merged
     try:
         from evolution_loop_v10 import run_with_realized_feedback
     except ImportError:
@@ -85,11 +105,13 @@ def run_full_cycle(
                 decision.ticker,
                 llm_client,
                 quality_fn,
-                proposer=proposer,
+                proposer=effective_proposer,
                 retriever=retriever,
                 research_cycles=rd_cycles,
                 dev_rounds=dev_rounds,
                 run_id=rid,
+                rerun_analysis=rerun_analysis,
+                analysis_runner=analysis_runner,
             )
             result["rd"] = rd_report
             if record_traces:

@@ -45,8 +45,11 @@
 
 ## 本 fork 专属方向
 
-### TextGrad V10 自进化引擎 — ✅ V10.23 生产主链路强化
+### TextGrad V10 自进化引擎 — ✅ V10.28 真闭环 + 轨迹 A/B + 信号接线
 - 计算图 + 验证门控 + eval_harness + ∇_LLM + 经验 few-shot
+- ✅ V10.26 **`rerun_analysis`**：`run_multi_round` 改写后重跑分析，`graph_analysis.AnalysisRunner`
+- ✅ V10.27 **`tools/trajectory_ab_eval.py`**：V9.3 vs V10 诊断 vs V10.26 进化 A/B（bundled fixtures）
+- ✅ V10.28 **量化信号 → HypothesisProposer**：`signal_proposer` + `pipeline.run_full_cycle(factor_scan=…)`
 - ✅ V10.23 **∇_LLM 接入主链路**：`run_with_realized_feedback` / `run_full_cycle` 默认增强梯度
 - ✅ V10.23 **验证门控默认**：`pipeline` 的 `use_validation=True` + `dev_rounds=3`
 - ✅ V10.21 Scenario + `status`/`reflect`/`optimize` CLI

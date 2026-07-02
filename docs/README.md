@@ -84,13 +84,14 @@ docs/README.md          ← 你在这里（导航）
 4. thesis-tracker skill
 ```
 
-### 场景 D：引擎自进化
+### 场景 D：引擎自进化（V10.28）
 
 ```text
-1. ENGINE.md
-2. evolution_loop_v10.py status / cycle
-3. TESTING.md §引擎验收
-4. textgrad_design.md（深入）
+1. ENGINE.md §9
+2. evolution_loop_v10.py status / cycle [--rerun-analysis]
+3. python3 tools/trajectory_ab_eval.py     # V10.27 A/B
+4. TESTING.md §V10.28 TextGrad 进化验收
+5. textgrad_design.md（深入）
 ```
 
 ---
@@ -108,7 +109,7 @@ docs/README.md          ← 你在这里（导航）
 | 研究队列 | USER_GUIDE §8 | test_tools_thesis_queue | — |
 | 组合扫描/风险 | USER_GUIDE §7 | test_tools_portfolio_* | action-card |
 | 美股动量回测 | BACKTEST §3 | 手工冒烟 | — |
-| TextGrad 引擎 | ENGINE.md | test_v10_*, test_pipeline | textgrad_design |
+| TextGrad 引擎 | ENGINE.md | test_v10_*, test_eval_harness_rerun, test_trajectory_ab, test_pipeline | textgrad_design |
 | 收益反馈/绩效 | ENGINE §4, BACKTEST §5 | test_realized_feedback_loop | textgrad_design |
 | 引擎轨迹回测 | BACKTEST §4 | test_v10_backtest | — |
 | HTTP 服务 | ENGINE §6 | test_service | — |

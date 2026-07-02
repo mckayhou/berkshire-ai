@@ -50,6 +50,7 @@ python3 src/evolution_loop_v10.py cron all --json
 | `optimize TICKER` | 反思 + 验证门控进化 |
 | `cycle TICKER` | `run_full_cycle` 完整主链路 |
 | `cron TASK` | 定时任务入口 |
+| `skill-evolve ACTION` | SkillForge 技能进化（见 [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md)） |
 
 Cron 脚本：`./scripts/cron-evolution.sh thesis-tracker`
 
@@ -237,7 +238,17 @@ curl -s localhost:8000/doctor
 
 ---
 
-## 8. LLM 与改写
+## 8. V10.26–10.28 进化 API 速查
+
+| 版本 | 能力 | 入口 |
+|------|------|------|
+| V10.26 | `rerun_analysis` | `run_multi_round(..., rerun_analysis=True)`、`cycle --rerun-analysis` |
+| V10.27 | 轨迹 A/B | `tools/trajectory_ab_eval.py` |
+| V10.28 | 信号→Hypothesis | `run_full_cycle(factor_scan=…, limitup_scan=…)` |
+
+---
+
+## 9. LLM 与改写
 
 | 变量 | 作用 |
 |------|------|
@@ -253,13 +264,21 @@ curl -s localhost:8000/doctor
 
 ---
 
-## 9. 测试与验收
+## 10. 测试与验收
 
 ```bash
+python3 tools/trajectory_ab_eval.py          # V10.27 A/B（bundled fixtures）
+python3 -m pytest tests/test_eval_harness_rerun.py tests/test_trajectory_ab.py -v
 python3 -m pytest tests/test_v10_unit.py tests/test_v10_integration.py -v
 python3 -m pytest tests/test_realized_feedback_loop.py tests/test_pipeline.py -v
 python3 -m pytest tests/test_service.py -v    # 需 fastapi
 python3 tests/test_v10_backtest.py            # 轨迹诊断（非 pytest）
+```
+
+```bash
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py -v
+python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/tasks_unlabeled.jsonl --judge-mode rule
+python3 tools/skill_evolve.py evolve investment-research --judge-mode auto --dry-run
 ```
 
 见 [TESTING.md](../TESTING.md) §按功能验收入口。

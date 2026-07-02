@@ -17,7 +17,7 @@
 | 多空对抗辩论 | ✅ 已实现 (V10.11) | `debate.py` + `BerkshireGraph.debate()`：bull/bear case + 结构化净判断 `DebateResult` |
 | LLM 驱动的 Prompt 改写（Option B）| ✅ 已实现 (V10.13) | `prompt_optimizer.apply_gradient`：LLM 读「下游诊断 + 当前 Prompt」产出改进版 Prompt 回填变量。客户端可注入/可 mock（`StaticLLMClient` / `OpenAICompatibleLLMClient`），核心可离线单测 |
 | LLM 驱动的「批评/梯度」生成 (`∇_LLM`) | ✅ 已实现 | V10.17 `llm_gradient.enrich_gradients_with_llm`；失败降级回规则化模板 |
-| 真正的迭代进化循环 | 🟡 部分 (V10.13) | 单步「backward → LLM 改写 → 回填」已闭环；多轮自动迭代（改写后重跑分析→再评分）仍待接线 |
+| 真正的迭代进化循环 | ✅ (V10.26) | `rerun_analysis=True`：改写 → 重跑分析 → `backward(scores)` 梯度；默认关（省 LLM） |
 
 > 结论：Option B 的「变量真实改写」已落地——文本梯度第一次真正作用到 Prompt 上。下一步是把启发式「批评」也换成 LLM 生成（`∇_LLM`），以及把单步闭环扩成多轮自动迭代。结构化的 `Gradient.issues` 与可注入的 `LLMClient` 让这两步都能无侵入演进，**消费方（回测/测试）无需改动**。
 
@@ -458,6 +458,6 @@ export BERKSHIRE_SENSITIVITY=0.41
 
 ---
 
-**当前状态 (V10.23)**: 计算图 + 收益反馈闭环 + SENSITIVITY 校准 + 变量真实改写 + ∇_LLM（含主链路接线）+ 验证门控多轮迭代（`eval_harness` / `pipeline`）均已落地并测试通过。
+**当前状态 (V10.28)**: 计算图 + 收益反馈闭环 + ∇_LLM + 验证门控多轮迭代均已落地。**V10.26** 起 `run_multi_round(rerun_analysis=True)` 在改写后重跑分析并用 `backward(scores)` 产梯度；**V10.27** `trajectory_ab_eval` 提供轨迹 A/B 验收；**V10.28** factor/limitup scan JSON 可并入 `HypothesisProposer`。
 
-**可选后续**: 在 held-out 标的上跑四大师分析作 quality_fn（需 LLM 预算）；Redis/OTel/TLS 运维清单。
+**可选后续**: held-out 标的上用真实四大师 LLM 作 `AnalysisRunner`（需 LLM 预算）；Redis/OTel/TLS 运维清单。

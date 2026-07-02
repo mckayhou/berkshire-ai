@@ -1,0 +1,2 @@
+{"task_id": "u001", "skill_name": "investment-research", "agent_output": "建议买入，营收增长强劲。", "reference_output": "信息丰富度 B。观望，待 cross-validate 与 report_audit 准出。", "tool_trace": [], "metadata": {"depth": "standard"}}
+{"task_id": "u002", "skill_name": "investment-research", "agent_output": "已给出行动卡与综合决策表，建议观望。", "reference_output": "行动卡完整，结论观望，双源验证通过。", "tool_trace": ["financial_rigor.py", "report_audit.py"], "metadata": {"depth": "standard"}}

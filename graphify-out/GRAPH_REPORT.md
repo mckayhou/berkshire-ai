@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-02)
 
 ## Corpus Check
-- 247 files · ~410,161 words
+- 275 files · ~420,172 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 293 nodes · 334 edges · 200 communities (52 shown, 148 thin omitted)
+- 320 nodes · 357 edges · 226 communities (60 shown, 166 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4dd2d732`
+- Built from commit: `55e656eb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,18 +23,32 @@
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
 - [[_COMMUNITY_Community 8|Community 8]]
+- [[_COMMUNITY_Community 9|Community 9]]
+- [[_COMMUNITY_Community 10|Community 10]]
+- [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
+- [[_COMMUNITY_Community 13|Community 13]]
 - [[_COMMUNITY_Community 14|Community 14]]
 - [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
+- [[_COMMUNITY_Community 18|Community 18]]
+- [[_COMMUNITY_Community 19|Community 19]]
+- [[_COMMUNITY_Community 21|Community 21]]
 - [[_COMMUNITY_Community 22|Community 22]]
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
+- [[_COMMUNITY_Community 25|Community 25]]
 - [[_COMMUNITY_Community 26|Community 26]]
+- [[_COMMUNITY_Community 27|Community 27]]
+- [[_COMMUNITY_Community 28|Community 28]]
+- [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
 - [[_COMMUNITY_Community 33|Community 33]]
 - [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 36|Community 36]]
 - [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 40|Community 40]]
 - [[_COMMUNITY_Community 41|Community 41]]
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
@@ -64,6 +78,7 @@
 - [[_COMMUNITY_Community 81|Community 81]]
 - [[_COMMUNITY_Community 82|Community 82]]
 - [[_COMMUNITY_Community 83|Community 83]]
+- [[_COMMUNITY_Community 85|Community 85]]
 - [[_COMMUNITY_Community 87|Community 87]]
 - [[_COMMUNITY_Community 91|Community 91]]
 - [[_COMMUNITY_Community 92|Community 92]]
@@ -85,6 +100,7 @@
 - [[_COMMUNITY_Community 122|Community 122]]
 - [[_COMMUNITY_Community 123|Community 123]]
 - [[_COMMUNITY_Community 124|Community 124]]
+- [[_COMMUNITY_Community 128|Community 128]]
 - [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
@@ -163,42 +179,44 @@
 - [[_COMMUNITY_Community 210|Community 210]]
 - [[_COMMUNITY_Community 211|Community 211]]
 - [[_COMMUNITY_Community 213|Community 213]]
+- [[_COMMUNITY_Community 218|Community 218]]
 - [[_COMMUNITY_Community 219|Community 219]]
 - [[_COMMUNITY_Community 220|Community 220]]
 - [[_COMMUNITY_Community 221|Community 221]]
+- [[_COMMUNITY_Community 223|Community 223]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Agent 技能目录（SKILLS）` - 30 edges
+1. `Agent 技能目录（SKILLS）` - 31 edges
 2. `Berkshire AI 功能使用指南` - 20 edges
 3. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 15 edges
-4. `Berkshire AI 文档中心` - 14 edges
-5. `TextGrad 引擎指南（ENGINE）` - 13 edges
-6. `测试指南（TESTING）` - 12 edges
+4. `TextGrad 引擎指南（ENGINE）` - 14 edges
+5. `Berkshire AI 文档中心` - 14 edges
+6. `测试指南（TESTING）` - 13 edges
 7. `回测指南（BACKTEST）` - 12 edges
 8. `A 股量化指南（QUANT）` - 12 edges
 9. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 11 edges
-10. `报告输出规范（report conventions）` - 9 edges
+10. `tools/ — 工具链说明` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Agent 技能目录（SKILLS）`  [EXTRACTED]
   README.md → docs/SKILLS.md
-- `回测指南（BACKTEST）` --references--> `测试指南（TESTING）`  [EXTRACTED]
-  docs/BACKTEST.md → TESTING.md
-- `TextGrad 引擎指南（ENGINE）` --references--> `测试指南（TESTING）`  [EXTRACTED]
-  docs/ENGINE.md → TESTING.md
-- `A 股量化指南（QUANT）` --references--> `测试指南（TESTING）`  [EXTRACTED]
-  docs/QUANT.md → TESTING.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南（TESTING）`  [EXTRACTED]
-  README.md → TESTING.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `回测指南（BACKTEST）`  [EXTRACTED]
+  README.md → docs/BACKTEST.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `TextGrad 引擎指南（ENGINE）`  [EXTRACTED]
+  README.md → docs/ENGINE.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `A 股量化指南（QUANT）`  [EXTRACTED]
+  README.md → docs/QUANT.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
+  README.md → README_EN.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (200 total, 148 thin omitted)
+## Communities (226 total, 166 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.41
-Nodes (21): 回测指南（BACKTEST）, TextGrad 引擎指南（ENGINE）, Prompt 模板（V10.22）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南（TESTING） (+13 more)
+Cohesion: 0.39
+Nodes (22): 回测指南（BACKTEST）, TextGrad 引擎指南（ENGINE）, Prompt 模板（V10.22）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, SkillForge 技能进化（SKILL_EVOLUTION） (+14 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 1.20
@@ -209,18 +227,18 @@ Cohesion: 0.21
 Nodes (20): Agent 技能目录（SKILLS）, 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利, 深度公司系列：8 篇长文拆一家公司, 段永平问答：以他的方式思考, 财报精读：一手资料深度解读, 财报精读团队：四大师并行解读 + 公众号发布框架, 财务数据获取与交叉验证规范, 行业漏斗筛选：从全市场到 3 家的价值投资精选流程 (+12 more)
 
 ## Knowledge Gaps
-- **12 isolated node(s):** `release-check.sh script`, `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `log-command.sh script` (+7 more)
+- **12 isolated node(s):** `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `release-check.sh script`, `log-command.sh script` (+7 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **148 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **166 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Agent 技能目录（SKILLS）` connect `Community 7` to `Community 4`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+  _High betweenness centrality (0.012) - this node is a cross-community bridge._
 - **Why does `Berkshire AI 功能使用指南` connect `Community 4` to `Community 7`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **Why does `Berkshire AI 文档中心` connect `Community 4` to `Community 7`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **What connects `release-check.sh script`, `berkshire-ai`, `cron-evolution.sh script` to the rest of the system?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **What connects `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script` to the rest of the system?**
   _12 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -36,6 +36,26 @@
 
 ## 📜 版本历史
 
+### V10.28 - 2026-07-02 (TextGrad 真闭环 + 轨迹 A/B + 量化信号接线)
+
+**V10.26 — 分析重跑闭环** `src/graph_analysis.py`
+- `AnalysisRunner` / `PromptHeuristicAnalysisRunner`
+- `eval_harness.run_multi_round(rerun_analysis=True)`：改写后重跑分析 → `backward(scores)` 梯度
+- `research_loop` / `pipeline.run_full_cycle` 透传 `rerun_analysis`
+
+**V10.27 — 轨迹 A/B 验收** `src/trajectory_ab.py` + `tools/trajectory_ab_eval.py`
+- bundled `tests/fixtures/trajectories/sample_tasks.json`
+- 指标：V9.3 整体分 vs V10 节点诊断覆盖率 vs V10.26 进化 Δ
+
+**V10.28 — 量化信号 → Hypothesis** `src/signal_proposer.py`
+- `FactorScanHypothesisProposer` / `LimitupScanHypothesisProposer` / `CompositeHypothesisProposer`
+- `pipeline.run_full_cycle(factor_scan=…, limitup_scan=…)` 并入 R 循环
+
+**测试结果**:
+- [x] 单元测试: **485 passed**
+
+---
+
 ### V10.25 - 2026-07-02 (A股 AlphaGPT 因子挖掘 + thesis_queue 接线)
 
 **1) AlphaGPT times.py 移植** `tools/ashare_alphagpt/` + `tools/ashare_factor_mining.py`
@@ -727,7 +747,7 @@ V9.1 (模型优化)
   ↓
 V9.3 (Tavily 集成)
   ↓
-V10.25 ← 当前版本
+V10.28 ← 当前版本
 ```
 
 ---

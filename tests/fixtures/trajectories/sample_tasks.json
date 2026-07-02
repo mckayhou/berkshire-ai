@@ -1,0 +1,26 @@
+[
+  {
+    "ticker": "600519",
+    "scores": {"duan": 0.72, "buffett": 0.65, "munger": 0.80, "lilu": 0.58}
+  },
+  {
+    "ticker": "AAPL",
+    "scores": {"duan": 0.88, "buffett": 0.90, "munger": 0.86, "lilu": 0.84}
+  },
+  {
+    "ticker": "0700.HK",
+    "scores": {"duan": 0.70, "buffett": 0.68, "munger": 0.75, "lilu": 0.62}
+  },
+  {
+    "ticker": "MSFT",
+    "scores": {"duan": 0.78, "buffett": 0.82, "munger": 0.79, "lilu": 0.76}
+  },
+  {
+    "ticker": "000001",
+    "scores": {"duan": 0.55, "buffett": 0.60, "munger": 0.58, "lilu": 0.52}
+  },
+  {
+    "ticker": "NVDA",
+    "scores": {"duan": 0.91, "buffett": 0.72, "munger": 0.88, "lilu": 0.80}
+  }
+]

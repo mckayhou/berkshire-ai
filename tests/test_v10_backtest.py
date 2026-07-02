@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
 Berkshire AI V10.0 - 回测验证
-使用历史轨迹数据验证 TextGrad 诊断效果
+使用历史轨迹数据验证 TextGrad 诊断效果。
+
+离线发版门控请优先使用 tools/trajectory_ab_eval.py（bundled fixtures，V10.27）。
+本脚本依赖 ~/.qwenpaw/berkshire_traces/*.json。
 """
 import glob
 import json

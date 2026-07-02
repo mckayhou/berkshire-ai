@@ -143,6 +143,8 @@ python3 src/evolution_loop_v10.py status
 python3 src/evolution_loop_v10.py reflect AAPL
 python3 src/evolution_loop_v10.py optimize AAPL --rounds 3
 python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
+python3 src/evolution_loop_v10.py cycle 600519 --anchor 1500 --price 1650 --rerun-analysis
+python3 src/evolution_loop_v10.py cycle 600519 --anchor 1500 --price 1650 --factor-scan factor.json
 python3 src/evolution_loop_v10.py cron evolution-loop
 ./scripts/cron-evolution.sh thesis-tracker
 ```
@@ -152,7 +154,7 @@ python3 src/evolution_loop_v10.py cron evolution-loop
 | `status` | 决策日志 / 经验库 / 轨迹存储健康摘要 |
 | `reflect TICKER` | 基于历史经验对比反思 |
 | `optimize TICKER` | 反思 + 验证门控进化 |
-| `cycle TICKER` | 完整主链路 `run_full_cycle`（R/D + 收益反馈） |
+| `cycle TICKER` | 完整主链路 `run_full_cycle`（R/D + 收益反馈）；可加 `--rerun-analysis`、`--factor-scan` |
 | `cron TASK` | 定时任务：`thesis-tracker` / `portfolio-weekly` / `evolution-loop` / `all` |
 
 ### 4.3 Python API（生产主链路）
@@ -191,6 +193,34 @@ python3 tools/calibrate_conviction.py report --ticker AAPL --json
 python3 tools/calibrate_sensitivity.py universe
 python3 tools/calibrate_sensitivity.py run --lookback 365 --also 182 --json
 ```
+
+### 4.6 V10.26–10.28 进化增强
+
+**分析重跑（V10.26）** — 改写 Prompt 后重跑分析，用 `backward(scores)` 产梯度（默认关，省 LLM）：
+
+```python
+from src.eval_harness import run_multi_round
+from src.graph_analysis import PromptHeuristicAnalysisRunner
+
+run_multi_round(graph, llm, quality_fn, rerun_analysis=True, ticker="600519")
+# 或 pipeline / CLI：
+# run_full_cycle(d, realized_price=110.0, rerun_analysis=True)
+```
+
+**轨迹 A/B（V10.27）** — 离线验收 V9.3 vs V10 诊断 vs 进化 Δ：
+
+```bash
+python3 tools/trajectory_ab_eval.py
+python3 tools/trajectory_ab_eval.py --tasks tests/fixtures/trajectories/sample_tasks.json --json
+```
+
+**量化信号 → Hypothesis（V10.28）** — factor/limitup 扫描 JSON 并入 R 循环：
+
+```python
+run_full_cycle(d, realized_price=110.0, factor_scan=scan_json, limitup_scan=lu_json)
+```
+
+详见 [ENGINE.md](ENGINE.md) §9、[BACKTEST.md](BACKTEST.md) §4.1。
 
 ---
 

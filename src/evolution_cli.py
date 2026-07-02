@@ -178,6 +178,16 @@ def cmd_cycle(args: argparse.Namespace) -> int:
     except ImportError:
         from .decision_log import DecisionRecord
         from .pipeline import run_full_cycle
+
+    factor_scan = None
+    limitup_scan = None
+    if args.factor_scan:
+        with open(args.factor_scan, encoding="utf-8") as f:
+            factor_scan = json.load(f)
+    if args.limitup_scan:
+        with open(args.limitup_scan, encoding="utf-8") as f:
+            limitup_scan = json.load(f)
+
     d = DecisionRecord(
         ticker=args.ticker,
         date=args.date,
@@ -189,6 +199,9 @@ def cmd_cycle(args: argparse.Namespace) -> int:
         realized_price=args.price,
         run_rd=not args.no_rd,
         rd_cycles=1,
+        rerun_analysis=bool(args.rerun_analysis),
+        factor_scan=factor_scan,
+        limitup_scan=limitup_scan,
     )
     fb = out.get("feedback") or {}
     stats = fb.get("stats")
@@ -248,8 +261,83 @@ def build_parser() -> argparse.ArgumentParser:
     p_cycle.add_argument("--anchor", type=float, required=True, help="决策时价格锚点")
     p_cycle.add_argument("--date", default="2026-01-02", help="决策日期")
     p_cycle.add_argument("--no-rd", action="store_true", help="跳过 R/D 双循环")
+    p_cycle.add_argument(
+        "--rerun-analysis",
+        action="store_true",
+        help="D 段改写后重跑分析（V10.26，默认关）",
+    )
+    p_cycle.add_argument("--factor-scan", help="factor_screener JSON 路径（V10.28）")
+    p_cycle.add_argument("--limitup-scan", help="limitup_screener JSON 路径（V10.28）")
+
+    p_skill = sub.add_parser("skill-evolve", help="SkillForge 技能进化（bad-case 驱动）")
+    p_skill.add_argument(
+        "action",
+        choices=["list", "judge", "analyze", "evolve", "status", "create"],
+        help="skill-evolve 子动作",
+    )
+    p_skill.add_argument("target", nargs="?", default=None, help="skill 名或 fixture 路径")
+    p_skill.add_argument("--rounds", type=int, default=1)
+    p_skill.add_argument("--dry-run", action="store_true")
+    p_skill.add_argument("--fixture", default=None)
+    p_skill.add_argument(
+        "--judge-mode",
+        choices=["auto", "llm", "rule"],
+        default="auto",
+    )
+    p_skill.add_argument("--re-judge", action="store_true")
+    p_skill.add_argument("--description", default="新技能", help="create 动作的描述")
 
     return parser
+
+
+def cmd_skill_evolve(args: argparse.Namespace) -> int:
+    try:
+        from skill_forge.cli import main as skill_forge_main
+    except ImportError:
+        from .skill_forge.cli import main as skill_forge_main
+
+    argv = [args.action]
+    extra_flags = []
+    if getattr(args, "judge_mode", None):
+        extra_flags.extend(["--judge-mode", args.judge_mode])
+    if getattr(args, "re_judge", False):
+        extra_flags.append("--re-judge")
+    if getattr(args, "dry_run", False):
+        extra_flags.append("--dry-run")
+    if getattr(args, "rounds", None):
+        extra_flags.extend(["--rounds", str(args.rounds)])
+    if getattr(args, "fixture", None):
+        extra_flags.extend(["--fixture", args.fixture])
+
+    if args.action == "list":
+        pass
+    elif args.action == "judge":
+        if not args.target and not args.fixture:
+            print("judge 需要 fixture 路径", file=sys.stderr)
+            return 1
+        argv.append(args.fixture or args.target)
+    elif args.action == "analyze":
+        if not args.target and not args.fixture:
+            print("analyze 需要 fixture 路径", file=sys.stderr)
+            return 1
+        argv.append(args.fixture or args.target)
+    elif args.action == "evolve":
+        if not args.target:
+            print("evolve 需要 skill 名", file=sys.stderr)
+            return 1
+        argv.append(args.target)
+    elif args.action == "status":
+        if not args.target:
+            print("status 需要 skill 名", file=sys.stderr)
+            return 1
+        argv.append(args.target)
+    elif args.action == "create":
+        if not args.target:
+            print("create 需要 skill 名", file=sys.stderr)
+            return 1
+        argv.extend([args.target, getattr(args, "description", "新技能")])
+    argv.extend(extra_flags)
+    return skill_forge_main(argv)
 
 
 def main(argv: Optional[list] = None) -> int:
@@ -268,6 +356,8 @@ def main(argv: Optional[list] = None) -> int:
         return cmd_cron(args)
     if cmd == "cycle":
         return cmd_cycle(args)
+    if cmd == "skill-evolve":
+        return cmd_skill_evolve(args)
     parser.print_help()
     return 1
 

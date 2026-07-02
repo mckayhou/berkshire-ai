@@ -17,6 +17,9 @@
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
 | `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
 | `calibrate_conviction.py` | 经验库 conviction 校准报告 | 否 | 无 |
+| `trajectory_ab_eval.py` | TextGrad V9.3 vs V10 轨迹 A/B 评测（V10.27） | 否 | 无 |
+| `skill_evolve.py` | SkillForge：从 bad-case 证据进化 skills（离线） | 否 | 无 |
+| `skill_evolve.py` | **SkillForge** 技能进化（bad-case → 四维诊断 → patch） | 否 | 见 [SKILL_EVOLUTION.md](../docs/SKILL_EVOLUTION.md) |
 | `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
@@ -316,6 +319,30 @@ export BERKSHIRE_ENABLE_AKTOOLS=1
 python3 tools/aktools_diagnostic.py 600519 --json
 python3 tools/aktools_diagnostic.py AAPL -o reports/aapl_diag.md
 ```
+
+## trajectory_ab_eval.py（离线，V10.27）
+
+```bash
+python3 tools/trajectory_ab_eval.py
+python3 tools/trajectory_ab_eval.py --tasks tests/fixtures/trajectories/sample_tasks.json --json
+python3 tools/trajectory_ab_eval.py --no-evolution   # 仅诊断覆盖率
+```
+
+对比 V9.3 整体均分、V10 节点诊断覆盖率、V10.26 `rerun_analysis` 进化 Δ。exit 0 当诊断覆盖率 ≥ 90%。
+
+---
+
+## skill_evolve.py（离线，SkillForge）
+
+```bash
+python3 tools/skill_evolve.py list
+python3 tools/skill_evolve.py analyze tests/fixtures/skill_forge/bad_cases.jsonl
+python3 tools/skill_evolve.py evolve investment-research --rounds 1 --dry-run
+```
+
+从失败案例 JSONL 分析根因并迭代 `skills/*.md`（见 `src/skill_forge/`）。测试：`pytest tests/test_skill_forge.py`。
+
+---
 
 ## calibrate_conviction.py（离线）
 

@@ -64,8 +64,8 @@ description: >
           factor_screener_bridge → thesis_queue --from-factor-scan；可选 extra [factor-mining]。
   V10.25: 五维打板评分 - limitup_screener_bridge + limitup_scoring（参考 TDX-MCP-LHDB-Agent）；
           thesis_queue --from-limitup-scan；完整用法见 docs/USER_GUIDE.md。
-  V10.25: 文档体系 - docs/README.md 文档中心；专题 BACKTEST / QUANT / ENGINE / SKILLS；
-          USER_GUIDE + tools/README + TESTING + README_EN 交叉链接。
+  V10.28: TextGrad 真闭环 - graph_analysis + run_multi_round(rerun_analysis)；
+          trajectory_ab_eval A/B；signal_proposer 接入 pipeline（factor/limitup scan）。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。

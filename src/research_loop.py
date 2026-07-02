@@ -246,6 +246,8 @@ def run_rd_cycle(
     min_improvement: float = 0.0,
     prompt_nodes: Optional[List[str]] = None,
     run_id: Optional[str] = None,
+    rerun_analysis: bool = False,
+    analysis_runner: Optional[Any] = None,
 ) -> RDCycleReport:
     """跑 R/D 双循环：每轮先 R（提假设）再 D（验证门控进化）。
 
@@ -260,6 +262,8 @@ def run_rd_cycle(
         retriever: D 段改写时 few-shot 召回（经 optimizer 注入）。
         research_cycles: R→D 外循环轮数。
         dev_rounds: 每轮 D 段 `run_multi_round` 最大轮数。
+        rerun_analysis: D 段是否每轮改写后重跑分析（V10.26）。
+        analysis_runner: 可选分析执行器。
     """
     tkr = str(ticker).strip().upper()
     logger = get_logger("research_loop")
@@ -302,6 +306,9 @@ def run_rd_cycle(
                 retriever=retriever,
                 retriever_ticker=tkr,
                 run_id=rid,
+                rerun_analysis=rerun_analysis,
+                analysis_runner=analysis_runner,
+                ticker=tkr,
             )
             report.cycles.append(
                 RDCycleMetrics(cycle=c, hypotheses_proposed=len(hyps), dev_report=dev)

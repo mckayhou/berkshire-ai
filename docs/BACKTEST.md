@@ -12,7 +12,7 @@
 | 挖出的 **A 股因子公式** 样本外表现 | §1 `train` + `oos` | ✅ |
 | **美股** 动量+价值框架（NVDA/AMD/MU） | §3 `momentum_backtest*` | ✅ |
 | **四大师决策** 事后对错 / 绩效 | §5 `run_with_realized_feedback` | 单次决策 |
-| **TextGrad** 对历史轨迹的诊断质量 | §4 `test_v10_backtest` | ❌（非交易） |
+| **TextGrad** 对历史轨迹的诊断质量 | §4 `test_v10_backtest` 或 §4.1 `trajectory_ab_eval` | ❌（非交易） |
 | **打板 / limitup 评分规则** | §6 需自建 backtrader | 仓库未内置 |
 | **完整事件驱动** A 股策略 | §2 backtrader / rqalpha | 需自写策略 |
 
@@ -155,6 +155,21 @@ python3 tests/test_v10_backtest.py
 
 详见 [TESTING.md §11 FAQ](../TESTING.md#11-已知限制与排错)。
 
+### 4.1 离线 A/B（V10.27，推荐发版门控）
+
+不依赖 `~/.qwenpaw/berkshire_traces`，使用 bundled fixtures：
+
+```bash
+python3 tools/trajectory_ab_eval.py
+python3 tools/trajectory_ab_eval.py --tasks tests/fixtures/trajectories/sample_tasks.json --json
+```
+
+| 项 | 说明 |
+|----|------|
+| 对比 | V9.3 整体均分 vs V10 节点诊断覆盖率 vs V10.26 `rerun_analysis` 进化 Δ |
+| 通过 | exit 0 当诊断覆盖率 ≥ 90% |
+| pytest | `tests/test_trajectory_ab.py` |
+
 ---
 
 ## 5. 决策事后绩效（realized_feedback + perf_metrics）
@@ -221,7 +236,8 @@ python3 tools/calibrate_sensitivity.py run --lookback 365 --json
 |------|------|------|------|
 | 因子 OOS | `ashare_factor_mining oos` | 本文 §1, QUANT §2 | test_ashare_alphagpt |
 | 美股动量 | `momentum_backtest.py` | 本文 §3 | 手工冒烟 |
-| 轨迹诊断 | `test_v10_backtest.py` | 本文 §4 | TESTING FAQ |
+| 轨迹诊断（离线） | `trajectory_ab_eval.py` | 本文 §4.1 | test_trajectory_ab |
+| 轨迹诊断（live traces） | `test_v10_backtest.py` | 本文 §4 | TESTING FAQ |
 | 决策绩效 | `run_with_realized_feedback` | ENGINE §4 | test_realized_feedback_loop |
 | backtrader | 自写策略 | quant_data_fusion §7 | — |
 | 打板 | limitup 筛选 + backtrader | QUANT §3, 本文 §6 | test_limitup_scoring |

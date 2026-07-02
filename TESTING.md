@@ -182,6 +182,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_research_loop.py` | `research_loop.py` | R/D 双循环 |
 | `test_hypothesis.py` | `hypothesis.py` | 可证伪假设 |
 | `test_eval_harness.py` | `eval_harness.py` | 多轮评测 |
+| `test_skill_forge.py` | `src/skill_forge/` | SkillForge 规则管线 + VFS |
+| `test_skill_forge_llm.py` | `llm_judge.py` | LLM-judge CR / 四维分析 / 诊断（StaticLLMClient） |
 | `test_eval_harness_golden.py` | 黄金回归 | 单调不退化 |
 | `test_prompt_optimizer.py` | `prompt_optimizer.py` | LLM 改写 |
 | `test_prompt_validation.py` | `prompt_validation.py` | 验证门控 |
@@ -221,6 +223,14 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_ashare_alphagpt.py` | `ashare_alphagpt/*` | 需 torch |
 | `test_factor_screener_bridge.py` | `factor_screener_bridge` | 需 torch |
 | `test_limitup_scoring.py` | `limitup_scoring` + thesis 合并 | **无 torch** |
+| `test_graph_analysis.py` | `graph_analysis.py` | V10.26 分析重跑 |
+| `test_eval_harness_rerun.py` | `eval_harness` + `rerun_analysis` | V10.26 真闭环 |
+| `test_trajectory_ab.py` | `trajectory_ab.py` | V10.27 A/B |
+| `test_trajectory_ab_eval_cli.py` | `tools/trajectory_ab_eval.py` | CLI smoke |
+| `test_signal_proposer.py` | `signal_proposer.py` | V10.28 信号→Hypothesis |
+| `test_pipeline_signals.py` | `pipeline` + factor scan | V10.28 接线 |
+| `test_skill_forge.py` | `skill_forge/*` | SkillForge 离线进化 |
+| `test_skill_forge_llm.py` | `skill_forge` LLM judge | StaticLLMClient mock |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
 ---
@@ -241,7 +251,20 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `tools/limitup_screener_bridge.py` / `limitup_scoring.py` | `pytest tests/test_limitup_scoring.py` |
 | `tools/quant_screener_bridge.py` | `pytest tests/test_quant_data_fusion.py` |
 | `src/service.py` | `pytest tests/test_service.py tests/test_access_control.py` |
-| 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py` |
+| `src/eval_harness.py` / `rerun_analysis` | `pytest tests/test_eval_harness.py tests/test_eval_harness_rerun.py tests/test_eval_harness_golden.py` |
+| `src/graph_analysis.py` | `pytest tests/test_graph_analysis.py tests/test_eval_harness_rerun.py` |
+| `src/trajectory_ab.py` | `pytest tests/test_trajectory_ab.py`；`python3 tools/trajectory_ab_eval.py` |
+| `src/signal_proposer.py` / `pipeline` 信号接线 | `pytest tests/test_signal_proposer.py tests/test_pipeline_signals.py` |
+| 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
+
+### V10.28 TextGrad 进化验收
+
+```bash
+# V10.26 分析重跑 + V10.27 A/B + V10.28 信号接线
+python3 -m pytest tests/test_graph_analysis.py tests/test_eval_harness_rerun.py \
+  tests/test_trajectory_ab.py tests/test_signal_proposer.py tests/test_pipeline_signals.py -v
+python3 tools/trajectory_ab_eval.py --json   # 诊断覆盖率 ≥ 90% → exit 0
+```
 
 ### V10.25+ 量化最小验收
 
@@ -423,7 +446,7 @@ A: CI 仅装 `requirements.txt` + pytest；torch 用例通过 `importorskip` 跳
 A: `pytest tests/test_limitup_scoring.py -v`（6 用例，无 torch）。
 
 **Q: `test_v10_backtest.py` 和 pytest 关系？**  
-A: 独立诊断脚本，检查 TextGrad 节点诊断覆盖率；纳入发版人工步骤，不在 pytest 集合内。
+A: 独立诊断脚本，检查 TextGrad 节点诊断覆盖率（需 `~/.qwenpaw/berkshire_traces`）。**V10.27** 起可用离线 bundled fixtures：`python3 tools/trajectory_ab_eval.py`（纳入发版门控，exit 0 = 覆盖率 ≥ 90%）。
 
 ---
 
@@ -482,6 +505,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-02 | 3.14 | **485 passed**（V10.28 + SkillForge；e2e LLM skip） |
 | 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |
 
 > 历史数字仅作参考；以本地 `pytest tests/ --co` 与 `-rs` 输出为准。
