@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "TESTING.md": {
-    "mtime": 1782961049.1000915,
-    "ast_hash": "b6e8ab8c0d67bc110d9e09bb40593fb3",
+    "mtime": 1782962995.802604,
+    "ast_hash": "4fce27292f9d8d92972b7f66a44f4b3b",
     "semantic_hash": ""
   },
   "tools/README.md": {
@@ -1252,6 +1252,11 @@
   "docs/SKILLS.md": {
     "mtime": 1782961569.2964096,
     "ast_hash": "b94ed28fbaf0776bdf7285932ed7dcbc",
+    "semantic_hash": ""
+  },
+  "scripts/release-check.sh": {
+    "mtime": 1782962983.239044,
+    "ast_hash": "e1754ab24644a97d4cf44d0e0128f9f2",
     "semantic_hash": ""
   }
 }

@@ -54,7 +54,8 @@ ok "pyproject.toml == APP_VERSION ($PKG_VER)"
 MAJOR_MINOR="${PKG_VER%.*}"
 EXPECTED_BANNER="V${MAJOR_MINOR}"
 
-README_BANNER="$(grep -m1 '当前版本' README.md | grep -oE 'V10\.[0-9]+' || true)"
+README_BANNER="$(grep -m1 '当前版本' README.md | sed -n 's/.*当前版本\*\*：\*\*\(V10\.[0-9][0-9]*\).*/\1/p')"
+[[ -n "$README_BANNER" ]] || fail "could not parse README.md 当前版本 banner"
 [[ "$README_BANNER" == "$EXPECTED_BANNER" ]] || fail "README.md banner ($README_BANNER) != $EXPECTED_BANNER"
 
 STATE_BANNER="$(grep -m1 'Version:' config/state.md | grep -oE 'V10\.[0-9]+' || true)"
