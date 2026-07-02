@@ -17,7 +17,7 @@
       "label": "fail()",
       "file_type": "code",
       "source_file": "scripts/release-check.sh",
-      "source_location": "L22",
+      "source_location": "L25",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -3095,15 +3095,15 @@
       "source_location": "L1",
       "weight": 1.0,
       "context": "call",
+      "confidence_score": 1.0,
       "source": "release-check",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_release-check.sh__entry",
-      "confidence_score": 1.0
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_release-check.sh__entry"
     },
     {
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/release-check.sh",
-      "source_location": "L22",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "release-check",
       "target": "release-check",
@@ -6321,5 +6321,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8c882597c7373d9cd147506c5fe4f720313a246a"
+  "built_at_commit": "4dd2d732f1f41108589d31c532fa3902095dde94"
 }
