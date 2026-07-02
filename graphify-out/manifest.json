@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782970823.461989,
-    "ast_hash": "57c049a4248a633e407949f3db35d1b8",
+    "mtime": 1782973722.825937,
+    "ast_hash": "6a2e204870695729cb0fad89ef9ca927",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782970935.6597266,
-    "ast_hash": "532b7f8c585457fd150e1f5c80ece4b1",
+    "mtime": 1782973721.5387242,
+    "ast_hash": "42e724d6da2eceb6eb1c4fa76ed17705",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "config/state.md": {
-    "mtime": 1782965662.0392284,
-    "ast_hash": "fd4f2a38ab0fc0071695d05fe0f2a2f5",
+    "mtime": 1782973720.0647607,
+    "ast_hash": "ae31c174489a85843d85ff9c899021b9",
     "semantic_hash": ""
   },
   "docs/textgrad_design.md": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "README_EN.md": {
-    "mtime": 1782965660.5397532,
-    "ast_hash": "6c7095b611f2a8f2ea5ea672e1ff0635",
+    "mtime": 1782973734.1925693,
+    "ast_hash": "4eaf2f47d2f14ebc4b07ae823583fcc8",
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
