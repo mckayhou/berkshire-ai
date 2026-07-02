@@ -4,14 +4,64 @@
   "graph": {},
   "nodes": [
     {
-      "label": "Berkshire AI - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf\uff08\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38\uff09",
+      "label": "\u56de\u6d4b\u6307\u5357\uff08BACKTEST\uff09",
       "file_type": "document",
-      "source_file": "README.md",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "BACKTEST",
+      "community": 4,
+      "norm_label": "\u56de\u6d4b\u6307\u5357(backtest)"
+    },
+    {
+      "label": "TextGrad \u5f15\u64ce\u6307\u5357\uff08ENGINE\uff09",
+      "file_type": "document",
+      "source_file": "docs/ENGINE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ENGINE",
+      "community": 4,
+      "norm_label": "textgrad \u5f15\u64ce\u6307\u5357(engine)"
+    },
+    {
+      "label": "A \u80a1\u91cf\u5316\u6307\u5357\uff08QUANT\uff09",
+      "file_type": "document",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "QUANT",
+      "community": 4,
+      "norm_label": "a \u80a1\u91cf\u5316\u6307\u5357(quant)"
+    },
+    {
+      "label": "Berkshire AI \u6587\u6863\u4e2d\u5fc3",
+      "file_type": "document",
+      "source_file": "docs/README.md",
       "source_location": "L1",
       "_origin": "ast",
       "id": "README",
       "community": 4,
-      "norm_label": "berkshire ai - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf(\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38)"
+      "norm_label": "berkshire ai \u6587\u6863\u4e2d\u5fc3"
+    },
+    {
+      "label": "Agent \u6280\u80fd\u76ee\u5f55\uff08SKILLS\uff09",
+      "file_type": "document",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "SKILLS",
+      "community": 4,
+      "norm_label": "agent \u6280\u80fd\u76ee\u5f55(skills)"
+    },
+    {
+      "label": "Berkshire AI \u529f\u80fd\u4f7f\u7528\u6307\u5357",
+      "file_type": "document",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "USER_GUIDE",
+      "community": 4,
+      "norm_label": "berkshire ai \u529f\u80fd\u4f7f\u7528\u6307\u5357"
     },
     {
       "label": "Berkshire AI \u2014 Four-Masters Parallel Investment Research (Upstream fully integrated)",
@@ -19,9 +69,9 @@
       "source_file": "README_EN.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "README_EN",
       "community": 4,
-      "norm_label": "berkshire ai \u2014 four-masters parallel investment research (upstream fully integrated)"
+      "norm_label": "berkshire ai \u2014 four-masters parallel investment research (upstream fully integrated)",
+      "id": "README_EN"
     },
     {
       "label": "Berkshire AI \u7248\u672c\u5386\u53f2",
@@ -29,9 +79,9 @@
       "source_file": "VERSION_HISTORY.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "VERSION_HISTORY",
       "community": 4,
-      "norm_label": "berkshire ai \u7248\u672c\u5386\u53f2"
+      "norm_label": "berkshire ai \u7248\u672c\u5386\u53f2",
+      "id": "VERSION_HISTORY"
     },
     {
       "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
@@ -39,9 +89,9 @@
       "source_file": "config/skill.md",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "skill",
       "community": 31,
-      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)"
+      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)",
+      "id": "skill"
     },
     {
       "label": "Berkshire AI - Global State & Thesis Tracker",
@@ -49,9 +99,9 @@
       "source_file": "config/state.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "state",
       "community": 32,
-      "norm_label": "berkshire ai - global state & thesis tracker"
+      "norm_label": "berkshire ai - global state & thesis tracker",
+      "id": "state"
     },
     {
       "label": "berkshire-ai Roadmap",
@@ -59,9 +109,9 @@
       "source_file": "docs/ROADMAP.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "ROADMAP",
       "community": 4,
-      "norm_label": "berkshire-ai roadmap"
+      "norm_label": "berkshire-ai roadmap",
+      "id": "ROADMAP"
     },
     {
       "label": "berkshire-ai",
@@ -72,9 +122,9 @@
       "source_location": "L1",
       "version": "10.25.0",
       "_origin": "ast",
-      "id": "pkg_berkshire_ai",
       "community": 70,
-      "norm_label": "berkshire-ai"
+      "norm_label": "berkshire-ai",
+      "id": "pkg_berkshire_ai"
     },
     {
       "label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
@@ -82,9 +132,9 @@
       "source_file": "src/service.py",
       "source_location": "L63",
       "_origin": "ast",
-      "id": "service",
       "community": 77,
-      "norm_label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1"
+      "norm_label": "\u7531\u300c\u51b3\u7b56\u5feb\u7167 + \u5df2\u5b9e\u73b0\u4ef7\u683c\u300d\u8ba1\u7b97\u6536\u76ca\u2192\u8bc4\u5206\u3002      payload: {         ticker, date, scores:{prefix:0~1",
+      "id": "service"
     },
     {
       "label": "__init__.py",
@@ -2579,16 +2629,6 @@
       "id": "TESTING"
     },
     {
-      "label": "\u56de\u6d4b\u6307\u5357\uff08BACKTEST\uff09",
-      "file_type": "document",
-      "source_file": "docs/BACKTEST.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "\u56de\u6d4b\u6307\u5357(backtest)",
-      "id": "BACKTEST"
-    },
-    {
       "label": "Prompt \u6a21\u677f\uff08V10.22\uff09",
       "file_type": "document",
       "source_file": "docs/PROMPT_TEMPLATES.md",
@@ -2597,36 +2637,6 @@
       "community": 109,
       "norm_label": "prompt \u6a21\u677f(v10.22)",
       "id": "PROMPT_TEMPLATES"
-    },
-    {
-      "label": "A \u80a1\u91cf\u5316\u6307\u5357\uff08QUANT\uff09",
-      "file_type": "document",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "a \u80a1\u91cf\u5316\u6307\u5357(quant)",
-      "id": "QUANT"
-    },
-    {
-      "label": "Berkshire AI \u6587\u6863\u4e2d\u5fc3",
-      "file_type": "document",
-      "source_file": "docs/README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "berkshire ai \u6587\u6863\u4e2d\u5fc3",
-      "id": "docs_README.md"
-    },
-    {
-      "label": "Berkshire AI \u529f\u80fd\u4f7f\u7528\u6307\u5357",
-      "file_type": "document",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "berkshire ai \u529f\u80fd\u4f7f\u7528\u6307\u5357",
-      "id": "USER_GUIDE"
     },
     {
       "label": "\u7ed3\u6784\u5316\u884c\u52a8\u5361\uff08Action Card\uff09",
@@ -2933,7 +2943,197 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "README.md",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "BACKTEST",
+      "target": "BACKTEST",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "BACKTEST",
+      "target": "ENGINE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "BACKTEST",
+      "target": "QUANT"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "BACKTEST",
+      "target": "README",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L156",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "BACKTEST",
+      "target": "TESTING"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/BACKTEST.md",
+      "source_location": "L98",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "BACKTEST",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "SKILLS",
+      "target": "BACKTEST",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "USER_GUIDE",
+      "target": "BACKTEST",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ENGINE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "ENGINE",
+      "target": "ENGINE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ENGINE.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "ENGINE",
+      "target": "README",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ENGINE.md",
+      "source_location": "L259",
+      "weight": 1.0,
+      "source": "ENGINE",
+      "target": "USER_GUIDE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "SKILLS",
+      "target": "ENGINE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "QUANT",
+      "target": "QUANT",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "QUANT",
+      "target": "README",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L254",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "QUANT",
+      "target": "TESTING"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L224",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "QUANT",
+      "target": "USER_GUIDE"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "QUANT",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/QUANT.md",
+      "source_location": "L124",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "QUANT",
+      "target": "tdx_mcp_tool_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "SKILLS",
+      "target": "QUANT",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/README.md",
       "source_location": "L1",
       "weight": 1.0,
       "source": "README",
@@ -2946,9 +3146,9 @@
       "source_file": "README.md",
       "source_location": "L274",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README",
-      "target": "README_EN",
-      "confidence_score": 1.0
+      "target": "README_EN"
     },
     {
       "relation": "references",
@@ -2956,8 +3156,28 @@
       "source_file": "README.md",
       "source_location": "L280",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README",
-      "target": "ROADMAP",
+      "target": "ROADMAP"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/README.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "README",
+      "target": "SKILLS",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/README.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "README",
+      "target": "USER_GUIDE",
       "confidence_score": 1.0
     },
     {
@@ -2966,9 +3186,129 @@
       "source_file": "README.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README",
-      "target": "VERSION_HISTORY",
+      "target": "VERSION_HISTORY"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "SKILLS",
+      "target": "SKILLS",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/SKILLS.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "SKILLS",
+      "target": "USER_GUIDE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "TESTING.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "TESTING",
+      "target": "USER_GUIDE"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L587",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "ROADMAP"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "USER_GUIDE",
+      "target": "USER_GUIDE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L589",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "VERSION_HISTORY"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L331",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "action-card"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L585",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "report-conventions"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L586",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "tdx_mcp_tool_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "textgrad_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/README.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_README.md",
+      "target": "USER_GUIDE"
     },
     {
       "relation": "contains",
@@ -2976,9 +3316,9 @@
       "source_file": "README_EN.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "README_EN",
-      "target": "README_EN",
-      "confidence_score": 1.0
+      "target": "README_EN"
     },
     {
       "relation": "references",
@@ -3021,24 +3361,14 @@
       "target": "VERSION_HISTORY"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L589",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "VERSION_HISTORY"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "VERSION_HISTORY.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "VERSION_HISTORY",
-      "target": "VERSION_HISTORY",
-      "confidence_score": 1.0
+      "target": "VERSION_HISTORY"
     },
     {
       "relation": "contains",
@@ -3046,9 +3376,9 @@
       "source_file": "config/skill.md",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "skill",
-      "target": "skill",
-      "confidence_score": 1.0
+      "target": "skill"
     },
     {
       "relation": "contains",
@@ -3056,9 +3386,9 @@
       "source_file": "config/state.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "state",
-      "target": "state",
-      "confidence_score": 1.0
+      "target": "state"
     },
     {
       "relation": "contains",
@@ -3066,18 +3396,8 @@
       "source_file": "docs/ROADMAP.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "ROADMAP",
-      "target": "ROADMAP",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L587",
-      "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "USER_GUIDE",
+      "source": "ROADMAP",
       "target": "ROADMAP"
     },
     {
@@ -3086,9 +3406,9 @@
       "source_file": "src/service.py",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "service",
-      "target": "service",
-      "confidence_score": 1.0
+      "target": "service"
     },
     {
       "relation": "contains",
@@ -5021,26 +5341,6 @@
       "target": "AGENTS"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/BACKTEST.md",
-      "source_location": "L156",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "BACKTEST",
-      "target": "TESTING"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L254",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "QUANT",
-      "target": "TESTING"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "TESTING.md",
@@ -5049,16 +5349,6 @@
       "confidence_score": 1.0,
       "source": "TESTING",
       "target": "TESTING"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "TESTING.md",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "TESTING",
-      "target": "USER_GUIDE"
     },
     {
       "relation": "references",
@@ -5073,16 +5363,6 @@
     {
       "relation": "references",
       "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "TESTING"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
       "source_file": "tools/README.md",
       "source_location": "L341",
       "weight": 1.0,
@@ -5093,222 +5373,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/BACKTEST.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "BACKTEST",
-      "target": "BACKTEST"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/BACKTEST.md",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "BACKTEST",
-      "target": "QUANT"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/BACKTEST.md",
-      "source_location": "L98",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "BACKTEST",
-      "target": "quant_data_fusion"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "BACKTEST"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "docs/PROMPT_TEMPLATES.md",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "PROMPT_TEMPLATES",
       "target": "PROMPT_TEMPLATES"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "QUANT",
-      "target": "QUANT"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L224",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "QUANT",
-      "target": "USER_GUIDE"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "QUANT",
-      "target": "quant_data_fusion"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/QUANT.md",
-      "source_location": "L124",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "QUANT",
-      "target": "tdx_mcp_tool_design"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "QUANT"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "USER_GUIDE"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "action-card"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "docs_README.md"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "report-conventions"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/README.md",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_README.md",
-      "target": "textgrad_design"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "USER_GUIDE"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L331",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "action-card"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L244",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "quant_data_fusion"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L585",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "report-conventions"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L586",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "tdx_mcp_tool_design"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/USER_GUIDE.md",
-      "source_location": "L166",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "USER_GUIDE",
-      "target": "textgrad_design"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/README.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tools_README.md",
-      "target": "USER_GUIDE"
     },
     {
       "relation": "contains",
@@ -5652,5 +5722,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fab7cbd115a210f4c3adc4b8b83ffdca43c5b97f"
+  "built_at_commit": "053a3d1676a746fd12ef3d6f53525beff9c6ec75"
 }

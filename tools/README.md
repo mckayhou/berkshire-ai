@@ -1,6 +1,8 @@
 # tools/ — 工具链说明
 
+> **文档中心**：[docs/README.md](../docs/README.md)（按场景选阅读路径）  
 > **完整使用指南**：[docs/USER_GUIDE.md](../docs/USER_GUIDE.md)（按工作流组织，覆盖全部功能）  
+> 回测专题：[docs/BACKTEST.md](../docs/BACKTEST.md) · A 股量化：[docs/QUANT.md](../docs/QUANT.md) · 引擎：[docs/ENGINE.md](../docs/ENGINE.md)  
 > 本文档按工具逐项列出 CLI 参数与示例。
 
 投研流程中由 Agent 通过 shell 调用的辅助工具。所有命令均以仓库根目录为工作目录运行（`python3 tools/xxx.py ...`）。
@@ -335,9 +337,28 @@ python3 tools/xueqiu_scraper.py --user-id <雪球用户ID> --keywords 拼多多,
 
 ---
 
+## perf_metrics.py（离线，Python API）
+
+无 CLI。供 `run_with_realized_feedback` 与动量回测脚本拼净值曲线后计算风险调整指标。
+
+```python
+from tools.perf_metrics import risk_analysis, returns_from_prices
+
+rets = returns_from_prices([100, 101, 99, 102])
+print(risk_analysis(rets))  # 年化收益、波动、夏普、最大回撤等
+```
+
+口径对齐 Qlib `risk_analysis`（求和累计收益、252 日年化）。详见 [BACKTEST.md §5](../docs/BACKTEST.md#5-决策后验绩效run_with_realized_feedback--perf_metrics) 与 [ENGINE.md §4](../docs/ENGINE.md#4-收益反馈与绩效)。
+
+---
+
 ## 延伸阅读
 
+- [docs/README.md](../docs/README.md) — **文档中心**（导航与场景路径）
 - [docs/USER_GUIDE.md](../docs/USER_GUIDE.md) — 按工作流组织的**完整功能使用指南**
+- [docs/BACKTEST.md](../docs/BACKTEST.md) — 回测 5 条路线对照
+- [docs/QUANT.md](../docs/QUANT.md) — A 股量化专题
+- [docs/ENGINE.md](../docs/ENGINE.md) — TextGrad 引擎专题
 - [TESTING.md](../TESTING.md) — **完整测试指南**（pytest 分层、CI、冒烟清单）
 - [docs/quant_data_fusion.md](../docs/quant_data_fusion.md) — A 股数据融合与边界
 - [docs/action-card.md](../docs/action-card.md) — portfolio_scan 行动卡模板

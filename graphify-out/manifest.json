@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782960669.4655979,
-    "ast_hash": "643e2c43e93fe95d83d1a7884abdd570",
+    "mtime": 1782961062.270593,
+    "ast_hash": "a7e7cb18d21d4977cf93f47008164204",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782960669.4676304,
-    "ast_hash": "e9704bd057760423a4086e1dd4667bfd",
+    "mtime": 1782961077.8289979,
+    "ast_hash": "adbf41debfa4c91bc0b60195739583db",
     "semantic_hash": ""
   },
   "config/state.md": {
@@ -265,13 +265,13 @@
     "semantic_hash": ""
   },
   "TESTING.md": {
-    "mtime": 1782960048.0106087,
-    "ast_hash": "f48cd790d2abf18bafac15ea086bd3c6",
+    "mtime": 1782961049.1000915,
+    "ast_hash": "b6e8ab8c0d67bc110d9e09bb40593fb3",
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782960048.026201,
-    "ast_hash": "a614c41538b44a63e312431c3ea88c12",
+    "mtime": 1782961060.568924,
+    "ast_hash": "f1dcb132dbd608d14ac61c1cae9d78a6",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "docs/USER_GUIDE.md": {
-    "mtime": 1782960048.0148401,
-    "ast_hash": "67bfff27796de4c774ce434181921bd2",
+    "mtime": 1782960910.3567505,
+    "ast_hash": "06251a8b00dbb037e51c16edd6363739",
     "semantic_hash": ""
   },
   "docs/BACKTEST.md": {
@@ -1242,6 +1242,16 @@
   "docs/README.md": {
     "mtime": 1782960685.7025309,
     "ast_hash": "47426d1d00577eb74321405918b41b7b",
+    "semantic_hash": ""
+  },
+  "docs/ENGINE.md": {
+    "mtime": 1782960822.1678152,
+    "ast_hash": "26e8538037793adaabb4aa6aef9485b1",
+    "semantic_hash": ""
+  },
+  "docs/SKILLS.md": {
+    "mtime": 1782960840.6393342,
+    "ast_hash": "e5ee6181c55c2fec6ede4889742daee3",
     "semantic_hash": ""
   }
 }

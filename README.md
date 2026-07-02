@@ -6,7 +6,8 @@
 
 **当前版本**：**V10.25**（AlphaGPT 因子挖掘 `ashare_alphagpt` / `factor_screener_bridge`；五维打板 `limitup_screener_bridge`；累积 V10.24 量化数据融合）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
-**使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全部功能的工作流与 CLI 说明。
+**使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全功能工作流  
+**文档中心**：[docs/README.md](docs/README.md) — 按场景选阅读路径（回测 / 量化 / 引擎 / 技能 / 测试）
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -270,17 +271,21 @@ berkshire-ai/
 
 | 文档 | 内容 |
 |---|---|
-| **[docs/USER_GUIDE.md](docs/USER_GUIDE.md)** | **全功能使用指南**（工作流 + 全部 CLI） |
+| **[docs/README.md](docs/README.md)** | **文档中心**（导航与场景路径） |
+| **[docs/USER_GUIDE.md](docs/USER_GUIDE.md)** | 全功能使用指南（工作流 + CLI） |
+| [docs/BACKTEST.md](docs/BACKTEST.md) | 回测专题（5 条路线） |
+| [docs/QUANT.md](docs/QUANT.md) | A 股量化专题 |
+| [docs/ENGINE.md](docs/ENGINE.md) | TextGrad 引擎专题 |
+| [docs/SKILLS.md](docs/SKILLS.md) | Agent 技能目录 |
+| [TESTING.md](TESTING.md) | 测试指南（pytest、CI、冒烟） |
+| [tools/README.md](tools/README.md) | 工具 CLI 逐项说明 |
+| [docs/quant_data_fusion.md](docs/quant_data_fusion.md) | A 股三库融合与数据边界 |
+| [docs/textgrad_design.md](docs/textgrad_design.md) | 引擎设计（深度） |
+| [docs/action-card.md](docs/action-card.md) | 组合行动卡模板 |
+| [docs/report-conventions.md](docs/report-conventions.md) | 报告规范 |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图 |
 | [README_EN.md](README_EN.md) | English version |
-| [TESTING.md](TESTING.md) | **测试指南**（pytest 分层、CI、冒烟清单、验收入口） |
-| [tools/README.md](tools/README.md) | 工具链 CLI 参数逐项说明 |
-| [docs/quant_data_fusion.md](docs/quant_data_fusion.md) | A 股三库融合、因子/打板筛选边界 |
-| [docs/action-card.md](docs/action-card.md) | 结构化行动卡（PM 汇总层，可执行结论模板） |
-| [docs/report-conventions.md](docs/report-conventions.md) | 报告目录/命名规范、投研核心原则 |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图（含本 fork 实现状态） |
-| [docs/textgrad_design.md](docs/textgrad_design.md) | TextGrad V10 引擎设计 |
-| [docs/tdx_mcp_tool_design.md](docs/tdx_mcp_tool_design.md) | 通达信 MCP（不实施，备忘） |
-| [LICENSE](LICENSE) | MIT（fork 自 xbtlin/ai-berkshire，保留原作者版权） |
+| [LICENSE](LICENSE) | MIT |
 
 ## 🧪 测试
 

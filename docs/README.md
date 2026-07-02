@@ -17,6 +17,7 @@
 | **选 Agent 技能** | [SKILLS.md](SKILLS.md) | 5 min |
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
 | **理解架构与设计** | [textgrad_design.md](textgrad_design.md) | 30 min |
+| **Prompt 模板** | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 按需 |
 
 ---
 
@@ -35,6 +36,11 @@ docs/README.md          ← 你在这里（导航）
 ├── report-conventions.md 报告规范
 ├── ROADMAP.md            路线图
 └── tdx_mcp_tool_design.md 通达信 MCP（不实施，备忘）
+
+参考与备忘（非操作手册）
+├── PROMPT_TEMPLATES.md   四大师 Prompt 模板
+├── qlib_evaluation.md    Qlib 口径评估备忘
+└── rdagent_reference.md  RD-Agent 借鉴备忘
 
 仓库根目录
 ├── README.md           项目总览

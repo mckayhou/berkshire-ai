@@ -638,6 +638,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v
 | [action-card.md](action-card.md) | 行动卡模板 |
 | [report-conventions.md](report-conventions.md) | 报告规范 |
 | [tdx_mcp_tool_design.md](tdx_mcp_tool_design.md) | 通达信 MCP（不实施） |
+| [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 四大师 Prompt 模板 |
 | [ROADMAP.md](ROADMAP.md) | 路线图 |
 | [README.md](../README.md) | 项目总览 |
 | [VERSION_HISTORY.md](../VERSION_HISTORY.md) | 版本历史 |
