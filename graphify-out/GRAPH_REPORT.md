@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 286 nodes · 260 edges · 221 communities (51 shown, 170 thin omitted)
+- 286 nodes · 262 edges · 221 communities (51 shown, 170 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `343ddf61`
+- Built from commit: `59b6116c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -191,14 +191,14 @@
 ## God Nodes (most connected - your core abstractions)
 1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 12 edges
 2. `Berkshire AI 功能使用指南` - 12 edges
-3. `报告输出规范（report conventions）` - 7 edges
-4. `tools/ — 工具链说明` - 6 edges
+3. `测试指南（TESTING）` - 7 edges
+4. `报告输出规范（report conventions）` - 7 edges
 5. `聚宽策略开发` - 6 edges
 6. `聚宽文档索引` - 6 edges
 7. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-8. `结构化行动卡（Action Card）` - 6 edges
-9. `测试指南（TESTING）` - 5 edges
-10. `Berkshire AI 版本历史` - 5 edges
+8. `Berkshire AI 版本历史` - 6 edges
+9. `结构化行动卡（Action Card）` - 6 edges
+10. `tools/ — 工具链说明` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
@@ -218,7 +218,7 @@
 ## Communities (221 total, 170 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.51
+Cohesion: 0.54
 Nodes (13): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南（TESTING）, Berkshire AI 功能使用指南, Berkshire AI 版本历史, 结构化行动卡（Action Card）, Quant Data Fusion — 三库调研与 berkshire-ai V10.24 融合决策 (+5 more)
 
 ### Community 5 - "Community 5"
