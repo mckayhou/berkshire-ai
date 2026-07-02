@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782966645.631991,
-    "ast_hash": "c393d081c0debfdd7ba678b80553e8cf",
+    "mtime": 1782969555.3708215,
+    "ast_hash": "afdcfea31972a824b549ab48187d5c01",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -265,13 +265,13 @@
     "semantic_hash": ""
   },
   "TESTING.md": {
-    "mtime": 1782966645.6340184,
-    "ast_hash": "276d57c34ecacb0c407e4679b84b66d4",
+    "mtime": 1782969555.367942,
+    "ast_hash": "5aab9c520c5fdb4e5792234c7b0d7a19",
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782965771.0174294,
-    "ast_hash": "fbda97501a805485d26a928951f723d1",
+    "mtime": 1782968339.522728,
+    "ast_hash": "8c895a122f9153d8f21d5777ac9edde0",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "src/eval_harness.py": {
-    "mtime": 1782965128.1051087,
-    "ast_hash": "d18f6a17a75656b6fa346e9d2c803fae",
+    "mtime": 1782969058.4051518,
+    "ast_hash": "9d5625cc49364ec7ac42802d34f66c49",
     "semantic_hash": ""
   },
   "src/prompt_validation.py": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "src/evolution_cli.py": {
-    "mtime": 1782965930.1115472,
-    "ast_hash": "f1e5d1907e79be2265675ea8733654a0",
+    "mtime": 1782968430.6248748,
+    "ast_hash": "1f03342ede5b17fbe4d5af8bad7f7c0f",
     "semantic_hash": ""
   },
   "src/reflect.py": {
@@ -600,8 +600,8 @@
     "semantic_hash": ""
   },
   "tests/test_evolution_cli.py": {
-    "mtime": 1782876474.3720698,
-    "ast_hash": "8efbddab1514209748041aa2fe37d963",
+    "mtime": 1782968379.46766,
+    "ast_hash": "362b4bd470286a034e0b8f3a86312992",
     "semantic_hash": ""
   },
   "tests/test_reflect.py": {
@@ -1240,8 +1240,8 @@
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1782965680.5182197,
-    "ast_hash": "998a1d341c6bea493330f950403dbae4",
+    "mtime": 1782968356.1809998,
+    "ast_hash": "cdbd058b58ec9322960e1ece8a7afb17",
     "semantic_hash": ""
   },
   "docs/ENGINE.md": {
@@ -1265,8 +1265,8 @@
     "semantic_hash": ""
   },
   "src/signal_proposer.py": {
-    "mtime": 1782964837.1278858,
-    "ast_hash": "edfb3c88b94adbc7640437999d8ce885",
+    "mtime": 1782969060.453927,
+    "ast_hash": "c00d0713ed2851751bfcec8a2da9e180",
     "semantic_hash": ""
   },
   "src/skill_forge/__init__.py": {
@@ -1355,8 +1355,8 @@
     "semantic_hash": ""
   },
   "tests/test_skill_forge.py": {
-    "mtime": 1782965525.3889694,
-    "ast_hash": "73bd48804d2e8bf379eea94867de2685",
+    "mtime": 1782968431.387293,
+    "ast_hash": "6de92c5bc794d6b40b15b745b1463fc4",
     "semantic_hash": ""
   },
   "tests/test_trajectory_ab.py": {
@@ -1365,8 +1365,8 @@
     "semantic_hash": ""
   },
   "tools/skill_evolve.py": {
-    "mtime": 1782965310.169114,
-    "ast_hash": "def454b09641e85e210f0c3d6dcbeb82",
+    "mtime": 1782968381.0816486,
+    "ast_hash": "5864d3399d0e8f93e488389d7eef8adb",
     "semantic_hash": ""
   },
   "tools/trajectory_ab_eval.py": {
@@ -1375,8 +1375,8 @@
     "semantic_hash": ""
   },
   "docs/SKILL_EVOLUTION.md": {
-    "mtime": 1782966003.4876423,
-    "ast_hash": "437d22202b9cf63791ae0b53ab054568",
+    "mtime": 1782968383.2655072,
+    "ast_hash": "3367f0ed7142a246b492b0a4cd1024ab",
     "semantic_hash": ""
   },
   "src/skill_forge/judge_mode.py": {
@@ -1390,13 +1390,23 @@
     "semantic_hash": ""
   },
   "tests/test_skill_forge_llm.py": {
-    "mtime": 1782965956.6064706,
-    "ast_hash": "7c5ee180c7920cca4034fae0cf2661a5",
+    "mtime": 1782968434.1338263,
+    "ast_hash": "2502401086379ba13663610f3131249f",
     "semantic_hash": ""
   },
   "tests/test_trajectory_ab_eval_cli.py": {
     "mtime": 1782965788.4294274,
     "ast_hash": "6a0f55d9df9f9cbb5d940584414a75ae",
+    "semantic_hash": ""
+  },
+  "tests/test_skill_forge_cli.py": {
+    "mtime": 1782968332.0161915,
+    "ast_hash": "97542db8fc1830c903c1d3f320490678",
+    "semantic_hash": ""
+  },
+  "tests/fixtures/skill_forge/README.md": {
+    "mtime": 1782968334.490833,
+    "ast_hash": "225f3125f068d6b4c20dd63f9883f17c",
     "semantic_hash": ""
   }
 }

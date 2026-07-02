@@ -195,7 +195,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_access_control.py` | `access_control.py` | API Key / 限流 |
 | `test_metrics_export.py` | `metrics_export.py` | Prometheus |
 | `test_config.py` | `config.py` | 环境变量 doctor |
-| `test_evolution_cli.py` | `evolution_cli.py` | CLI 子命令 |
+| `test_evolution_cli.py` | `evolution_cli.py` | CLI 子命令（含 skill-evolve） |
 | `test_cron_evolution.py` | cron 任务 | 定时入口 |
 | `test_reflect.py` | 反思 | 经验对比 |
 | `test_trace_recorder.py` | 轨迹记录 | |
@@ -229,8 +229,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_trajectory_ab_eval_cli.py` | `tools/trajectory_ab_eval.py` | CLI smoke |
 | `test_signal_proposer.py` | `signal_proposer.py` | V10.28 信号→Hypothesis |
 | `test_pipeline_signals.py` | `pipeline` + factor scan | V10.28 接线 |
-| `test_skill_forge.py` | `skill_forge/*` | SkillForge 离线进化 |
-| `test_skill_forge_llm.py` | `skill_forge` LLM judge | StaticLLMClient mock |
+| `test_skill_forge_cli.py` | `tools/skill_evolve.py` CLI | 子命令 subprocess 冒烟 |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
 ---
@@ -255,7 +254,18 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/graph_analysis.py` | `pytest tests/test_graph_analysis.py tests/test_eval_harness_rerun.py` |
 | `src/trajectory_ab.py` | `pytest tests/test_trajectory_ab.py`；`python3 tools/trajectory_ab_eval.py` |
 | `src/signal_proposer.py` / `pipeline` 信号接线 | `pytest tests/test_signal_proposer.py tests/test_pipeline_signals.py` |
+| `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
+
+### SkillForge 技能进化验收
+
+```bash
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
+python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/bad_cases.jsonl --judge-mode rule
+python3 tools/skill_evolve.py evolve investment-research --dry-run --judge-mode rule
+```
+
+文档：[docs/SKILL_EVOLUTION.md](docs/SKILL_EVOLUTION.md)
 
 ### V10.28 TextGrad 进化验收
 
@@ -293,6 +303,8 @@ python3 tools/report_audit.py extract --report reports/RocketLab/RKLB-investment
 python3 tools/report_html.py README.md -o /tmp/readme.html
 python3 tools/thesis_queue.py --json
 python3 tools/portfolio_risk.py --holdings '{"NVDA":45,"CASH":55}' --json
+python3 tools/skill_evolve.py list
+python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/bad_cases.jsonl --judge-mode rule
 python3 src/config.py
 ```
 
@@ -505,7 +517,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
-| 2026-07-02 | 3.14 | **484 passed, 1 skipped**（V10.28 + SkillForge；e2e LLM skip） |
+| 2026-07-02 | 3.14 | **503 passed, 2 skipped**（V10.28 + SkillForge；e2e LLM + Tavily integration skip） |
 | 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |
 
 > 历史数字仅作参考；以本地 `pytest tests/ --co` 与 `-rs` 输出为准。

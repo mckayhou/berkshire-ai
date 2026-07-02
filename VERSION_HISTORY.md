@@ -52,7 +52,7 @@
 - `pipeline.run_full_cycle(factor_scan=…, limitup_scan=…)` 并入 R 循环
 
 **测试结果**:
-- [x] 单元测试: **484 passed, 1 skipped**
+- [x] 单元测试: **503 passed, 2 skipped**
 
 ---
 

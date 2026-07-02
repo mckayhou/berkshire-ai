@@ -167,13 +167,52 @@ def run_multi_round(
             from .graph_analysis import PromptHeuristicAnalysisRunner
         runner = PromptHeuristicAnalysisRunner()
 
-    def _mean_quality() -> float:
+    def _run_analysis() -> Optional[Dict[str, float]]:
+        if rerun_analysis and runner is not None:
+            return dict(runner.run(graph, ticker or "DEMO"))
+        return None
+
+    def _mean_quality_from_scores(scores: Dict[str, float]) -> float:
+        try:
+            from graph_analysis import mean_master_scores
+        except ImportError:
+            from .graph_analysis import mean_master_scores
+        if prompt_nodes:
+            prefixes = [
+                n[: -len("_prompt")]
+                for n in prompt_nodes
+                if n.endswith("_prompt")
+            ]
+            if prefixes:
+                vals = [_clip01(float(scores.get(p, 0.0))) for p in prefixes]
+                return sum(vals) / len(vals)
+        return mean_master_scores(scores)
+
+    def _mean_quality(scores: Optional[Dict[str, float]] = None) -> float:
+        if rerun_analysis and runner is not None:
+            s = scores if scores is not None else _run_analysis()
+            if not s:
+                return 0.0
+            return _mean_quality_from_scores(s)
+        return mean_prompt_quality(graph, quality_fn, prompt_nodes)
+
+    def _build_grads(scores: Optional[Dict[str, float]] = None) -> Dict[str, Gradient]:
         if rerun_analysis and runner is not None:
             try:
-                from graph_analysis import mean_master_scores
+                from graph_analysis import prompt_gradients_from_scores
             except ImportError:
-                from .graph_analysis import mean_master_scores
-            scores = runner.run(graph, ticker or "DEMO")
+                from .graph_analysis import prompt_gradients_from_scores
+            s = scores if scores is not None else _run_analysis()
+            if not s:
+                return {}
+            return prompt_gradients_from_scores(graph, s, prompt_nodes=prompt_nodes)
+        return build_quality_gradients(graph, quality_fn, threshold, prompt_nodes)
+
+    def _all_passed(
+        grads: Dict[str, Gradient],
+        scores: Optional[Dict[str, float]] = None,
+    ) -> bool:
+        if rerun_analysis and scores is not None:
             if prompt_nodes:
                 prefixes = [
                     n[: -len("_prompt")]
@@ -182,31 +221,14 @@ def run_multi_round(
                 ]
                 if prefixes:
                     vals = [_clip01(float(scores.get(p, 0.0))) for p in prefixes]
-                    return sum(vals) / len(vals)
-            return mean_master_scores(scores)
-        return mean_prompt_quality(graph, quality_fn, prompt_nodes)
-
-    def _build_grads():
-        if rerun_analysis and runner is not None:
-            try:
-                from graph_analysis import prompt_gradients_from_scores
-            except ImportError:
-                from .graph_analysis import prompt_gradients_from_scores
-            scores = runner.run(graph, ticker or "DEMO")
-            return prompt_gradients_from_scores(graph, scores, prompt_nodes=prompt_nodes)
-        return build_quality_gradients(graph, quality_fn, threshold, prompt_nodes)
-
-    def _all_passed(grads: Dict[str, Gradient]) -> bool:
-        if rerun_analysis:
-            return bool(grads) and all(g.ok for g in grads.values())
+                    return bool(vals) and all(v >= threshold for v in vals)
+            return bool(scores) and all(
+                _clip01(float(v)) >= threshold for v in scores.values()
+            )
         return bool(grads) and all(g.ok for g in grads.values())
 
-    scorer_fn = quality_fn
-    if rerun_analysis and runner is not None:
-        # 验证门控仍按 prompt 文本打分（改写后 analysis 分在下一轮体现）
-        scorer_fn = quality_fn
-
-    scorer = StaticPromptScorer(fn=scorer_fn)
+    # 验证门控仍按 prompt 文本打分（改写后 analysis 分在下一轮体现）
+    scorer = StaticPromptScorer(fn=quality_fn)
     optimizer = TextualGradientDescent(
         graph,
         llm=llm,
@@ -230,14 +252,12 @@ def run_multi_round(
                    "rerun_analysis": rerun_analysis},
         )
         for r in range(1, rounds + 1):
-            scores_snapshot: Optional[Dict[str, float]] = None
-            if rerun_analysis and runner is not None:
-                scores_snapshot = dict(runner.run(graph, ticker or "DEMO"))
+            scores_snapshot = _run_analysis()
 
-            grads = _build_grads()
-            all_passed = _all_passed(grads)
+            grads = _build_grads(scores_snapshot)
+            all_passed = _all_passed(grads, scores_snapshot)
             if all_passed:
-                q = _mean_quality()
+                q = _mean_quality(scores_snapshot)
                 report.rounds.append(
                     RoundMetrics(r, q, 0, 0, True, analysis_scores=scores_snapshot)
                 )
@@ -248,10 +268,9 @@ def run_multi_round(
             accepted = sum(1 for u in updates if u.get("rewritten"))
             rejected = sum(1 for u in updates if u.get("rewrite_rejected"))
 
-            if rerun_analysis and runner is not None:
-                scores_snapshot = dict(runner.run(graph, ticker or "DEMO"))
+            scores_snapshot = _run_analysis()
 
-            q = _mean_quality()
+            q = _mean_quality(scores_snapshot)
             report.rounds.append(
                 RoundMetrics(
                     r, q, accepted, rejected, False, analysis_scores=scores_snapshot

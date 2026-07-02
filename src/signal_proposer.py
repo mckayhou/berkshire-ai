@@ -7,7 +7,10 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict, List, Optional
+
+logger = logging.getLogger(__name__)
 
 try:
     from experience_store import Experience, ExperienceRetriever
@@ -119,6 +122,11 @@ class CompositeHypothesisProposer:
                     ticker=ticker, recent=recent, retriever=retriever, k=k
                 )
             except Exception:  # noqa: BLE001
+                logger.warning(
+                    "hypothesis proposer failed",
+                    exc_info=True,
+                    extra={"proposer": type(proposer).__name__},
+                )
                 batch = []
             for h in batch:
                 key = (h.ticker.upper(), h.statement[:80])

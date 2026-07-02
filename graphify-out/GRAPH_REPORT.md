@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-02)
 
 ## Corpus Check
-- 275 files · ~420,163 words
+- 277 files · ~421,240 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 320 nodes · 357 edges · 226 communities (60 shown, 166 thin omitted)
+- 322 nodes · 360 edges · 227 communities (61 shown, 166 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `56cec0f3`
+- Built from commit: `92103866`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -189,8 +189,8 @@
 1. `Agent 技能目录（SKILLS）` - 31 edges
 2. `Berkshire AI 功能使用指南` - 20 edges
 3. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 15 edges
-4. `TextGrad 引擎指南（ENGINE）` - 14 edges
-5. `Berkshire AI 文档中心` - 14 edges
+4. `Berkshire AI 文档中心` - 15 edges
+5. `TextGrad 引擎指南（ENGINE）` - 14 edges
 6. `测试指南（TESTING）` - 13 edges
 7. `回测指南（BACKTEST）` - 12 edges
 8. `A 股量化指南（QUANT）` - 12 edges
@@ -212,11 +212,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (226 total, 166 thin omitted)
+## Communities (227 total, 166 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.39
-Nodes (22): 回测指南（BACKTEST）, TextGrad 引擎指南（ENGINE）, Prompt 模板（V10.22）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, SkillForge 技能进化（SKILL_EVOLUTION） (+14 more)
+Cohesion: 0.37
+Nodes (23): 回测指南（BACKTEST）, TextGrad 引擎指南（ENGINE）, Prompt 模板（V10.22）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, SkillForge 技能进化（SKILL_EVOLUTION） (+15 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 1.20
@@ -239,6 +239,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Berkshire AI 功能使用指南` connect `Community 4` to `Community 7`?**
   _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **Why does `Berkshire AI 文档中心` connect `Community 4` to `Community 7`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script` to the rest of the system?**
   _12 weakly-connected nodes found - possible documentation gaps or missing edges._
