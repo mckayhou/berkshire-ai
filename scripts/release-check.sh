@@ -33,9 +33,10 @@ warn() {
 }
 
 # --- 1. Clean working tree (includes graphify hook drift) ---
-if [[ -n "$(git status --porcelain)" ]]; then
+DIRTY="$(git status --porcelain | grep -v '^?? graphify-out/\.rebuild\.lock$' || true)"
+if [[ -n "$DIRTY" ]]; then
   echo "Uncommitted changes:" >&2
-  git status --short >&2
+  echo "$DIRTY" >&2
   fail "working tree not clean — commit or stash before release"
 fi
 ok "working tree clean"
