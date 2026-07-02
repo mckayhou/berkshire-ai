@@ -472,7 +472,7 @@ chmod +x scripts/release-check.sh   # 首次
 | 1 | 工作区干净 | `git status --short` 无输出（含 graphify hook 产生的 `graphify-out/`） |
 | 2 | 包版本一致 | `pyproject.toml` `version` == `src/service.py` `APP_VERSION` |
 | 3 | 对外横幅一致 | `README.md`、`config/state.md` 的 **V10.XY** 与上项主版本号一致 |
-| 4 | 无幽灵版本号 | 核心文档无未写入 `VERSION_HISTORY.md` 的 **V10.26** 等标签 |
+| 4 | 无幽灵版本号 | 核心文档无高于当前 **V10.XY** 的未发布标签 |
 | 5 | 标签指向 HEAD | `git rev-parse HEAD` == `git rev-parse v10.XY^{commit}` |
 | 6 | 远端同步 | `main` 与 `origin/main` 同 SHA（有 upstream 时） |
 | 7 | 单元测试 | `pytest -q tests/` 全绿 |

@@ -79,11 +79,24 @@ STATE_BANNER="$(grep -m1 'Version:' config/state.md | sed -n 's/.*\*\*Version: \
 [[ "$STATE_BANNER" == "$EXPECTED_BANNER" ]] || fail "config/state.md ($STATE_BANNER) != $EXPECTED_BANNER"
 ok "user-facing banners match ($EXPECTED_BANNER)"
 
-# --- 3. No phantom future version labels in tracked docs ---
-PHANTOM="$(grep -r 'V10\.26' --include='*.md' config README.md docs tools 2>/dev/null \
-  | grep -v '.agents/skills/qmt-docs' || true)"
-[[ -z "$PHANTOM" ]] || { echo "$PHANTOM" >&2; fail "phantom V10.26 references (fold into current VERSION_HISTORY entry)"; }
-ok "no phantom V10.26 in core docs"
+# --- 3. No phantom *future* version labels (minor > shipping) in core docs ---
+SHIP_MINOR="${MAJOR_MINOR#10.}"
+PHANTOM=""
+while IFS= read -r line; do
+  [[ -z "$line" ]] && continue
+  for tag in $(echo "$line" | grep -oE 'V10\.[0-9]+' || true); do
+    minor="${tag#V10.}"
+    minor="${minor#0}" # strip leading zero for compare
+    ship="${SHIP_MINOR#0}"
+    if [[ "$minor" -gt "$ship" ]]; then
+      PHANTOM="${PHANTOM}${line}\n"
+      break
+    fi
+  done
+done < <(grep -rE 'V10\.[0-9]+' --include='*.md' config README.md docs tools 2>/dev/null \
+  | grep -v '.agents/skills/qmt-docs' || true)
+[[ -z "$PHANTOM" ]] || { echo -e "$PHANTOM" >&2; fail "phantom future version labels (minor > V10.${SHIP_MINOR})"; }
+ok "no phantom future version in core docs"
 
 # --- 4. Annotated tag points at HEAD ---
 TAG="v${MAJOR_MINOR}"
