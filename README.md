@@ -4,7 +4,9 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.24**（量化数据融合：`LocalCsvSource` / `PytdxSource` + `quant_screener_bridge`；见 `docs/quant_data_fusion.md`；累积 V10.23 主链路强化）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.26**（五维打板评分 `limitup_screener_bridge`；累积 V10.25 AlphaGPT 因子挖掘、V10.24 量化数据融合）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+
+**使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全部功能的工作流与 CLI 说明。
 
 **当前状态**：上游全能力 + V10 引擎已并入本仓库。**自 V10.2 起重点适配 OpenClaw / QwenPaw 风格 Agent 运行时**。
 
@@ -173,13 +175,16 @@ debate = BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0
 print(debate.net_stance, debate.net_score)   # bullish / +0.x（中性区 |net|<0.15）
 ```
 
-### A股多源降级数据 + 多通道交付
+# A股多源降级数据 + 多通道交付 + 量化筛选
 
+详见 [docs/USER_GUIDE.md](docs/USER_GUIDE.md) §5–§8。快速命令：
 ```bash
 # 数据：按 native→tushare→efinance→akshare→baostock→yfinance 降级，全失败不抛崩
 python3 tools/data_sources.py sources                  # 列出各源可用状态（离线）
 python3 tools/data_sources.py daily 600519 --limit 60  # 日线（走降级链）
-python3 tools/quant_screener_bridge.py --json          # 本地 CSV 动量 → thesis_queue JSON（V10.24）
+python3 tools/quant_screener_bridge.py --json          # 本地 CSV 动量 → thesis_queue JSON
+python3 tools/limitup_screener_bridge.py --json        # 五维打板评分（V10.26）
+python3 tools/factor_screener_bridge.py --json         # AlphaGPT 因子筛选（需 torch）
 
 # 交付：Telegram / 飞书 / 本地兜底；零配置只落地到 reports/notifications/
 python3 tools/notify.py channels
@@ -265,24 +270,36 @@ berkshire-ai/
 
 | 文档 | 内容 |
 |---|---|
+| **[docs/USER_GUIDE.md](docs/USER_GUIDE.md)** | **全功能使用指南**（工作流 + 全部 CLI） |
 | [README_EN.md](README_EN.md) | English version |
-| [TESTING.md](TESTING.md) | 测试指南 + 最近一次全量 E2E 报告 |
-| [tools/README.md](tools/README.md) | 工具链 CLI 用法目录（含 data_sources / notify 降级与多通道交付） |
+| [TESTING.md](TESTING.md) | **测试指南**（pytest 分层、CI、冒烟清单、验收入口） |
+| [tools/README.md](tools/README.md) | 工具链 CLI 参数逐项说明 |
+| [docs/quant_data_fusion.md](docs/quant_data_fusion.md) | A 股三库融合、因子/打板筛选边界 |
 | [docs/action-card.md](docs/action-card.md) | 结构化行动卡（PM 汇总层，可执行结论模板） |
 | [docs/report-conventions.md](docs/report-conventions.md) | 报告目录/命名规范、投研核心原则 |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | 路线图（含本 fork 实现状态） |
 | [docs/textgrad_design.md](docs/textgrad_design.md) | TextGrad V10 引擎设计 |
+| [docs/tdx_mcp_tool_design.md](docs/tdx_mcp_tool_design.md) | 通达信 MCP（不实施，备忘） |
 | [LICENSE](LICENSE) | MIT（fork 自 xbtlin/ai-berkshire，保留原作者版权） |
 
 ## 🧪 测试
 
+完整说明见 **[TESTING.md](TESTING.md)**（分层、459+ 用例索引、CI、手工冒烟、按功能验收入口）。
+
 ```bash
-pip install -r requirements.txt pytest
-python3 -m pytest tests/ -v -rs      # 单元 + 集成（无 key/无网时相关用例自动 skip）
-python3 tests/test_v10_backtest.py   # 回测诊断覆盖率
+pip install -r requirements.txt pytest pytest-cov
+python3 -m pytest tests/ -v -rs      # 全量；无 LLM Key 时 1 个 e2e skip
+python3 -m pytest tests/ -q --cov --cov-fail-under=50   # 与 CI 一致
+python3 tests/test_v10_backtest.py   # TextGrad 诊断覆盖率（非 pytest）
 ```
 
-完整 E2E 步骤与最近一次结果见 [TESTING.md](TESTING.md)。
+按功能快速验收示例：
+
+```bash
+python3 -m pytest tests/test_limitup_scoring.py -v          # 打板评分
+python3 -m pytest tests/test_tools_financial_rigor.py -v     # 金融严谨性
+python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
+```
 
 ## 🔄 版本规范
 

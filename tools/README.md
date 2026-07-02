@@ -1,24 +1,33 @@
 # tools/ — 工具链说明
 
+> **完整使用指南**：[docs/USER_GUIDE.md](../docs/USER_GUIDE.md)（按工作流组织，覆盖全部功能）  
+> 本文档按工具逐项列出 CLI 参数与示例。
+
 投研流程中由 Agent 通过 shell 调用的辅助工具。所有命令均以仓库根目录为工作目录运行（`python3 tools/xxx.py ...`）。
 
 | 工具 | 作用 | 需要网络 | 额外依赖 |
 |---|---|:---:|---|
 | `financial_rigor.py` | 金融数据严谨性验证（核心） | 否 | 无 |
 | `report_audit.py` | 研究报告数据抽检 / 准出判决 | 否 | 无 |
+| `report_html.py` | Markdown → HTML 报告（暗色主题） | 否 | 无 |
+| `stock_comparison.py` | 2–4 标的横向对比矩阵 | 否 | 无 |
 | `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
 | `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
+| `calibrate_conviction.py` | 经验库 conviction 校准报告 | 否 | 无 |
 | `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
 | `ashare_factor_mining.py` | A股自动因子挖掘（AlphaGPT times.py 移植） | 是* | `pip install '.[factor-mining]'` |
 | `factor_screener_bridge.py` | 已训练公式 → 多标的打分 → thesis_queue JSON | 否* | `pip install '.[factor-mining]'`；优先本地 CSV |
 | `limitup_screener_bridge.py` | 五维打板评分（TDX 策略移植）→ thesis_queue JSON | 否 | 无 torch；优先本地 CSV |
+| `quant_screener_bridge.py` | 本地 CSV 动量突破 → thesis_queue JSON | 否 | `BERKSHIRE_DATA_DIR/daily_ohlcv.csv` |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
 | `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
 | `portfolio_risk.py` | 组合风险检查（集中度/现金/主题/相关性） | 否 | 可选 `data/correlation_*.csv` |
 | `thesis_queue.py` | state.md + 扫描信号 → 研究待办队列 | 否* | `config/state.md` |
+| `aktools_diagnostic.py` | aktools 原子 API 复合诊断 | 是* | `BERKSHIRE_ENABLE_AKTOOLS=1` |
+| `perf_metrics.py` | 绩效指标库（夏普/回撤等，Python API） | 否 | 无 CLI |
 | `holdings` 数据 | `data/holdings.example.json` | 否 | 复制为 `data/holdings.json`（本地，不提交） |
 | `morningstar_fair_value.py` | Morningstar 公允价值榜单 | 是 | curl |
 | `xueqiu_scraper.py` | 雪球用户时间线抓取 | 是 | playwright + 登录态 |
@@ -119,6 +128,15 @@ python3 tools/thesis_queue.py --run-limitup-scan --json
 ```
 
 环境变量：`BERKSHIRE_LIMITUP_SCORE_MIN`（默认 60）、`BERKSHIRE_LIMITUP_MIN_BARS`（默认 22）。
+
+## quant_screener_bridge.py（本地 CSV 动量突破，无 torch）
+
+读取 `BERKSHIRE_DATA_DIR/daily_ohlcv.csv`，检测「收盘创 N 日新高 + 放量」。
+
+```bash
+python3 tools/quant_screener_bridge.py --json
+python3 tools/quant_screener_bridge.py --codes 600519,000001 --lookback 20 --vol-mult 1.5 --json
+```
 
 ## data_sources.py（在线，多源降级链）
 
@@ -252,11 +270,53 @@ python3 tools/portfolio_risk.py --holdings-file portfolio.json --proposed MU 5
 
 ## thesis_queue.py（离线*，队列同步）
 
-解析 `config/state.md` §1/§2，合并 `portfolio_scan` 买入信号，输出 `research_now` 优先级列表。`--run-scan` 会联网。
+解析 `config/state.md` §1/§2，合并 portfolio_scan / factor / limitup 扫描信号，输出 `research_now` 优先级列表。
 
 ```bash
+# 仅读 state.md
 python3 tools/thesis_queue.py --json
+python3 tools/thesis_queue.py --suggest-md
+
+# 合并外部 JSON
 python3 tools/thesis_queue.py --from-scan scan.json --suggest-md
+python3 tools/thesis_queue.py --from-factor-scan data/factor_scan.json --json
+python3 tools/thesis_queue.py --from-limitup-scan data/limitup_scan.json --json
+
+# 内联运行扫描
+python3 tools/thesis_queue.py --run-scan --quiet --json
+python3 tools/thesis_queue.py --run-factor-scan --json
+python3 tools/thesis_queue.py --run-factor-scan --factor-codes 600519,511260 --json
+python3 tools/thesis_queue.py --run-limitup-scan --json
+python3 tools/thesis_queue.py --run-limitup-scan --limitup-codes 600519,000001 --json
+```
+
+## report_html.py（离线）
+
+```bash
+python3 tools/report_html.py reports/foo.md -o reports/foo.html
+python3 tools/report_html.py reports/foo.md --stdout
+```
+
+## stock_comparison.py（离线）
+
+```bash
+python3 tools/stock_comparison.py AAPL MSFT GOOGL
+python3 tools/stock_comparison.py --from-decisions --limit 4 --html /tmp/compare.html
+```
+
+## aktools_diagnostic.py（在线*，需本地 aktools 服务）
+
+```bash
+export BERKSHIRE_ENABLE_AKTOOLS=1
+python3 tools/aktools_diagnostic.py 600519 --json
+python3 tools/aktools_diagnostic.py AAPL -o reports/aapl_diag.md
+```
+
+## calibrate_conviction.py（离线）
+
+```bash
+python3 tools/calibrate_conviction.py report
+python3 tools/calibrate_conviction.py report --ticker AAPL --json
 ```
 
 ## morningstar_fair_value.py（在线）
@@ -272,3 +332,12 @@ python3 tools/morningstar_fair_value.py --max-pages 1 --top 5  # 快速冒烟
 python3 tools/xueqiu_scraper.py --user-id <雪球用户ID> --keywords 拼多多,PDD,黄峥 --output /tmp/pdd.md
 ```
 需 `pip install playwright && playwright install chromium`，并提供登录态（`--state-path`，默认 `/tmp/xueqiu_state.json`）。
+
+---
+
+## 延伸阅读
+
+- [docs/USER_GUIDE.md](../docs/USER_GUIDE.md) — 按工作流组织的**完整功能使用指南**
+- [TESTING.md](../TESTING.md) — **完整测试指南**（pytest 分层、CI、冒烟清单）
+- [docs/quant_data_fusion.md](../docs/quant_data_fusion.md) — A 股数据融合与边界
+- [docs/action-card.md](../docs/action-card.md) — portfolio_scan 行动卡模板

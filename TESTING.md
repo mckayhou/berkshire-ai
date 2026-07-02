@@ -1,75 +1,444 @@
-# 测试指南与 E2E 报告（TESTING）
+# 测试指南（TESTING）
 
-本文件说明如何对 berkshire-ai 进行端到端（E2E）测试，并记录最近一次全量 E2E 的结果。
+> 本文档说明 berkshire-ai **如何跑测试、测什么、CI 怎么配、如何手工冒烟**。  
+> 功能用法见 [docs/USER_GUIDE.md](docs/USER_GUIDE.md)；工具 CLI 见 [tools/README.md](tools/README.md)。
 
-## 环境要求
+---
 
-- Python ≥ 3.11（实测 3.14.6）
-- 依赖：`pip install -r requirements.txt`（仅 `httpx`）+ `pytest`
-- 可选：`playwright`（仅 `xueqiu_scraper.py` 需要，且需登录态）
-- 环境变量：`TAVILY_API_KEYS`（逗号分隔多个 key，供 `src/tavily_search.py` 使用）
-- 网络：A股/美股/Morningstar/Tavily 工具需要外网
+## 目录
 
-## 一键自测
+1. [快速开始](#1-快速开始)
+2. [环境要求](#2-环境要求)
+3. [测试分层](#3-测试分层)
+4. [常用命令](#4-常用命令)
+5. [测试文件索引](#5-测试文件索引)
+6. [按功能验收入口](#6-按功能验收入口)
+7. [工具手工冒烟清单](#7-工具手工冒烟清单)
+8. [CI 流水线](#8-ci-流水线)
+9. [覆盖率与质量门](#9-覆盖率与质量门)
+10. [编写新测试](#10-编写新测试)
+11. [已知限制与排错](#11-已知限制与排错)
+
+---
+
+## 1. 快速开始
 
 ```bash
-# 1) 单元 + 集成测试（无网络/无 key 时相关用例自动 skip，不会"假通过"）
+cd berkshire-ai
+
+# 最小安装（与 CI 一致）
+pip install -r requirements.txt
+pip install pytest pytest-cov
+
+# 全量单元 + 集成（推荐每次改代码后跑）
 python3 -m pytest tests/ -v -rs
 
-# 2) 回测脚本（自进化引擎诊断覆盖率）
-python3 tests/test_v10_backtest.py
+# 带覆盖率（CI 门槛 ≥50%）
+python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 
-# 3) 进化引擎入口
-python3 src/evolution_loop_v10.py                    # run_example 演示
-python3 src/evolution_loop_v10.py status             # 存储健康摘要（V10.21）
-python3 src/evolution_loop_v10.py reflect AAPL       # 对比反思
-python3 src/evolution_loop_v10.py optimize AAPL      # 反思 + 进化
+# 回测诊断脚本（非 pytest，单独跑）
+python3 tests/test_v10_backtest.py
 ```
 
-## 工具 E2E 冒烟（逐个）
+**当前规模（2026-07）**：`tests/` 下约 **459** 个 pytest 用例；无 LLM Key 时 **1** 个 e2e 用例自动 skip，其余应全部通过。
+
+---
+
+## 2. 环境要求
+
+| 组件 | 要求 |
+|------|------|
+| Python | **3.10–3.12**（CI 矩阵）；本地 3.14 亦可 |
+| 核心依赖 | `pip install -r requirements.txt`（`httpx`） |
+| 测试 | `pip install pytest pytest-cov` 或 `pip install -e '.[dev]'` |
+| 可选 extras | 见下表 |
+
+### 可选依赖与对测试的影响
+
+| Extra | 安装 | 影响的测试 |
+|-------|------|------------|
+| `[dev]` | `pip install -e '.[dev]'` | ruff、mypy、pytest-cov |
+| `[factor-mining]` | `pip install -e '.[factor-mining]'` | `test_ashare_alphagpt.py`、`test_factor_screener_bridge.py`（无 torch 时 `importorskip` 跳过） |
+| `[service]` | `pip install -e '.[service]'` | `test_service.py` 中 FastAPI 用例（无 fastapi 时 skip） |
+| `[quant]` | `pip install -e '.[quant]'` | `test_quant_data_fusion.py` 中 pytdx 相关（mock 为主） |
+| `[ashare]` | akshare/tushare 等 | 仅手工在线冒烟；单测用 monkeypatch |
+
+### 环境变量（测试相关）
+
+| 变量 | 用途 | 无配置时 |
+|------|------|----------|
+| `BERKSHIRE_LLM_API_KEY` / `OPENAI_API_KEY` | `tests/e2e/test_llm_smoke.py` | **skip**（非失败） |
+| `TAVILY_API_KEYS` | 手工 `tavily_search.py test` | 手工跳过 |
+| `BERKSHIRE_*` | 各模块配置 | 单测多用 `monkeypatch` 清理 |
+
+---
+
+## 3. 测试分层
+
+```text
+                    ┌─────────────────────┐
+                    │  E2E LLM 冒烟        │  tests/e2e/（需 API Key）
+                    └──────────┬──────────┘
+                               │
+          ┌────────────────────┼────────────────────┐
+          │                    │                    │
+   ┌──────▼──────┐    ┌────────▼────────┐   ┌──────▼──────┐
+   │ 集成测试     │    │ 工具层单测       │   │ 引擎核心单测 │
+   │ v10_integration│  │ test_tools_*    │   │ src/* tests  │
+   │ pipeline     │    │ limitup/factor  │   │ graph/opt... │
+   └──────────────┘    └─────────────────┘   └─────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │ 离线 mock 为主       │
+                    │ 网络层 monkeypatch   │
+                    └─────────────────────┘
+```
+
+| 层级 | 目录/文件 | 特点 |
+|------|-----------|------|
+| **引擎单元** | `test_v10_unit.py`、`test_graph*`、`test_prompt_*` 等 | 纯逻辑，无 I/O |
+| **引擎集成** | `test_v10_integration.py`、`test_pipeline.py`、`test_realized_feedback_loop.py` | 多模块串联 |
+| **工具单测** | `test_tools_*.py` | `tools/` 下 CLI 逻辑；网络用 mock |
+| **量化/A股** | `test_ashare_alphagpt.py`、`test_factor_screener_bridge.py`、`test_limitup_scoring.py`、`test_quant_data_fusion.py` | 因子/打板/CSV；torch 可选 |
+| **E2E** | `tests/e2e/test_llm_smoke.py` | 真实 LLM，默认 skip |
+| **诊断脚本** | `tests/test_v10_backtest.py` | 非 pytest，打印覆盖率 |
+
+---
+
+## 4. 常用命令
+
+### 4.1 全量 / verbosity
 
 ```bash
-# 离线（无需网络）
-python3 tools/financial_rigor.py verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
-python3 tools/financial_rigor.py three-scenario --price 510 --eps 23.5 --shares 91.1 --growth 0.15 0.10 0.05 --pe 25 20 15
-python3 tools/report_audit.py extract --report reports/RocketLab/RKLB-investment-research.md --dry-run
+python3 -m pytest tests/ -q                    # 安静
+python3 -m pytest tests/ -v                   # 逐条
+python3 -m pytest tests/ -v -rs               # 显示 skip 原因（推荐）
+python3 -m pytest tests/ -x                   # 首败即停
+python3 -m pytest tests/ --lf                   # 只跑上次失败
+```
 
-# 在线（需网络）
+### 4.2 按文件 / 目录
+
+```bash
+# 引擎核心
+python3 -m pytest tests/test_v10_unit.py tests/test_v10_integration.py -v
+
+# 工具链
+python3 -m pytest tests/test_tools_financial_rigor.py tests/test_tools_report_audit.py -v
+
+# A 股量化（含打板）
+python3 -m pytest tests/test_limitup_scoring.py tests/test_factor_screener_bridge.py \
+                 tests/test_ashare_alphagpt.py tests/test_quant_data_fusion.py -v
+
+# thesis_queue
+python3 -m pytest tests/test_tools_thesis_queue.py tests/test_limitup_scoring.py::test_merge_limitup_scan_suggestions -v
+
+# 仅 e2e（需 LLM Key）
+python3 -m pytest tests/e2e/ -v
+```
+
+### 4.3 按关键字
+
+```bash
+python3 -m pytest tests/ -k "limitup" -v
+python3 -m pytest tests/ -k "factor or alphagpt" -v
+python3 -m pytest tests/ -k "thesis_queue" -v
+python3 -m pytest tests/ -k "financial_rigor" -v
+```
+
+### 4.4 Lint / 类型（与 CI 一致）
+
+```bash
+pip install ruff mypy
+ruff check src tools tests
+mypy
+```
+
+### 4.5 进化引擎 CLI 冒烟
+
+```bash
+python3 src/evolution_loop_v10.py              # run_example
+python3 src/evolution_loop_v10.py status
+python3 src/evolution_loop_v10.py reflect AAPL
+python3 src/evolution_loop_v10.py optimize AAPL --rounds 1
+python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
+```
+
+---
+
+## 5. 测试文件索引
+
+| 文件 | 覆盖模块 | 说明 |
+|------|----------|------|
+| `test_v10_unit.py` | `graph.py`, `optimizer.py` | 计算图拓扑、反向传播 |
+| `test_v10_integration.py` | 引擎端到端 | 图创建、更新节点 |
+| `test_v10_backtest.py` | 诊断覆盖率 | **脚本**，非 pytest |
+| `test_pipeline.py` | `src/pipeline.py` | `run_full_cycle` |
+| `test_realized_feedback_loop.py` | `realized_feedback.py` | 收益反馈闭环 |
+| `test_network_price_provider.py` | 价格提供者 | 缓存、非交易日 |
+| `test_decision_log` *(via loop)* | `decision_log.py` | JSONL 持久化 |
+| `test_experience_store.py` | `experience_store.py` | 经验库 JSONL |
+| `test_research_loop.py` | `research_loop.py` | R/D 双循环 |
+| `test_hypothesis.py` | `hypothesis.py` | 可证伪假设 |
+| `test_eval_harness.py` | `eval_harness.py` | 多轮评测 |
+| `test_eval_harness_golden.py` | 黄金回归 | 单调不退化 |
+| `test_prompt_optimizer.py` | `prompt_optimizer.py` | LLM 改写 |
+| `test_prompt_validation.py` | `prompt_validation.py` | 验证门控 |
+| `test_llm_gradient.py` | `llm_gradient.py` | ∇_LLM |
+| `test_evolution_llm_wiring.py` | 主链路接线 | LLM 梯度注入 |
+| `test_sanitize.py` | `sanitize.py` | 提示注入防护 |
+| `test_observability.py` | `observability.py` | 埋点 / run_id |
+| `test_service.py` | `service.py` | FastAPI（需 extra） |
+| `test_access_control.py` | `access_control.py` | API Key / 限流 |
+| `test_metrics_export.py` | `metrics_export.py` | Prometheus |
+| `test_config.py` | `config.py` | 环境变量 doctor |
+| `test_evolution_cli.py` | `evolution_cli.py` | CLI 子命令 |
+| `test_cron_evolution.py` | cron 任务 | 定时入口 |
+| `test_reflect.py` | 反思 | 经验对比 |
+| `test_trace_recorder.py` | 轨迹记录 | |
+| `test_run_recorder.py` | Run 记录 | |
+| `test_quality_scorer.py` | 质量评分 | |
+| `test_scenario.py` | 情景分析 | |
+| `test_rewrite_fewshot.py` | few-shot 注入 | |
+| `test_golden_action_card.py` | 行动卡黄金样例 | |
+| `test_tools_financial_rigor.py` | `financial_rigor.py` | 精确计算 + AST 安全 |
+| `test_tools_report_audit.py` | `report_audit.py` | 提取 / 判决 |
+| `test_tools_data_sources.py` | `data_sources.py` | 降级链、适配器 |
+| `test_tools_network.py` | 网络重试 | monkeypatch httpx |
+| `test_tools_notify.py` | `notify.py` | 多通道 mock |
+| `test_tools_misc.py` | ashare/screener 等 | 纯函数 |
+| `test_tools_portfolio_scan.py` | `portfolio_scan.py` | |
+| `test_tools_portfolio_risk.py` | `portfolio_risk.py` | |
+| `test_tools_thesis_queue.py` | `thesis_queue.py` | state.md 解析 |
+| `test_tools_perf_metrics.py` | `perf_metrics.py` | 夏普/回撤等 |
+| `test_calibrate_sensitivity.py` | `calibrate_sensitivity.py` | SENSITIVITY |
+| `test_calibrate_conviction.py` | `calibrate_conviction.py` | conviction |
+| `test_report_html.py` | `report_html.py` | MD→HTML |
+| `test_stock_comparison.py` | `stock_comparison.py` | |
+| `test_aktools_diagnostic.py` | `aktools_diagnostic.py` | mock HTTP |
+| `test_quant_data_fusion.py` | LocalCsv / quant bridge | V10.24 |
+| `test_ashare_alphagpt.py` | `ashare_alphagpt/*` | 需 torch |
+| `test_factor_screener_bridge.py` | `factor_screener_bridge` | 需 torch |
+| `test_limitup_scoring.py` | `limitup_scoring` + thesis 合并 | **无 torch** |
+| `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
+
+---
+
+## 6. 按功能验收入口
+
+改动了某块代码后，优先跑对应测试：
+
+| 你改了… | 跑这些 |
+|---------|--------|
+| `src/graph.py` / `optimizer.py` | `pytest tests/test_v10_unit.py tests/test_v10_integration.py` |
+| `src/realized_feedback.py` | `pytest tests/test_realized_feedback_loop.py tests/test_network_price_provider.py` |
+| `src/prompt_optimizer.py` | `pytest tests/test_prompt_optimizer.py tests/test_prompt_validation.py` |
+| `tools/financial_rigor.py` | `pytest tests/test_tools_financial_rigor.py` |
+| `tools/data_sources.py` | `pytest tests/test_tools_data_sources.py tests/test_quant_data_fusion.py` |
+| `tools/thesis_queue.py` | `pytest tests/test_tools_thesis_queue.py tests/test_limitup_scoring.py tests/test_factor_screener_bridge.py` |
+| `tools/ashare_alphagpt/*` | `pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py` |
+| `tools/limitup_screener_bridge.py` / `limitup_scoring.py` | `pytest tests/test_limitup_scoring.py` |
+| `tools/quant_screener_bridge.py` | `pytest tests/test_quant_data_fusion.py` |
+| `src/service.py` | `pytest tests/test_service.py tests/test_access_control.py` |
+
+### V10.25+ 量化最小验收
+
+```bash
+# 无 torch：打板评分 + CSV 动量 + thesis 合并
+python3 -m pytest tests/test_limitup_scoring.py tests/test_quant_data_fusion.py -v
+
+# 有 torch：再加因子
+pip install -e '.[factor-mining]'
+python3 -m pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py -v
+```
+
+---
+
+## 7. 工具手工冒烟清单
+
+自动化单测 **不替代** 第三方 API 可用性验证。发版前可选跑：
+
+### 7.1 离线（无需网络）
+
+```bash
+python3 tools/financial_rigor.py verify-market-cap \
+  --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
+python3 tools/financial_rigor.py calc --expr '510 * 9.11e9'
+python3 tools/report_audit.py extract --report reports/RocketLab/RKLB-investment-research.md --dry-run
+python3 tools/report_html.py README.md -o /tmp/readme.html
+python3 tools/thesis_queue.py --json
+python3 tools/portfolio_risk.py --holdings '{"NVDA":45,"CASH":55}' --json
+python3 src/config.py
+```
+
+### 7.2 本地 CSV 量化（无需网络）
+
+```bash
+export BERKSHIRE_DATA_DIR=./data
+# 需存在 data/daily_ohlcv.csv
+python3 tools/quant_screener_bridge.py --json
+python3 tools/limitup_screener_bridge.py --json
+python3 tools/factor_screener_bridge.py --json   # 另需 torch + 已训练公式
+```
+
+### 7.3 在线（需外网）
+
+```bash
+python3 tools/data_sources.py sources
+python3 tools/data_sources.py quote 600519
 python3 tools/ashare_data.py quote 600519
 python3 tools/momentum_backtest.py
 python3 tools/stock_screener.py
-python3 tools/morningstar_fair_value.py --max-pages 1 --top 5   # 快速冒烟，不抓全量
-python3 src/tavily_search.py test                                # 需 TAVILY_API_KEYS
-
-# 需登录态（浏览器 + cookie）
-python3 tools/xueqiu_scraper.py --user-id <ID> --keywords 拼多多,PDD --output /tmp/out.md
+python3 tools/morningstar_fair_value.py --max-pages 1 --top 5
+python3 src/tavily_search.py test    # 需 TAVILY_API_KEYS
 ```
 
-## 最近一次 E2E 结果（2026-06-26，Python 3.14.6）
+### 7.4 需额外服务 / 登录
 
-| 组件 | 命令 | 结果 |
-|---|---|---|
-| 单元+集成测试 | `pytest tests/` | ✅ 107 passed（带 Tavily key；无 key 时 1 skipped）。含 94 个离线工具/网络层单测：financial_rigor 精确计算+AST 安全边界、report_audit 提取/抽样/判决、ashare/stock_screener/morningstar 纯函数、网络层瞬时重试/超时/错误透传（monkeypatch httpx/subprocess，零真实网络）|
-| 回测脚本 | `test_v10_backtest.py` | ✅ 诊断覆盖率 100% |
-| 进化引擎 | `evolution_loop_v10.py` | ✅ Graph created 18 nodes, Updates needed 7 |
-| 计算图/优化器 | `graph.py` / `optimizer.py` | ✅ 由单元测试覆盖（拓扑排序/反向传播/优化器）|
-| financial_rigor | 6 个子命令 + 恶意表达式 | ✅ 全部通过；`calc` 用 AST 安全求值，拒绝 `__import__(...)` |
-| report_audit | `extract` / `verdict` | ✅ 抽样、准出/打回判决均正确 |
-| ashare_data | `quote/financials/valuation/search` | ✅ 实时数据；市值"反推"已正确标注为仅供参考 |
-| momentum_backtest / v2 | 全量运行 | ✅ 实时 Yahoo 数据，跑完无崩溃 |
-| stock_screener | 全量运行 | ✅ 读取 `data/fundamentals.json`、`data/watchlist.json` |
-| morningstar_fair_value | `--max-pages 1 --top 5` 与全量 | ✅ 抓取 6108 只股票；星级渲染已做容错 |
-| tavily_search | `test` | ✅ 真实 API 返回腾讯行情/财务 |
-| xueqiu_scraper | `--help` | ✅ CLI 正常（全量运行需登录 cookie，未在 CI 覆盖）|
+| 工具 | 前置条件 |
+|------|----------|
+| `aktools_diagnostic.py` | `BERKSHIRE_ENABLE_AKTOOLS=1` + 本地 aktools HTTP |
+| `xueqiu_scraper.py` | Playwright + 雪球 cookie |
+| `notify.py send` | Telegram / 飞书 webhook（或仅本地兜底） |
+| `tests/e2e/test_llm_smoke.py` | OpenAI 兼容 API Key |
 
-### 本轮修复
+### 7.5 一键研究队列链路冒烟
 
-- `tools/morningstar_fair_value.py`：
-  - 之前 `--help` 会触发 84 秒全量抓取（无参数解析）→ 增加 `argparse`，支持 `--max-pages` / `--top`，`--help` 秒回；
-  - 星级渲染 `int(star_rating)` 对浮点字符串会崩溃 → 改用 `_stars()` 容错（int/float/str/None 均安全）。
+```bash
+export BERKSHIRE_DATA_DIR=./data
+python3 tools/limitup_screener_bridge.py --json -o /tmp/limitup.json
+python3 tools/thesis_queue.py --from-limitup-scan /tmp/limitup.json --suggest-md
+```
 
-## 已知限制
+---
 
-- `xueqiu_scraper.py` 需要 Playwright 浏览器 + 雪球登录态，不在自动化测试范围内。
-- 在线工具依赖第三方接口（Yahoo / Morningstar / 腾讯 / 东方财富 / Tavily），偶发限流/鉴权失败属环境问题；集成测试遇到此类错误会 `skip` 而非 `fail`。
-- `financial_rigor.py benford` 需样本量 ≥ 50 才给出可靠结论（样本不足会明确提示）。
+## 8. CI 流水线
+
+配置文件：`.github/workflows/test.yml`
+
+| Job | 内容 | 触发 |
+|-----|------|------|
+| `lint-type` | `ruff check` + `mypy src/` | push/PR → main |
+| `pytest` | Python **3.10 / 3.11 / 3.12** 矩阵 + **coverage ≥50%** | push/PR |
+| `e2e-llm` | `tests/e2e/`，需 repo secret `BERKSHIRE_LLM_API_KEY` | 仅 **push**（非 PR fork） |
+| `build-image` | `docker build` 冒烟 | push/PR |
+| `security` | `pip-audit`（非阻断）+ `gitleaks` | push/PR |
+
+本地复现 CI pytest job：
+
+```bash
+pip install -r requirements.txt pytest pytest-cov
+pytest tests/ -q --tb=short --cov --cov-report=term-missing --cov-fail-under=50
+```
+
+---
+
+## 9. 覆盖率与质量门
+
+```bash
+# 终端报告
+python3 -m pytest tests/ --cov --cov-report=term-missing
+
+# HTML 报告
+python3 -m pytest tests/ --cov --cov-report=html
+open htmlcov/index.html
+```
+
+| 门控 | 值 | 配置位置 |
+|------|-----|----------|
+| 覆盖率下限 | **50%** | CI `pytest --cov-fail-under=50` |
+| mypy | `src/` only | `pyproject.toml` `[tool.mypy]` |
+| ruff | E, F, I | `pyproject.toml` `[tool.ruff]` |
+
+覆盖率统计范围：`src/` + `tools/`（见 `pyproject.toml` `[tool.coverage.run]`）。
+
+---
+
+## 10. 编写新测试
+
+### 10.1 约定
+
+- 新测试放在 `tests/test_<模块>.py`
+- 工具测试：`sys.path.insert(0, "../tools")` 后 `import xxx`
+- 引擎测试：`sys.path.insert(0, "../src")` 或 `from src import ...`（editable install 后）
+- **网络必须 mock**：参考 `test_tools_network.py`、`test_aktools_diagnostic.py`
+- 可选依赖用 `pytest.importorskip("torch")` 或 `pytest.importorskip("fastapi")`
+- 需跳过时写清 `reason=`，跑 `-rs` 可看到
+
+### 10.2 模板：离线工具测试
+
+```python
+import os
+import sys
+import pytest
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
+import my_tool  # noqa: E402
+
+
+def test_happy_path(tmp_path, monkeypatch):
+    monkeypatch.setenv("BERKSHIRE_DATA_DIR", str(tmp_path))
+    result = my_tool.run(...)
+    assert result["ok"] is True
+```
+
+### 10.3 模板：CSV 筛选类
+
+参考 `tests/test_limitup_scoring.py`、`tests/test_factor_screener_bridge.py`：
+- 用 `tmp_path` 写 `daily_ohlcv.csv`
+- `monkeypatch.setenv("BERKSHIRE_DATA_DIR", ...)`
+- 断言 `candidates` 结构与 `thesis_queue_line`
+
+### 10.4 发版前检查清单
+
+- [ ] `pytest tests/ -v -rs` 全绿（允许 e2e skip）
+- [ ] `ruff check src tools tests`
+- [ ] `mypy`（若改 `src/`）
+- [ ] 新 CLI 在 `tools/README.md` + `docs/USER_GUIDE.md` 有说明
+- [ ] 新逻辑有对应 `tests/test_*.py`
+- [ ] `graphify update .`（若改 Python 代码）
+
+---
+
+## 11. 已知限制与排错
+
+| 现象 | 原因 | 处理 |
+|------|------|------|
+| `SKIPPED e2e/test_llm_smoke` | 无 LLM Key | 正常；配 Key 后再跑 `pytest tests/e2e/` |
+| `SKIPPED` torch 相关 | 未装 `[factor-mining]` | `pip install -e '.[factor-mining]'` 或接受 skip |
+| `SKIPPED` fastapi | 未装 `[service]` | 装 extra 或接受 skip |
+| 在线工具失败 | 第三方限流/鉴权 | 环境问题；单测不应依赖外网 |
+| `benford` 样本不足 | 需要 ≥50 个点 | 加大 `--values` 样本 |
+| `xueqiu_scraper` | 需浏览器登录 | 不纳入 CI |
+| coverage 低于 50% | 新代码无测试 | 补单测或扩展现有文件 |
+
+### 常见问题
+
+**Q: 为什么 CI 不跑 factor-mining / torch 测试？**  
+A: CI 仅装 `requirements.txt` + pytest；torch 用例通过 `importorskip` 跳过。本地发版前请手动装 `[factor-mining]` 跑量化测试。
+
+**Q: 如何只验证打板评分？**  
+A: `pytest tests/test_limitup_scoring.py -v`（6 用例，无 torch）。
+
+**Q: `test_v10_backtest.py` 和 pytest 关系？**  
+A: 独立诊断脚本，检查 TextGrad 节点诊断覆盖率；纳入发版人工步骤，不在 pytest 集合内。
+
+---
+
+## 附录：历史 E2E 记录
+
+| 日期 | Python | pytest | 备注 |
+|------|--------|--------|------|
+| 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |
+
+> 历史数字仅作参考；以本地 `pytest tests/ --co` 与 `-rs` 输出为准。
+
+---
+
+## 相关文档
+
+- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 功能使用
+- [tools/README.md](tools/README.md) — CLI 参数
+- [VERSION_HISTORY.md](VERSION_HISTORY.md) — 版本与测试要求
+- [docs/textgrad_design.md](docs/textgrad_design.md) — 引擎设计

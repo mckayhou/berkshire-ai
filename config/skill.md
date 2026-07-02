@@ -62,6 +62,8 @@ description: >
           quant_screener_bridge → thesis_queue JSON；docs/quant_data_fusion.md（AlphaGPT 仅文档边界）。
   V10.25: A股 AlphaGPT 因子挖掘 - tools/ashare_factor_mining.py + ashare_alphagpt/（移植 times.py）；
           factor_screener_bridge → thesis_queue --from-factor-scan；可选 extra [factor-mining]。
+  V10.26: 五维打板评分 - limitup_screener_bridge + limitup_scoring（参考 TDX-MCP-LHDB-Agent）；
+          thesis_queue --from-limitup-scan；完整用法见 docs/USER_GUIDE.md。
   重要：所有 skills 均为独立 Agent 指令模板，专为 OpenClaw / QwenPaw 这一类产品设计。
   - OpenClaw：带 YAML frontmatter 的 SKILL.md 格式，可直接安装到 ~/.openclaw/workspace/skills/
   - QwenPaw：作为 loop_engine 提示组件，与 evolution_loop_v10.py 配合使用。
