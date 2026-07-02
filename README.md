@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.26**（五维打板评分 `limitup_screener_bridge`；累积 V10.25 AlphaGPT 因子挖掘、V10.24 量化数据融合）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.25**（AlphaGPT 因子挖掘 `ashare_alphagpt` / `factor_screener_bridge`；五维打板 `limitup_screener_bridge`；累积 V10.24 量化数据融合）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全部功能的工作流与 CLI 说明。
 
@@ -183,7 +183,7 @@ print(debate.net_stance, debate.net_score)   # bullish / +0.x（中性区 |net|<
 python3 tools/data_sources.py sources                  # 列出各源可用状态（离线）
 python3 tools/data_sources.py daily 600519 --limit 60  # 日线（走降级链）
 python3 tools/quant_screener_bridge.py --json          # 本地 CSV 动量 → thesis_queue JSON
-python3 tools/limitup_screener_bridge.py --json        # 五维打板评分（V10.26）
+python3 tools/limitup_screener_bridge.py --json        # 五维打板评分（V10.25）
 python3 tools/factor_screener_bridge.py --json         # AlphaGPT 因子筛选（需 torch）
 
 # 交付：Telegram / 飞书 / 本地兜底；零配置只落地到 reports/notifications/

@@ -86,3 +86,12 @@
 - `tools/quant_screener_bridge.py`：本地 CSV 动量 → thesis_queue JSON
 - `docs/quant_data_fusion.md`：三库对比 + AlphaGPT 边界（不引入 torch/qlib）
 - ⬜ 明确不做：整库 fork、AlphaGPT 训练栈、qlib 因子栈
+
+
+### A股 AlphaGPT 因子挖掘 + 打板评分 — ✅ V10.25
+- `tools/ashare_alphagpt/` + `tools/ashare_factor_mining.py`（可选 extra `factor-mining`）
+- `tools/factor_screener_bridge.py`：已训练公式 → thesis_queue JSON
+- `tools/limitup_screener_bridge.py` + `limitup_scoring.py`（五维打板，无 torch）
+- `tools/thesis_queue.py`：`--from-factor-scan` / `--run-factor-scan` / `--from-limitup-scan` / `--run-limitup-scan`
+- 见 `docs/quant_data_fusion.md` §7 finance-quant-skills
+

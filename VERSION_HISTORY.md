@@ -50,8 +50,11 @@
 
 **4) 文档** `docs/quant_data_fusion.md`、`.env.example`、`config/skill.md` 同步
 
+**5) 五维打板评分** `tools/limitup_screener_bridge.py` + `tools/ashare_alphagpt/limitup_scoring.py`
+- thesis_queue：`--from-limitup-scan` / `--run-limitup-scan`
+
 **测试结果**:
-- [x] 单元测试: test_ashare_alphagpt + test_factor_screener_bridge + thesis_queue
+- [x] 单元测试: test_ashare_alphagpt + test_factor_screener_bridge + test_limitup_scoring + thesis_queue
 
 ---
 
@@ -721,7 +724,7 @@ V9.1 (模型优化)
   ↓
 V9.3 (Tavily 集成)
   ↓
-V10.0 (TextGrad 化) ← 当前版本
+V10.25 ← 当前版本
 ```
 
 ---
@@ -741,4 +744,4 @@ V10.0 (TextGrad 化) ← 当前版本
 ---
 
 **维护者**: Mckay (houqing)  
-**最后更新**: 2026-06-26
+**最后更新**: 2026-07-02

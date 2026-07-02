@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-07-01 | Loop Engine: Active (L2 - Assisted) | **Version: V10.24**（量化数据融合：LocalCsv + Pytdx + screener bridge；累积 V10.23 主链路强化）
+> Last Updated: 2026-07-02 | Loop Engine: Active (L2 - Assisted) | **Version: V10.25**（A股 AlphaGPT 因子挖掘 + 五维打板评分 + thesis_queue 接线；累积 V10.24 量化数据融合）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |
@@ -21,6 +21,7 @@
 
 | Date | Issue | Lesson Learned | Applied To Skill |
 |------|-------|----------------|------------------|
+| 2026-07-02 | **V10.25 - A股 AlphaGPT 因子挖掘 + 五维打板 + thesis_queue** | `tools/ashare_alphagpt/`、`ashare_factor_mining.py`、`factor_screener_bridge.py`、`limitup_screener_bridge.py`；thesis_queue 因子/打板扫描接线；文档与 `.env.example` 同步。 | `tools/ashare_alphagpt/`, `tools/factor_screener_bridge.py`, `tools/limitup_screener_bridge.py`, `tools/thesis_queue.py` |
 | 2026-06-30 | **V10.18 - 借鉴 RD-Agent / Qlib（绩效度量 + 经验库 + 假设对象）** | 依据 `docs/qlib_evaluation.md`/`docs/rdagent_reference.md` 只读评估，按依赖序落地三项最小切口（借口径/借理念，不进核心依赖）：`tools/perf_metrics.py` 补齐风险调整绩效（Qlib risk_analysis：年化/波动/IR/夏普/最大回撤/求和累计/超额/含成本，纯 stdlib，接 decision_log+可注入 PriceProvider）；`src/experience_store.py` 把 realized_feedback 用完即弃的成败信号沉淀为可检索经验并 few-shot 回灌改写（`build_rewrite_messages(examples=None)` 逐字节不变）；`src/hypothesis.py` 显式可证伪假设对象+最小存储（不接主链路）。382 passed/2 skipped。 | `tools/perf_metrics.py`, `src/experience_store.py`, `src/hypothesis.py`, `src/prompt_optimizer.py` |
 | 2026-06-30 | **V10.17 - 生产化硬化 档D（部署上线 + 访问控制 + 指标导出 + 真梯度）** | 从「可服务化」推进到「可部署/可防护/可监控/批评更真实」：容器化 Dockerfile/compose（非 root+HEALTHCHECK）+ berkshire-serve 入口；access_control（API Key 常量时间鉴权 + 固定窗限流）；metrics_export（/metrics Prometheus，零依赖）；llm_gradient 生成真实 ∇_LLM 批评（失败降级回规则化）；mypy check_untyped_defs + golden 回归 + Docker/e2e CI。 | `Dockerfile`, `src/access_control.py`, `src/metrics_export.py`, `src/llm_gradient.py`, `src/service.py` |
 | 2026-06-30 | **V10.15 - 生产化硬化 档B（让自进化真正成立）** | 「能改 prompt」≠「改得更好」：`src/prompt_validation.py` 验证门控（改写后评分，只有不劣于旧版+min_improvement 才接受否则回滚，杜绝漂移）；`NetworkPriceProvider` 经 data_sources 接真实行情（缓存+非交易日回退）替换 mock；`src/eval_harness.py` 多轮迭代 `run_multi_round` + 离线回归证明「单调不退化且收敛」。 | `src/prompt_validation.py`, `src/realized_feedback.py`, `src/eval_harness.py` |
