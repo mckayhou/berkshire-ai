@@ -36,7 +36,7 @@
 
 ## 📜 版本历史
 
-### V10.28 - 2026-07-02 (TextGrad 真闭环 + 轨迹 A/B + 量化信号接线)
+### V10.28 - 2026-07-02 (TextGrad 真闭环 + 轨迹 A/B + 量化信号接线 + SkillForge 技能进化)
 
 **V10.26 — 分析重跑闭环** `src/graph_analysis.py`
 - `AnalysisRunner` / `PromptHeuristicAnalysisRunner`
@@ -51,7 +51,7 @@
 - `FactorScanHypothesisProposer` / `LimitupScanHypothesisProposer` / `CompositeHypothesisProposer`
 - `pipeline.run_full_cycle(factor_scan=…, limitup_scan=…)` 并入 R 循环
 
-**SkillForge 技能进化** `src/skill_forge/` + `tools/skill_evolve.py`
+**V10.28 — SkillForge 技能进化** `src/skill_forge/` + `tools/skill_evolve.py`
 - LLM-judge Consistency Rate + 四维失败分析 + Skill Diagnostician/Optimizer
 - `--judge-mode auto|llm|rule`；文档 `docs/SKILL_EVOLUTION.md`
 - 测试：`test_skill_forge.py` + `test_skill_forge_llm.py` + `test_skill_forge_cli.py` + `evolution_cli` skill-evolve

@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.28** (TextGrad `rerun_analysis` closed loop + trajectory A/B + quant signals→Hypothesis; builds on V10.25 AlphaGPT / limit-up / docs hub). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.28** (TextGrad `rerun_analysis` closed loop + trajectory A/B + quant signals→Hypothesis + **SkillForge skill evolution**; builds on V10.25 AlphaGPT / limit-up / docs hub). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 

@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.28**（TextGrad 真闭环 `rerun_analysis` + 轨迹 A/B + 量化信号→Hypothesis；累积 V10.25 AlphaGPT / 打板 / 文档体系）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.28**（TextGrad 真闭环 `rerun_analysis` + 轨迹 A/B + 量化信号→Hypothesis + **SkillForge 技能进化**；累积 V10.25 AlphaGPT / 打板 / 文档体系）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全功能工作流  
 **文档中心**：[docs/README.md](docs/README.md) — 按场景选阅读路径（回测 / 量化 / 引擎 / 技能 / 测试）
