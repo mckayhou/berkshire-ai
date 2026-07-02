@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782966030.6317265,
-    "ast_hash": "bea88bad4207f6a96e5bb37025720a30",
+    "mtime": 1782966645.631991,
+    "ast_hash": "c393d081c0debfdd7ba678b80553e8cf",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "TESTING.md": {
-    "mtime": 1782966178.9268801,
-    "ast_hash": "8b01dfe3a9fcffaa19711204b7bda963",
+    "mtime": 1782966645.6340184,
+    "ast_hash": "276d57c34ecacb0c407e4679b84b66d4",
     "semantic_hash": ""
   },
   "tools/README.md": {
