@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-02)
 
 ## Corpus Check
-- 240 files · ~401,981 words
+- 241 files · ~405,675 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 286 nodes · 246 edges · 224 communities (51 shown, 173 thin omitted)
+- 286 nodes · 260 edges · 221 communities (51 shown, 170 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3d951ef8`
+- Built from commit: `343ddf61`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -106,7 +106,6 @@
 - [[_COMMUNITY_Community 122|Community 122]]
 - [[_COMMUNITY_Community 123|Community 123]]
 - [[_COMMUNITY_Community 124|Community 124]]
-- [[_COMMUNITY_Community 128|Community 128]]
 - [[_COMMUNITY_Community 129|Community 129]]
 - [[_COMMUNITY_Community 131|Community 131]]
 - [[_COMMUNITY_Community 132|Community 132]]
@@ -185,56 +184,54 @@
 - [[_COMMUNITY_Community 210|Community 210]]
 - [[_COMMUNITY_Community 211|Community 211]]
 - [[_COMMUNITY_Community 213|Community 213]]
-- [[_COMMUNITY_Community 218|Community 218]]
 - [[_COMMUNITY_Community 219|Community 219]]
 - [[_COMMUNITY_Community 220|Community 220]]
 - [[_COMMUNITY_Community 221|Community 221]]
-- [[_COMMUNITY_Community 223|Community 223]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
-2. `聚宽策略开发` - 6 edges
-3. `聚宽文档索引` - 6 edges
-4. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-5. `报告输出规范（report conventions）` - 6 edges
-6. `聚宽量化平台API文档` - 4 edges
-7. `常见问题` - 4 edges
-8. `因子分析` - 4 edges
-9. `Berkshire AI 版本历史` - 4 edges
-10. `berkshire-ai Roadmap` - 4 edges
+1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 12 edges
+2. `Berkshire AI 功能使用指南` - 12 edges
+3. `报告输出规范（report conventions）` - 7 edges
+4. `tools/ — 工具链说明` - 6 edges
+5. `聚宽策略开发` - 6 edges
+6. `聚宽文档索引` - 6 edges
+7. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
+8. `结构化行动卡（Action Card）` - 6 edges
+9. `测试指南（TESTING）` - 5 edges
+10. `Berkshire AI 版本历史` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
   README.md → README_EN.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
   README.md → docs/ROADMAP.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南与 E2E 报告（TESTING）`  [EXTRACTED]
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南（TESTING）`  [EXTRACTED]
   README.md → TESTING.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 功能使用指南`  [EXTRACTED]
+  README.md → docs/USER_GUIDE.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
   README.md → VERSION_HISTORY.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `结构化行动卡（Action Card）`  [EXTRACTED]
-  README.md → docs/action-card.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (224 total, 173 thin omitted)
+## Communities (221 total, 170 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.58
-Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
+Cohesion: 0.51
+Nodes (13): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南（TESTING）, Berkshire AI 功能使用指南, Berkshire AI 版本历史, 结构化行动卡（Action Card）, Quant Data Fusion — 三库调研与 berkshire-ai V10.24 融合决策 (+5 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 1.20
 Nodes (5): 聚宽策略开发, 聚宽量化平台API文档, 常见问题, 因子分析, 聚宽文档索引
 
 ## Knowledge Gaps
-- **11 isolated node(s):** `新闻联播文本数据`, `版本信息`, `导入xtquant库时提示 `NO module named 'xtquant.IPythonAPiClient'``, `ContextInfo.paint - 在界面上画图`, `ext_data - 获取扩展数据` (+6 more)
+- **11 isolated node(s):** `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script` (+6 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **173 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **170 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `新闻联播文本数据`, `版本信息`, `导入xtquant库时提示 `NO module named 'xtquant.IPythonAPiClient'`` to the rest of the system?**
+- **What connects `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script` to the rest of the system?**
   _11 weakly-connected nodes found - possible documentation gaps or missing edges._

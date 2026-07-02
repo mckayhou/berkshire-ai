@@ -4,24 +4,44 @@
   "graph": {},
   "nodes": [
     {
-      "label": "\u901a\u8fbe\u4fe1 TQ MCP \u5de5\u5177\u8bbe\u8ba1\uff08\u5916\u90e8 Windows \u6267\u884c\u5c42\uff09",
+      "label": "Berkshire AI - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf\uff08\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38\uff09",
       "file_type": "document",
-      "source_file": "docs/tdx_mcp_tool_design.md",
+      "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "tdx_mcp_tool_design",
-      "community": 223,
-      "norm_label": "\u901a\u8fbe\u4fe1 tq mcp \u5de5\u5177\u8bbe\u8ba1(\u5916\u90e8 windows \u6267\u884c\u5c42)"
+      "id": "README.md",
+      "community": 4,
+      "norm_label": "berkshire ai - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf(\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38)"
     },
     {
-      "label": "test_limitup_scoring.py",
-      "file_type": "code",
-      "source_file": "tests/test_limitup_scoring.py",
+      "label": "\u6d4b\u8bd5\u6307\u5357\uff08TESTING\uff09",
+      "file_type": "document",
+      "source_file": "TESTING.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "test_limitup_scoring",
-      "community": 217,
-      "norm_label": "test_limitup_scoring.py"
+      "id": "TESTING",
+      "community": 4,
+      "norm_label": "\u6d4b\u8bd5\u6307\u5357(testing)"
+    },
+    {
+      "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
+      "file_type": "document",
+      "source_file": "config/skill.md",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "skill",
+      "community": 31,
+      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)"
+    },
+    {
+      "label": "Berkshire AI \u529f\u80fd\u4f7f\u7528\u6307\u5357",
+      "file_type": "document",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "USER_GUIDE",
+      "community": 4,
+      "norm_label": "berkshire ai \u529f\u80fd\u4f7f\u7528\u6307\u5357"
     },
     {
       "label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e",
@@ -29,529 +49,9 @@
       "source_file": "tools/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "README",
-      "community": 218,
+      "id": "tools_README.md",
+      "community": 4,
       "norm_label": "tools/ \u2014 \u5de5\u5177\u94fe\u8bf4\u660e"
-    },
-    {
-      "label": "",
-      "file_type": "code",
-      "source_file": "tools/ashare_alphagpt/limitup_scoring.py",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "limitup_scoring",
-      "community": 213,
-      "norm_label": ""
-    },
-    {
-      "label": "Score A-share symbols with a mined AlphaGPT formula.",
-      "file_type": "rationale",
-      "source_file": "tools/ashare_alphagpt/screener.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "screener",
-      "community": 133,
-      "norm_label": "score a-share symbols with a mined alphagpt formula."
-    },
-    {
-      "label": "limitup_screener_bridge.py",
-      "file_type": "code",
-      "source_file": "tools/limitup_screener_bridge.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "limitup_screener_bridge",
-      "community": 214,
-      "norm_label": "limitup_screener_bridge.py"
-    },
-    {
-      "label": "\u89e3\u6790 \u00a71 Active Portfolio Theses \u8868\u683c\u884c\u3002",
-      "file_type": "rationale",
-      "source_file": "tools/thesis_queue.py",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "thesis_queue",
-      "community": 53,
-      "norm_label": "\u89e3\u6790 \u00a71 active portfolio theses \u8868\u683c\u884c\u3002"
-    },
-    {
-      "label": "Backtrader\uff08\u5f00\u6e90\u91cf\u5316\u56de\u6d4b\u6846\u67b6\uff09",
-      "file_type": "document",
-      "source_file": ".agents/skills/backtrader/SKILL.md",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 191,
-      "norm_label": "backtrader(\u5f00\u6e90\u91cf\u5316\u56de\u6d4b\u6846\u67b6)",
-      "id": ".agents_skills_backtrader_SKILL.md"
-    },
-    {
-      "label": "Backtrader \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
-      "file_type": "document",
-      "source_file": ".agents/skills/backtrader/references/advanced-strategies.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 192,
-      "norm_label": "backtrader \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
-      "id": ".agents_skills_backtrader_references_advanced-strategies.md"
-    },
-    {
-      "label": "\u805a\u5bbd\u7b56\u7565\u5f00\u53d1",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/SKILL.md",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 5,
-      "norm_label": "\u805a\u5bbd\u7b56\u7565\u5f00\u53d1",
-      "id": ".agents_skills_joinquant-docs_SKILL.md"
-    },
-    {
-      "label": "\u805a\u5bbd\u91cf\u5316\u5e73\u53f0API\u6587\u6863",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/api.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 5,
-      "norm_label": "\u805a\u5bbd\u91cf\u5316\u5e73\u53f0api\u6587\u6863",
-      "id": "api"
-    },
-    {
-      "label": "Alpha101.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Alpha101.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 62,
-      "norm_label": "alpha101.md",
-      "id": ".agents_skills_joinquant-docs_data_Alpha101.md"
-    },
-    {
-      "label": "WorldQuant 101 Alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Alpha101.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 62,
-      "norm_label": "worldquant 101 alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
-      "id": "Alpha101"
-    },
-    {
-      "label": "Alpha191.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Alpha191.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 137,
-      "norm_label": "alpha191.md",
-      "id": ".agents_skills_joinquant-docs_data_Alpha191.md"
-    },
-    {
-      "label": "\u77ed\u5468\u671f\u4ef7\u91cf\u7279\u5f81 191 Alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Alpha191.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 137,
-      "norm_label": "\u77ed\u5468\u671f\u4ef7\u91cf\u7279\u5f81 191 alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
-      "id": "Alpha191"
-    },
-    {
-      "label": "Future.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Future.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 138,
-      "norm_label": "future.md",
-      "id": ".agents_skills_joinquant-docs_data_Future.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u671f\u8d27\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Future.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 138,
-      "norm_label": "\u83b7\u53d6\u671f\u8d27\u6570\u636e",
-      "id": "Future"
-    },
-    {
-      "label": "OTCfund.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/OTCfund.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 139,
-      "norm_label": "otcfund.md",
-      "id": ".agents_skills_joinquant-docs_data_OTCfund.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u516c\u52df\u57fa\u91d1\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/OTCfund.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 139,
-      "norm_label": "\u83b7\u53d6\u516c\u52df\u57fa\u91d1\u6570\u636e",
-      "id": "OTCfund"
-    },
-    {
-      "label": "Option.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Option.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 140,
-      "norm_label": "option.md",
-      "id": ".agents_skills_joinquant-docs_data_Option.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Option.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 140,
-      "norm_label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
-      "id": "Option"
-    },
-    {
-      "label": "Public.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Public.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 141,
-      "norm_label": "public.md",
-      "id": ".agents_skills_joinquant-docs_data_Public.md"
-    },
-    {
-      "label": "\u65b0\u95fb\u8054\u64ad\u6587\u672c\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Public.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 141,
-      "norm_label": "\u65b0\u95fb\u8054\u64ad\u6587\u672c\u6570\u636e",
-      "id": "Public"
-    },
-    {
-      "label": "Stock.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Stock.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 142,
-      "norm_label": "stock.md",
-      "id": ".agents_skills_joinquant-docs_data_Stock.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u80a1\u7968\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/Stock.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 142,
-      "norm_label": "\u83b7\u53d6\u80a1\u7968\u6570\u636e",
-      "id": "Stock"
-    },
-    {
-      "label": "\u503a\u5238\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/bond.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 193,
-      "norm_label": "\u503a\u5238\u6570\u636e",
-      "id": ".agents_skills_joinquant-docs_data_bond.md"
-    },
-    {
-      "label": "factor_values.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/factor_values.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 143,
-      "norm_label": "factor_values.md",
-      "id": ".agents_skills_joinquant-docs_data_factor_values.md"
-    },
-    {
-      "label": "\u4f7f\u7528\u65b9\u6cd5",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/factor_values.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 143,
-      "norm_label": "\u4f7f\u7528\u65b9\u6cd5",
-      "id": "factor_values"
-    },
-    {
-      "label": "fund.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/fund.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 144,
-      "norm_label": "fund.md",
-      "id": ".agents_skills_joinquant-docs_data_fund.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/fund.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 144,
-      "norm_label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
-      "id": "fund"
-    },
-    {
-      "label": "index-data.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/index-data.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 147,
-      "norm_label": "index-data.md",
-      "id": ".agents_skills_joinquant-docs_data_index-data.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/index-data.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 147,
-      "norm_label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
-      "id": "index-data"
-    },
-    {
-      "label": "index.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/index.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 148,
-      "norm_label": "index.md",
-      "id": ".agents_skills_joinquant-docs_data_index.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/index.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 148,
-      "norm_label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
-      "id": "index"
-    },
-    {
-      "label": "macroData.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/macroData.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 149,
-      "norm_label": "macrodata.md",
-      "id": ".agents_skills_joinquant-docs_data_macroData.md"
-    },
-    {
-      "label": "\u5b8f\u89c2\u7ecf\u6d4e\u6570\u636e\uff08\u6216\u5c06\u505c\u6b62\u66f4\u65b0\uff09",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/macroData.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 149,
-      "norm_label": "\u5b8f\u89c2\u7ecf\u6d4e\u6570\u636e(\u6216\u5c06\u505c\u6b62\u66f4\u65b0)",
-      "id": "macroData"
-    },
-    {
-      "label": "plateData.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/plateData.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 150,
-      "norm_label": "platedata.md",
-      "id": ".agents_skills_joinquant-docs_data_plateData.md"
-    },
-    {
-      "label": "\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/plateData.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 150,
-      "norm_label": "\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
-      "id": "plateData"
-    },
-    {
-      "label": "\u56e0\u5b50\u8bf4\u660e",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/data/technicalanalysis.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 194,
-      "norm_label": "\u56e0\u5b50\u8bf4\u660e",
-      "id": ".agents_skills_joinquant-docs_data_technicalanalysis.md"
-    },
-    {
-      "label": "\u5e38\u89c1\u95ee\u9898",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/faq.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 5,
-      "norm_label": "\u5e38\u89c1\u95ee\u9898",
-      "id": "faq"
-    },
-    {
-      "label": "\u56e0\u5b50\u5206\u6790",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/fator.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 5,
-      "norm_label": "\u56e0\u5b50\u5206\u6790",
-      "id": "fator"
-    },
-    {
-      "label": "\u805a\u5bbd\u6587\u6863\u7d22\u5f15",
-      "file_type": "document",
-      "source_file": ".agents/skills/joinquant-docs/reference.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 5,
-      "norm_label": "\u805a\u5bbd\u6587\u6863\u7d22\u5f15",
-      "id": "reference"
-    },
-    {
-      "label": "MiniQMT \u91cf\u5316\u4ea4\u6613\u6280\u80fd",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/SKILL.md",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 195,
-      "norm_label": "miniqmt \u91cf\u5316\u4ea4\u6613\u6280\u80fd",
-      "id": ".agents_skills_miniqmt_SKILL.md"
-    },
-    {
-      "label": "changelog.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/changelog.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 152,
-      "norm_label": "changelog.md",
-      "id": ".agents_skills_miniqmt_references_changelog.md"
-    },
-    {
-      "label": "\u7248\u672c\u4fe1\u606f",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/changelog.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 152,
-      "norm_label": "\u7248\u672c\u4fe1\u606f",
-      "id": "changelog"
-    },
-    {
-      "label": "\u884c\u60c5\u793a\u4f8b",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/code_examples.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 196,
-      "norm_label": "\u884c\u60c5\u793a\u4f8b",
-      "id": ".agents_skills_miniqmt_references_code_examples.md"
-    },
-    {
-      "label": "download_xtquant.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/download_xtquant.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 197,
-      "norm_label": "download_xtquant.md",
-      "id": ".agents_skills_miniqmt_references_download_xtquant.md"
-    },
-    {
-      "label": "question_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/question_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 153,
-      "norm_label": "question_function.md",
-      "id": ".agents_skills_miniqmt_references_question_function.md"
-    },
-    {
-      "label": "\u5bfc\u5165xtquant\u5e93\u65f6\u63d0\u793a `NO module named 'xtquant.IPythonAPiClient'`",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/question_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 153,
-      "norm_label": "\u5bfc\u5165xtquant\u5e93\u65f6\u63d0\u793a `no module named 'xtquant.ipythonapiclient'`",
-      "id": "question_function"
-    },
-    {
-      "label": "XtQuant \u80fd\u63d0\u4f9b\u54ea\u4e9b\u670d\u52a1",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/start_now.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 198,
-      "norm_label": "xtquant \u80fd\u63d0\u4f9b\u54ea\u4e9b\u670d\u52a1",
-      "id": ".agents_skills_miniqmt_references_start_now.md"
-    },
-    {
-      "label": "xtdata.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/xtdata.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 154,
-      "norm_label": "xtdata.md",
-      "id": ".agents_skills_miniqmt_references_xtdata.md"
-    },
-    {
-      "label": "XtQuant.XtData \u884c\u60c5\u6a21\u5757",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/xtdata.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 154,
-      "norm_label": "xtquant.xtdata \u884c\u60c5\u6a21\u5757",
-      "id": "xtdata"
-    },
-    {
-      "label": "xtdata_dict.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/xtdata_dict.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 156,
-      "norm_label": "xtdata_dict.md",
-      "id": ".agents_skills_miniqmt_references_xtdata_dict.md"
-    },
-    {
-      "label": "\u9644\u5f55\uff1axtdata\u884c\u60c5\u6570\u636e\u5b57\u6bb5\u4e0e\u6570\u636e\u5b57\u5178\u8be6\u60c5",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/xtdata_dict.md",
-      "source_location": "L2",
-      "_origin": "ast",
-      "community": 156,
-      "norm_label": "\u9644\u5f55:xtdata\u884c\u60c5\u6570\u636e\u5b57\u6bb5\u4e0e\u6570\u636e\u5b57\u5178\u8be6\u60c5",
-      "id": "xtdata_dict"
-    },
-    {
-      "label": "XtQuant.Xttrade \u4ea4\u6613\u6a21\u5757",
-      "file_type": "document",
-      "source_file": ".agents/skills/miniqmt/references/xttrader.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 199,
-      "norm_label": "xtquant.xttrade \u4ea4\u6613\u6a21\u5757",
-      "id": ".agents_skills_miniqmt_references_xttrader.md"
     },
     {
       "label": "__init__.py",
@@ -561,7 +61,7 @@
       "_origin": "ast",
       "community": 200,
       "norm_label": "__init__.py",
-      "id": "__init__"
+      "id": ".agents_skills_miniqmt_scripts___init__.py"
     },
     {
       "label": "financial_data.py",
@@ -602,724 +102,6 @@
       "community": 222,
       "norm_label": "trade.py",
       "id": "trade"
-    },
-    {
-      "label": "PyWenCai\uff08\u540c\u82b1\u987a\u95ee\u8d22\u6570\u636e\u67e5\u8be2\uff09",
-      "file_type": "document",
-      "source_file": ".agents/skills/pywencai/SKILL.md",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 201,
-      "norm_label": "pywencai(\u540c\u82b1\u987a\u95ee\u8d22\u6570\u636e\u67e5\u8be2)",
-      "id": ".agents_skills_pywencai_SKILL.md"
-    },
-    {
-      "label": "QMT Python \u7b56\u7565\u5f00\u53d1\u77e5\u8bc6\u5e93",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/SKILL.md",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 202,
-      "norm_label": "qmt python \u7b56\u7565\u5f00\u53d1\u77e5\u8bc6\u5e93",
-      "id": ".agents_skills_qmt-docs_SKILL.md"
-    },
-    {
-      "label": "backtesting-guide.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/backtesting-guide.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "backtesting-guide.md",
-      "id": ".agents_skills_qmt-docs_references_backtesting-guide.md"
-    },
-    {
-      "label": "QMT \u56de\u6d4b\u6a21\u578b\u5b8c\u5168\u6307\u5357",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/backtesting-guide.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 157,
-      "norm_label": "qmt \u56de\u6d4b\u6a21\u578b\u5b8c\u5168\u6307\u5357",
-      "id": "backtesting-guide"
-    },
-    {
-      "label": "best-practices.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/best-practices.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 161,
-      "norm_label": "best-practices.md",
-      "id": ".agents_skills_qmt-docs_references_best-practices.md"
-    },
-    {
-      "label": "QMT \u7f16\u7801\u6700\u4f73\u5b9e\u8df5\u4e0e\u89c4\u8303",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/best-practices.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 161,
-      "norm_label": "qmt \u7f16\u7801\u6700\u4f73\u5b9e\u8df5\u4e0e\u89c4\u8303",
-      "id": "best-practices"
-    },
-    {
-      "label": "\u53ef\u8f6c\u503a\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/bond.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 203,
-      "norm_label": "\u53ef\u8f6c\u503a\u6570\u636e",
-      "id": ".agents_skills_qmt-docs_references_dict_bond.md"
-    },
-    {
-      "label": "floorfunds.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/floorfunds.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 162,
-      "norm_label": "floorfunds.md",
-      "id": ".agents_skills_qmt-docs_references_dict_floorfunds.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/floorfunds.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 162,
-      "norm_label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
-      "id": "floorfunds"
-    },
-    {
-      "label": "future.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/future.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 163,
-      "norm_label": "future.md",
-      "id": ".agents_skills_qmt-docs_references_dict_future.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u671f\u8d27\u5408\u7ea6\u4fe1\u606f",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/future.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 163,
-      "norm_label": "\u83b7\u53d6\u671f\u8d27\u5408\u7ea6\u4fe1\u606f",
-      "id": "future"
-    },
-    {
-      "label": "indexes.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/indexes.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 164,
-      "norm_label": "indexes.md",
-      "id": ".agents_skills_qmt-docs_references_dict_indexes.md"
-    },
-    {
-      "label": "\u5173\u4e8e\u8fc5\u6295\u6307\u6570\u8ba1\u7b97\u89c4\u5219\u7684\u8bf4\u660e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/indexes.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 164,
-      "norm_label": "\u5173\u4e8e\u8fc5\u6295\u6307\u6570\u8ba1\u7b97\u89c4\u5219\u7684\u8bf4\u660e",
-      "id": "indexes"
-    },
-    {
-      "label": "industry.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/industry.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 165,
-      "norm_label": "industry.md",
-      "id": ".agents_skills_qmt-docs_references_dict_industry.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/industry.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 165,
-      "norm_label": "\u83b7\u53d6\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
-      "id": "industry"
-    },
-    {
-      "label": "option.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/option.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 166,
-      "norm_label": "option.md",
-      "id": ".agents_skills_qmt-docs_references_dict_option.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/option.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 166,
-      "norm_label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
-      "id": "option"
-    },
-    {
-      "label": "Token \u4f7f\u7528\u76f8\u5173",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/question_answer.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 204,
-      "norm_label": "token \u4f7f\u7528\u76f8\u5173",
-      "id": ".agents_skills_qmt-docs_references_dict_question_answer.md"
-    },
-    {
-      "label": "scenario_based_example.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/scenario_based_example.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 170,
-      "norm_label": "scenario_based_example.md",
-      "id": ".agents_skills_qmt-docs_references_dict_scenario_based_example.md"
-    },
-    {
-      "label": "\u573a\u666f\u5316\u793a\u4f8b",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/scenario_based_example.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 170,
-      "norm_label": "\u573a\u666f\u5316\u793a\u4f8b",
-      "id": "scenario_based_example"
-    },
-    {
-      "label": "stock.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/stock.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 171,
-      "norm_label": "stock.md",
-      "id": ".agents_skills_qmt-docs_references_dict_stock.md"
-    },
-    {
-      "label": "\u83b7\u53d6\u80a1\u7968\u6982\u51b5",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/stock.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 171,
-      "norm_label": "\u83b7\u53d6\u80a1\u7968\u6982\u51b5",
-      "id": "stock"
-    },
-    {
-      "label": "xuntou_factor.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/xuntou_factor.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 172,
-      "norm_label": "xuntou_factor.md",
-      "id": ".agents_skills_qmt-docs_references_dict_xuntou_factor.md"
-    },
-    {
-      "label": "\u56e0\u5b50\u6570\u636e\u4e0b\u8f7d",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/dict/xuntou_factor.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 172,
-      "norm_label": "\u56e0\u5b50\u6570\u636e\u4e0b\u8f7d",
-      "id": "xuntou_factor"
-    },
-    {
-      "label": "backtest.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/backtest.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 205,
-      "norm_label": "backtest.md",
-      "id": ".agents_skills_qmt-docs_references_examples_backtest.md"
-    },
-    {
-      "label": "\u56de\u6d4b\u793a\u4f8b\uff1a\u53cc\u5747\u7ebf\u7b56\u7565",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/backtest.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 205,
-      "norm_label": "\u56de\u6d4b\u793a\u4f8b:\u53cc\u5747\u7ebf\u7b56\u7565",
-      "id": "backtest"
-    },
-    {
-      "label": "live-trading.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/live-trading.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 173,
-      "norm_label": "live-trading.md",
-      "id": ".agents_skills_qmt-docs_references_examples_live-trading.md"
-    },
-    {
-      "label": "\u5b9e\u76d8\u793a\u4f8b\uff1a\u53cc\u5747\u7ebf\u7b56\u7565",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/live-trading.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 173,
-      "norm_label": "\u5b9e\u76d8\u793a\u4f8b:\u53cc\u5747\u7ebf\u7b56\u7565",
-      "id": "live-trading"
-    },
-    {
-      "label": "run-time.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/run-time.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 174,
-      "norm_label": "run-time.md",
-      "id": ".agents_skills_qmt-docs_references_examples_run-time.md"
-    },
-    {
-      "label": "\u5b9a\u65f6\u4efb\u52a1\u793a\u4f8b\uff1arun_time \u5b9a\u65f6\u8fd0\u884c",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/run-time.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 174,
-      "norm_label": "\u5b9a\u65f6\u4efb\u52a1\u793a\u4f8b:run_time \u5b9a\u65f6\u8fd0\u884c",
-      "id": "run-time"
-    },
-    {
-      "label": "subscribe.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/subscribe.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 175,
-      "norm_label": "subscribe.md",
-      "id": ".agents_skills_qmt-docs_references_examples_subscribe.md"
-    },
-    {
-      "label": "\u4e8b\u4ef6\u9a71\u52a8\u793a\u4f8b\uff1asubscribe \u8ba2\u9605\u63a8\u9001",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/examples/subscribe.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 175,
-      "norm_label": "\u4e8b\u4ef6\u9a71\u52a8\u793a\u4f8b:subscribe \u8ba2\u9605\u63a8\u9001",
-      "id": "subscribe"
-    },
-    {
-      "label": "execution-mechanisms.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/execution-mechanisms.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 176,
-      "norm_label": "execution-mechanisms.md",
-      "id": ".agents_skills_qmt-docs_references_execution-mechanisms.md"
-    },
-    {
-      "label": "QMT \u8fd0\u884c\u673a\u5236\u8be6\u89e3",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/execution-mechanisms.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 176,
-      "norm_label": "qmt \u8fd0\u884c\u673a\u5236\u8be6\u89e3",
-      "id": "execution-mechanisms"
-    },
-    {
-      "label": "joinquant-migration.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/joinquant-migration.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 177,
-      "norm_label": "joinquant-migration.md",
-      "id": ".agents_skills_qmt-docs_references_joinquant-migration.md"
-    },
-    {
-      "label": "\u805a\u5bbd\u7b56\u7565\u8fc1\u79fb\u81f3 QMT \u6307\u5357",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/joinquant-migration.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 177,
-      "norm_label": "\u805a\u5bbd\u7b56\u7565\u8fc1\u79fb\u81f3 qmt \u6307\u5357",
-      "id": "joinquant-migration"
-    },
-    {
-      "label": "live-trading-guide.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/live-trading-guide.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 178,
-      "norm_label": "live-trading-guide.md",
-      "id": ".agents_skills_qmt-docs_references_live-trading-guide.md"
-    },
-    {
-      "label": "QMT \u5b9e\u76d8\u4ea4\u6613\u5b8c\u5168\u6307\u5357",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/live-trading-guide.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 178,
-      "norm_label": "qmt \u5b9e\u76d8\u4ea4\u6613\u5b8c\u5168\u6307\u5357",
-      "id": "live-trading-guide"
-    },
-    {
-      "label": "overview.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/overview.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 179,
-      "norm_label": "overview.md",
-      "id": ".agents_skills_qmt-docs_references_overview.md"
-    },
-    {
-      "label": "QMT \u7cfb\u7edf\u6982\u8ff0",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/overview.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 179,
-      "norm_label": "qmt \u7cfb\u7edf\u6982\u8ff0",
-      "id": "overview"
-    },
-    {
-      "label": "callback_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/callback_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 180,
-      "norm_label": "callback_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_callback_function.md"
-    },
-    {
-      "label": "\u5b9e\u65f6\u4e3b\u63a8\u51fd\u6570",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/callback_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 180,
-      "norm_label": "\u5b9e\u65f6\u4e3b\u63a8\u51fd\u6570",
-      "id": "callback_function"
-    },
-    {
-      "label": "\u83b7\u53d6\u884c\u60c5\u793a\u4f8b",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/code_examples.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 206,
-      "norm_label": "\u83b7\u53d6\u884c\u60c5\u793a\u4f8b",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_code_examples.md"
-    },
-    {
-      "label": "data_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 181,
-      "norm_label": "data_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_data_function.md"
-    },
-    {
-      "label": "\u6570\u636e\u4e0b\u8f7d",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 181,
-      "norm_label": "\u6570\u636e\u4e0b\u8f7d",
-      "id": "data_function"
-    },
-    {
-      "label": "data_structure.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_structure.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 182,
-      "norm_label": "data_structure.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_data_structure.md"
-    },
-    {
-      "label": "\u6570\u636e\u7c7b",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_structure.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 182,
-      "norm_label": "\u6570\u636e\u7c7b",
-      "id": "data_structure"
-    },
-    {
-      "label": "drawing_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/drawing_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 183,
-      "norm_label": "drawing_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_drawing_function.md"
-    },
-    {
-      "label": "ContextInfo.paint - \u5728\u754c\u9762\u4e0a\u753b\u56fe",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/drawing_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 183,
-      "norm_label": "contextinfo.paint - \u5728\u754c\u9762\u4e0a\u753b\u56fe",
-      "id": "drawing_function"
-    },
-    {
-      "label": "enum_constants.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/enum_constants.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 184,
-      "norm_label": "enum_constants.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_enum_constants.md"
-    },
-    {
-      "label": "opType - \u64cd\u4f5c\u7c7b\u578b",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/enum_constants.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 184,
-      "norm_label": "optype - \u64cd\u4f5c\u7c7b\u578b",
-      "id": "enum_constants"
-    },
-    {
-      "label": "interface_operation.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/interface_operation.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 185,
-      "norm_label": "interface_operation.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_interface_operation.md"
-    },
-    {
-      "label": "\u65b0\u5efa\u7b56\u7565",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/interface_operation.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 185,
-      "norm_label": "\u65b0\u5efa\u7b56\u7565",
-      "id": "interface_operation"
-    },
-    {
-      "label": "Python\u73af\u5883\u76f8\u5173",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/question_answer.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 207,
-      "norm_label": "python\u73af\u5883\u76f8\u5173",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_question_answer.md"
-    },
-    {
-      "label": "quote_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/quote_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 186,
-      "norm_label": "quote_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_quote_function.md"
-    },
-    {
-      "label": "ext_data - \u83b7\u53d6\u6269\u5c55\u6570\u636e",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/quote_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 186,
-      "norm_label": "ext_data - \u83b7\u53d6\u6269\u5c55\u6570\u636e",
-      "id": "quote_function"
-    },
-    {
-      "label": "\u4e00\u3001\u6982\u8ff0",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/start_now.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 208,
-      "norm_label": "\u4e00\u3001\u6982\u8ff0",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_start_now.md"
-    },
-    {
-      "label": "system_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/system_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 187,
-      "norm_label": "system_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_system_function.md"
-    },
-    {
-      "label": "ContextInfo \u5bf9\u8c61",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/system_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 187,
-      "norm_label": "contextinfo \u5bf9\u8c61",
-      "id": "system_function"
-    },
-    {
-      "label": "trading_function.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/trading_function.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 188,
-      "norm_label": "trading_function.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_trading_function.md"
-    },
-    {
-      "label": "\u4ea4\u6613\u4e0b\u5355\u51fd\u6570",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/trading_function.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 188,
-      "norm_label": "\u4ea4\u6613\u4e0b\u5355\u51fd\u6570",
-      "id": "trading_function"
-    },
-    {
-      "label": "user_attention.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/user_attention.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 189,
-      "norm_label": "user_attention.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_user_attention.md"
-    },
-    {
-      "label": "\u5b89\u88c5\u8def\u5f84\u7684\u9009\u62e9",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/user_attention.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 189,
-      "norm_label": "\u5b89\u88c5\u8def\u5f84\u7684\u9009\u62e9",
-      "id": "user_attention"
-    },
-    {
-      "label": "variable_convention.md",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/variable_convention.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "variable_convention.md",
-      "id": ".agents_skills_qmt-docs_references_python-innerApi_variable_convention.md"
-    },
-    {
-      "label": "\u51fd\u6570\u547d\u540d\u89c4\u5219",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/variable_convention.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 190,
-      "norm_label": "\u51fd\u6570\u547d\u540d\u89c4\u5219",
-      "id": "variable_convention"
-    },
-    {
-      "label": "QMT Python \u5e38\u7528 API \u901f\u67e5",
-      "file_type": "document",
-      "source_file": ".agents/skills/qmt-docs/references/quick-reference.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 209,
-      "norm_label": "qmt python \u5e38\u7528 api \u901f\u67e5",
-      "id": ".agents_skills_qmt-docs_references_quick-reference.md"
-    },
-    {
-      "label": "RQAlpha\uff08\u7c73\u7b50\u5f00\u6e90\u56de\u6d4b\u6846\u67b6\uff09",
-      "file_type": "document",
-      "source_file": ".agents/skills/rqalpha/SKILL.md",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 210,
-      "norm_label": "rqalpha(\u7c73\u7b50\u5f00\u6e90\u56de\u6d4b\u6846\u67b6)",
-      "id": ".agents_skills_rqalpha_SKILL.md"
-    },
-    {
-      "label": "RQAlpha \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
-      "file_type": "document",
-      "source_file": ".agents/skills/rqalpha/references/advanced-strategies.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 211,
-      "norm_label": "rqalpha \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
-      "id": ".agents_skills_rqalpha_references_advanced-strategies.md"
-    },
-    {
-      "label": "Quant Data Fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai V10.24 \u878d\u5408\u51b3\u7b56",
-      "file_type": "document",
-      "source_file": "docs/quant_data_fusion.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 128,
-      "norm_label": "quant data fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai v10.24 \u878d\u5408\u51b3\u7b56",
-      "id": "quant_data_fusion"
-    },
-    {
-      "label": "update-platforms.sh",
-      "file_type": "code",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "file"
-      },
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "update-platforms.sh",
-      "id": "update-platforms"
-    },
-    {
-      "label": "update-platforms.sh script",
-      "file_type": "code",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "metadata": {
-        "language": "bash",
-        "kind": "bash_entrypoint"
-      },
-      "_origin": "ast",
-      "community": 1,
-      "norm_label": "update-platforms.sh script",
-      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
     },
     {
       "label": "berkshire-ai",
@@ -1841,6 +623,16 @@
       "id": "test_hypothesis"
     },
     {
+      "label": "test_limitup_scoring.py",
+      "file_type": "code",
+      "source_file": "tests/test_limitup_scoring.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 217,
+      "norm_label": "test_limitup_scoring.py",
+      "id": "test_limitup_scoring"
+    },
+    {
       "label": "test_llm_gradient.py",
       "file_type": "code",
       "source_file": "tests/test_llm_gradient.py",
@@ -2253,6 +1045,16 @@
     {
       "label": "",
       "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/limitup_scoring.py",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 213,
+      "norm_label": "",
+      "id": "limitup_scoring"
+    },
+    {
+      "label": "",
+      "file_type": "code",
       "source_file": "tools/ashare_alphagpt/miner.py",
       "source_location": "L22",
       "_origin": "ast",
@@ -2289,6 +1091,16 @@
       "community": 132,
       "norm_label": "stackvm operators for a-share factor formulas (from alphagpt times.py).",
       "id": "ops"
+    },
+    {
+      "label": "Score A-share symbols with a mined AlphaGPT formula.",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/screener.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 133,
+      "norm_label": "score a-share symbols with a mined alphagpt formula.",
+      "id": "screener"
     },
     {
       "label": "",
@@ -2379,6 +1191,16 @@
       "community": 14,
       "norm_label": "convert any numeric to exact decimal, avoiding float traps.",
       "id": "financial_rigor"
+    },
+    {
+      "label": "limitup_screener_bridge.py",
+      "file_type": "code",
+      "source_file": "tools/limitup_screener_bridge.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 214,
+      "norm_label": "limitup_screener_bridge.py",
+      "id": "limitup_screener_bridge"
     },
     {
       "label": "log-command.sh",
@@ -2529,6 +1351,16 @@
       "id": "stock_screener"
     },
     {
+      "label": "\u89e3\u6790 \u00a71 Active Portfolio Theses \u8868\u683c\u884c\u3002",
+      "file_type": "rationale",
+      "source_file": "tools/thesis_queue.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "community": 53,
+      "norm_label": "\u89e3\u6790 \u00a71 active portfolio theses \u8868\u683c\u884c\u3002",
+      "id": "thesis_queue"
+    },
+    {
       "label": "\u4f18\u5148\u9875\u9762 JS fetch\uff1b\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
       "file_type": "rationale",
       "source_file": "tools/xueqiu_scraper.py",
@@ -2537,6 +1369,1184 @@
       "community": 41,
       "norm_label": "\u4f18\u5148\u9875\u9762 js fetch;\u5931\u8d25\u56de\u9000\u5230 context.request\u3002",
       "id": "xueqiu_scraper"
+    },
+    {
+      "label": "update-platforms.sh",
+      "file_type": "code",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "update-platforms.sh",
+      "id": "update-platforms"
+    },
+    {
+      "label": "update-platforms.sh script",
+      "file_type": "code",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "update-platforms.sh script",
+      "id": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
+    },
+    {
+      "label": "Backtrader\uff08\u5f00\u6e90\u91cf\u5316\u56de\u6d4b\u6846\u67b6\uff09",
+      "file_type": "document",
+      "source_file": ".agents/skills/backtrader/SKILL.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 191,
+      "norm_label": "backtrader(\u5f00\u6e90\u91cf\u5316\u56de\u6d4b\u6846\u67b6)",
+      "id": ".agents_skills_backtrader_SKILL.md"
+    },
+    {
+      "label": "Backtrader \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
+      "file_type": "document",
+      "source_file": ".agents/skills/backtrader/references/advanced-strategies.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 192,
+      "norm_label": "backtrader \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
+      "id": ".agents_skills_backtrader_references_advanced-strategies.md"
+    },
+    {
+      "label": "\u805a\u5bbd\u7b56\u7565\u5f00\u53d1",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/SKILL.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "\u805a\u5bbd\u7b56\u7565\u5f00\u53d1",
+      "id": ".agents_skills_joinquant-docs_SKILL.md"
+    },
+    {
+      "label": "\u805a\u5bbd\u91cf\u5316\u5e73\u53f0API\u6587\u6863",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/api.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "\u805a\u5bbd\u91cf\u5316\u5e73\u53f0api\u6587\u6863",
+      "id": "api"
+    },
+    {
+      "label": "Alpha101.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Alpha101.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "alpha101.md",
+      "id": ".agents_skills_joinquant-docs_data_Alpha101.md"
+    },
+    {
+      "label": "WorldQuant 101 Alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Alpha101.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "worldquant 101 alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
+      "id": "Alpha101"
+    },
+    {
+      "label": "Alpha191.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Alpha191.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 137,
+      "norm_label": "alpha191.md",
+      "id": ".agents_skills_joinquant-docs_data_Alpha191.md"
+    },
+    {
+      "label": "\u77ed\u5468\u671f\u4ef7\u91cf\u7279\u5f81 191 Alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Alpha191.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 137,
+      "norm_label": "\u77ed\u5468\u671f\u4ef7\u91cf\u7279\u5f81 191 alphas \u56e0\u5b50\u51fd\u6570\u4f7f\u7528\u8bf4\u660e",
+      "id": "Alpha191"
+    },
+    {
+      "label": "Future.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Future.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 138,
+      "norm_label": "future.md",
+      "id": ".agents_skills_joinquant-docs_data_Future.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u671f\u8d27\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Future.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 138,
+      "norm_label": "\u83b7\u53d6\u671f\u8d27\u6570\u636e",
+      "id": "Future"
+    },
+    {
+      "label": "OTCfund.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/OTCfund.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 139,
+      "norm_label": "otcfund.md",
+      "id": ".agents_skills_joinquant-docs_data_OTCfund.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u516c\u52df\u57fa\u91d1\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/OTCfund.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 139,
+      "norm_label": "\u83b7\u53d6\u516c\u52df\u57fa\u91d1\u6570\u636e",
+      "id": "OTCfund"
+    },
+    {
+      "label": "Option.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Option.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 140,
+      "norm_label": "option.md",
+      "id": ".agents_skills_joinquant-docs_data_Option.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Option.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 140,
+      "norm_label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
+      "id": "Option"
+    },
+    {
+      "label": "Public.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Public.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 141,
+      "norm_label": "public.md",
+      "id": ".agents_skills_joinquant-docs_data_Public.md"
+    },
+    {
+      "label": "\u65b0\u95fb\u8054\u64ad\u6587\u672c\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Public.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 141,
+      "norm_label": "\u65b0\u95fb\u8054\u64ad\u6587\u672c\u6570\u636e",
+      "id": "Public"
+    },
+    {
+      "label": "Stock.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Stock.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 142,
+      "norm_label": "stock.md",
+      "id": ".agents_skills_joinquant-docs_data_Stock.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u80a1\u7968\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/Stock.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 142,
+      "norm_label": "\u83b7\u53d6\u80a1\u7968\u6570\u636e",
+      "id": "Stock"
+    },
+    {
+      "label": "\u503a\u5238\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/bond.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 193,
+      "norm_label": "\u503a\u5238\u6570\u636e",
+      "id": ".agents_skills_joinquant-docs_data_bond.md"
+    },
+    {
+      "label": "factor_values.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/factor_values.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 143,
+      "norm_label": "factor_values.md",
+      "id": ".agents_skills_joinquant-docs_data_factor_values.md"
+    },
+    {
+      "label": "\u4f7f\u7528\u65b9\u6cd5",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/factor_values.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 143,
+      "norm_label": "\u4f7f\u7528\u65b9\u6cd5",
+      "id": "factor_values"
+    },
+    {
+      "label": "fund.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/fund.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 144,
+      "norm_label": "fund.md",
+      "id": ".agents_skills_joinquant-docs_data_fund.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/fund.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 144,
+      "norm_label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
+      "id": "fund"
+    },
+    {
+      "label": "index-data.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/index-data.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 147,
+      "norm_label": "index-data.md",
+      "id": ".agents_skills_joinquant-docs_data_index-data.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/index-data.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 147,
+      "norm_label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
+      "id": "index-data"
+    },
+    {
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/index.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 148,
+      "norm_label": "index.md",
+      "id": ".agents_skills_joinquant-docs_data_index.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/index.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 148,
+      "norm_label": "\u83b7\u53d6\u6caa\u6df1\u6307\u6570\u6570\u636e",
+      "id": "index"
+    },
+    {
+      "label": "macroData.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/macroData.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 149,
+      "norm_label": "macrodata.md",
+      "id": ".agents_skills_joinquant-docs_data_macroData.md"
+    },
+    {
+      "label": "\u5b8f\u89c2\u7ecf\u6d4e\u6570\u636e\uff08\u6216\u5c06\u505c\u6b62\u66f4\u65b0\uff09",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/macroData.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 149,
+      "norm_label": "\u5b8f\u89c2\u7ecf\u6d4e\u6570\u636e(\u6216\u5c06\u505c\u6b62\u66f4\u65b0)",
+      "id": "macroData"
+    },
+    {
+      "label": "plateData.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/plateData.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 150,
+      "norm_label": "platedata.md",
+      "id": ".agents_skills_joinquant-docs_data_plateData.md"
+    },
+    {
+      "label": "\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/plateData.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 150,
+      "norm_label": "\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
+      "id": "plateData"
+    },
+    {
+      "label": "\u56e0\u5b50\u8bf4\u660e",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/data/technicalanalysis.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 194,
+      "norm_label": "\u56e0\u5b50\u8bf4\u660e",
+      "id": ".agents_skills_joinquant-docs_data_technicalanalysis.md"
+    },
+    {
+      "label": "\u5e38\u89c1\u95ee\u9898",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/faq.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "\u5e38\u89c1\u95ee\u9898",
+      "id": "faq"
+    },
+    {
+      "label": "\u56e0\u5b50\u5206\u6790",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/fator.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "\u56e0\u5b50\u5206\u6790",
+      "id": "fator"
+    },
+    {
+      "label": "\u805a\u5bbd\u6587\u6863\u7d22\u5f15",
+      "file_type": "document",
+      "source_file": ".agents/skills/joinquant-docs/reference.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 5,
+      "norm_label": "\u805a\u5bbd\u6587\u6863\u7d22\u5f15",
+      "id": "reference"
+    },
+    {
+      "label": "MiniQMT \u91cf\u5316\u4ea4\u6613\u6280\u80fd",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/SKILL.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 195,
+      "norm_label": "miniqmt \u91cf\u5316\u4ea4\u6613\u6280\u80fd",
+      "id": ".agents_skills_miniqmt_SKILL.md"
+    },
+    {
+      "label": "changelog.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/changelog.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 152,
+      "norm_label": "changelog.md",
+      "id": ".agents_skills_miniqmt_references_changelog.md"
+    },
+    {
+      "label": "\u7248\u672c\u4fe1\u606f",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/changelog.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 152,
+      "norm_label": "\u7248\u672c\u4fe1\u606f",
+      "id": "changelog"
+    },
+    {
+      "label": "\u884c\u60c5\u793a\u4f8b",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/code_examples.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 196,
+      "norm_label": "\u884c\u60c5\u793a\u4f8b",
+      "id": ".agents_skills_miniqmt_references_code_examples.md"
+    },
+    {
+      "label": "download_xtquant.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/download_xtquant.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 197,
+      "norm_label": "download_xtquant.md",
+      "id": ".agents_skills_miniqmt_references_download_xtquant.md"
+    },
+    {
+      "label": "question_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/question_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 153,
+      "norm_label": "question_function.md",
+      "id": ".agents_skills_miniqmt_references_question_function.md"
+    },
+    {
+      "label": "\u5bfc\u5165xtquant\u5e93\u65f6\u63d0\u793a `NO module named 'xtquant.IPythonAPiClient'`",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/question_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 153,
+      "norm_label": "\u5bfc\u5165xtquant\u5e93\u65f6\u63d0\u793a `no module named 'xtquant.ipythonapiclient'`",
+      "id": "question_function"
+    },
+    {
+      "label": "XtQuant \u80fd\u63d0\u4f9b\u54ea\u4e9b\u670d\u52a1",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/start_now.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 198,
+      "norm_label": "xtquant \u80fd\u63d0\u4f9b\u54ea\u4e9b\u670d\u52a1",
+      "id": ".agents_skills_miniqmt_references_start_now.md"
+    },
+    {
+      "label": "xtdata.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/xtdata.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 154,
+      "norm_label": "xtdata.md",
+      "id": ".agents_skills_miniqmt_references_xtdata.md"
+    },
+    {
+      "label": "XtQuant.XtData \u884c\u60c5\u6a21\u5757",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/xtdata.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 154,
+      "norm_label": "xtquant.xtdata \u884c\u60c5\u6a21\u5757",
+      "id": "xtdata"
+    },
+    {
+      "label": "xtdata_dict.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/xtdata_dict.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 156,
+      "norm_label": "xtdata_dict.md",
+      "id": ".agents_skills_miniqmt_references_xtdata_dict.md"
+    },
+    {
+      "label": "\u9644\u5f55\uff1axtdata\u884c\u60c5\u6570\u636e\u5b57\u6bb5\u4e0e\u6570\u636e\u5b57\u5178\u8be6\u60c5",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/xtdata_dict.md",
+      "source_location": "L2",
+      "_origin": "ast",
+      "community": 156,
+      "norm_label": "\u9644\u5f55:xtdata\u884c\u60c5\u6570\u636e\u5b57\u6bb5\u4e0e\u6570\u636e\u5b57\u5178\u8be6\u60c5",
+      "id": "xtdata_dict"
+    },
+    {
+      "label": "XtQuant.Xttrade \u4ea4\u6613\u6a21\u5757",
+      "file_type": "document",
+      "source_file": ".agents/skills/miniqmt/references/xttrader.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 199,
+      "norm_label": "xtquant.xttrade \u4ea4\u6613\u6a21\u5757",
+      "id": ".agents_skills_miniqmt_references_xttrader.md"
+    },
+    {
+      "label": "PyWenCai\uff08\u540c\u82b1\u987a\u95ee\u8d22\u6570\u636e\u67e5\u8be2\uff09",
+      "file_type": "document",
+      "source_file": ".agents/skills/pywencai/SKILL.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 201,
+      "norm_label": "pywencai(\u540c\u82b1\u987a\u95ee\u8d22\u6570\u636e\u67e5\u8be2)",
+      "id": ".agents_skills_pywencai_SKILL.md"
+    },
+    {
+      "label": "QMT Python \u7b56\u7565\u5f00\u53d1\u77e5\u8bc6\u5e93",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/SKILL.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 202,
+      "norm_label": "qmt python \u7b56\u7565\u5f00\u53d1\u77e5\u8bc6\u5e93",
+      "id": ".agents_skills_qmt-docs_SKILL.md"
+    },
+    {
+      "label": "backtesting-guide.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/backtesting-guide.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 157,
+      "norm_label": "backtesting-guide.md",
+      "id": ".agents_skills_qmt-docs_references_backtesting-guide.md"
+    },
+    {
+      "label": "QMT \u56de\u6d4b\u6a21\u578b\u5b8c\u5168\u6307\u5357",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/backtesting-guide.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 157,
+      "norm_label": "qmt \u56de\u6d4b\u6a21\u578b\u5b8c\u5168\u6307\u5357",
+      "id": "backtesting-guide"
+    },
+    {
+      "label": "best-practices.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/best-practices.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 161,
+      "norm_label": "best-practices.md",
+      "id": ".agents_skills_qmt-docs_references_best-practices.md"
+    },
+    {
+      "label": "QMT \u7f16\u7801\u6700\u4f73\u5b9e\u8df5\u4e0e\u89c4\u8303",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/best-practices.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 161,
+      "norm_label": "qmt \u7f16\u7801\u6700\u4f73\u5b9e\u8df5\u4e0e\u89c4\u8303",
+      "id": "best-practices"
+    },
+    {
+      "label": "\u53ef\u8f6c\u503a\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/bond.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 203,
+      "norm_label": "\u53ef\u8f6c\u503a\u6570\u636e",
+      "id": ".agents_skills_qmt-docs_references_dict_bond.md"
+    },
+    {
+      "label": "floorfunds.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/floorfunds.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 162,
+      "norm_label": "floorfunds.md",
+      "id": ".agents_skills_qmt-docs_references_dict_floorfunds.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/floorfunds.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 162,
+      "norm_label": "\u83b7\u53d6\u57fa\u91d1\u6570\u636e",
+      "id": "floorfunds"
+    },
+    {
+      "label": "future.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/future.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 163,
+      "norm_label": "future.md",
+      "id": ".agents_skills_qmt-docs_references_dict_future.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u671f\u8d27\u5408\u7ea6\u4fe1\u606f",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/future.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 163,
+      "norm_label": "\u83b7\u53d6\u671f\u8d27\u5408\u7ea6\u4fe1\u606f",
+      "id": "future"
+    },
+    {
+      "label": "indexes.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/indexes.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 164,
+      "norm_label": "indexes.md",
+      "id": ".agents_skills_qmt-docs_references_dict_indexes.md"
+    },
+    {
+      "label": "\u5173\u4e8e\u8fc5\u6295\u6307\u6570\u8ba1\u7b97\u89c4\u5219\u7684\u8bf4\u660e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/indexes.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 164,
+      "norm_label": "\u5173\u4e8e\u8fc5\u6295\u6307\u6570\u8ba1\u7b97\u89c4\u5219\u7684\u8bf4\u660e",
+      "id": "indexes"
+    },
+    {
+      "label": "industry.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/industry.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 165,
+      "norm_label": "industry.md",
+      "id": ".agents_skills_qmt-docs_references_dict_industry.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/industry.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 165,
+      "norm_label": "\u83b7\u53d6\u884c\u4e1a\u6982\u5ff5\u6570\u636e",
+      "id": "industry"
+    },
+    {
+      "label": "option.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/option.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 166,
+      "norm_label": "option.md",
+      "id": ".agents_skills_qmt-docs_references_dict_option.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/option.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 166,
+      "norm_label": "\u83b7\u53d6\u671f\u6743\u6570\u636e",
+      "id": "option"
+    },
+    {
+      "label": "Token \u4f7f\u7528\u76f8\u5173",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/question_answer.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 204,
+      "norm_label": "token \u4f7f\u7528\u76f8\u5173",
+      "id": ".agents_skills_qmt-docs_references_dict_question_answer.md"
+    },
+    {
+      "label": "scenario_based_example.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/scenario_based_example.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 170,
+      "norm_label": "scenario_based_example.md",
+      "id": ".agents_skills_qmt-docs_references_dict_scenario_based_example.md"
+    },
+    {
+      "label": "\u573a\u666f\u5316\u793a\u4f8b",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/scenario_based_example.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 170,
+      "norm_label": "\u573a\u666f\u5316\u793a\u4f8b",
+      "id": "scenario_based_example"
+    },
+    {
+      "label": "stock.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/stock.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 171,
+      "norm_label": "stock.md",
+      "id": ".agents_skills_qmt-docs_references_dict_stock.md"
+    },
+    {
+      "label": "\u83b7\u53d6\u80a1\u7968\u6982\u51b5",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/stock.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 171,
+      "norm_label": "\u83b7\u53d6\u80a1\u7968\u6982\u51b5",
+      "id": "stock"
+    },
+    {
+      "label": "xuntou_factor.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/xuntou_factor.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 172,
+      "norm_label": "xuntou_factor.md",
+      "id": ".agents_skills_qmt-docs_references_dict_xuntou_factor.md"
+    },
+    {
+      "label": "\u56e0\u5b50\u6570\u636e\u4e0b\u8f7d",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/dict/xuntou_factor.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 172,
+      "norm_label": "\u56e0\u5b50\u6570\u636e\u4e0b\u8f7d",
+      "id": "xuntou_factor"
+    },
+    {
+      "label": "\u56de\u6d4b\u793a\u4f8b\uff1a\u53cc\u5747\u7ebf\u7b56\u7565",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/backtest.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 205,
+      "norm_label": "\u56de\u6d4b\u793a\u4f8b:\u53cc\u5747\u7ebf\u7b56\u7565",
+      "id": ".agents_skills_qmt-docs_references_examples_backtest.md"
+    },
+    {
+      "label": "live-trading.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/live-trading.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 173,
+      "norm_label": "live-trading.md",
+      "id": ".agents_skills_qmt-docs_references_examples_live-trading.md"
+    },
+    {
+      "label": "\u5b9e\u76d8\u793a\u4f8b\uff1a\u53cc\u5747\u7ebf\u7b56\u7565",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/live-trading.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 173,
+      "norm_label": "\u5b9e\u76d8\u793a\u4f8b:\u53cc\u5747\u7ebf\u7b56\u7565",
+      "id": "live-trading"
+    },
+    {
+      "label": "run-time.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/run-time.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 174,
+      "norm_label": "run-time.md",
+      "id": ".agents_skills_qmt-docs_references_examples_run-time.md"
+    },
+    {
+      "label": "\u5b9a\u65f6\u4efb\u52a1\u793a\u4f8b\uff1arun_time \u5b9a\u65f6\u8fd0\u884c",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/run-time.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 174,
+      "norm_label": "\u5b9a\u65f6\u4efb\u52a1\u793a\u4f8b:run_time \u5b9a\u65f6\u8fd0\u884c",
+      "id": "run-time"
+    },
+    {
+      "label": "subscribe.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/subscribe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 175,
+      "norm_label": "subscribe.md",
+      "id": ".agents_skills_qmt-docs_references_examples_subscribe.md"
+    },
+    {
+      "label": "\u4e8b\u4ef6\u9a71\u52a8\u793a\u4f8b\uff1asubscribe \u8ba2\u9605\u63a8\u9001",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/examples/subscribe.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 175,
+      "norm_label": "\u4e8b\u4ef6\u9a71\u52a8\u793a\u4f8b:subscribe \u8ba2\u9605\u63a8\u9001",
+      "id": "subscribe"
+    },
+    {
+      "label": "execution-mechanisms.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/execution-mechanisms.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 176,
+      "norm_label": "execution-mechanisms.md",
+      "id": ".agents_skills_qmt-docs_references_execution-mechanisms.md"
+    },
+    {
+      "label": "QMT \u8fd0\u884c\u673a\u5236\u8be6\u89e3",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/execution-mechanisms.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 176,
+      "norm_label": "qmt \u8fd0\u884c\u673a\u5236\u8be6\u89e3",
+      "id": "execution-mechanisms"
+    },
+    {
+      "label": "joinquant-migration.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/joinquant-migration.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 177,
+      "norm_label": "joinquant-migration.md",
+      "id": ".agents_skills_qmt-docs_references_joinquant-migration.md"
+    },
+    {
+      "label": "\u805a\u5bbd\u7b56\u7565\u8fc1\u79fb\u81f3 QMT \u6307\u5357",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/joinquant-migration.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 177,
+      "norm_label": "\u805a\u5bbd\u7b56\u7565\u8fc1\u79fb\u81f3 qmt \u6307\u5357",
+      "id": "joinquant-migration"
+    },
+    {
+      "label": "live-trading-guide.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/live-trading-guide.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 178,
+      "norm_label": "live-trading-guide.md",
+      "id": ".agents_skills_qmt-docs_references_live-trading-guide.md"
+    },
+    {
+      "label": "QMT \u5b9e\u76d8\u4ea4\u6613\u5b8c\u5168\u6307\u5357",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/live-trading-guide.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 178,
+      "norm_label": "qmt \u5b9e\u76d8\u4ea4\u6613\u5b8c\u5168\u6307\u5357",
+      "id": "live-trading-guide"
+    },
+    {
+      "label": "overview.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/overview.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 179,
+      "norm_label": "overview.md",
+      "id": ".agents_skills_qmt-docs_references_overview.md"
+    },
+    {
+      "label": "QMT \u7cfb\u7edf\u6982\u8ff0",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/overview.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 179,
+      "norm_label": "qmt \u7cfb\u7edf\u6982\u8ff0",
+      "id": "overview"
+    },
+    {
+      "label": "callback_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/callback_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 180,
+      "norm_label": "callback_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_callback_function.md"
+    },
+    {
+      "label": "\u5b9e\u65f6\u4e3b\u63a8\u51fd\u6570",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/callback_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 180,
+      "norm_label": "\u5b9e\u65f6\u4e3b\u63a8\u51fd\u6570",
+      "id": "callback_function"
+    },
+    {
+      "label": "\u83b7\u53d6\u884c\u60c5\u793a\u4f8b",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/code_examples.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 206,
+      "norm_label": "\u83b7\u53d6\u884c\u60c5\u793a\u4f8b",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_code_examples.md"
+    },
+    {
+      "label": "data_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 181,
+      "norm_label": "data_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_data_function.md"
+    },
+    {
+      "label": "\u6570\u636e\u4e0b\u8f7d",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 181,
+      "norm_label": "\u6570\u636e\u4e0b\u8f7d",
+      "id": "data_function"
+    },
+    {
+      "label": "data_structure.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_structure.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 182,
+      "norm_label": "data_structure.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_data_structure.md"
+    },
+    {
+      "label": "\u6570\u636e\u7c7b",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/data_structure.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 182,
+      "norm_label": "\u6570\u636e\u7c7b",
+      "id": "data_structure"
+    },
+    {
+      "label": "drawing_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/drawing_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 183,
+      "norm_label": "drawing_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_drawing_function.md"
+    },
+    {
+      "label": "ContextInfo.paint - \u5728\u754c\u9762\u4e0a\u753b\u56fe",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/drawing_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 183,
+      "norm_label": "contextinfo.paint - \u5728\u754c\u9762\u4e0a\u753b\u56fe",
+      "id": "drawing_function"
+    },
+    {
+      "label": "enum_constants.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/enum_constants.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 184,
+      "norm_label": "enum_constants.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_enum_constants.md"
+    },
+    {
+      "label": "opType - \u64cd\u4f5c\u7c7b\u578b",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/enum_constants.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 184,
+      "norm_label": "optype - \u64cd\u4f5c\u7c7b\u578b",
+      "id": "enum_constants"
+    },
+    {
+      "label": "interface_operation.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/interface_operation.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 185,
+      "norm_label": "interface_operation.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_interface_operation.md"
+    },
+    {
+      "label": "\u65b0\u5efa\u7b56\u7565",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/interface_operation.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 185,
+      "norm_label": "\u65b0\u5efa\u7b56\u7565",
+      "id": "interface_operation"
+    },
+    {
+      "label": "Python\u73af\u5883\u76f8\u5173",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/question_answer.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 207,
+      "norm_label": "python\u73af\u5883\u76f8\u5173",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_question_answer.md"
+    },
+    {
+      "label": "quote_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/quote_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 186,
+      "norm_label": "quote_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_quote_function.md"
+    },
+    {
+      "label": "ext_data - \u83b7\u53d6\u6269\u5c55\u6570\u636e",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/quote_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 186,
+      "norm_label": "ext_data - \u83b7\u53d6\u6269\u5c55\u6570\u636e",
+      "id": "quote_function"
+    },
+    {
+      "label": "\u4e00\u3001\u6982\u8ff0",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/start_now.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 208,
+      "norm_label": "\u4e00\u3001\u6982\u8ff0",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_start_now.md"
+    },
+    {
+      "label": "system_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/system_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 187,
+      "norm_label": "system_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_system_function.md"
+    },
+    {
+      "label": "ContextInfo \u5bf9\u8c61",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/system_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 187,
+      "norm_label": "contextinfo \u5bf9\u8c61",
+      "id": "system_function"
+    },
+    {
+      "label": "trading_function.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/trading_function.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 188,
+      "norm_label": "trading_function.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_trading_function.md"
+    },
+    {
+      "label": "\u4ea4\u6613\u4e0b\u5355\u51fd\u6570",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/trading_function.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 188,
+      "norm_label": "\u4ea4\u6613\u4e0b\u5355\u51fd\u6570",
+      "id": "trading_function"
+    },
+    {
+      "label": "user_attention.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/user_attention.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 189,
+      "norm_label": "user_attention.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_user_attention.md"
+    },
+    {
+      "label": "\u5b89\u88c5\u8def\u5f84\u7684\u9009\u62e9",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/user_attention.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 189,
+      "norm_label": "\u5b89\u88c5\u8def\u5f84\u7684\u9009\u62e9",
+      "id": "user_attention"
+    },
+    {
+      "label": "variable_convention.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/variable_convention.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 190,
+      "norm_label": "variable_convention.md",
+      "id": ".agents_skills_qmt-docs_references_python-innerApi_variable_convention.md"
+    },
+    {
+      "label": "\u51fd\u6570\u547d\u540d\u89c4\u5219",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/python-innerApi/variable_convention.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 190,
+      "norm_label": "\u51fd\u6570\u547d\u540d\u89c4\u5219",
+      "id": "variable_convention"
+    },
+    {
+      "label": "QMT Python \u5e38\u7528 API \u901f\u67e5",
+      "file_type": "document",
+      "source_file": ".agents/skills/qmt-docs/references/quick-reference.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 209,
+      "norm_label": "qmt python \u5e38\u7528 api \u901f\u67e5",
+      "id": ".agents_skills_qmt-docs_references_quick-reference.md"
+    },
+    {
+      "label": "RQAlpha\uff08\u7c73\u7b50\u5f00\u6e90\u56de\u6d4b\u6846\u67b6\uff09",
+      "file_type": "document",
+      "source_file": ".agents/skills/rqalpha/SKILL.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 210,
+      "norm_label": "rqalpha(\u7c73\u7b50\u5f00\u6e90\u56de\u6d4b\u6846\u67b6)",
+      "id": ".agents_skills_rqalpha_SKILL.md"
+    },
+    {
+      "label": "RQAlpha \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
+      "file_type": "document",
+      "source_file": ".agents/skills/rqalpha/references/advanced-strategies.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 211,
+      "norm_label": "rqalpha \u8fdb\u9636\u7b56\u7565\u793a\u4f8b",
+      "id": ".agents_skills_rqalpha_references_advanced-strategies.md"
     },
     {
       "label": "graphify",
@@ -2549,16 +2559,6 @@
       "id": "AGENTS"
     },
     {
-      "label": "Berkshire AI - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf\uff08\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38\uff09",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "berkshire ai - \u56db\u5927\u5e08\u5e76\u884c\u6295\u7814\u7cfb\u7edf(\u5df2\u5b8c\u6574\u6574\u5408\u4e0a\u6e38)",
-      "id": "README.md"
-    },
-    {
       "label": "Berkshire AI \u2014 Four-Masters Parallel Investment Research (Upstream fully integrated)",
       "file_type": "document",
       "source_file": "README_EN.md",
@@ -2569,16 +2569,6 @@
       "id": "README_EN"
     },
     {
-      "label": "\u6d4b\u8bd5\u6307\u5357\u4e0e E2E \u62a5\u544a\uff08TESTING\uff09",
-      "file_type": "document",
-      "source_file": "TESTING.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "\u6d4b\u8bd5\u6307\u5357\u4e0e e2e \u62a5\u544a(testing)",
-      "id": "TESTING"
-    },
-    {
       "label": "Berkshire AI \u7248\u672c\u5386\u53f2",
       "file_type": "document",
       "source_file": "VERSION_HISTORY.md",
@@ -2587,16 +2577,6 @@
       "community": 4,
       "norm_label": "berkshire ai \u7248\u672c\u5386\u53f2",
       "id": "VERSION_HISTORY"
-    },
-    {
-      "label": "Investment Research Meta-Skill (V10.0 - TextGrad \u5316)",
-      "file_type": "document",
-      "source_file": "config/skill.md",
-      "source_location": "L66",
-      "_origin": "ast",
-      "community": 31,
-      "norm_label": "investment research meta-skill (v10.0 - textgrad \u5316)",
-      "id": "skill"
     },
     {
       "label": "Berkshire AI - Global State & Thesis Tracker",
@@ -2649,6 +2629,16 @@
       "id": "qlib_evaluation"
     },
     {
+      "label": "Quant Data Fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai V10.24 \u878d\u5408\u51b3\u7b56",
+      "file_type": "document",
+      "source_file": "docs/quant_data_fusion.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "quant data fusion \u2014 \u4e09\u5e93\u8c03\u7814\u4e0e berkshire-ai v10.24 \u878d\u5408\u51b3\u7b56",
+      "id": "quant_data_fusion"
+    },
+    {
       "label": "\u501f\u9274 Microsoft RD-Agent \u5230 berkshire-ai\uff1a\u53ef\u6267\u884c\u5efa\u8bae\u62a5\u544a",
       "file_type": "document",
       "source_file": "docs/rdagent_reference.md",
@@ -2667,6 +2657,16 @@
       "community": 4,
       "norm_label": "\u62a5\u544a\u8f93\u51fa\u89c4\u8303(report conventions)",
       "id": "report-conventions"
+    },
+    {
+      "label": "\u901a\u8fbe\u4fe1 TQ MCP \u5de5\u5177\u8bbe\u8ba1\uff08\u5916\u90e8 Windows \u6267\u884c\u5c42\uff09",
+      "file_type": "document",
+      "source_file": "docs/tdx_mcp_tool_design.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "\u901a\u8fbe\u4fe1 tq mcp \u5de5\u5177\u8bbe\u8ba1(\u5916\u90e8 windows \u6267\u884c\u5c42)",
+      "id": "tdx_mcp_tool_design"
     },
     {
       "label": "Berkshire AI V10.0 - TextGrad \u5316\u8bbe\u8ba1",
@@ -2901,14 +2901,264 @@
   ],
   "links": [
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L276",
+      "weight": 1.0,
+      "source": "README.md",
+      "target": "README.md",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L251",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "README_EN"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L256",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "ROADMAP"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L252",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "TESTING"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "USER_GUIDE"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "VERSION_HISTORY"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L254",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "action-card"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L277",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L255",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "report-conventions"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L282",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "tdx_mcp_tool_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L257",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "README.md",
+      "target": "textgrad_design"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/tdx_mcp_tool_design.md",
+      "source_file": "TESTING.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "tdx_mcp_tool_design",
-      "target": "tdx_mcp_tool_design",
+      "source": "TESTING",
+      "target": "TESTING",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "TESTING.md",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "TESTING",
+      "target": "USER_GUIDE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/README.md",
+      "source_location": "L341",
+      "weight": 1.0,
+      "source": "tools_README.md",
+      "target": "TESTING",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "config/skill.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "skill",
+      "target": "skill",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L587",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "ROADMAP"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "USER_GUIDE",
+      "target": "USER_GUIDE",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L589",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "VERSION_HISTORY"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L331",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "action-card"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L585",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "report-conventions"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L586",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "tdx_mcp_tool_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "USER_GUIDE",
+      "target": "textgrad_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/README.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_README.md",
+      "target": "USER_GUIDE"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/README.md",
+      "source_location": "L342",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_README.md",
+      "target": "action-card"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/README.md",
+      "source_location": "L341",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_README.md",
+      "target": "quant_data_fusion"
     },
     {
       "relation": "contains",
@@ -2916,9 +3166,519 @@
       "source_file": "tools/README.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "README",
-      "target": "README",
+      "source": "tools_README.md",
+      "target": "tools_README.md",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cron-evolution.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cron-evolution",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_cron-evolution.sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/portfolio-weekly.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio-weekly",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src___init__.py",
+      "target": "src___init__.py"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/access_control.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "access_control",
+      "target": "access_control"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/config.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_config.py",
+      "target": "src_config.py"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/cron_evolution.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cron_evolution",
+      "target": "cron_evolution"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/debate.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "debate",
+      "target": "debate"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/decision_log.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "decision_log",
+      "target": "decision_log"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/eval_harness.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "eval_harness",
+      "target": "eval_harness"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/evolution_cli.py",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "evolution_cli",
+      "target": "evolution_cli"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/evolution_loop_v10.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "evolution_loop_v10",
+      "target": "evolution_loop_v10"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/experience_store.py",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "experience_store",
+      "target": "experience_store"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/graph.py",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "graph",
+      "target": "graph"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hypothesis.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "hypothesis",
+      "target": "hypothesis"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/llm_gradient.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "llm_gradient",
+      "target": "llm_gradient"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/metrics_export.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "metrics_export",
+      "target": "metrics_export"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/observability.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "observability",
+      "target": "observability"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/optimizer.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "optimizer",
+      "target": "optimizer"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pipeline.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "pipeline",
+      "target": "pipeline"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/prompt_optimizer.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "prompt_optimizer",
+      "target": "prompt_optimizer"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/prompt_validation.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "prompt_validation",
+      "target": "prompt_validation"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/quality_scorer.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "quality_scorer",
+      "target": "quality_scorer"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/realized_feedback.py",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "realized_feedback",
+      "target": "realized_feedback"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/reflect.py",
+      "source_location": "L57",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "reflect",
+      "target": "reflect"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/research_loop.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "research_loop",
+      "target": "research_loop"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/run_recorder.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "run_recorder",
+      "target": "run_recorder"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/sanitize.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "sanitize",
+      "target": "sanitize"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/scenario.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scenario",
+      "target": "scenario"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/service.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "service",
+      "target": "service"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/tavily_search.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tavily_search",
+      "target": "tavily_search"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/trace_recorder.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "trace_recorder",
+      "target": "trace_recorder"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_calibrate_sensitivity.py",
+      "source_location": "L175",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_calibrate_sensitivity",
+      "target": "test_calibrate_sensitivity"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_eval_harness.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_eval_harness",
+      "target": "test_eval_harness"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_eval_harness_golden.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_eval_harness_golden",
+      "target": "test_eval_harness_golden"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_experience_store.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_experience_store",
+      "target": "test_experience_store"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_hypothesis.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_hypothesis",
+      "target": "test_hypothesis"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_realized_feedback_loop.py",
+      "source_location": "L199",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_realized_feedback_loop",
+      "target": "test_realized_feedback_loop"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_research_loop.py",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_research_loop",
+      "target": "test_research_loop"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_tools_data_sources.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_tools_data_sources",
+      "target": "test_tools_data_sources"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_tools_network.py",
+      "source_location": "L81",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_tools_network",
+      "target": "test_tools_network"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_tools_perf_metrics.py",
+      "source_location": "L153",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_tools_perf_metrics",
+      "target": "test_tools_perf_metrics"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_v10_integration.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_v10_integration",
+      "target": "test_v10_integration"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/test_v10_unit.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_v10_unit",
+      "target": "test_v10_unit"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/aktools_diagnostic.py",
+      "source_location": "L158",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "aktools_diagnostic",
+      "target": "aktools_diagnostic"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_ashare_alphagpt___init__.py",
+      "target": "tools_ashare_alphagpt___init__.py"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/backtest.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_ashare_alphagpt_backtest.py",
+      "target": "tools_ashare_alphagpt_backtest.py"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/config.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tools_ashare_alphagpt_config.py",
+      "target": "tools_ashare_alphagpt_config.py"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/data_engine.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "data_engine",
+      "target": "data_engine"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/decode.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "decode",
+      "target": "decode"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/features.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "features",
+      "target": "features"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/formula_store.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "formula_store",
+      "target": "formula_store"
     },
     {
       "relation": "rationale_for",
@@ -2926,9 +3686,49 @@
       "source_file": "tools/ashare_alphagpt/limitup_scoring.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "limitup_scoring",
-      "target": "limitup_scoring",
-      "confidence_score": 1.0
+      "target": "limitup_scoring"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/miner.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "miner",
+      "target": "miner"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/model.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "model",
+      "target": "model"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/oos.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "oos",
+      "target": "oos"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/ops.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ops",
+      "target": "ops"
     },
     {
       "relation": "rationale_for",
@@ -2936,9 +3736,189 @@
       "source_file": "tools/ashare_alphagpt/screener.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "screener",
-      "target": "screener",
-      "confidence_score": 1.0
+      "target": "screener"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/vm.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "vm",
+      "target": "vm"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/vocab.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "vocab",
+      "target": "vocab"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_data.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ashare_data",
+      "target": "ashare_data"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/calibrate_conviction.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calibrate_conviction",
+      "target": "calibrate_conviction"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/calibrate_sensitivity.py",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calibrate_sensitivity",
+      "target": "calibrate_sensitivity"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/data_sources.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "data_sources",
+      "target": "data_sources"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/financial_rigor.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "financial_rigor",
+      "target": "financial_rigor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/log-command.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "log-command",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/momentum_backtest.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "momentum_backtest",
+      "target": "momentum_backtest"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/morningstar_fair_value.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "morningstar_fair_value",
+      "target": "morningstar_fair_value"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/notify.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notify",
+      "target": "notify"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/perf_metrics.py",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "perf_metrics",
+      "target": "perf_metrics"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_risk.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio_risk",
+      "target": "portfolio_risk"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/portfolio_scan.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "portfolio_scan",
+      "target": "portfolio_scan"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/quant_screener_bridge.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "quant_screener_bridge",
+      "target": "quant_screener_bridge"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/report_audit.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "report_audit",
+      "target": "report_audit"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/report_html.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "report_html",
+      "target": "report_html"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/stock_screener.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "stock_screener",
+      "target": "stock_screener"
     },
     {
       "relation": "rationale_for",
@@ -2946,9 +3926,29 @@
       "source_file": "tools/thesis_queue.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "thesis_queue",
-      "target": "thesis_queue",
-      "confidence_score": 1.0
+      "target": "thesis_queue"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/xueqiu_scraper.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "xueqiu_scraper",
+      "target": "xueqiu_scraper"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "update-platforms.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "update-platforms",
+      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
     },
     {
       "relation": "contains",
@@ -3713,26 +4713,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": ".agents/skills/qmt-docs/references/examples/backtest.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": ".agents_skills_qmt-docs_references_examples_backtest.md",
-      "target": "backtest"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".agents/skills/qmt-docs/references/examples/backtest.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backtest",
-      "target": "backtest"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": ".agents/skills/qmt-docs/references/examples/live-trading.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -4123,852 +5103,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/quant_data_fusion.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "quant_data_fusion",
-      "target": "quant_data_fusion"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "update-platforms.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "update-platforms",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_update-platforms.sh__entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cron-evolution.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cron-evolution",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_cron-evolution.sh__entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/portfolio-weekly.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "portfolio-weekly",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_scripts_portfolio-weekly.sh__entry"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src___init__.py",
-      "target": "src___init__.py"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/access_control.py",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "access_control",
-      "target": "access_control"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/config.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_config.py",
-      "target": "src_config.py"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/cron_evolution.py",
-      "source_location": "L83",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cron_evolution",
-      "target": "cron_evolution"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/debate.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "debate",
-      "target": "debate"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/decision_log.py",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "decision_log",
-      "target": "decision_log"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/eval_harness.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "eval_harness",
-      "target": "eval_harness"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/evolution_cli.py",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "evolution_cli",
-      "target": "evolution_cli"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/evolution_loop_v10.py",
-      "source_location": "L97",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "evolution_loop_v10",
-      "target": "evolution_loop_v10"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/experience_store.py",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "experience_store",
-      "target": "experience_store"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/graph.py",
-      "source_location": "L69",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "graph",
-      "target": "graph"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/hypothesis.py",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "hypothesis",
-      "target": "hypothesis"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/llm_gradient.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "llm_gradient",
-      "target": "llm_gradient"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/metrics_export.py",
-      "source_location": "L52",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "metrics_export",
-      "target": "metrics_export"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/observability.py",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "observability",
-      "target": "observability"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/optimizer.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "optimizer",
-      "target": "optimizer"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/pipeline.py",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "pipeline",
-      "target": "pipeline"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/prompt_optimizer.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "prompt_optimizer",
-      "target": "prompt_optimizer"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/prompt_validation.py",
-      "source_location": "L44",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "prompt_validation",
-      "target": "prompt_validation"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/quality_scorer.py",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "quality_scorer",
-      "target": "quality_scorer"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/realized_feedback.py",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "realized_feedback",
-      "target": "realized_feedback"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/reflect.py",
-      "source_location": "L57",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "reflect",
-      "target": "reflect"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/research_loop.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "research_loop",
-      "target": "research_loop"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/run_recorder.py",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "run_recorder",
-      "target": "run_recorder"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/sanitize.py",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "sanitize",
-      "target": "sanitize"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/scenario.py",
-      "source_location": "L56",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scenario",
-      "target": "scenario"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/service.py",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "service",
-      "target": "service"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/tavily_search.py",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tavily_search",
-      "target": "tavily_search"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "src/trace_recorder.py",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "trace_recorder",
-      "target": "trace_recorder"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_calibrate_sensitivity.py",
-      "source_location": "L175",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_calibrate_sensitivity",
-      "target": "test_calibrate_sensitivity"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_eval_harness.py",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_eval_harness",
-      "target": "test_eval_harness"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_eval_harness_golden.py",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_eval_harness_golden",
-      "target": "test_eval_harness_golden"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_experience_store.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_experience_store",
-      "target": "test_experience_store"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_hypothesis.py",
-      "source_location": "L100",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_hypothesis",
-      "target": "test_hypothesis"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_realized_feedback_loop.py",
-      "source_location": "L199",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_realized_feedback_loop",
-      "target": "test_realized_feedback_loop"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_research_loop.py",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_research_loop",
-      "target": "test_research_loop"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_tools_data_sources.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_tools_data_sources",
-      "target": "test_tools_data_sources"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_tools_network.py",
-      "source_location": "L81",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_tools_network",
-      "target": "test_tools_network"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_tools_perf_metrics.py",
-      "source_location": "L153",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_tools_perf_metrics",
-      "target": "test_tools_perf_metrics"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_v10_integration.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_v10_integration",
-      "target": "test_v10_integration"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tests/test_v10_unit.py",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "test_v10_unit",
-      "target": "test_v10_unit"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/aktools_diagnostic.py",
-      "source_location": "L158",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "aktools_diagnostic",
-      "target": "aktools_diagnostic"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tools_ashare_alphagpt___init__.py",
-      "target": "tools_ashare_alphagpt___init__.py"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/backtest.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tools_ashare_alphagpt_backtest.py",
-      "target": "tools_ashare_alphagpt_backtest.py"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/config.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "tools_ashare_alphagpt_config.py",
-      "target": "tools_ashare_alphagpt_config.py"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/data_engine.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "data_engine",
-      "target": "data_engine"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/decode.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "decode",
-      "target": "decode"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/features.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "features",
-      "target": "features"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/formula_store.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "formula_store",
-      "target": "formula_store"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/miner.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "miner",
-      "target": "miner"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/model.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "model",
-      "target": "model"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/oos.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "oos",
-      "target": "oos"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/ops.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "ops",
-      "target": "ops"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/vm.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "vm",
-      "target": "vm"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_alphagpt/vocab.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "vocab",
-      "target": "vocab"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/ashare_data.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "ashare_data",
-      "target": "ashare_data"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/calibrate_conviction.py",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calibrate_conviction",
-      "target": "calibrate_conviction"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/calibrate_sensitivity.py",
-      "source_location": "L86",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calibrate_sensitivity",
-      "target": "calibrate_sensitivity"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/data_sources.py",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "data_sources",
-      "target": "data_sources"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/financial_rigor.py",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "financial_rigor",
-      "target": "financial_rigor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/log-command.sh",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "log-command",
-      "target": "_Users_kay01.hou_Documents_Github_berkshire-ai_tools_log-command.sh__entry"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/momentum_backtest.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "momentum_backtest",
-      "target": "momentum_backtest"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/morningstar_fair_value.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "morningstar_fair_value",
-      "target": "morningstar_fair_value"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/notify.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "notify",
-      "target": "notify"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/perf_metrics.py",
-      "source_location": "L39",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "perf_metrics",
-      "target": "perf_metrics"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/portfolio_risk.py",
-      "source_location": "L85",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "portfolio_risk",
-      "target": "portfolio_risk"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/portfolio_scan.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "portfolio_scan",
-      "target": "portfolio_scan"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/quant_screener_bridge.py",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "quant_screener_bridge",
-      "target": "quant_screener_bridge"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/report_audit.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "report_audit",
-      "target": "report_audit"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/report_html.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "report_html",
-      "target": "report_html"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/stock_screener.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "stock_screener",
-      "target": "stock_screener"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "tools/xueqiu_scraper.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "xueqiu_scraper",
-      "target": "xueqiu_scraper"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "AGENTS",
       "target": "AGENTS"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L270",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "README.md"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L251",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "README_EN"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L256",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "ROADMAP"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L252",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "TESTING"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "VERSION_HISTORY"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L254",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "action-card"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L255",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "report-conventions"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L257",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "README.md",
-      "target": "textgrad_design"
     },
     {
       "relation": "contains",
@@ -5013,32 +5153,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "TESTING.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "TESTING",
-      "target": "TESTING"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "VERSION_HISTORY.md",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "VERSION_HISTORY",
       "target": "VERSION_HISTORY"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "config/skill.md",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "skill",
-      "target": "skill"
     },
     {
       "relation": "contains",
@@ -5103,6 +5223,16 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/quant_data_fusion.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "quant_data_fusion",
+      "target": "quant_data_fusion"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/rdagent_reference.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -5129,6 +5259,16 @@
       "confidence_score": 1.0,
       "source": "reports_README.md",
       "target": "report-conventions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/tdx_mcp_tool_design.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tdx_mcp_tool_design",
+      "target": "tdx_mcp_tool_design"
     },
     {
       "relation": "contains",
@@ -5362,5 +5502,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3d951ef8de55b665f70bb1d6a8c7dd1173ef1c18"
+  "built_at_commit": "343ddf6148f5a53017ccaf4c233079329ed20575"
 }
