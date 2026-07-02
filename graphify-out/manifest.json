@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "scripts/release-check.sh": {
-    "mtime": 1782963135.4801333,
-    "ast_hash": "7ec93c42dda6fd61e1ea3ff5171fc95f",
+    "mtime": 1782963203.311189,
+    "ast_hash": "de86a99f2101e4f03ee321ba1b4288a5",
     "semantic_hash": ""
   }
 }

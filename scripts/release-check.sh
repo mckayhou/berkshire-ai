@@ -32,11 +32,23 @@ warn() {
   echo "WARN: $*" >&2
 }
 
+# Wait for post-commit graphify hook (if any)
+if [[ -f graphify-out/.rebuild.lock ]]; then
+  echo "Waiting for graphify hook to finish..."
+  for _ in $(seq 1 45); do
+    [[ ! -f graphify-out/.rebuild.lock ]] && break
+    sleep 1
+  done
+fi
+
 # --- 1. Clean working tree (includes graphify hook drift) ---
 DIRTY="$(git status --porcelain | grep -v '^?? graphify-out/\.rebuild\.lock$' || true)"
 if [[ -n "$DIRTY" ]]; then
   echo "Uncommitted changes:" >&2
   echo "$DIRTY" >&2
+  if echo "$DIRTY" | grep -q '^ M graphify-out/'; then
+    fail "graphify-out dirty after hook — run: git add graphify-out && git commit -m 'chore: sync graphify-out'"
+  fi
   fail "working tree not clean — commit or stash before release"
 fi
 ok "working tree clean"
