@@ -273,3 +273,74 @@ def run_screen(
         "errors": errors,
         "generated_at": datetime.now().isoformat(timespec="seconds"),
     }
+
+
+def run_limitup_screen_from_csv(
+    *,
+    codes: list[str] | None = None,
+    min_score: float | None = None,
+    top_n: int | None = None,
+    auction_min_high_open: float = 2.0,
+    auction_max_high_open: float = 7.0,
+) -> dict:
+    """五维打板评分扫描（本地 CSV，无 torch 依赖）。"""
+    from .limitup_scoring import run_limitup_screen
+
+    csv_path = _csv_path()
+    if not csv_path.is_file():
+        return {
+            "ok": False,
+            "error": f"daily_ohlcv.csv not found at {csv_path}",
+            "candidates": [],
+            "generated_at": datetime.now().isoformat(timespec="seconds"),
+        }
+    by_sym = load_csv_ohlcv_by_symbol(csv_path)
+    return run_limitup_screen(
+        by_sym,
+        codes=codes,
+        min_score=min_score,
+        top_n=top_n,
+        auction_min_high_open=auction_min_high_open,
+        auction_max_high_open=auction_max_high_open,
+    )
+
+
+def enrich_with_limitup_scores(
+    factor_result: dict,
+    *,
+    min_limitup_score: float | None = None,
+) -> dict:
+    """在 AlphaGPT 因子候选上叠加五维打板分（同 ticker 合并）。"""
+    from .limitup_scoring import score_bars_limitup
+
+    if not factor_result.get("ok"):
+        return factor_result
+
+    csv_path = _csv_path()
+    if not csv_path.is_file():
+        factor_result["limitup_enriched"] = False
+        return factor_result
+
+    by_sym = load_csv_ohlcv_by_symbol(csv_path)
+    threshold = min_limitup_score
+    if threshold is None:
+        threshold = float(os.environ.get("BERKSHIRE_LIMITUP_SCORE_MIN", "0"))
+
+    enriched = []
+    for c in factor_result.get("candidates", []):
+        sym = c.get("symbol") or _baostock_symbol(c.get("ticker", ""))
+        bars = by_sym.get(sym)
+        row = dict(c)
+        if bars:
+            hit = score_bars_limitup(c.get("ticker", ""), bars)
+            if hit:
+                row["limitup_score"] = hit["score"]
+                row["limitup_signal"] = hit["signal_type"]
+                if hit["score"] < threshold:
+                    continue
+        enriched.append(row)
+
+    out = dict(factor_result)
+    out["candidates"] = enriched
+    out["limitup_enriched"] = True
+    return out

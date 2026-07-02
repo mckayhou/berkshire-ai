@@ -14,6 +14,7 @@
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
 | `ashare_factor_mining.py` | A股自动因子挖掘（AlphaGPT times.py 移植） | 是* | `pip install '.[factor-mining]'` |
 | `factor_screener_bridge.py` | 已训练公式 → 多标的打分 → thesis_queue JSON | 否* | `pip install '.[factor-mining]'`；优先本地 CSV |
+| `limitup_screener_bridge.py` | 五维打板评分（TDX 策略移植）→ thesis_queue JSON | 否 | 无 torch；优先本地 CSV |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
 | `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
 | `portfolio_risk.py` | 组合风险检查（集中度/现金/主题/相关性） | 否 | 可选 `data/correlation_*.csv` |
@@ -100,6 +101,24 @@ python3 tools/factor_screener_bridge.py --codes 600519,000001 --source online --
 python3 tools/thesis_queue.py --from-factor-scan data/alphagpt/factor_scan.json --suggest-md
 python3 tools/thesis_queue.py --run-factor-scan --factor-codes 600519,511260 --json
 ```
+
+## limitup_screener_bridge.py（五维打板评分，无 torch）
+
+移植自 [TDX-MCP-LHDB-Agent](https://github.com/adambbhe/TDX-MCP-LHDB-Agent) 的 `UnifiedScoringSystem`，用本地日线代理竞价/涨停信号（**无 Windows / 无通达信依赖**）。
+
+```bash
+# 扫描 CSV 内全部标的，输出 JSON
+python3 tools/limitup_screener_bridge.py --json -o data/limitup_scan.json
+
+# 限定代码、提高阈值
+python3 tools/limitup_screener_bridge.py --codes 600519,000001 --min-score 70 --json
+
+# 并入研究待办
+python3 tools/thesis_queue.py --from-limitup-scan data/limitup_scan.json --suggest-md
+python3 tools/thesis_queue.py --run-limitup-scan --json
+```
+
+环境变量：`BERKSHIRE_LIMITUP_SCORE_MIN`（默认 60）、`BERKSHIRE_LIMITUP_MIN_BARS`（默认 22）。
 
 ## data_sources.py（在线，多源降级链）
 

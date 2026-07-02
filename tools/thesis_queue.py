@@ -98,6 +98,34 @@ def _norm(t: str) -> str:
     return t.strip().upper().replace(" ", "")
 
 
+def merge_limitup_scan_suggestions(
+    limitup_scan: dict,
+    existing_queue: set[str],
+    existing_theses: set[str],
+) -> list[dict]:
+    """从 limitup_screener_bridge 结果生成研究建议。"""
+    out = []
+    for c in limitup_scan.get("candidates", []):
+        t = _norm(c.get("ticker", ""))
+        if not t or t in existing_queue or t in existing_theses:
+            continue
+        score = float(c.get("score", 0))
+        priority = int(min(100, score))
+        if priority < 60:
+            continue
+        out.append({
+            "ticker": c.get("ticker", t),
+            "source": "limitup_screener",
+            "priority": priority,
+            "suggested_note": c.get("note", "")[:120],
+            "action": "investment-research 验证打板信号 + 基本面/题材逻辑",
+            "score": score,
+            "signal_type": c.get("signal_type"),
+        })
+    out.sort(key=lambda x: -x["priority"])
+    return out
+
+
 def merge_factor_scan_suggestions(
     factor_scan: dict,
     existing_queue: set[str],
@@ -165,6 +193,7 @@ def build_action_plan(
     state: dict,
     scan_summary: dict | None = None,
     factor_scan: dict | None = None,
+    limitup_scan: dict | None = None,
 ) -> dict:
     theses = state["theses"]
     queue = state["queue"]
@@ -186,6 +215,13 @@ def build_action_plan(
             factor_scan, pending_tickers, thesis_tickers,
         )
         scan_suggestions.extend(factor_suggestions)
+
+    limitup_suggestions = []
+    if limitup_scan and limitup_scan.get("ok"):
+        limitup_suggestions = merge_limitup_scan_suggestions(
+            limitup_scan, pending_tickers, thesis_tickers,
+        )
+        scan_suggestions.extend(limitup_suggestions)
 
     # 研究优先级：TRIGGERED 论文 > 新 BUY 信号 > Watch 论文
     research_now = []
@@ -225,6 +261,7 @@ def build_action_plan(
         "pending_queue_open": [q for q in queue if not q["done"]],
         "scan_suggestions": scan_suggestions,
         "factor_suggestions": factor_suggestions,
+        "limitup_suggestions": limitup_suggestions,
         "research_now": research_now,
     }
 
@@ -275,8 +312,12 @@ def main():
     parser.add_argument("--state", default=DEFAULT_STATE, help="state.md 路径")
     parser.add_argument("--from-scan", help="portfolio_scan --json 输出文件")
     parser.add_argument("--from-factor-scan", help="factor_screener_bridge --json 输出文件")
+    parser.add_argument("--from-limitup-scan", help="limitup_screener_bridge --json 输出文件")
     parser.add_argument("--run-factor-scan", action="store_true",
                         help="运行 factor_screener_bridge（需已训练公式 + 本地 CSV 或 --factor-codes）")
+    parser.add_argument("--run-limitup-scan", action="store_true",
+                        help="运行 limitup_screener_bridge（需本地 CSV）")
+    parser.add_argument("--limitup-codes", help="--run-limitup-scan 限定代码列表")
     parser.add_argument("--factor-codes", help="--run-factor-scan 在线模式代码列表")
     parser.add_argument("--run-scan", action="store_true", help="联网运行 portfolio_scan")
     parser.add_argument("--quiet", action="store_true", help="--run-scan 时静默扫描")
@@ -291,6 +332,7 @@ def main():
     state = load_state(args.state)
     scan_summary = None
     factor_scan = None
+    limitup_scan = None
 
     if args.from_scan:
         with open(args.from_scan, encoding="utf-8") as f:
@@ -298,6 +340,9 @@ def main():
     elif args.from_factor_scan:
         with open(args.from_factor_scan, encoding="utf-8") as f:
             factor_scan = json.load(f)
+    elif args.from_limitup_scan:
+        with open(args.from_limitup_scan, encoding="utf-8") as f:
+            limitup_scan = json.load(f)
     elif args.run_factor_scan:
         try:
             import torch  # noqa: F401
@@ -311,6 +356,17 @@ def main():
         except Exception as e:
             print(f"❌ factor scan failed: {e}", file=sys.stderr)
             sys.exit(1)
+    elif args.run_limitup_scan:
+        try:
+            from ashare_alphagpt.screener import run_limitup_screen_from_csv
+
+            codes = None
+            if args.limitup_codes:
+                codes = [c.strip() for c in args.limitup_codes.split(",") if c.strip()]
+            limitup_scan = run_limitup_screen_from_csv(codes=codes)
+        except Exception as e:
+            print(f"❌ limitup scan failed: {e}", file=sys.stderr)
+            sys.exit(1)
     elif args.run_scan:
         from portfolio_scan import (  # noqa: E402
             flatten_tickers,
@@ -323,7 +379,7 @@ def main():
         results = run_scan(pairs, verbose=not args.quiet)
         scan_summary = summarize(results)
 
-    plan = build_action_plan(state, scan_summary, factor_scan)
+    plan = build_action_plan(state, scan_summary, factor_scan, limitup_scan)
 
     if args.suggest_md:
         print(format_suggest_md(plan))
