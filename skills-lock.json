@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "backtrader": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backtrader/SKILL.md",
+      "computedHash": "7e5ba520cfefe4f357f80b054a1b9ea4221d2156cf7dd35f2a88abba81660ff6"
+    },
+    "joinquant-docs": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/joinquant-docs/SKILL.md",
+      "computedHash": "acc067658f29f39f3b085bcf5272bdcc180bbb6b97f318ec89f4392643b939a6"
+    },
+    "miniqmt": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/miniqmt/SKILL.md",
+      "computedHash": "68a1e24e3abd7d4746fec5062d5228215fca1205255f79371216ff38b44f292c"
+    },
+    "pywencai": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pywencai/SKILL.md",
+      "computedHash": "dd4ac291fada77829aa413cf9456048313ed9b29f795794998c1acaf400d9308"
+    },
+    "qmt-docs": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/qmt-docs/SKILL.md",
+      "computedHash": "655db43719034131b93f96388e670eef3f1a1d7e47d9de2ab9fd44e139b6ef1a"
+    },
+    "rqalpha": {
+      "source": "lzwme/finance-quant-skills",
+      "sourceType": "github",
+      "skillPath": "skills/rqalpha/SKILL.md",
+      "computedHash": "b8888e2e0b6f5697377b4e0c65350a3fbf329852739f2b3c72769c2ad00d29a6"
+    }
+  }
+}

@@ -80,6 +80,8 @@
 | 通达信 MCP | 不封装进 core；可用 `TDX_API_KEY` + 外部 tdx_mcp 脚本 |
 | AlphaGPT times.py A股逻辑 | ✅ `tools/ashare_factor_mining.py` + `tools/ashare_alphagpt/`（可选 `[factor-mining]`） |
 | 因子筛选 → thesis_queue | ✅ `tools/factor_screener_bridge.py` + `thesis_queue.py --from-factor-scan` |
+| 打板五维评分 → thesis_queue | ✅ `tools/limitup_screener_bridge.py` + `limitup_scoring.py`（参考 [TDX-MCP-LHDB-Agent](https://github.com/adambbhe/TDX-MCP-LHDB-Agent)） |
+| 通达信 TQ 实盘 MCP | **不实施**（无 Windows）；备忘见 `docs/tdx_mcp_tool_design.md` |
 | AlphaGPT 加密主栈 | **明确不做** Solana 实盘 / meme 训练栈并入 core |
 | tdx_quant 指标全集 | 不复制 `indicators/`；动量筛选用 bridge 内最小逻辑 |
 
@@ -88,6 +90,7 @@
 - qlib / CoSTEER / 多 trace Web viewer 直依赖
 - AlphaGPT 训练栈、Solana 执行层并入 berkshire-ai
 - 将 daily_stock_data 或 tdx_quant 整库 vendor 进本仓库
+- TDX-MCP-LHDB-Agent 整库 vendor（仅采纳评分逻辑）；**Windows 实盘/MCP 不实施**
 
 ---
 
@@ -112,11 +115,12 @@
                     ▼                          ▼                  ▼
          data_sources.py              quant_screener_bridge   factor_screener_bridge
          (降级链)                      (动量候选 JSON)         (AlphaGPT 因子 JSON)
+                    limitup_screener_bridge (五维打板 JSON)
                                                │                  │
                                                └────────┬─────────┘
                                                         ▼
                                                thesis_queue.py
-                                               (--from-scan / --from-factor-scan)
+                                               (--from-scan / --from-factor-scan / --from-limitup-scan)
 ```
 
 **试用（零外部 cron）**：`BERKSHIRE_ENABLE_PYTDX=1` + `pip install .[quant]`，走实时 pytdx（主机可用性不稳定，建议作补充源）。
@@ -148,5 +152,43 @@
 | `BERKSHIRE_ALPHAGPT_CODE` | 训练标的（默认 `511260`） |
 | `BERKSHIRE_ALPHAGPT_STEPS` / `BATCH` / `MAX_LEN` | 训练超参 |
 | `BERKSHIRE_ALPHAGPT_SCORE_MIN` | 因子筛选最低 score（默认 0） |
+| `BERKSHIRE_LIMITUP_SCORE_MIN` | 打板五维评分最低分（默认 60） |
+| `BERKSHIRE_LIMITUP_MIN_BARS` | 打板评分最少 K 线根数（默认 22） |
+| `WENCAI_COOKIE` | 问财选股 Cookie（`pywencai` skill；见 `.env.example`） |
 
 详见 [.env.example](../.env.example)。
+
+---
+
+## 7. finance-quant-skills 增量技能（V10.25）
+
+来源：[lzwme/finance-quant-skills](https://github.com/lzwme/finance-quant-skills)（MIT）。**刻意未安装**与 `data_sources.py` / AkTools MCP 重叠的 `akshare`、`tushare`、`baostock`、`equity-researcher`。
+
+| Skill | 路径 | 用途 | 前置条件 |
+|-------|------|------|----------|
+| `qmt-docs` | `.agents/skills/qmt-docs` | QMT API 离线文档 + 聚宽迁移 | 无 |
+| `joinquant-docs` | `.agents/skills/joinquant-docs` | 聚宽策略/API 离线文档 | 无 |
+| `miniqmt` | `.agents/skills/miniqmt` | XtQuant 行情与实盘下单脚本 | 本地 MiniQMT 客户端 |
+| `backtrader` | `.agents/skills/backtrader` | 事件驱动回测教学 | `pip install backtrader` |
+| `rqalpha` | `.agents/skills/rqalpha` | 米筐 A 股/期货回测 | `pip install rqalpha` |
+| `pywencai` | `.agents/skills/pywencai` | 问财自然语言选股 | `WENCAI_COOKIE` |
+
+**安装 / 更新**（项目根目录）：
+
+```bash
+npx skills add lzwme/finance-quant-skills \
+  --skill qmt-docs --skill joinquant-docs --skill miniqmt \
+  --skill backtrader --skill rqalpha --skill pywencai \
+  --agent cursor --copy -y
+npx skills update   # 后续升级
+```
+
+锁文件：`skills-lock.json`。恢复：`npx skills experimental_install`。
+
+**同步到 OpenClaw / QwenPaw**：`./update-platforms.sh`（berkshire skills → OpenClaw；quant skills → OpenClaw + `berkshire_v8/quant-skills/`）。
+
+**典型组合**（与 berkshire 主链路互补，不替代四大师投研）：
+
+- 选股验证：`pywencai` → `tools/data_sources.py` 拉日线 → `backtrader` 回测
+- 聚宽→QMT 迁移：`joinquant-docs` + `qmt-docs`（`joinquant-migration.md`）
+- 实盘边界：`miniqmt`（需客户端）；数据仍走现有降级链

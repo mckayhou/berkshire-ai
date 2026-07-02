@@ -11,9 +11,24 @@ for f in "$BASE/skills/"*.md; do
   cp "$f" "$HOME/.openclaw/workspace/skills/$name/SKILL.md"
   echo "Updated $name"
 done
+if [ -d "$BASE/.agents/skills" ]; then
+  echo "=== Syncing finance-quant-skills (.agents/skills) to OpenClaw ==="
+  for d in "$BASE/.agents/skills"/*/; do
+    [ -d "$d" ] || continue
+    name="$(basename "$d")"
+    mkdir -p "$HOME/.openclaw/workspace/skills/$name"
+    rsync -av --delete "$d" "$HOME/.openclaw/workspace/skills/$name/" || true
+    echo "Synced quant skill: $name"
+  done
+fi
 echo "=== Updating QwenPaw berkshire_v8 ==="
 mkdir -p "$HOME/.qwenpaw/loop_engine/berkshire_v8/skills" "$HOME/.qwenpaw/loop_engine/berkshire_v8/tools"
 rsync -av --delete "$BASE/skills/" "$HOME/.qwenpaw/loop_engine/berkshire_v8/skills/"
+if [ -d "$BASE/.agents/skills" ]; then
+  mkdir -p "$HOME/.qwenpaw/loop_engine/berkshire_v8/quant-skills"
+  rsync -av --delete "$BASE/.agents/skills/" "$HOME/.qwenpaw/loop_engine/berkshire_v8/quant-skills/"
+  echo "quant-skills synced to QwenPaw."
+fi
 rsync -av --delete "$BASE/tools/" "$HOME/.qwenpaw/loop_engine/berkshire_v8/tools/"
 cp "$BASE/README.md" "$BASE/VERSION_HISTORY.md" "$BASE/config/"*.md "$BASE/AGENTS.md" "$HOME/.qwenpaw/loop_engine/berkshire_v8/" 2>/dev/null || true
 echo "=== Syncing latest engine code (src) ==="
