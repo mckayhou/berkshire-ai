@@ -505,7 +505,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
-| 2026-07-02 | 3.14 | **485 passed**（V10.28 + SkillForge；e2e LLM skip） |
+| 2026-07-02 | 3.14 | **484 passed, 1 skipped**（V10.28 + SkillForge；e2e LLM skip） |
 | 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |
 
 > 历史数字仅作参考；以本地 `pytest tests/ --co` 与 `-rs` 输出为准。
