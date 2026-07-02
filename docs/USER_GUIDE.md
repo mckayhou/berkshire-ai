@@ -694,6 +694,7 @@ python3 -m pytest tests/ -q --cov --cov-fail-under=50
 python3 -m pytest tests/test_limitup_scoring.py -v
 python3 -m pytest tests/test_factor_screener_bridge.py -v   # 需 torch
 python3 -m pytest tests/test_tools_thesis_queue.py -v
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
 ```
 
 | 场景 | 命令 |
@@ -701,6 +702,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v
 | 仅打板 | `pytest tests/test_limitup_scoring.py` |
 | 仅因子 | `pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py` |
 | 仅引擎 | `pytest tests/test_v10_unit.py tests/test_v10_integration.py` |
+| 技能进化 SkillForge | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
 | 真实 LLM e2e | `BERKSHIRE_LLM_API_KEY=... pytest tests/e2e/` |
 
 ---
