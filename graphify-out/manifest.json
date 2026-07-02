@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "update-platforms.sh": {
-    "mtime": 1782453066.007018,
-    "ast_hash": "417cbef17932de46d38762ec278d16c7",
+    "mtime": 1782958625.3027663,
+    "ast_hash": "7f8e56c6f4db6a3692f7c3aa3e031585",
     "semantic_hash": ""
   },
   "README.md": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782904563.0360873,
-    "ast_hash": "d9d2d426910f2c4ae50f4b383b59da94",
+    "mtime": 1782957599.3124871,
+    "ast_hash": "4faf821fab990d77a96b75c6a27dd0f8",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782957458.7401578,
-    "ast_hash": "6f39f6e217d6c0898093140b4506bcef",
+    "mtime": 1782958905.7835217,
+    "ast_hash": "c3c8f32798e8fc58b2d9f0d85fb87d7b",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "tools/thesis_queue.py": {
-    "mtime": 1782957394.3292642,
-    "ast_hash": "289432c5f33a133351b9fa2031491ac5",
+    "mtime": 1782958690.0482635,
+    "ast_hash": "845976400e931cf25a3fce62642867ac",
     "semantic_hash": ""
   },
   ".github/workflows/test.yml": {
@@ -730,8 +730,8 @@
     "semantic_hash": ""
   },
   "docs/quant_data_fusion.md": {
-    "mtime": 1782957463.8654985,
-    "ast_hash": "16bb0fcbc691bb2e0455aa05b235aec1",
+    "mtime": 1782958903.6461155,
+    "ast_hash": "115cd9b19431cf95b0aa8ecf485afd84",
     "semantic_hash": ""
   },
   "tests/test_ashare_alphagpt.py": {
@@ -770,8 +770,8 @@
     "semantic_hash": ""
   },
   "tools/ashare_alphagpt/miner.py": {
-    "mtime": 1782957479.0369284,
-    "ast_hash": "4a5703496128b120c1ba9c59ef5ef005",
+    "mtime": 1782957569.9860666,
+    "ast_hash": "de7ad0c6cd882162161e4e7eb6e8aaf5",
     "semantic_hash": ""
   },
   "tools/ashare_alphagpt/model.py": {
@@ -785,8 +785,8 @@
     "semantic_hash": ""
   },
   "tools/ashare_alphagpt/ops.py": {
-    "mtime": 1782956855.641048,
-    "ast_hash": "075d5efb01c2939e374801b4885198d5",
+    "mtime": 1782957576.8818324,
+    "ast_hash": "1270f917ca7c4a3a6b0bae2ef31880ba",
     "semantic_hash": ""
   },
   "tools/ashare_alphagpt/vm.py": {
@@ -815,13 +815,413 @@
     "semantic_hash": ""
   },
   "tools/ashare_alphagpt/screener.py": {
-    "mtime": 1782957359.2553225,
-    "ast_hash": "56d03fd6eca47246a8ae22b79692d336",
+    "mtime": 1782958626.2596967,
+    "ast_hash": "87bfcb871cb3ec880ab83a5ecf414204",
     "semantic_hash": ""
   },
   "tools/factor_screener_bridge.py": {
     "mtime": 1782957368.7263997,
     "ast_hash": "de97eefe9dc19842cdbe070f1f1e80d2",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/scripts/__init__.py": {
+    "mtime": 1782958565.5372672,
+    "ast_hash": "ddc893ccc8b89b7e7e5bdb6309cfc5b3",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/scripts/financial_data.py": {
+    "mtime": 1782958565.5370028,
+    "ast_hash": "8e5c55b1789734702ba91c831b12b2dc",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/scripts/market_data.py": {
+    "mtime": 1782958565.5372238,
+    "ast_hash": "88b4f551d223f41602b126ed9ba0b5f9",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/scripts/sector_data.py": {
+    "mtime": 1782958565.5373101,
+    "ast_hash": "38a4afd25dc41c267f1252ac6bf93cdb",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/scripts/trade.py": {
+    "mtime": 1782958565.537429,
+    "ast_hash": "6d461056a9ab88290bbd1f6111c5da3d",
+    "semantic_hash": ""
+  },
+  "skills-lock.json": {
+    "mtime": 1782958565.5589821,
+    "ast_hash": "84d3c7452dbad40ba130632462ca9d73",
+    "semantic_hash": ""
+  },
+  "tests/test_limitup_scoring.py": {
+    "mtime": 1782958706.4483402,
+    "ast_hash": "ce76d7b51b8b90f6cdab3788b306403d",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/limitup_scoring.py": {
+    "mtime": 1782958602.3100283,
+    "ast_hash": "f31f825e8cb04b01e2e637c0df10537c",
+    "semantic_hash": ""
+  },
+  "tools/limitup_screener_bridge.py": {
+    "mtime": 1782958634.756406,
+    "ast_hash": "b09b58c68419742d1d6e37d693e27d13",
+    "semantic_hash": ""
+  },
+  ".agents/skills/backtrader/SKILL.md": {
+    "mtime": 1782958565.5249496,
+    "ast_hash": "f3d1ab1e45e354bafc460742aa302b15",
+    "semantic_hash": ""
+  },
+  ".agents/skills/backtrader/references/advanced-strategies.md": {
+    "mtime": 1782958565.5250976,
+    "ast_hash": "7297aac46ac03f463b5bd7d80c8a31a1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/SKILL.md": {
+    "mtime": 1782958565.529049,
+    "ast_hash": "c01308ee997f9b66b1a3eedc6dbfee4c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/api.md": {
+    "mtime": 1782958565.5301354,
+    "ast_hash": "0be52bdae2fb801ad33634f8946cc416",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Alpha101.md": {
+    "mtime": 1782958565.5304573,
+    "ast_hash": "b1ea2b8b4bfa55baf8b154efea84f8b7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Alpha191.md": {
+    "mtime": 1782958565.5306969,
+    "ast_hash": "5e8b2a892da2dda289813fffde7e80e6",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Future.md": {
+    "mtime": 1782958565.5306416,
+    "ast_hash": "2b54a73ddc78632e38666efbd385d106",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/OTCfund.md": {
+    "mtime": 1782958565.5332441,
+    "ast_hash": "a0172e91f2566637bb240986baef750b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Option.md": {
+    "mtime": 1782958565.5316873,
+    "ast_hash": "8ea90ca0687d55dc227c89717699672c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Public.md": {
+    "mtime": 1782958565.5308957,
+    "ast_hash": "67685db9b200a6337fec31c52748e080",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/Stock.md": {
+    "mtime": 1782958565.5331445,
+    "ast_hash": "8174ae9d0085c172ac85814bc0d041ec",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/bond.md": {
+    "mtime": 1782958565.5315816,
+    "ast_hash": "6dd37830faf36c25c377be784011ea15",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/factor_values.md": {
+    "mtime": 1782958565.5322936,
+    "ast_hash": "15ce37da8d445beb7e0510a340e4fa23",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/fund.md": {
+    "mtime": 1782958565.5320036,
+    "ast_hash": "8e0dc29ce1012d33782746abde17e607",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/index-data.md": {
+    "mtime": 1782958565.5323489,
+    "ast_hash": "054a953b267d3cc5c6a08a89562df798",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/index.md": {
+    "mtime": 1782958565.5329223,
+    "ast_hash": "24d85b2b1e34215c9dbe62b84431b393",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/macroData.md": {
+    "mtime": 1782958565.533821,
+    "ast_hash": "973efda3d50f480e9b34ef997eb6448d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/plateData.md": {
+    "mtime": 1782958565.533179,
+    "ast_hash": "87c34c51db1fec9cbf26ba1c66923cdc",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/data/technicalanalysis.md": {
+    "mtime": 1782958565.5337236,
+    "ast_hash": "c0bd3e9155d4ca9abcad1b60bbfbd270",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/faq.md": {
+    "mtime": 1782958565.5294902,
+    "ast_hash": "fb67045c37f5b6dc78265315381766a1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/fator.md": {
+    "mtime": 1782958565.529572,
+    "ast_hash": "b6ef83d38c6f0f7aa0323f50e0a88e10",
+    "semantic_hash": ""
+  },
+  ".agents/skills/joinquant-docs/reference.md": {
+    "mtime": 1782958565.5297735,
+    "ast_hash": "2d8445d74243c5ccdd2903d0d7f53a85",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/SKILL.md": {
+    "mtime": 1782958565.5362196,
+    "ast_hash": "0067b0f34d7d394ed70148167780dbe2",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/changelog.md": {
+    "mtime": 1782958565.5366414,
+    "ast_hash": "e9efa814cb7c7a8b2b06e01bfc9126c1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/code_examples.md": {
+    "mtime": 1782958565.536836,
+    "ast_hash": "55e956548aaa79a59a1ad4beef8a5ba1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/download_xtquant.md": {
+    "mtime": 1782958565.5366771,
+    "ast_hash": "3a48ee2f4fde19d597d876810efd6571",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/question_function.md": {
+    "mtime": 1782958565.5366762,
+    "ast_hash": "d8a44ec3f597af4351f9d67cc0a3e3a9",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/start_now.md": {
+    "mtime": 1782958565.5370045,
+    "ast_hash": "47cae72e348b25b0e1855e4444e7c001",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/xtdata.md": {
+    "mtime": 1782958565.536936,
+    "ast_hash": "8a36502550e54335550730355ba2e50b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/xtdata_dict.md": {
+    "mtime": 1782958565.5371683,
+    "ast_hash": "731e05194814da955229d0dee0969deb",
+    "semantic_hash": ""
+  },
+  ".agents/skills/miniqmt/references/xttrader.md": {
+    "mtime": 1782958565.5375748,
+    "ast_hash": "60dfec0de4f2610c55348805ec0f0d85",
+    "semantic_hash": ""
+  },
+  ".agents/skills/pywencai/SKILL.md": {
+    "mtime": 1782958565.5382783,
+    "ast_hash": "0f3d5829e01aa641c377b66fbabf948d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/SKILL.md": {
+    "mtime": 1782958565.5399666,
+    "ast_hash": "a16064be3b79386304481ac30e14dfdb",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/backtesting-guide.md": {
+    "mtime": 1782958565.5418925,
+    "ast_hash": "c1068fc374107134dc315cb63103e75f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/best-practices.md": {
+    "mtime": 1782958565.5415366,
+    "ast_hash": "4be9348babdf53894d4e793029646cac",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/bond.md": {
+    "mtime": 1782958565.5428827,
+    "ast_hash": "b04d72a30ff258174d50e04447165532",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/floorfunds.md": {
+    "mtime": 1782958565.5432267,
+    "ast_hash": "3087ecb50465593b79a79bc9ebd56cb0",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/future.md": {
+    "mtime": 1782958565.5432463,
+    "ast_hash": "fbb631f2626c5f721648b883b782d5a7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/indexes.md": {
+    "mtime": 1782958565.5430884,
+    "ast_hash": "ae62b0e45919b1ea484139527309e886",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/industry.md": {
+    "mtime": 1782958565.543393,
+    "ast_hash": "565c390b3f41f9e58723559fd836dcb2",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/option.md": {
+    "mtime": 1782958565.5433388,
+    "ast_hash": "f0e83b93a96d2b66e0f1537a8660d3c8",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/question_answer.md": {
+    "mtime": 1782958565.5434663,
+    "ast_hash": "a34e2ba2d3780a6f2f4631ef22f4891c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/scenario_based_example.md": {
+    "mtime": 1782958565.5437024,
+    "ast_hash": "b63d763ff27cd257242253d67c754dcf",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/stock.md": {
+    "mtime": 1782958565.5438302,
+    "ast_hash": "688dab373581b3b4011ef2f6dfa952f7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/dict/xuntou_factor.md": {
+    "mtime": 1782958565.543676,
+    "ast_hash": "73d34b7681f3db38c3eaec7d704a8248",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/examples/backtest.md": {
+    "mtime": 1782958565.5437284,
+    "ast_hash": "dcf511f6d9d4911559866c777e6602e8",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/examples/live-trading.md": {
+    "mtime": 1782958565.5440826,
+    "ast_hash": "d22d31d585dcf504560ce5da88c34821",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/examples/run-time.md": {
+    "mtime": 1782958565.5439181,
+    "ast_hash": "fc742e84fb19190d1702f90fc8cf1f0f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/examples/subscribe.md": {
+    "mtime": 1782958565.5439904,
+    "ast_hash": "7c57de9209e16af46f1eb328f6e0379a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/execution-mechanisms.md": {
+    "mtime": 1782958565.5414026,
+    "ast_hash": "bcf1325def2c30b229e34141d0d25c88",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/joinquant-migration.md": {
+    "mtime": 1782958565.5420384,
+    "ast_hash": "cddf8c80b51ba902cec491ec7e87d9c3",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/live-trading-guide.md": {
+    "mtime": 1782958565.5419014,
+    "ast_hash": "46db39444be2b24af455c13fe55f44d7",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/overview.md": {
+    "mtime": 1782958565.542217,
+    "ast_hash": "1a30f72e7f4143ce95bd7df81a1e773d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/callback_function.md": {
+    "mtime": 1782958565.5443907,
+    "ast_hash": "2f9ecc6c692826bab4dbcfedf3f61f37",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/code_examples.md": {
+    "mtime": 1782958565.544342,
+    "ast_hash": "14794b8b67e2f75b2913c6568f12babd",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/data_function.md": {
+    "mtime": 1782958565.544736,
+    "ast_hash": "3c7caaeb040027f8f0736f8a403f0d4d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/data_structure.md": {
+    "mtime": 1782958565.544545,
+    "ast_hash": "05f0917bf8aecc59be5fb810239b7770",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/drawing_function.md": {
+    "mtime": 1782958565.5446746,
+    "ast_hash": "f9fc9d1e7dd43ea3f900112d93f61ded",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/enum_constants.md": {
+    "mtime": 1782958565.5449526,
+    "ast_hash": "c2785ceddf54dbbebce54e6a05802a5b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/interface_operation.md": {
+    "mtime": 1782958565.544967,
+    "ast_hash": "2745386673a443363e1cfb2de20d2910",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/question_answer.md": {
+    "mtime": 1782958565.54524,
+    "ast_hash": "7448e88dc93162856d11628336754e9a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/quote_function.md": {
+    "mtime": 1782958565.5452008,
+    "ast_hash": "edb64eb4dff115eaa915cdaec9966bba",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/start_now.md": {
+    "mtime": 1782958565.5450115,
+    "ast_hash": "224dba0fdc2a889d84aa38133217d410",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/system_function.md": {
+    "mtime": 1782958565.5455034,
+    "ast_hash": "837f127df8005365c9a17611ceffd98e",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/trading_function.md": {
+    "mtime": 1782958565.5456629,
+    "ast_hash": "01bfa3b10eba2d140e1ff577920d0442",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/user_attention.md": {
+    "mtime": 1782958565.5453258,
+    "ast_hash": "a803fd454e3cc1e24ddbba4d6be61c4f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/python-innerApi/variable_convention.md": {
+    "mtime": 1782958565.5456219,
+    "ast_hash": "76c49448afc4ea6c927ef71f0114dcde",
+    "semantic_hash": ""
+  },
+  ".agents/skills/qmt-docs/references/quick-reference.md": {
+    "mtime": 1782958565.5418797,
+    "ast_hash": "8ee55da728811af544be4d1341a18e5f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/rqalpha/SKILL.md": {
+    "mtime": 1782958565.54666,
+    "ast_hash": "518f647de01f0ebea718e0545c63a85e",
+    "semantic_hash": ""
+  },
+  ".agents/skills/rqalpha/references/advanced-strategies.md": {
+    "mtime": 1782958565.5467026,
+    "ast_hash": "a61bd151860f72145404a2f6e4291656",
+    "semantic_hash": ""
+  },
+  "docs/tdx_mcp_tool_design.md": {
+    "mtime": 1782958900.9688437,
+    "ast_hash": "88eff0642c42f13fd143707da64cb1e2",
     "semantic_hash": ""
   }
 }

@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-02)
 
 ## Corpus Check
-- 160 files · ~101,687 words
+- 240 files · ~401,981 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 161 nodes · 127 edges · 149 communities (42 shown, 107 thin omitted)
+- 286 nodes · 246 edges · 224 communities (51 shown, 173 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4ece7a68`
+- Built from commit: `3d951ef8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -113,28 +113,95 @@
 - [[_COMMUNITY_Community 133|Community 133]]
 - [[_COMMUNITY_Community 135|Community 135]]
 - [[_COMMUNITY_Community 136|Community 136]]
+- [[_COMMUNITY_Community 137|Community 137]]
+- [[_COMMUNITY_Community 138|Community 138]]
+- [[_COMMUNITY_Community 139|Community 139]]
+- [[_COMMUNITY_Community 140|Community 140]]
+- [[_COMMUNITY_Community 141|Community 141]]
+- [[_COMMUNITY_Community 142|Community 142]]
+- [[_COMMUNITY_Community 143|Community 143]]
+- [[_COMMUNITY_Community 144|Community 144]]
 - [[_COMMUNITY_Community 146|Community 146]]
+- [[_COMMUNITY_Community 147|Community 147]]
+- [[_COMMUNITY_Community 148|Community 148]]
+- [[_COMMUNITY_Community 149|Community 149]]
+- [[_COMMUNITY_Community 150|Community 150]]
 - [[_COMMUNITY_Community 151|Community 151]]
+- [[_COMMUNITY_Community 152|Community 152]]
+- [[_COMMUNITY_Community 153|Community 153]]
+- [[_COMMUNITY_Community 154|Community 154]]
 - [[_COMMUNITY_Community 155|Community 155]]
+- [[_COMMUNITY_Community 156|Community 156]]
+- [[_COMMUNITY_Community 157|Community 157]]
 - [[_COMMUNITY_Community 158|Community 158]]
 - [[_COMMUNITY_Community 159|Community 159]]
 - [[_COMMUNITY_Community 160|Community 160]]
+- [[_COMMUNITY_Community 161|Community 161]]
+- [[_COMMUNITY_Community 162|Community 162]]
+- [[_COMMUNITY_Community 163|Community 163]]
+- [[_COMMUNITY_Community 164|Community 164]]
+- [[_COMMUNITY_Community 165|Community 165]]
+- [[_COMMUNITY_Community 166|Community 166]]
 - [[_COMMUNITY_Community 167|Community 167]]
 - [[_COMMUNITY_Community 168|Community 168]]
+- [[_COMMUNITY_Community 170|Community 170]]
 - [[_COMMUNITY_Community 171|Community 171]]
+- [[_COMMUNITY_Community 172|Community 172]]
 - [[_COMMUNITY_Community 173|Community 173]]
+- [[_COMMUNITY_Community 174|Community 174]]
+- [[_COMMUNITY_Community 175|Community 175]]
+- [[_COMMUNITY_Community 176|Community 176]]
+- [[_COMMUNITY_Community 177|Community 177]]
+- [[_COMMUNITY_Community 178|Community 178]]
+- [[_COMMUNITY_Community 179|Community 179]]
+- [[_COMMUNITY_Community 180|Community 180]]
+- [[_COMMUNITY_Community 181|Community 181]]
+- [[_COMMUNITY_Community 182|Community 182]]
+- [[_COMMUNITY_Community 183|Community 183]]
+- [[_COMMUNITY_Community 184|Community 184]]
+- [[_COMMUNITY_Community 185|Community 185]]
+- [[_COMMUNITY_Community 186|Community 186]]
+- [[_COMMUNITY_Community 187|Community 187]]
+- [[_COMMUNITY_Community 188|Community 188]]
+- [[_COMMUNITY_Community 189|Community 189]]
+- [[_COMMUNITY_Community 190|Community 190]]
+- [[_COMMUNITY_Community 191|Community 191]]
+- [[_COMMUNITY_Community 192|Community 192]]
+- [[_COMMUNITY_Community 193|Community 193]]
+- [[_COMMUNITY_Community 194|Community 194]]
+- [[_COMMUNITY_Community 195|Community 195]]
+- [[_COMMUNITY_Community 196|Community 196]]
+- [[_COMMUNITY_Community 198|Community 198]]
+- [[_COMMUNITY_Community 199|Community 199]]
+- [[_COMMUNITY_Community 201|Community 201]]
+- [[_COMMUNITY_Community 202|Community 202]]
+- [[_COMMUNITY_Community 203|Community 203]]
+- [[_COMMUNITY_Community 204|Community 204]]
+- [[_COMMUNITY_Community 205|Community 205]]
+- [[_COMMUNITY_Community 206|Community 206]]
+- [[_COMMUNITY_Community 207|Community 207]]
+- [[_COMMUNITY_Community 208|Community 208]]
+- [[_COMMUNITY_Community 209|Community 209]]
+- [[_COMMUNITY_Community 210|Community 210]]
+- [[_COMMUNITY_Community 211|Community 211]]
+- [[_COMMUNITY_Community 213|Community 213]]
+- [[_COMMUNITY_Community 218|Community 218]]
+- [[_COMMUNITY_Community 219|Community 219]]
+- [[_COMMUNITY_Community 220|Community 220]]
+- [[_COMMUNITY_Community 221|Community 221]]
+- [[_COMMUNITY_Community 223|Community 223]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 9 edges
-2. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-3. `报告输出规范（report conventions）` - 6 edges
-4. `Berkshire AI 版本历史` - 4 edges
-5. `berkshire-ai Roadmap` - 4 edges
-6. `结构化行动卡（Action Card）` - 4 edges
-7. `测试指南与 E2E 报告（TESTING）` - 3 edges
-8. `Berkshire AI V10.0 - TextGrad 化设计` - 3 edges
-9. `reports/ — 研究报告输出目录` - 3 edges
-10. `Berkshire AI V10 engine package.  Exports the main classes for TextGrad-based 4-` - 2 edges
+2. `聚宽策略开发` - 6 edges
+3. `聚宽文档索引` - 6 edges
+4. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
+5. `报告输出规范（report conventions）` - 6 edges
+6. `聚宽量化平台API文档` - 4 edges
+7. `常见问题` - 4 edges
+8. `因子分析` - 4 edges
+9. `Berkshire AI 版本历史` - 4 edges
+10. `berkshire-ai Roadmap` - 4 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
@@ -151,19 +218,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (149 total, 107 thin omitted)
+## Communities (224 total, 173 thin omitted)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.58
 Nodes (9): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南与 E2E 报告（TESTING）, Berkshire AI 版本历史, 结构化行动卡（Action Card）, 报告输出规范（report conventions）, reports/ — 研究报告输出目录 (+1 more)
 
+### Community 5 - "Community 5"
+Cohesion: 1.20
+Nodes (5): 聚宽策略开发, 聚宽量化平台API文档, 常见问题, 因子分析, 聚宽文档索引
+
 ## Knowledge Gaps
-- **5 isolated node(s):** `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script`, `log-command.sh script`, `update-platforms.sh script`
+- **11 isolated node(s):** `新闻联播文本数据`, `版本信息`, `导入xtquant库时提示 `NO module named 'xtquant.IPythonAPiClient'``, `ContextInfo.paint - 在界面上画图`, `ext_data - 获取扩展数据` (+6 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **107 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **173 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `berkshire-ai`, `cron-evolution.sh script`, `portfolio-weekly.sh script` to the rest of the system?**
-  _5 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `新闻联播文本数据`, `版本信息`, `导入xtquant库时提示 `NO module named 'xtquant.IPythonAPiClient'`` to the rest of the system?**
+  _11 weakly-connected nodes found - possible documentation gaps or missing edges._
