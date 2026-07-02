@@ -1,16 +1,16 @@
 # Graph Report - berkshire-ai  (2026-07-02)
 
 ## Corpus Check
-- 241 files · ~405,675 words
+- 244 files · ~407,719 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 286 nodes · 262 edges · 221 communities (51 shown, 170 thin omitted)
+- 289 nodes · 272 edges · 221 communities (51 shown, 170 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `59b6116c`
+- Built from commit: `fab7cbd1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -189,28 +189,28 @@
 - [[_COMMUNITY_Community 221|Community 221]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 12 edges
-2. `Berkshire AI 功能使用指南` - 12 edges
-3. `测试指南（TESTING）` - 7 edges
-4. `报告输出规范（report conventions）` - 7 edges
-5. `聚宽策略开发` - 6 edges
-6. `聚宽文档索引` - 6 edges
-7. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
-8. `Berkshire AI 版本历史` - 6 edges
-9. `结构化行动卡（Action Card）` - 6 edges
-10. `tools/ — 工具链说明` - 6 edges
+1. `Berkshire AI 功能使用指南` - 13 edges
+2. `测试指南（TESTING）` - 9 edges
+3. `Berkshire AI 文档中心` - 9 edges
+4. `A 股量化指南（QUANT）` - 8 edges
+5. `报告输出规范（report conventions）` - 7 edges
+6. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 6 edges
+7. `Berkshire AI 版本历史` - 6 edges
+8. `聚宽策略开发` - 6 edges
+9. `聚宽文档索引` - 6 edges
+10. `回测指南（BACKTEST）` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
   README.md → README_EN.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
   README.md → docs/ROADMAP.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南（TESTING）`  [EXTRACTED]
-  README.md → TESTING.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 功能使用指南`  [EXTRACTED]
-  README.md → docs/USER_GUIDE.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
   README.md → VERSION_HISTORY.md
+- `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
+  README_EN.md → docs/ROADMAP.md
+- `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
+  README_EN.md → VERSION_HISTORY.md
 
 ## Import Cycles
 - None detected.
@@ -218,8 +218,8 @@
 ## Communities (221 total, 170 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.54
-Nodes (13): Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南（TESTING）, Berkshire AI 功能使用指南, Berkshire AI 版本历史, 结构化行动卡（Action Card）, Quant Data Fusion — 三库调研与 berkshire-ai V10.24 融合决策 (+5 more)
+Cohesion: 0.43
+Nodes (16): 回测指南（BACKTEST）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap, 测试指南（TESTING）, Berkshire AI 功能使用指南, Berkshire AI 版本历史 (+8 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 1.20

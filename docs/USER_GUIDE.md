@@ -1,8 +1,18 @@
 # Berkshire AI 功能使用指南
 
-> 本文档汇总 **berkshire-ai** 全部主要功能的使用方法。  
-> 命令默认在**仓库根目录**执行：`cd /path/to/berkshire-ai`。  
-> 工具级细节见 [tools/README.md](../tools/README.md)；设计文档见 `docs/`。
+> 本文档汇总 **berkshire-ai** 全部主要功能的使用方法（**工作流导向**）。  
+> 命令默认在**仓库根目录**执行：`cd /path/to/berkshire-ai`。
+
+**文档导航**：[docs/README.md](README.md)（推荐从这里选阅读路径）
+
+| 专题 | 文档 |
+|------|------|
+| 回测（5 条路线对照） | [BACKTEST.md](BACKTEST.md) |
+| A 股量化 | [QUANT.md](QUANT.md) |
+| TextGrad 引擎 | [ENGINE.md](ENGINE.md) |
+| Agent 技能 | [SKILLS.md](SKILLS.md) |
+| 测试验收 | [TESTING.md](../TESTING.md) |
+| 工具 CLI 逐项 | [tools/README.md](../tools/README.md) |
 
 ---
 
@@ -117,6 +127,8 @@ python3 tools/thesis_queue.py --from-factor-scan data/factor_scan.json --json
 ---
 
 ## 4. TextGrad 进化引擎
+
+> 深度说明（CLI 全集、API、HTTP 服务、存储路径）：[ENGINE.md](ENGINE.md)
 
 ### 4.1 单次研究运行
 
@@ -242,7 +254,8 @@ python3 src/tavily_search.py "贵州茅台 2025 业绩"
 
 ## 6. A 股量化：因子挖掘与筛选
 
-> 融合决策见 [quant_data_fusion.md](quant_data_fusion.md)。
+> 完整专题（数据准备、日更工作流、环境变量）：[QUANT.md](QUANT.md)  
+> 回测验收（train/OOS/打板能否回测）：[BACKTEST.md](BACKTEST.md)
 
 ### 6.1 AlphaGPT 因子训练
 
@@ -290,6 +303,8 @@ python3 tools/limitup_screener_bridge.py --auction-min 2 --auction-max 7 --top 2
 ```
 
 五维权重：信号强度 25% / 价格位置 20% / 量能 20% / 动能 20% / 风控 15%。
+
+> **注意**：本模块是**选股评分**，仓库**未内置**打板策略历史收益回测；若需验证规则，见 [BACKTEST.md §6](BACKTEST.md#6-打板评分limitup与回测)。
 
 ### 6.4 本地 CSV 动量突破
 
@@ -342,10 +357,14 @@ python3 tools/portfolio_risk.py --holdings-file data/holdings.json --proposed MU
 
 ### 7.4 动量回测（演示）
 
+> 五种「回测」路线对照：[BACKTEST.md](BACKTEST.md)
+
 ```bash
 python3 tools/momentum_backtest.py
 python3 tools/momentum_backtest_v2.py
 ```
+
+美股 NVDA/AMD/MU 演示；A 股因子 OOS 见 §6 与 BACKTEST §1。
 
 ### 7.5 Morningstar 公允价值
 
@@ -490,6 +509,8 @@ python3 tools/notify.py send --title "x" --text "y" --channels feishu --local
 
 ## 12. Agent / Skills 使用
 
+> 18 个技能目录与触发语：[SKILLS.md](SKILLS.md)
+
 ### 12.1 OpenClaw
 
 ```bash
@@ -604,16 +625,21 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v
 
 | 文档 | 内容 |
 |------|------|
-| [README.md](../README.md) | 项目总览与快速开始 |
-| [tools/README.md](../tools/README.md) | 各工具 CLI 参数详解 |
-| [quant_data_fusion.md](quant_data_fusion.md) | 三库融合与 A 股数据边界 |
-| [textgrad_design.md](textgrad_design.md) | TextGrad 引擎设计 |
+| **[docs/README.md](README.md)** | **文档中心**（按角色选阅读路径） |
+| [USER_GUIDE.md](USER_GUIDE.md) | 本文件：全功能工作流 |
+| [BACKTEST.md](BACKTEST.md) | 回测 5 条路线 |
+| [QUANT.md](QUANT.md) | A 股量化专题 |
+| [ENGINE.md](ENGINE.md) | TextGrad 引擎专题 |
+| [SKILLS.md](SKILLS.md) | Agent 技能目录 |
+| [TESTING.md](../TESTING.md) | 测试与验收 |
+| [tools/README.md](../tools/README.md) | 工具 CLI 逐项 |
+| [quant_data_fusion.md](quant_data_fusion.md) | 三库融合与边界 |
+| [textgrad_design.md](textgrad_design.md) | 引擎设计深度 |
 | [action-card.md](action-card.md) | 行动卡模板 |
 | [report-conventions.md](report-conventions.md) | 报告规范 |
-| [tdx_mcp_tool_design.md](tdx_mcp_tool_design.md) | 通达信 MCP（**不实施**，备忘） |
+| [tdx_mcp_tool_design.md](tdx_mcp_tool_design.md) | 通达信 MCP（不实施） |
 | [ROADMAP.md](ROADMAP.md) | 路线图 |
-| [TESTING.md](../TESTING.md) | 测试指南 |
-| [TESTING.md](../TESTING.md) | **测试指南**（pytest、CI、冒烟、验收入口） |
+| [README.md](../README.md) | 项目总览 |
 | [VERSION_HISTORY.md](../VERSION_HISTORY.md) | 版本历史 |
 
 ---
