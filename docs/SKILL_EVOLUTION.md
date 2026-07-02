@@ -155,13 +155,21 @@ python3 src/evolution_loop_v10.py skill-evolve evolve investment-research --judg
 ## 8. 测试
 
 ```bash
-python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py -v
+# 全量 SkillForge（规则 + LLM mock + CLI 冒烟）
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
+
+# evolution_cli 集成
+python3 -m pytest tests/test_evolution_cli.py -v -k skill_evolve
 ```
 
-Fixtures：
+| 测试文件 | 覆盖 |
+|----------|------|
+| `test_skill_forge.py` | VFS、规则分析、聚合、诊断、多轮进化、Creator |
+| `test_skill_forge_llm.py` | LLM-judge CR、四维分析、诊断、降级 |
+| `test_skill_forge_cli.py` | `tools/skill_evolve.py` 子命令 |
+| `test_evolution_cli.py` | `evolution_loop_v10.py skill-evolve` |
 
-- `tests/fixtures/skill_forge/bad_cases.jsonl` — 已标注 consistency
-- `tests/fixtures/skill_forge/tasks_unlabeled.jsonl` — 无标签，测 LLM-judge
+Fixtures 说明：`tests/fixtures/skill_forge/README.md`
 
 ---
 
@@ -170,3 +178,7 @@ Fixtures：
 - Knowledge 类失败存在收敛天花板（论文 §3.3.2）；长尾仍依赖运行时检索与人工审核。
 - LLM-judge 成本随 task 数线性增长；批量评测建议先 `--judge-mode rule` 冒烟，再 `llm` 全量。
 - 多轮进化在同批 bad case 上可能 idempotent（重复 patch 被跳过）。
+
+## 10. 新功能交付
+
+与仓库铁律一致：每次新功能须 **跑测试 + 补全文档**。清单见 [TESTING.md §10.4](../TESTING.md#104-新功能交付清单) 与 [AGENTS.md](../AGENTS.md)。

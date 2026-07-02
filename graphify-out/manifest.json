@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1782965803.3510394,
-    "ast_hash": "039c31bd03a962ced45b161072292638",
+    "mtime": 1782970823.461989,
+    "ast_hash": "57c049a4248a633e407949f3db35d1b8",
     "semantic_hash": ""
   },
   "VERSION_HISTORY.md": {
-    "mtime": 1782969555.3708215,
-    "ast_hash": "afdcfea31972a824b549ab48187d5c01",
+    "mtime": 1782970829.4149957,
+    "ast_hash": "51f140b6949d896acd9ffe468c59fd2d",
     "semantic_hash": ""
   },
   "config/skill.md": {
@@ -205,8 +205,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1782442416.258812,
-    "ast_hash": "62c05a2bf20bf036a0b2633478663e64",
+    "mtime": 1782970770.2355149,
+    "ast_hash": "f85a3210168f6b7dd4ec9714a77c9290",
     "semantic_hash": ""
   },
   "requirements.txt": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "docs/ROADMAP.md": {
-    "mtime": 1782965181.191531,
-    "ast_hash": "1b6b84e8663912f261764247e484a68d",
+    "mtime": 1782970825.3547935,
+    "ast_hash": "53bb6a79d3634b3f9eadcd0519ecc0d0",
     "semantic_hash": ""
   },
   "docs/report-conventions.md": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "TESTING.md": {
-    "mtime": 1782969555.367942,
-    "ast_hash": "5aab9c520c5fdb4e5792234c7b0d7a19",
+    "mtime": 1782970808.8737195,
+    "ast_hash": "6682f430e7d963bd7531676ba30fd0ee",
     "semantic_hash": ""
   },
   "tools/README.md": {
@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "docs/USER_GUIDE.md": {
-    "mtime": 1782965641.9783285,
-    "ast_hash": "0113ef6b1a1d6e59534924a38a792c49",
+    "mtime": 1782970821.560121,
+    "ast_hash": "4b1660d734d86dc1aac009d4c81aef5d",
     "semantic_hash": ""
   },
   "docs/BACKTEST.md": {
@@ -1245,8 +1245,8 @@
     "semantic_hash": ""
   },
   "docs/ENGINE.md": {
-    "mtime": 1782966005.7908552,
-    "ast_hash": "fd4b65b38b365667aa0e1e9aa88dc29e",
+    "mtime": 1782970770.2664657,
+    "ast_hash": "57245cd8731a7c371643673d3fc957ac",
     "semantic_hash": ""
   },
   "docs/SKILLS.md": {
@@ -1375,8 +1375,8 @@
     "semantic_hash": ""
   },
   "docs/SKILL_EVOLUTION.md": {
-    "mtime": 1782968383.2655072,
-    "ast_hash": "3367f0ed7142a246b492b0a4cd1024ab",
+    "mtime": 1782970834.6095774,
+    "ast_hash": "148cb00f259a5399d27c1522b5f4af25",
     "semantic_hash": ""
   },
   "src/skill_forge/judge_mode.py": {

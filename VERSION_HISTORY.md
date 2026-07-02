@@ -51,8 +51,13 @@
 - `FactorScanHypothesisProposer` / `LimitupScanHypothesisProposer` / `CompositeHypothesisProposer`
 - `pipeline.run_full_cycle(factor_scan=…, limitup_scan=…)` 并入 R 循环
 
+**SkillForge 技能进化** `src/skill_forge/` + `tools/skill_evolve.py`
+- LLM-judge Consistency Rate + 四维失败分析 + Skill Diagnostician/Optimizer
+- `--judge-mode auto|llm|rule`；文档 `docs/SKILL_EVOLUTION.md`
+- 测试：`test_skill_forge.py` + `test_skill_forge_llm.py` + `test_skill_forge_cli.py` + `evolution_cli` skill-evolve
+
 **测试结果**:
-- [x] 单元测试: **503 passed, 2 skipped**
+- [x] 单元测试: **503 passed, 2 skipped**（含 SkillForge；`pytest tests/ -ra`）
 
 ---
 

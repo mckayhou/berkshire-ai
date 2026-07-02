@@ -2803,7 +2803,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "AGENTS",
-      "community": 2,
+      "community": 4,
       "norm_label": "graphify"
     },
     {
@@ -5412,6 +5412,16 @@
     {
       "relation": "references",
       "confidence": "EXTRACTED",
+      "source_file": "docs/SKILL_EVOLUTION.md",
+      "source_location": "L184",
+      "weight": 1.0,
+      "source": "SKILL_EVOLUTION",
+      "target": "AGENTS",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "source_file": "README.md",
       "source_location": "L276",
       "weight": 1.0,
@@ -5478,6 +5488,16 @@
       "confidence_score": 1.0,
       "source": "README.md",
       "target": "SKILLS"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "README.md",
+      "target": "SKILL_EVOLUTION",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -6432,6 +6452,16 @@
     {
       "relation": "references",
       "confidence": "EXTRACTED",
+      "source_file": "docs/USER_GUIDE.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "USER_GUIDE",
+      "target": "SKILL_EVOLUTION",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "source_file": "tests/fixtures/skill_forge/README.md",
       "source_location": "L36",
       "weight": 1.0,
@@ -6871,5 +6901,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "92103866654ff41c58e81cbfc7496b37ae64a605"
+  "built_at_commit": "46fc2c4f8df5f5b4f37f5fd0b1c3e191dff0179b"
 }

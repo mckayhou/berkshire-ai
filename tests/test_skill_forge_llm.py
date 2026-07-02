@@ -26,7 +26,11 @@ from skill_forge import (  # noqa: E402
     aggregate_failures,
     analyze_batch,
 )
-from skill_forge.llm_judge import judge_diagnostic_plan  # noqa: E402
+from skill_forge.llm_judge import (  # noqa: E402
+    ConsistencyBatchReport,
+    judge_consistency_batch,
+    judge_diagnostic_plan,
+)
 
 FIXTURE = Path(__file__).parent / "fixtures" / "skill_forge" / "bad_cases.jsonl"
 TASKS = Path(__file__).parent / "fixtures" / "skill_forge" / "tasks_unlabeled.jsonl"
@@ -196,6 +200,59 @@ def test_evolve_llm_mode_dry_run(mock_llm, tmp_path):
         mode=JudgeMode.LLM,
     )
     assert report.rounds[0].accepted_changes >= 1
+
+
+def test_judge_consistency_batch_cr(mock_llm):
+    from skill_forge.bad_case_loader import load_tasks_jsonl
+
+    raw = load_tasks_jsonl(TASKS)
+    report = judge_consistency_batch(raw, mock_llm)
+    assert isinstance(report, ConsistencyBatchReport)
+    assert report.strict_cr == 0.5
+    assert report.lenient_cr == 0.5
+    assert len(report.judgments) == 2
+
+
+def test_judge_partial_consistency():
+    llm = StaticLLMClient(
+        fn=lambda _s, _u: json.dumps(
+            {
+                "consistency": "partial",
+                "rationale": "部分一致",
+                "core_action_aligned": True,
+            },
+            ensure_ascii=False,
+        )
+    )
+    j = judge_consistency("部分报告", "完整参考", llm)
+    assert j.consistency == Consistency.PARTIAL
+    assert not j.strict_match
+
+
+def test_diagnose_llm_fallback_to_rules():
+    from skill_forge import diagnose_rules, load_bad_cases_jsonl
+
+    bad_llm = StaticLLMClient(responses={"*": "not-json"})
+    records = analyze_batch(load_bad_cases_jsonl(FIXTURE), mode=JudgeMode.RULE)
+    agg = aggregate_failures(records)
+    rule_diag = diagnose_rules("investment-research", 0, agg)
+    llm_diag = diagnose(
+        "investment-research",
+        0,
+        agg,
+        skill_markdown=SKILL_SRC.read_text(encoding="utf-8"),
+        llm=bad_llm,
+        mode=JudgeMode.LLM,
+    )
+    assert llm_diag.optimization_plan
+    assert len(llm_diag.optimization_plan) == len(rule_diag.optimization_plan)
+
+
+def test_effective_judge_mode_auto_without_llm():
+    from skill_forge.judge_mode import effective_judge_mode
+
+    assert effective_judge_mode(JudgeMode.AUTO, None) == JudgeMode.RULE
+    assert effective_judge_mode(JudgeMode.AUTO, StaticLLMClient()) == JudgeMode.LLM
 
 
 def test_llm_failure_fallback_to_rules():

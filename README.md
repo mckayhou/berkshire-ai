@@ -31,6 +31,8 @@
 
 **TextGrad 自进化**: 借鉴 Nature 2025 论文，实现节点级诊断 + 文本梯度反向传播
 
+**SkillForge 技能进化**: bad-case + LLM-judge → 四维失败分析 → `skills/*.md` 版本化迭代（见 [docs/SKILL_EVOLUTION.md](docs/SKILL_EVOLUTION.md)）
+
 **已实现收益反馈闭环 + 多空辩论**（吸收自 TradingAgents）: 把每次决策落盘 → 事后用真实价格算 alpha → 转成各大师"校准评分"喂回反向传播；并在四大师并行之上插入一个显式的多空对抗辩论环节，给出 bull/bear case 与净判断。
 
 **A股多源降级数据层 + 多通道推送**（吸收自 JusticePlutus）: 数据获取走 `native→tushare→efinance→akshare→baostock→yfinance` 降级链，全失败优雅返回不抛崩；报告/信号可经 Telegram / 飞书 / 本地兜底多通道交付，零配置只落地不报错。

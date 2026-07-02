@@ -276,7 +276,8 @@ python3 tests/test_v10_backtest.py            # 轨迹诊断（非 pytest）
 ```
 
 ```bash
-python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py -v
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
+python3 src/evolution_loop_v10.py skill-evolve list
 python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/tasks_unlabeled.jsonl --judge-mode rule
 python3 tools/skill_evolve.py evolve investment-research --judge-mode auto --dry-run
 ```

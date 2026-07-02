@@ -45,6 +45,11 @@
 
 ## 本 fork 专属方向
 
+### SkillForge 技能进化 — ✅（LLM-judge + bad-case 闭环）
+- `src/skill_forge/`：Consistency Rate、四维失败分析、诊断、VFS 版本化 patch
+- `tools/skill_evolve.py` + `evolution_loop_v10.py skill-evolve`
+- 文档：`docs/SKILL_EVOLUTION.md`；测试：`test_skill_forge*.py`（41 用例含 CLI）
+
 ### TextGrad V10 自进化引擎 — ✅ V10.28 真闭环 + 轨迹 A/B + 信号接线
 - 计算图 + 验证门控 + eval_harness + ∇_LLM + 经验 few-shot
 - ✅ V10.26 **`rerun_analysis`**：`run_multi_round` 改写后重跑分析，`graph_analysis.AnalysisRunner`

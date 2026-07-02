@@ -63,3 +63,20 @@ def test_cli_optimize(tmp_path):
     data = json.loads(r.stdout)
     assert "evolution" in data
     assert data["evolution"]["rounds"] >= 1
+
+
+def test_cli_skill_evolve_list():
+    r = _run_cli("skill-evolve", "list")
+    assert r.returncode == 0
+    data = json.loads(r.stdout)
+    assert "investment-research" in data["skills"]
+
+
+def test_cli_skill_evolve_judge_rule():
+    fixture = os.path.join(
+        BERKSHIRE_DIR, "tests", "fixtures", "skill_forge", "bad_cases.jsonl"
+    )
+    r = _run_cli("skill-evolve", "judge", fixture, "--judge-mode", "rule")
+    assert r.returncode == 0
+    data = json.loads(r.stdout)
+    assert data["strict_cr"] >= 0

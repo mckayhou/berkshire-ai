@@ -17,8 +17,7 @@
 7. [工具手工冒烟清单](#7-工具手工冒烟清单)
 8. [CI 流水线](#8-ci-流水线)
 9. [覆盖率与质量门](#9-覆盖率与质量门)
-10. [编写新测试](#10-编写新测试)
-11. [已知限制与排错](#11-已知限制与排错)
+10. [编写新测试](#10-编写新测试)（含 [§10.4 新功能交付清单](#104-新功能交付清单)）
 
 ---
 
@@ -41,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-07）**：`tests/` 下约 **459** 个 pytest 用例；无 LLM Key 时 **1** 个 e2e 用例自动 skip，其余应全部通过。
+**当前规模（2026-07）**：`tests/` 下 **505** 个 pytest 用例；典型本地结果 **503 passed, 2 skipped**（e2e LLM + Tavily integration）；以 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -426,14 +425,41 @@ def test_happy_path(tmp_path, monkeypatch):
 - `monkeypatch.setenv("BERKSHIRE_DATA_DIR", ...)`
 - 断言 `candidates` 结构与 `thesis_queue_line`
 
-### 10.4 发版前检查清单
+### 10.4 新功能交付清单
 
-- [ ] `pytest tests/ -v -rs` 全绿（允许 e2e skip）
-- [ ] `ruff check src tools tests`
-- [ ] `mypy`（若改 `src/`）
-- [ ] 新 CLI 在 `tools/README.md` + `docs/USER_GUIDE.md` 有说明
-- [ ] 新逻辑有对应 `tests/test_*.py`
-- [ ] `graphify update .`（若改 Python 代码）
+> **硬性要求**：每次新功能或行为变更，在标记完成前必须跑通测试并补全文档。发版前再跑 `release-check`（§12）。
+
+#### 测试
+
+- [ ] 新增/更新 `tests/test_<模块>.py`（含 CLI subprocess 冒烟时 `tests/test_*_cli.py`）
+- [ ] `pytest tests/ -v -rs` 全绿（允许 e2e / Tavily / torch skip，须在 `VERSION_HISTORY` 或本文件附录写明）
+- [ ] 新 CLI 在 §6「按功能验收入口」增加一行命令
+- [ ] §5「测试文件索引」表增加对应行
+- [ ] `ruff check src tools tests`；改 `src/` 时跑 `mypy`
+
+#### 文档（按暴露面逐项核对）
+
+| 暴露面 | 必改文件 |
+|--------|----------|
+| 用户可见能力 | `README.md`、`README_EN.md`、`docs/USER_GUIDE.md` |
+| 引擎 / API / CLI | `docs/ENGINE.md`、`src/evolution_cli.py` 帮助、`tools/README.md` |
+| 版本发版 | `VERSION_HISTORY.md`、`config/state.md`、`pyproject.toml` + `APP_VERSION` |
+| 专题能力 | 对应专题 doc（如 `SKILL_EVOLUTION.md`、`BACKTEST.md`、`textgrad_design.md`） |
+| 路线图 | `docs/ROADMAP.md`（里程碑级变更） |
+| 测试与冒烟 | **本文件** `TESTING.md`（§5、§6、§10.4、附录计数） |
+| 文档导航 | `docs/README.md` 表格/地图（新专题时） |
+
+#### 工程
+
+- [ ] `graphify update .`（改 Python 后）；提交 `graphify-out/` sync
+- [ ] `./scripts/release-check.sh --skip-tag-check`（工作区干净、版本横幅一致）
+
+#### 一键核对（功能开发中，非发版）
+
+```bash
+pytest tests/ -v -rs
+./scripts/release-check.sh --skip-tag-check --skip-pytest   # 或含 pytest 的完整门控
+```
 
 ---
 

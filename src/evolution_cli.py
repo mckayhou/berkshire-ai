@@ -297,17 +297,6 @@ def cmd_skill_evolve(args: argparse.Namespace) -> int:
         from .skill_forge.cli import main as skill_forge_main
 
     argv = [args.action]
-    extra_flags = []
-    if getattr(args, "judge_mode", None):
-        extra_flags.extend(["--judge-mode", args.judge_mode])
-    if getattr(args, "re_judge", False):
-        extra_flags.append("--re-judge")
-    if getattr(args, "dry_run", False):
-        extra_flags.append("--dry-run")
-    if getattr(args, "rounds", None):
-        extra_flags.extend(["--rounds", str(args.rounds)])
-    if getattr(args, "fixture", None):
-        extra_flags.extend(["--fixture", args.fixture])
 
     if args.action == "list":
         pass
@@ -316,16 +305,28 @@ def cmd_skill_evolve(args: argparse.Namespace) -> int:
             print("judge 需要 fixture 路径", file=sys.stderr)
             return 1
         argv.append(args.fixture or args.target)
+        argv.extend(["--judge-mode", args.judge_mode])
     elif args.action == "analyze":
         if not args.target and not args.fixture:
             print("analyze 需要 fixture 路径", file=sys.stderr)
             return 1
         argv.append(args.fixture or args.target)
+        argv.extend(["--judge-mode", args.judge_mode])
+        if args.re_judge:
+            argv.append("--re-judge")
     elif args.action == "evolve":
         if not args.target:
             print("evolve 需要 skill 名", file=sys.stderr)
             return 1
         argv.append(args.target)
+        if args.fixture:
+            argv.extend(["--fixture", args.fixture])
+        argv.extend(["--rounds", str(args.rounds)])
+        argv.extend(["--judge-mode", args.judge_mode])
+        if args.dry_run:
+            argv.append("--dry-run")
+        if args.re_judge:
+            argv.append("--re-judge")
     elif args.action == "status":
         if not args.target:
             print("status 需要 skill 名", file=sys.stderr)
@@ -336,7 +337,8 @@ def cmd_skill_evolve(args: argparse.Namespace) -> int:
             print("create 需要 skill 名", file=sys.stderr)
             return 1
         argv.extend([args.target, getattr(args, "description", "新技能")])
-    argv.extend(extra_flags)
+        if args.dry_run:
+            argv.append("--dry-run")
     return skill_forge_main(argv)
 
 

@@ -10,6 +10,7 @@
 | 回测（5 条路线对照） | [BACKTEST.md](BACKTEST.md) |
 | A 股量化 | [QUANT.md](QUANT.md) |
 | TextGrad 引擎 | [ENGINE.md](ENGINE.md) |
+| 技能进化 SkillForge | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) |
 | Agent 技能 | [SKILLS.md](SKILLS.md) |
 | 测试验收 | [TESTING.md](../TESTING.md) |
 | 工具 CLI 逐项 | [tools/README.md](../tools/README.md) |
@@ -221,6 +222,31 @@ run_full_cycle(d, realized_price=110.0, factor_scan=scan_json, limitup_scan=lu_j
 ```
 
 详见 [ENGINE.md](ENGINE.md) §9、[BACKTEST.md](BACKTEST.md) §4.1。
+
+### 4.7 SkillForge 技能进化（`skills/*.md`）
+
+> 与 TextGrad 互补：TextGrad 改大师 Prompt；SkillForge 改 `skills/*.md` 工作流与工具规则。  
+> 专题：[SKILL_EVOLUTION.md](SKILL_EVOLUTION.md)
+
+```bash
+# LLM-judge Consistency Rate + 四维失败分析 + 技能 patch
+python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/bad_cases.jsonl --judge-mode auto
+python3 tools/skill_evolve.py evolve investment-research --dry-run --judge-mode rule
+
+# 统一入口
+python3 src/evolution_loop_v10.py skill-evolve list
+python3 src/evolution_loop_v10.py skill-evolve evolve investment-research --dry-run --judge-mode rule
+```
+
+| 子命令 | 说明 |
+|--------|------|
+| `judge FIXTURE` | Strict / Lenient CR（`--judge-mode auto\|llm\|rule`） |
+| `analyze FIXTURE` | 四维失败分析 |
+| `evolve SKILL` | bad-case → 诊断 → 版本化 patch（`--dry-run` 不写 live） |
+| `status SKILL` | 查看 `skills/.evolution/` 版本清单 |
+| `create NAME DESC` | 从 reports/ + 现有 skills 挖掘生成 Skill v0 |
+
+验收：`pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v`（见 [TESTING.md](../TESTING.md) §SkillForge）。
 
 ---
 

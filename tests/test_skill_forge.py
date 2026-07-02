@@ -18,6 +18,7 @@ from skill_forge import (  # noqa: E402
     BadCase,
     Consistency,
     FailureCategory,
+    JudgeMode,
     SkillVFS,
     analyze_bad_case,
     analyze_batch,
@@ -28,6 +29,7 @@ from skill_forge import (  # noqa: E402
     load_bad_cases_jsonl,
     mine_tool_schemas_from_skills,
     parse_sections,
+    run_multi_round_evolution,
 )
 
 
@@ -161,6 +163,62 @@ def test_parse_sections_finds_depth():
     sections = parse_sections(content)
     headings = [s.heading for s in sections]
     assert any("研究深度" in h for h in headings)
+
+
+def test_cases_from_audit_verdict():
+    from skill_forge.bad_case_loader import cases_from_audit_verdict
+
+    case = cases_from_audit_verdict(
+        skill_name="investment-research",
+        task_id="a1",
+        agent_output="报告",
+        reference_output="参考",
+        verdict="reject",
+        audit_failures=[{"label": "营收"}],
+    )
+    assert case.consistency == Consistency.INCONSISTENT
+    assert case.metadata["audit_failures"]
+
+
+def test_load_tasks_jsonl_unlabeled():
+    from skill_forge.bad_case_loader import load_tasks_jsonl
+
+    path = Path(__file__).parent / "fixtures" / "skill_forge" / "tasks_unlabeled.jsonl"
+    rows = load_tasks_jsonl(path)
+    assert len(rows) == 2
+    assert rows[0].get("consistency") is None
+
+
+def test_multi_round_respects_max_rounds(sandbox_skill):
+    skills, evo = sandbox_skill
+    cases = load_bad_cases_jsonl(FIXTURE)
+    vfs = SkillVFS(skills_root=skills, evolution_root=evo)
+    report = run_multi_round_evolution(
+        vfs,
+        "investment-research",
+        cases,
+        rounds=3,
+        write_live=False,
+        mode=JudgeMode.RULE,
+    )
+    assert 1 <= len(report.rounds) <= 3
+    assert report.rounds[0].accepted_changes >= 1
+
+
+def test_aggregator_representative_limit():
+    records = analyze_batch(load_bad_cases_jsonl(FIXTURE))
+    agg = aggregate_failures(records, top_k=1)
+    for a in agg:
+        assert len(a.representative_task_ids) <= 1
+
+
+def test_vfs_commit_and_read_version(sandbox_skill):
+    skills, evo = sandbox_skill
+    vfs = SkillVFS(skills_root=skills, evolution_root=evo)
+    content = vfs.read_skill("investment-research")
+    v = vfs.commit_version("investment-research", content, note="test")
+    assert v == 1
+    assert vfs.read_skill("investment-research", version=1) == content
 
 
 def vfs_current_version(skills_root: Path, name: str) -> int:

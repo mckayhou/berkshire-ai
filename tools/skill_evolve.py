@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """SkillForge CLI — evolve berkshire-ai skills from bad-case evidence.
 
+Subcommands:
+  list | judge | analyze | evolve | status | create
+
 Examples:
   python3 tools/skill_evolve.py list
-  python3 tools/skill_evolve.py analyze tests/fixtures/skill_forge/bad_cases.jsonl
-  python3 tools/skill_evolve.py evolve investment-research --rounds 1 --dry-run
+  python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/tasks_unlabeled.jsonl --judge-mode auto
+  python3 tools/skill_evolve.py analyze tests/fixtures/skill_forge/bad_cases.jsonl --judge-mode rule
+  python3 tools/skill_evolve.py evolve investment-research --rounds 1 --dry-run --judge-mode auto
   python3 tools/skill_evolve.py status investment-research
+
+Docs: docs/SKILL_EVOLUTION.md
+Tests: pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py
 """
 
 from __future__ import annotations
