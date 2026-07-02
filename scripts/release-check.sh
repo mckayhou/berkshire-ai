@@ -7,12 +7,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 SKIP_PYTEST=0
+SKIP_TAG_CHECK=0
 for arg in "$@"; do
   case "$arg" in
     --skip-pytest) SKIP_PYTEST=1 ;;
+    --skip-tag-check) SKIP_TAG_CHECK=1 ;;
     -h|--help)
-      echo "Usage: $0 [--skip-pytest]"
+      echo "Usage: $0 [--skip-pytest] [--skip-tag-check]"
       echo "  Verifies clean tree, version alignment, tag at HEAD, upstream sync, pytest."
+      echo "  --skip-tag-check  use before creating a new annotated tag"
       exit 0
       ;;
     *) echo "Unknown option: $arg" >&2; exit 2 ;;
@@ -35,7 +38,7 @@ warn() {
 # Wait for post-commit graphify hook (if any)
 if [[ -f graphify-out/.rebuild.lock ]]; then
   echo "Waiting for graphify hook to finish..."
-  for _ in $(seq 1 45); do
+  for _ in $(seq 1 60); do
     [[ ! -f graphify-out/.rebuild.lock ]] && break
     sleep 1
   done
@@ -84,13 +87,17 @@ ok "no phantom V10.26 in core docs"
 
 # --- 4. Annotated tag points at HEAD ---
 TAG="v${MAJOR_MINOR}"
-if git rev-parse "$TAG" >/dev/null 2>&1; then
-  HEAD_SHA="$(git rev-parse HEAD)"
-  TAG_SHA="$(git rev-parse "${TAG}^{commit}")"
-  [[ "$HEAD_SHA" == "$TAG_SHA" ]] || fail "HEAD ($HEAD_SHA) != ${TAG}^{commit} ($TAG_SHA) — move tag or commit remaining work"
-  ok "tag ${TAG} at HEAD"
+if [[ "$SKIP_TAG_CHECK" -eq 0 ]]; then
+  if git rev-parse "$TAG" >/dev/null 2>&1; then
+    HEAD_SHA="$(git rev-parse HEAD)"
+    TAG_SHA="$(git rev-parse "${TAG}^{commit}")"
+    [[ "$HEAD_SHA" == "$TAG_SHA" ]] || fail "HEAD ($HEAD_SHA) != ${TAG}^{commit} ($TAG_SHA) — move tag or commit remaining work"
+    ok "tag ${TAG} at HEAD"
+  else
+    warn "tag ${TAG} not found (create after pre-tag checks pass)"
+  fi
 else
-  warn "tag ${TAG} not found (create after this check passes)"
+  warn "tag check skipped (--skip-tag-check)"
 fi
 
 # --- 5. Upstream sync (when tracking branch exists) ---

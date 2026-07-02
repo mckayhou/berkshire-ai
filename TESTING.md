@@ -464,13 +464,13 @@ chmod +x scripts/release-check.sh   # 首次
 pytest -q tests/
 # 3. 提交全部（含 graphify）；若 hook 再次脏 graphify-out，再提交一次 sync
 git add -A && git commit -m "chore: bump version to X.Y.Z"
-# 4. 发版门控
-./scripts/release-check.sh
-# 5. 打标签并推送（标签必须在 release-check 通过之后）
+# 4. 发版门控（改版本号并提交后；**最后一笔 graphify sync 提交后等 ~60s** 再跑，避免 hook 未结束）
+./scripts/release-check.sh --skip-tag-check   # 可选：首跑跳过标签项（见脚本 --help）
+# 5. 打标签并推送
 git tag -a vX.Y -m "VX.Y: summary"
 git push origin main && git push origin vX.Y
-# 6. 再跑 release-check，确认 hook 未留下未提交变更
-./scripts/release-check.sh --skip-pytest
+# 6. 终验（含标签必须在 HEAD）
+./scripts/release-check.sh
 ```
 
 > **教训（V10.25）**：分多次 subagent 提交、未跑全库 `git status`、标签打在版本 bump 而文档提交在后、graphify post-commit hook 反复弄脏工作区，会导致「以为发完其实还漏」。以后以 `release-check.sh` 为唯一收口。
