@@ -36,6 +36,25 @@
 
 ## 📜 版本历史
 
+### V10.25 - 2026-07-02 (A股 AlphaGPT 因子挖掘 + thesis_queue 接线)
+
+**1) AlphaGPT times.py 移植** `tools/ashare_alphagpt/` + `tools/ashare_factor_mining.py`
+- REINFORCE + StackVM 自动因子搜索；数据走 `ashare_data` / `data_sources`（无硬编码 Token）
+- 可选 extra：`pip install '.[factor-mining]'`（torch/pandas/pyarrow）
+
+**2) 因子筛选桥接** `tools/factor_screener_bridge.py`
+- 已训练公式 → 本地 CSV / 在线多标的打分 → thesis_queue JSON
+
+**3) thesis_queue 扩展**
+- `--from-factor-scan` / `--run-factor-scan` / `--factor-codes`
+
+**4) 文档** `docs/quant_data_fusion.md`、`.env.example`、`config/skill.md` 同步
+
+**测试结果**:
+- [x] 单元测试: test_ashare_alphagpt + test_factor_screener_bridge + thesis_queue
+
+---
+
 ### V10.24 - 2026-07-01 (量化数据融合：LocalCsv + Pytdx + screener bridge)
 
 **1) 本地 CSV 数据源** `LocalCsvSource`

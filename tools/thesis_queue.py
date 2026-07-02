@@ -98,6 +98,34 @@ def _norm(t: str) -> str:
     return t.strip().upper().replace(" ", "")
 
 
+def merge_factor_scan_suggestions(
+    factor_scan: dict,
+    existing_queue: set[str],
+    existing_theses: set[str],
+) -> list[dict]:
+    """从 factor_screener_bridge 结果生成研究建议。"""
+    out = []
+    for c in factor_scan.get("candidates", []):
+        t = _norm(c.get("ticker", ""))
+        if not t or t in existing_queue or t in existing_theses:
+            continue
+        score = abs(float(c.get("score", 0)))
+        priority = int(min(100, score * 100))
+        if priority < 5:
+            continue
+        out.append({
+            "ticker": c.get("ticker", t),
+            "source": "factor_screener",
+            "priority": priority,
+            "suggested_note": c.get("note", "")[:120],
+            "action": "investment-research 验证 AlphaGPT 因子信号 + fundamentals",
+            "score": c.get("score"),
+            "direction": c.get("direction"),
+        })
+    out.sort(key=lambda x: -x["priority"])
+    return out
+
+
 def merge_scan_suggestions(
     scan_summary: dict,
     existing_queue: set[str],
@@ -133,7 +161,11 @@ def merge_scan_suggestions(
     return out
 
 
-def build_action_plan(state: dict, scan_summary: dict | None = None) -> dict:
+def build_action_plan(
+    state: dict,
+    scan_summary: dict | None = None,
+    factor_scan: dict | None = None,
+) -> dict:
     theses = state["theses"]
     queue = state["queue"]
     pending_tickers = queue_tickers(queue)
@@ -147,6 +179,13 @@ def build_action_plan(state: dict, scan_summary: dict | None = None) -> dict:
         scan_suggestions = merge_scan_suggestions(
             scan_summary, pending_tickers, thesis_tickers,
         )
+
+    factor_suggestions = []
+    if factor_scan and factor_scan.get("ok"):
+        factor_suggestions = merge_factor_scan_suggestions(
+            factor_scan, pending_tickers, thesis_tickers,
+        )
+        scan_suggestions.extend(factor_suggestions)
 
     # 研究优先级：TRIGGERED 论文 > 新 BUY 信号 > Watch 论文
     research_now = []
@@ -185,6 +224,7 @@ def build_action_plan(state: dict, scan_summary: dict | None = None) -> dict:
         "watch_theses": watch,
         "pending_queue_open": [q for q in queue if not q["done"]],
         "scan_suggestions": scan_suggestions,
+        "factor_suggestions": factor_suggestions,
         "research_now": research_now,
     }
 
@@ -194,9 +234,10 @@ def format_suggest_md(plan: dict) -> str:
     for item in plan["scan_suggestions"]:
         if item["priority"] <= 0:
             continue
+        src = item.get("source", "portfolio_scan")
         lines.append(
             f"- [ ] **{item['ticker']}**: {item['suggested_note']} "
-            f"(来源: portfolio_scan, {datetime.now().strftime('%Y-%m-%d')})"
+            f"(来源: {src}, {datetime.now().strftime('%Y-%m-%d')})"
         )
     if len(lines) == 2:
         lines.append("- （无新买入信号需入队）")
@@ -233,6 +274,10 @@ def main():
     parser = argparse.ArgumentParser(description="state.md + portfolio_scan 研究队列同步")
     parser.add_argument("--state", default=DEFAULT_STATE, help="state.md 路径")
     parser.add_argument("--from-scan", help="portfolio_scan --json 输出文件")
+    parser.add_argument("--from-factor-scan", help="factor_screener_bridge --json 输出文件")
+    parser.add_argument("--run-factor-scan", action="store_true",
+                        help="运行 factor_screener_bridge（需已训练公式 + 本地 CSV 或 --factor-codes）")
+    parser.add_argument("--factor-codes", help="--run-factor-scan 在线模式代码列表")
     parser.add_argument("--run-scan", action="store_true", help="联网运行 portfolio_scan")
     parser.add_argument("--quiet", action="store_true", help="--run-scan 时静默扫描")
     parser.add_argument("--json", action="store_true", help="JSON 输出")
@@ -245,10 +290,27 @@ def main():
 
     state = load_state(args.state)
     scan_summary = None
+    factor_scan = None
 
     if args.from_scan:
         with open(args.from_scan, encoding="utf-8") as f:
             scan_summary = json.load(f)
+    elif args.from_factor_scan:
+        with open(args.from_factor_scan, encoding="utf-8") as f:
+            factor_scan = json.load(f)
+    elif args.run_factor_scan:
+        try:
+            import torch  # noqa: F401
+            from ashare_alphagpt.screener import run_screen
+
+            codes = None
+            if args.factor_codes:
+                codes = [c.strip() for c in args.factor_codes.split(",") if c.strip()]
+            source = "online" if codes else "auto"
+            factor_scan = run_screen(codes=codes, source=source)
+        except Exception as e:
+            print(f"❌ factor scan failed: {e}", file=sys.stderr)
+            sys.exit(1)
     elif args.run_scan:
         from portfolio_scan import (  # noqa: E402
             flatten_tickers,
@@ -261,7 +323,7 @@ def main():
         results = run_scan(pairs, verbose=not args.quiet)
         scan_summary = summarize(results)
 
-    plan = build_action_plan(state, scan_summary)
+    plan = build_action_plan(state, scan_summary, factor_scan)
 
     if args.suggest_md:
         print(format_suggest_md(plan))

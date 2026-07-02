@@ -78,8 +78,8 @@
       "source_file": "src/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "__init__",
-      "community": 5,
+      "id": "src___init__.py",
+      "community": 167,
       "norm_label": "berkshire ai v10 engine package.  exports the main classes for textgrad-based 4-"
     },
     {
@@ -98,8 +98,8 @@
       "source_file": "src/config.py",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "config",
-      "community": 69,
+      "id": "src_config.py",
+      "community": 168,
       "norm_label": ""
     },
     {
@@ -393,6 +393,16 @@
       "norm_label": "test_aktools_diagnostic.py"
     },
     {
+      "label": "test_ashare_alphagpt.py",
+      "file_type": "code",
+      "source_file": "tests/test_ashare_alphagpt.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_ashare_alphagpt",
+      "community": 169,
+      "norm_label": "test_ashare_alphagpt.py"
+    },
+    {
       "label": "test_calibrate_conviction.py",
       "file_type": "code",
       "source_file": "tests/test_calibrate_conviction.py",
@@ -481,6 +491,16 @@
       "id": "test_experience_store",
       "community": 94,
       "norm_label": ""
+    },
+    {
+      "label": "test_factor_screener_bridge.py",
+      "file_type": "code",
+      "source_file": "tests/test_factor_screener_bridge.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_factor_screener_bridge",
+      "community": 134,
+      "norm_label": "test_factor_screener_bridge.py"
     },
     {
       "label": "test_golden_action_card.py",
@@ -843,6 +863,146 @@
       "norm_label": "\u539f\u5b50 api \u7ec4\u88c5\u590d\u5408\u8bca\u65ad;\u81f3\u5c11\u4e00\u9879\u6210\u529f\u5219 ok=true\u3002"
     },
     {
+      "label": "A-share factor mining (AlphaGPT times.py logic) for berkshire-ai.  Requires opti",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "tools_ashare_alphagpt___init__.py",
+      "community": 171,
+      "norm_label": "a-share factor mining (alphagpt times.py logic) for berkshire-ai.  requires opti"
+    },
+    {
+      "label": "Sortino-style reward backtest for mined factors (train split).",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/backtest.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "backtest",
+      "community": 5,
+      "norm_label": "sortino-style reward backtest for mined factors (train split)."
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/config.py",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "tools_ashare_alphagpt_config.py",
+      "community": 173,
+      "norm_label": ""
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/data_engine.py",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "data_engine",
+      "community": 146,
+      "norm_label": ""
+    },
+    {
+      "label": "Human-readable formula decoding.",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/decode.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "decode",
+      "community": 151,
+      "norm_label": "human-readable formula decoding."
+    },
+    {
+      "label": "OHLCV \u2192 factor feature tensors (AlphaGPT times.py feature engineering).",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/features.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "features",
+      "community": 155,
+      "norm_label": "ohlcv \u2192 factor feature tensors (alphagpt times.py feature engineering)."
+    },
+    {
+      "label": "Load / save mined factor formulas.",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/formula_store.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "formula_store",
+      "community": 131,
+      "norm_label": "load / save mined factor formulas."
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/miner.py",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "miner",
+      "community": 158,
+      "norm_label": ""
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/model.py",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "model",
+      "community": 159,
+      "norm_label": ""
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/oos.py",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "oos",
+      "community": 160,
+      "norm_label": ""
+    },
+    {
+      "label": "StackVM operators for A-share factor formulas (from AlphaGPT times.py).",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/ops.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ops",
+      "community": 132,
+      "norm_label": "stackvm operators for a-share factor formulas (from alphagpt times.py)."
+    },
+    {
+      "label": "Score A-share symbols with a mined AlphaGPT formula.",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/screener.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "screener",
+      "community": 133,
+      "norm_label": "score a-share symbols with a mined alphagpt formula."
+    },
+    {
+      "label": "",
+      "file_type": "code",
+      "source_file": "tools/ashare_alphagpt/vm.py",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "vm",
+      "community": 135,
+      "norm_label": ""
+    },
+    {
+      "label": "Formula vocabulary: features + operators.",
+      "file_type": "rationale",
+      "source_file": "tools/ashare_alphagpt/vocab.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "vocab",
+      "community": 136,
+      "norm_label": "formula vocabulary: features + operators."
+    },
+    {
       "label": "\u7528 curl --noproxy \u76f4\u8fde\uff0c\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25\uff08\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94\uff09\u81ea\u52a8\u91cd\u8bd5\uff0c\u6700\u7ec8\u5931\u8d25\u629b ConnectionError\u3002",
       "file_type": "rationale",
       "source_file": "tools/ashare_data.py",
@@ -851,6 +1011,16 @@
       "id": "ashare_data",
       "community": 6,
       "norm_label": "\u7528 curl --noproxy \u76f4\u8fde,\u7ed5\u8fc7\u7cfb\u7edf\u4ee3\u7406\u3002      \u77ac\u65f6\u5931\u8d25(\u8d85\u65f6/\u975e\u96f6\u9000\u51fa/\u7a7a\u54cd\u5e94)\u81ea\u52a8\u91cd\u8bd5,\u6700\u7ec8\u5931\u8d25\u629b connectionerror\u3002"
+    },
+    {
+      "label": "ashare_factor_mining.py",
+      "file_type": "code",
+      "source_file": "tools/ashare_factor_mining.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "ashare_factor_mining",
+      "community": 145,
+      "norm_label": "ashare_factor_mining.py"
     },
     {
       "label": "",
@@ -881,6 +1051,16 @@
       "id": "data_sources",
       "community": 56,
       "norm_label": ""
+    },
+    {
+      "label": "factor_screener_bridge.py",
+      "file_type": "code",
+      "source_file": "tools/factor_screener_bridge.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "factor_screener_bridge",
+      "community": 69,
+      "norm_label": "factor_screener_bridge.py"
     },
     {
       "label": "Convert any numeric to exact Decimal, avoiding float traps.",
@@ -1496,8 +1676,8 @@
       "source_file": "src/__init__.py",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "__init__",
-      "target": "__init__",
+      "source": "src___init__.py",
+      "target": "src___init__.py",
       "confidence_score": 1.0
     },
     {
@@ -1516,8 +1696,8 @@
       "source_file": "src/config.py",
       "source_location": "L66",
       "weight": 1.0,
-      "source": "config",
-      "target": "config",
+      "source": "src_config.py",
+      "target": "src_config.py",
       "confidence_score": 1.0
     },
     {
@@ -1908,6 +2088,146 @@
       "weight": 1.0,
       "source": "aktools_diagnostic",
       "target": "aktools_diagnostic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "tools_ashare_alphagpt___init__.py",
+      "target": "tools_ashare_alphagpt___init__.py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/backtest.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backtest",
+      "target": "backtest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/config.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "tools_ashare_alphagpt_config.py",
+      "target": "tools_ashare_alphagpt_config.py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/data_engine.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "data_engine",
+      "target": "data_engine",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/decode.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "decode",
+      "target": "decode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/features.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "features",
+      "target": "features",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/formula_store.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "formula_store",
+      "target": "formula_store",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/miner.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "miner",
+      "target": "miner",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/model.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "model",
+      "target": "model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/oos.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "oos",
+      "target": "oos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/ops.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "ops",
+      "target": "ops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/screener.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "screener",
+      "target": "screener",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/vm.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "vm",
+      "target": "vm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "tools/ashare_alphagpt/vocab.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "vocab",
+      "target": "vocab",
       "confidence_score": 1.0
     },
     {
@@ -2602,5 +2922,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "92906de875205315c1f51cd1b1738960de5f897d"
+  "built_at_commit": "4ece7a6879df62be2ee1b972d38ef64c71c2deed"
 }

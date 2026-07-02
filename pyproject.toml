@@ -21,6 +21,14 @@ dependencies = ["httpx>=0.27,<1.0"]
 ashare = ["akshare", "tushare", "efinance", "baostock", "yfinance"]
 # 可选量化本地/实时源（LocalCsvSource / PytdxSource）
 quant = ["pytdx"]
+# A 股 AlphaGPT 因子挖掘（tools/ashare_factor_mining.py，移植自 imbue-bit/AlphaGPT times.py）
+factor-mining = [
+    "torch>=2.0",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "tqdm>=4.66",
+    "pyarrow>=14",
+]
 # 服务边界（src/service.py 的 FastAPI 传输层）
 service = ["fastapi>=0.110", "uvicorn>=0.29"]
 # 开发 / CI 工具链

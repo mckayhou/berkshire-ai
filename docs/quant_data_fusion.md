@@ -78,7 +78,9 @@
 | tdx_quant 全管道 | 不迁入 `scripts/data_pipeline/`；指标/选股见 `quant_screener_bridge` 参考层 |
 | daily_stock_data cron | 不内嵌；推荐外部 clone + cron，共享 `BERKSHIRE_DATA_DIR` |
 | 通达信 MCP | 不封装进 core；可用 `TDX_API_KEY` + 外部 tdx_mcp 脚本 |
-| AlphaGPT | **明确不做** qlib/PyTorch 核心依赖；`BERKSHIRE_ALPHAGPT_REPO` 仅 subprocess 钩子占位 |
+| AlphaGPT times.py A股逻辑 | ✅ `tools/ashare_factor_mining.py` + `tools/ashare_alphagpt/`（可选 `[factor-mining]`） |
+| 因子筛选 → thesis_queue | ✅ `tools/factor_screener_bridge.py` + `thesis_queue.py --from-factor-scan` |
+| AlphaGPT 加密主栈 | **明确不做** Solana 实盘 / meme 训练栈并入 core |
 | tdx_quant 指标全集 | 不复制 `indicators/`；动量筛选用 bridge 内最小逻辑 |
 
 ### ⬜ 明确不做（ROADMAP 对齐）
@@ -108,8 +110,13 @@
                                                │
                     ┌──────────────────────────┼──────────────────┐
                     ▼                          ▼                  ▼
-         data_sources.py              quant_screener_bridge   thesis_queue.py
-         (降级链)                      (动量候选 JSON)          (研究待办)
+         data_sources.py              quant_screener_bridge   factor_screener_bridge
+         (降级链)                      (动量候选 JSON)         (AlphaGPT 因子 JSON)
+                                               │                  │
+                                               └────────┬─────────┘
+                                                        ▼
+                                               thesis_queue.py
+                                               (--from-scan / --from-factor-scan)
 ```
 
 **试用（零外部 cron）**：`BERKSHIRE_ENABLE_PYTDX=1` + `pip install .[quant]`，走实时 pytdx（主机可用性不稳定，建议作补充源）。
@@ -136,7 +143,10 @@
 | `BERKSHIRE_ENABLE_PYTDX` | `1` 启用实时 pytdx 源 |
 | `BERKSHIRE_PYTDX_HOST` / `PORT` | pytdx 行情主机（可选） |
 | `TDX_API_KEY` | 通达信 MCP（外部 tdx_quant 脚本用，本仓库不内置） |
-| `BERKSHIRE_ALPHAGPT_REPO` | AlphaGPT 克隆路径（subprocess 钩子，默认关闭） |
-| `BERKSHIRE_ENABLE_ALPHAGPT` | `1` 允许调用外部 AlphaGPT CLI（实验性） |
+| `BERKSHIRE_ALPHAGPT_REPO` | 外部 AlphaGPT 加密仓库路径（默认不用） |
+| `BERKSHIRE_ENABLE_ALPHAGPT` | `1` 允许 subprocess 调外部 AlphaGPT CLI |
+| `BERKSHIRE_ALPHAGPT_CODE` | 训练标的（默认 `511260`） |
+| `BERKSHIRE_ALPHAGPT_STEPS` / `BATCH` / `MAX_LEN` | 训练超参 |
+| `BERKSHIRE_ALPHAGPT_SCORE_MIN` | 因子筛选最低 score（默认 0） |
 
 详见 [.env.example](../.env.example)。

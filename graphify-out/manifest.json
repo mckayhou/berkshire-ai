@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "config/skill.md": {
-    "mtime": 1782904563.0363994,
-    "ast_hash": "0a4f50286d90b02a02a613c6c8e441dd",
+    "mtime": 1782957466.8969212,
+    "ast_hash": "35b0c8c03409e88ef53368cfd8c0d9e5",
     "semantic_hash": ""
   },
   "config/state.md": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "tools/README.md": {
-    "mtime": 1782808364.0512638,
-    "ast_hash": "1ba2d0bd1e6721c8ba193608bbb2e024",
+    "mtime": 1782957458.7401578,
+    "ast_hash": "6f39f6e217d6c0898093140b4506bcef",
     "semantic_hash": ""
   },
   "tests/test_tools_financial_rigor.py": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "tools/thesis_queue.py": {
-    "mtime": 1782817166.8809829,
-    "ast_hash": "bcf1b8f5d15689ba7f4c5098d050a2f0",
+    "mtime": 1782957394.3292642,
+    "ast_hash": "289432c5f33a133351b9fa2031491ac5",
     "semantic_hash": ""
   },
   ".github/workflows/test.yml": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "pyproject.toml": {
-    "mtime": 1782904563.038602,
-    "ast_hash": "9b5f82c2de04342b6a7567bd57bb0068",
+    "mtime": 1782957022.395717,
+    "ast_hash": "0cbb12cfa7bf7e30bed4d94d3fd78903",
     "semantic_hash": ""
   },
   "src/config.py": {
@@ -730,8 +730,98 @@
     "semantic_hash": ""
   },
   "docs/quant_data_fusion.md": {
-    "mtime": 1782904563.0376978,
-    "ast_hash": "10434eb53fd9f2da266de1ccff315cd9",
+    "mtime": 1782957463.8654985,
+    "ast_hash": "16bb0fcbc691bb2e0455aa05b235aec1",
+    "semantic_hash": ""
+  },
+  "tests/test_ashare_alphagpt.py": {
+    "mtime": 1782957129.1597557,
+    "ast_hash": "554e869962e8158e95a7b5a160bbd144",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/__init__.py": {
+    "mtime": 1782957406.7494802,
+    "ast_hash": "aa59765c30715b48c368c18f83812c9a",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/backtest.py": {
+    "mtime": 1782956912.802261,
+    "ast_hash": "0e142fefb78678f7ab7e8cf32656fbac",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/config.py": {
+    "mtime": 1782957001.0288618,
+    "ast_hash": "b6e4043546c4bb4b7364f1b2b58350d8",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/data_engine.py": {
+    "mtime": 1782957089.781933,
+    "ast_hash": "2091f060cdec28ad14ffa468e7d2887b",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/decode.py": {
+    "mtime": 1782956914.8136537,
+    "ast_hash": "2d5e5740feb88d98a8c463da5c2d4191",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/features.py": {
+    "mtime": 1782957074.5528424,
+    "ast_hash": "793c85a5023c14fa9936518c964b244b",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/miner.py": {
+    "mtime": 1782957479.0369284,
+    "ast_hash": "4a5703496128b120c1ba9c59ef5ef005",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/model.py": {
+    "mtime": 1782956945.1225185,
+    "ast_hash": "081d55bbaf5f4bef91a96d4c4bdcb479",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/oos.py": {
+    "mtime": 1782957097.3256137,
+    "ast_hash": "4606ba7d7204553aed7307d032735717",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/ops.py": {
+    "mtime": 1782956855.641048,
+    "ast_hash": "075d5efb01c2939e374801b4885198d5",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/vm.py": {
+    "mtime": 1782956905.774189,
+    "ast_hash": "8dbacc0be6811eca6a944cdc1e416652",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/vocab.py": {
+    "mtime": 1782956857.2826438,
+    "ast_hash": "8e4dae4667e291297dcc516c2c5cdd8c",
+    "semantic_hash": ""
+  },
+  "tools/ashare_factor_mining.py": {
+    "mtime": 1782957415.4900365,
+    "ast_hash": "77adf2536660decba1bfbdb22752b691",
+    "semantic_hash": ""
+  },
+  "tests/test_factor_screener_bridge.py": {
+    "mtime": 1782957454.1734946,
+    "ast_hash": "72b81175dbf03b926ad890e31436e858",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/formula_store.py": {
+    "mtime": 1782957339.4469025,
+    "ast_hash": "4e739f8a34ade592935ce31baf7536f4",
+    "semantic_hash": ""
+  },
+  "tools/ashare_alphagpt/screener.py": {
+    "mtime": 1782957359.2553225,
+    "ast_hash": "56d03fd6eca47246a8ae22b79692d336",
+    "semantic_hash": ""
+  },
+  "tools/factor_screener_bridge.py": {
+    "mtime": 1782957368.7263997,
+    "ast_hash": "de97eefe9dc19842cdbe070f1f1e80d2",
     "semantic_hash": ""
   }
 }

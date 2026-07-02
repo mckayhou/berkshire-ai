@@ -12,6 +12,8 @@
 | `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
 | `momentum_backtest.py` | 动量+价值回测（NVDA/AMD/MU） | 是 | curl |
 | `momentum_backtest_v2.py` | 回测 v2（框架验证版） | 是 | curl |
+| `ashare_factor_mining.py` | A股自动因子挖掘（AlphaGPT times.py 移植） | 是* | `pip install '.[factor-mining]'` |
+| `factor_screener_bridge.py` | 已训练公式 → 多标的打分 → thesis_queue JSON | 否* | `pip install '.[factor-mining]'`；优先本地 CSV |
 | `stock_screener.py` | 动量+价值实时筛选 | 是 | curl, `data/*.json` |
 | `portfolio_scan.py` | watchlist 扫描 + 结构化行动卡草案（JSON） | 是 | curl, 复用 stock_screener |
 | `portfolio_risk.py` | 组合风险检查（集中度/现金/主题/相关性） | 否 | 可选 `data/correlation_*.csv` |
@@ -65,6 +67,39 @@ python3 tools/ashare_data.py daily 600519 --limit 60  # 近 N 日日线（东方
 python3 tools/ashare_data.py search 茅台          # 搜索代码
 ```
 注：`valuation` 的"推算总股本"是由市值/股价反推，仅供参考；真实市值校验请用 `financial_rigor.py verify-market-cap`。
+
+## ashare_factor_mining.py（实验性，需 PyTorch）
+
+移植自 [AlphaGPT times.py](https://github.com/imbue-bit/AlphaGPT/blob/main/times.py)：用 Transformer + REINFORCE 在 A 股/ETF 日线上自动搜索可解释因子公式。
+
+```bash
+pip install '.[factor-mining]'
+python3 tools/ashare_factor_mining.py train --code 511260 --steps 400
+python3 tools/ashare_factor_mining.py train --code 600519 --steps 100 --plot
+python3 tools/ashare_factor_mining.py decode --tokens '[0,6,1,7]'
+python3 tools/ashare_factor_mining.py oos --formula data/alphagpt/best_ashare_formula.json
+```
+
+数据：优先 `data/alphagpt/{code}_ohlcv.parquet` 缓存 → `data_sources.daily` → `ashare_data.fetch_daily`；可选 `TUSHARE_TOKEN` 拉更长历史。
+
+输出：`BERKSHIRE_DATA_DIR/alphagpt/best_ashare_formula.json`（公式 token + 可读字符串）。
+
+## factor_screener_bridge.py（实验性，需已训练公式）
+
+```bash
+# 训练基准公式（可转债 ETF 511260）
+python3 tools/ashare_factor_mining.py train --code 511260 --steps 200
+
+# 用公式扫描本地 CSV 内全部标的
+python3 tools/factor_screener_bridge.py --json -o data/alphagpt/factor_scan.json
+
+# 在线扫描指定代码
+python3 tools/factor_screener_bridge.py --codes 600519,000001 --source online --json
+
+# 并入研究待办
+python3 tools/thesis_queue.py --from-factor-scan data/alphagpt/factor_scan.json --suggest-md
+python3 tools/thesis_queue.py --run-factor-scan --factor-codes 600519,511260 --json
+```
 
 ## data_sources.py（在线，多源降级链）
 
