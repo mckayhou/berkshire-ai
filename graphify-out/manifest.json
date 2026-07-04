@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "docs/USER_GUIDE.md": {
-    "mtime": 1782971035.0802503,
-    "ast_hash": "4437ac542651d76c60886f6126edee2e",
+    "mtime": 1783129688.3219314,
+    "ast_hash": "2e1d30fcb410cec3b037872d2a6317e1",
     "semantic_hash": ""
   },
   "docs/BACKTEST.md": {
@@ -1240,8 +1240,8 @@
     "semantic_hash": ""
   },
   "docs/README.md": {
-    "mtime": 1782968356.1809998,
-    "ast_hash": "cdbd058b58ec9322960e1ece8a7afb17",
+    "mtime": 1783129707.916268,
+    "ast_hash": "9aefada55bb6fbdde6c89804db895e10",
     "semantic_hash": ""
   },
   "docs/ENGINE.md": {
@@ -1375,8 +1375,8 @@
     "semantic_hash": ""
   },
   "docs/SKILL_EVOLUTION.md": {
-    "mtime": 1782970834.6095774,
-    "ast_hash": "148cb00f259a5399d27c1522b5f4af25",
+    "mtime": 1783129716.6633248,
+    "ast_hash": "e5a288a6cfa59636cae32af6447d300d",
     "semantic_hash": ""
   },
   "src/skill_forge/judge_mode.py": {
