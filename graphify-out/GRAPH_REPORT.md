@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 330 nodes · 370 edges · 234 communities (62 shown, 172 thin omitted)
+- 330 nodes · 361 edges · 234 communities (62 shown, 172 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a80c32f5`
+- Built from commit: `f37a5adc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -192,28 +192,28 @@
 - [[_COMMUNITY_Community 232|Community 232]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Agent 技能目录（SKILLS）` - 31 edges
-2. `Berkshire AI 功能使用指南` - 21 edges
-3. `Berkshire AI - 四大师并行投研系统（已完整整合上游）` - 16 edges
-4. `Berkshire AI 文档中心` - 15 edges
-5. `TextGrad 引擎指南（ENGINE）` - 14 edges
-6. `测试指南（TESTING）` - 13 edges
-7. `回测指南（BACKTEST）` - 12 edges
-8. `A 股量化指南（QUANT）` - 12 edges
-9. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 11 edges
-10. `SkillForge 技能进化（SKILL_EVOLUTION）` - 11 edges
+1. `Agent 技能目录（SKILLS）` - 30 edges
+2. `Berkshire AI 功能使用指南` - 20 edges
+3. `Berkshire AI 文档中心` - 15 edges
+4. `TextGrad 引擎指南（ENGINE）` - 14 edges
+5. `测试指南（TESTING）` - 13 edges
+6. `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)` - 11 edges
+7. `回测指南（BACKTEST）` - 11 edges
+8. `A 股量化指南（QUANT）` - 11 edges
+9. `SkillForge 技能进化（SKILL_EVOLUTION）` - 10 edges
+10. `tools/ — 工具链说明` - 10 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Agent 技能目录（SKILLS）`  [EXTRACTED]
-  README.md → docs/SKILLS.md
-- `SkillForge 技能进化（SKILL_EVOLUTION）` --references--> `graphify`  [EXTRACTED]
-  docs/SKILL_EVOLUTION.md → AGENTS.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `回测指南（BACKTEST）`  [EXTRACTED]
-  README.md → docs/BACKTEST.md
 - `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `TextGrad 引擎指南（ENGINE）`  [EXTRACTED]
   README.md → docs/ENGINE.md
-- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `A 股量化指南（QUANT）`  [EXTRACTED]
-  README.md → docs/QUANT.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated)`  [EXTRACTED]
+  README.md → README_EN.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `berkshire-ai Roadmap`  [EXTRACTED]
+  README.md → docs/ROADMAP.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `测试指南（TESTING）`  [EXTRACTED]
+  README.md → TESTING.md
+- `Berkshire AI - 四大师并行投研系统（已完整整合上游）` --references--> `Berkshire AI 版本历史`  [EXTRACTED]
+  README.md → VERSION_HISTORY.md
 
 ## Import Cycles
 - None detected.
@@ -221,7 +221,7 @@
 ## Communities (234 total, 172 thin omitted)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.36
+Cohesion: 0.33
 Nodes (24): graphify, 回测指南（BACKTEST）, TextGrad 引擎指南（ENGINE）, Prompt 模板（V10.22）, A 股量化指南（QUANT）, Berkshire AI - 四大师并行投研系统（已完整整合上游）, Berkshire AI — Four-Masters Parallel Investment Research (Upstream fully integrated), berkshire-ai Roadmap (+16 more)
 
 ### Community 5 - "Community 5"
