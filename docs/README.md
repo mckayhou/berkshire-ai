@@ -15,7 +15,7 @@
 | **TextGrad 引擎 / API / 服务** | [ENGINE.md](ENGINE.md) | 20 min |
 | **跑测试、CI、冒烟** | [TESTING.md](../TESTING.md) | 10 min |
 | **选 Agent 技能** | [SKILLS.md](SKILLS.md) | 5 min |
-| **技能进化（SkillForge）** | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) | 15 min |
+| **技能进化（SkillForge + Regression Gate）** | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) | 15 min |
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
 | **理解架构与设计** | [textgrad_design.md](textgrad_design.md) | 30 min |
 | **Prompt 模板** | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 按需 |
@@ -33,7 +33,7 @@ docs/README.md          ← 你在这里（导航）
 ├── QUANT.md            A 股量化专题
 ├── ENGINE.md           TextGrad 引擎专题
 ├── SKILLS.md           18 个 Agent 技能目录
-├── SKILL_EVOLUTION.md  SkillForge 技能进化（LLM-judge + bad-case 闭环）
+├── SKILL_EVOLUTION.md  SkillForge 技能进化（LLM-judge + bad-case 闭环 + regression gate）
 ├── quant_data_fusion.md  三库融合与数据边界
 ├── textgrad_design.md    引擎设计（深度）
 ├── action-card.md        组合行动卡模板
@@ -127,7 +127,8 @@ docs/README.md          ← 你在这里（导航）
 | HTTP 服务 | ENGINE §6 | test_service | — |
 | 推送 | USER_GUIDE §11 | test_tools_notify | — |
 | Agent 技能 | SKILLS.md | — | config/skill.md |
-| 技能进化 SkillForge | SKILL_EVOLUTION.md | test_skill_forge* | SKILLS.md §进化 |
+| 技能进化 SkillForge | SKILL_EVOLUTION.md | test_skill_forge*, test_regression_gate | SKILLS.md §进化 |
+| 多源证据 Brainstorm | ENGINE.md §V10.29 | test_evidence_channels, test_pipeline_brainstorm | USER_GUIDE §4.6 |
 | 外部 quant skills | QUANT §6 | — | quant_data_fusion §7 |
 | 论文状态机 | config/state.md | test_tools_thesis_queue | USER_GUIDE §8 |
 | Docker 服务 | ENGINE §6.1 | test_service | ROADMAP |

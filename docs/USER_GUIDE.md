@@ -223,6 +223,14 @@ run_full_cycle(d, realized_price=110.0, factor_scan=scan_json, limitup_scan=lu_j
 
 详见 [ENGINE.md](ENGINE.md) §9、[BACKTEST.md](BACKTEST.md) §4.1。
 
+**多源证据 Brainstorm（V10.29）** — 从 experience / anomaly_scan / knowledge_graph / report 四通道聚合证据，加权排序生成 Hypothesis：
+
+```python
+run_full_cycle(d, realized_price=110.0, factor_scan=scan_json, use_brainstorm=True)
+```
+
+通道失败静默降级，不影响主链路。详见 `src/evidence_channels.py`。
+
 ### 4.7 SkillForge 技能进化（`skills/*.md`）
 
 > 与 TextGrad 互补：TextGrad 改大师 Prompt；SkillForge 改 `skills/*.md` 工作流与工具规则。  

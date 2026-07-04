@@ -32,6 +32,7 @@ tasks.jsonl（可无 consistency 标签）
 | 优化执行 | `src/skill_forge/optimizer.py` |
 | 冷启动 Creator | `src/skill_forge/skill_creator.py` |
 | 管线 | `src/skill_forge/pipeline.py` |
+| 回归门控 | `src/skill_forge/regression_gate.py` |
 | CLI | `tools/skill_evolve.py` |
 
 ---
@@ -142,7 +143,37 @@ python3 src/evolution_loop_v10.py skill-evolve evolve investment-research --judg
 
 ---
 
-## 7. 与 TextGrad 的分工
+## 7. Regression Gate（V10.29 — paired trajectory replay）
+
+SkillForge patch 后自动用旧成功轨迹回放验证，防止退化（借鉴 AgentX paired replay）。
+
+```python
+from src.skill_forge.regression_gate import replay_trajectories
+
+report = replay_trajectories(
+    success_cases,             # 之前 judge=consistent/partial 的案例
+    post_skill_md=new_md,      # patch 后 skill
+    pre_skill_md=old_md,       # patch 前 skill
+    mode="rule",               # 或 "llm"
+    max_regression_rate=0.0,   # 零容忍
+)
+if not report.passed:
+    # 回滚到 pre_skill_md
+    ...
+```
+
+| 字段 | 含义 |
+|------|------|
+| `total_replayed` | 回放轨迹数 |
+| `regressions` | 退化数 |
+| `regression_rate` | 退化比例 |
+| `passed` | 是否通过（rate ≤ max） |
+
+在 `run_evolution_round(regression_cases=[…])` 中自动执行：patch 被接受后立即 replay，退化则 rollback。
+
+---
+
+## 8. 与 TextGrad 的分工
 
 | | TextGrad | SkillForge |
 |--|----------|------------|
@@ -152,11 +183,11 @@ python3 src/evolution_loop_v10.py skill-evolve evolve investment-research --judg
 
 ---
 
-## 8. 测试
+## 9. 测试
 
 ```bash
-# 全量 SkillForge（规则 + LLM mock + CLI 冒烟）
-python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
+# 全量 SkillForge（规则 + LLM mock + CLI 冒烟 + regression gate）
+python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py tests/test_regression_gate.py -v
 
 # evolution_cli 集成
 python3 -m pytest tests/test_evolution_cli.py -v -k skill_evolve
@@ -167,18 +198,19 @@ python3 -m pytest tests/test_evolution_cli.py -v -k skill_evolve
 | `test_skill_forge.py` | VFS、规则分析、聚合、诊断、多轮进化、Creator |
 | `test_skill_forge_llm.py` | LLM-judge CR、四维分析、诊断、降级 |
 | `test_skill_forge_cli.py` | `tools/skill_evolve.py` 子命令 |
+| `test_regression_gate.py` | Regression gate paired replay（V10.29） |
 | `test_evolution_cli.py` | `evolution_loop_v10.py skill-evolve` |
 
 Fixtures 说明：`tests/fixtures/skill_forge/README.md`
 
 ---
 
-## 9. 边界
+## 10. 边界
 
 - Knowledge 类失败存在收敛天花板（论文 §3.3.2）；长尾仍依赖运行时检索与人工审核。
 - LLM-judge 成本随 task 数线性增长；批量评测建议先 `--judge-mode rule` 冒烟，再 `llm` 全量。
 - 多轮进化在同批 bad case 上可能 idempotent（重复 patch 被跳过）。
 
-## 10. 新功能交付
+## 11. 新功能交付
 
 与仓库铁律一致：每次新功能须 **跑测试 + 补全文档**。清单见 [TESTING.md §10.4](../TESTING.md#104-新功能交付清单) 与 [AGENTS.md](../AGENTS.md)。
