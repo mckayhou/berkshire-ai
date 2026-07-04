@@ -36,6 +36,26 @@
 
 ## 📜 版本历史
 
+### V10.29 - 2026-07-04 (多源证据 Brainstorm + SkillForge regression gate)
+
+借鉴 AgentX (Kuaishou, arXiv:2606.26859) 的四路证据加权提案与 paired replay 防劣化。
+
+**多源证据 Brainstorm** `src/evidence_channels.py`
+- `EvidenceChannel` 协议：可注入的证据通道（experience / anomaly_scan / knowledge_graph / report）
+- `EvidenceBrainstormProposer`：聚合多通道证据，按 confidence 加权排序生成 Hypothesis
+- `build_brainstorm_proposer()`：工厂函数，从可用数据源自动构建
+- `pipeline.run_full_cycle(use_brainstorm=True)` 接入主链路
+
+**SkillForge Regression Gate** `src/skill_forge/regression_gate.py`
+- `replay_trajectories(success_cases, post_skill_md=…)`：patch 后用旧成功轨迹 replay
+- 检测退化则自动 rollback（paired replay 防劣化）
+- 接入 `skill_forge/pipeline.py` 的 `run_evolution_round(regression_cases=…)`
+
+**测试结果**:
+- [x] 单元测试: **520 passed, 2 skipped**（`pytest tests/ -ra`）
+
+---
+
 ### V10.28 - 2026-07-02 (TextGrad 真闭环 + 轨迹 A/B + 量化信号接线 + SkillForge 技能进化)
 
 **V10.26 — 分析重跑闭环** `src/graph_analysis.py`

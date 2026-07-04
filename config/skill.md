@@ -317,7 +317,7 @@ BerkshireGraph().debate({"duan":0.9,"buffett":0.8,"munger":0.4,"lilu":0.7}).net_
   "timestamp": "2026-06-25T19:00:00",
   "phase": "hunter|maker|checker|pm",
   "agent_role": "段永平|巴菲特|芒格|李录",
-  "model_used": "qwen3.7-plus|deepseek-v4-pro|glm-5.2|kimi-k2.6",
+  "model_used": "deepseek-v4-pro|glm-5.2|kimi-k2.6",
   "input_data": {...},
   "output_data": {...},
   "latency_ms": 1234,
@@ -471,7 +471,7 @@ cat ~/.qwenpaw/berkshire_state.md
 ### 9.2 认知层 (Cognition)
 
 **四大师并行分析**：
-1. 段永平 (生意分析师) → `qwen3.7-plus`
+1. 段永平 (生意分析师) → `deepseek-v4-pro`
 2. 巴菲特 (财务分析师) → `deepseek-v4-pro`
 3. 芒格 (行业研究员) → `glm-5.2`
 4. 李录 (风险评估师) → `kimi-k2.6`
@@ -552,7 +552,7 @@ description: 四大师并行投研框架 + Loop Engineering 自我进化
 | Task | Agent | Model | Output |
 |:-----|:------|:------|:-------|
 | 数据收集 | Hunter | qwen3-coder-plus | 结构化数据 |
-| 生意分析 | 段永平 | qwen3.7-plus | 商业模式画布 |
+| 生意分析 | 段永平 | deepseek-v4-pro | 商业模式画布 |
 | 财务分析 | 巴菲特 | deepseek-v4-pro | 估值模型 |
 | 行业分析 | 芒格 | glm-5.2 | 竞争格局 |
 | 风险评估 | 李录 | kimi-k2.6 | 风险清单 |

@@ -48,6 +48,7 @@ def run_full_cycle(
     proposer: Optional[HypothesisProposer] = None,
     llm: Optional[LLMClient] = None,
     scenario: Scenario = DEFAULT_SCENARIO,
+    use_brainstorm: bool = False,
     record_traces: bool = True,
     use_llm_gradient: bool = True,
     use_validation: bool = True,
@@ -67,6 +68,7 @@ def run_full_cycle(
         use_llm_gradient / use_validation: 反馈段是否启用 ∇_LLM 与验证门控。
         rerun_analysis: D 段改写后重跑分析（V10.26，默认关，耗 LLM）。
         factor_scan / limitup_scan: V10.28 量化信号 JSON，并入 HypothesisProposer。
+        use_brainstorm: V10.29 多源证据 brainstorm（聚合 experience/signal/graphify）。
         其余参数同 run_with_realized_feedback。
     """
     try:
@@ -83,6 +85,17 @@ def run_full_cycle(
         )
         if merged is not None:
             effective_proposer = merged
+
+    if use_brainstorm:
+        try:
+            from evidence_channels import build_brainstorm_proposer
+        except ImportError:
+            from .evidence_channels import build_brainstorm_proposer
+        effective_proposer = build_brainstorm_proposer(
+            base_proposer=effective_proposer,
+            factor_scan_loader=(lambda: factor_scan) if factor_scan else None,
+            limitup_scan_loader=(lambda: limitup_scan) if limitup_scan else None,
+        )
     try:
         from evolution_loop_v10 import run_with_realized_feedback
     except ImportError:

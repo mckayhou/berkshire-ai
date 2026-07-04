@@ -30,8 +30,9 @@ def run_evolution_round(
     write_live: bool = True,
     llm: Optional["LLMClient"] = None,
     mode: JudgeMode = JudgeMode.AUTO,
+    regression_cases: Optional[List[BadCase]] = None,
 ) -> SkillEvolutionRound:
-    """Single Failure Analysis → Aggregate → Diagnose → Optimize cycle."""
+    """Single Failure Analysis → Aggregate → Diagnose → Optimize → Regression Gate cycle."""
     aliases = {skill_name, skill_name.removesuffix(".md"), ""}
     relevant = [c for c in bad_cases if c.skill_name in aliases and c.is_failure]
     if not relevant:
@@ -40,12 +41,12 @@ def run_evolution_round(
     records = analyze_batch(relevant, llm=llm, mode=mode)
     aggregated = aggregate_failures(records, top_k=top_k)
     version = vfs.current_version(skill_name)
-    skill_md = vfs.read_skill(skill_name)
+    pre_skill_md = vfs.read_skill(skill_name)
     diagnostic = diagnose(
         skill_name,
         version,
         aggregated,
-        skill_markdown=skill_md,
+        skill_markdown=pre_skill_md,
         llm=llm,
         mode=mode,
     )
@@ -66,6 +67,28 @@ def run_evolution_round(
         )
     finally:
         diag_path.unlink(missing_ok=True)
+
+    # V10.29: Trajectory replay regression gate
+    if accepted > 0 and regression_cases and write_live:
+        from .regression_gate import replay_trajectories
+
+        post_skill_md = vfs.read_skill(skill_name)
+        success_pool = [
+            c for c in regression_cases
+            if c.consistency.value in ("consistent", "partial")
+        ]
+        if success_pool:
+            gate = replay_trajectories(
+                success_pool,
+                post_skill_md=post_skill_md,
+                pre_skill_md=pre_skill_md,
+                llm=llm,
+                mode=mode,
+            )
+            if not gate.passed:
+                # Rollback: restore pre-patch skill
+                vfs.write_skill(skill_name, pre_skill_md)
+                accepted = 0
 
     skill_path = str(vfs.skill_path(skill_name))
     return SkillEvolutionRound(

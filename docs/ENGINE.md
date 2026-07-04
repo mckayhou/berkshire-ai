@@ -245,6 +245,8 @@ curl -s localhost:8000/doctor
 | V10.26 | `rerun_analysis` | `run_multi_round(..., rerun_analysis=True)`、`cycle --rerun-analysis` |
 | V10.27 | 轨迹 A/B | `tools/trajectory_ab_eval.py` |
 | V10.28 | 信号→Hypothesis | `run_full_cycle(factor_scan=…, limitup_scan=…)` |
+| V10.29 | 多源证据 Brainstorm | `run_full_cycle(use_brainstorm=True)` |
+| V10.29 | SkillForge regression gate | `run_evolution_round(regression_cases=…)` |
 
 ---
 

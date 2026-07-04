@@ -40,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-07）**：`tests/` 下 **505** 个 pytest 用例；典型本地结果 **503 passed, 2 skipped**（e2e LLM + Tavily integration）；以 `pytest tests/ -ra` 为准。
+**当前规模（2026-07）**：`tests/` 下 **522** 个 pytest 用例；典型本地结果 **520 passed, 2 skipped**（e2e LLM + Tavily integration）；以 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -228,6 +228,9 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_trajectory_ab_eval_cli.py` | `tools/trajectory_ab_eval.py` | CLI smoke |
 | `test_signal_proposer.py` | `signal_proposer.py` | V10.28 信号→Hypothesis |
 | `test_pipeline_signals.py` | `pipeline` + factor scan | V10.28 接线 |
+| `test_evidence_channels.py` | `evidence_channels` 多源证据 | V10.29 brainstorm |
+| `test_pipeline_brainstorm.py` | `pipeline` + `use_brainstorm` | V10.29 接线 |
+| `test_regression_gate.py` | `skill_forge/regression_gate` | V10.29 paired replay |
 | `test_skill_forge_cli.py` | `tools/skill_evolve.py` CLI | 子命令 subprocess 冒烟 |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
@@ -253,6 +256,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/graph_analysis.py` | `pytest tests/test_graph_analysis.py tests/test_eval_harness_rerun.py` |
 | `src/trajectory_ab.py` | `pytest tests/test_trajectory_ab.py`；`python3 tools/trajectory_ab_eval.py` |
 | `src/signal_proposer.py` / `pipeline` 信号接线 | `pytest tests/test_signal_proposer.py tests/test_pipeline_signals.py` |
+| `src/evidence_channels.py` 多源证据 | `pytest tests/test_evidence_channels.py tests/test_pipeline_brainstorm.py` |
+| `src/skill_forge/regression_gate.py` 回归门控 | `pytest tests/test_regression_gate.py` |
 | `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
 
@@ -543,6 +548,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-04 | 3.14 | **520 passed, 2 skipped**（V10.29 + evidence channels + regression gate；e2e LLM + Tavily skip） |
 | 2026-07-02 | 3.14 | **503 passed, 2 skipped**（V10.28 + SkillForge；e2e LLM + Tavily integration skip） |
 | 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |
 

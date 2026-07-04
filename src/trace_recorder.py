@@ -45,6 +45,9 @@ class TraceRecord:
     errors: List[str] = field(default_factory=list)
     notes: str = ""
     run_id: Optional[str] = None
+    # V10.29: 失败根因结构化（借鉴 AgentX 失败资产化）
+    failure_root_cause: str = ""  # 失败根因分类：missing_data|wrong_model|prompt_issue|tool_failure|none
+    failure_detail: str = ""  # 失败详细描述（可检索）
 
     def __post_init__(self) -> None:
         self.ticker = str(self.ticker).strip().upper()

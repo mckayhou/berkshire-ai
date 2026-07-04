@@ -45,10 +45,17 @@
 
 ## 本 fork 专属方向
 
-### SkillForge 技能进化 — ✅（LLM-judge + bad-case 闭环）
+### V10.29 多源证据 Brainstorm + Regression Gate — ✅
+- `src/evidence_channels.py`：4 通道证据协议 + `EvidenceBrainstormProposer`
+- `src/skill_forge/regression_gate.py`：paired trajectory replay 防劣化
+- `pipeline.run_full_cycle(use_brainstorm=True)` 主链路接入
+- 参考：AgentX (Kuaishou, arXiv:2606.26859)
+
+### SkillForge 技能进化 — ✅（LLM-judge + bad-case 闭环 + regression gate）
 - `src/skill_forge/`：Consistency Rate、四维失败分析、诊断、VFS 版本化 patch
 - `tools/skill_evolve.py` + `evolution_loop_v10.py skill-evolve`
-- 文档：`docs/SKILL_EVOLUTION.md`；测试：`test_skill_forge*.py`（41 用例含 CLI）
+- V10.29：`regression_gate.py` paired replay 接入 `run_evolution_round`
+- 文档：`docs/SKILL_EVOLUTION.md`；测试：`test_skill_forge*.py` + `test_regression_gate.py`
 
 ### TextGrad V10 自进化引擎 — ✅ V10.28 真闭环 + 轨迹 A/B + 信号接线
 - 计算图 + 验证门控 + eval_harness + ∇_LLM + 经验 few-shot
