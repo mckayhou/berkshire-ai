@@ -240,22 +240,91 @@ class AkshareSource(DataSource):
             return False, "akshare not installed (pip install akshare)"
         return True, ""
 
-    def daily(self, code, limit=250):
-        import akshare as ak
-        c = code.strip().replace(".SH", "").replace(".SZ", "").replace(".BJ", "")
-        df = ak.stock_zh_a_hist(symbol=c, period="daily", adjust="")
+    @staticmethod
+    def _code_digits(code: str) -> str:
+        return (
+            code.strip()
+            .replace(".SH", "")
+            .replace(".SZ", "")
+            .replace(".BJ", "")
+            .replace("sh", "")
+            .replace("sz", "")
+            .replace("bj", "")
+        )
+
+    def _sina_symbol(self, code: str) -> str:
+        """sina 风格：sh600519 / sz000001。"""
+        c = self._code_digits(code)
+        if c.startswith(("6", "9", "5")):
+            return f"sh{c}"
+        if c.startswith(("4", "8")):
+            return f"bj{c}"
+        return f"sz{c}"
+
+    @staticmethod
+    def _rows_from_df(df, limit: int) -> list:
+        """兼容 stock_zh_a_hist（中文列）与 stock_zh_a_daily（英文列）。"""
         if df is None or len(df) == 0:
             return []
         df = df.tail(limit)
+        # 列名映射
+        col_date = "日期" if "日期" in df.columns else "date"
+        col_open = "开盘" if "开盘" in df.columns else "open"
+        col_close = "收盘" if "收盘" in df.columns else "close"
+        col_high = "最高" if "最高" in df.columns else "high"
+        col_low = "最低" if "最低" in df.columns else "low"
+        col_vol = "成交量" if "成交量" in df.columns else "volume"
         out = []
         for _, row in df.iterrows():
             out.append({
-                "date": str(row.get("日期")),
-                "open": row.get("开盘"), "close": row.get("收盘"),
-                "high": row.get("最高"), "low": row.get("最低"),
-                "volume": row.get("成交量"),
+                "date": str(row.get(col_date))[:10],
+                "open": row.get(col_open),
+                "close": row.get(col_close),
+                "high": row.get(col_high),
+                "low": row.get(col_low),
+                "volume": row.get(col_vol),
             })
         return out
+
+    def daily(self, code, limit=250):
+        """A 股日线：先东财 hist，失败则新浪 daily（akshare 双路径）。
+
+        参考 https://github.com/akfamily/akshare
+        - stock_zh_a_hist：东财，偶发断连
+        - stock_zh_a_daily：新浪，较稳
+        """
+        import akshare as ak
+
+        c = self._code_digits(code)
+        # 1) 东财 hist
+        try:
+            df = ak.stock_zh_a_hist(symbol=c, period="daily", adjust="")
+            rows = self._rows_from_df(df, limit)
+            if rows:
+                return rows
+        except Exception:
+            pass
+        # 2) 新浪 daily 兜底
+        df2 = ak.stock_zh_a_daily(symbol=self._sina_symbol(code), adjust="")
+        return self._rows_from_df(df2, limit)
+
+    def quote(self, code):
+        """用最近一根日线 close 作现价（避免全市场 spot 扫盘）。"""
+        bars = self.daily(code, limit=1)
+        if not bars:
+            return {}
+        b = bars[-1]
+        return {
+            "code": self._code_digits(code),
+            "price": b.get("close"),
+            "close": b.get("close"),
+            "open": b.get("open"),
+            "high": b.get("high"),
+            "low": b.get("low"),
+            "volume": b.get("volume"),
+            "date": b.get("date"),
+            "source": "akshare",
+        }
 
 
 # ---------------------------------------------------------------------------
