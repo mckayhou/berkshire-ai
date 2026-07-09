@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 import tempfile
 from pathlib import Path
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from .aggregator import aggregate_failures
-from .bad_case_loader import load_bad_cases_dir, load_bad_cases_jsonl, load_tasks_jsonl
+from .bad_case_loader import load_bad_cases_jsonl, load_tasks_jsonl
 from .diagnostician import diagnose
 from .failure_analyzer import analyze_batch
 from .judge_mode import JudgeMode, prepare_bad_cases

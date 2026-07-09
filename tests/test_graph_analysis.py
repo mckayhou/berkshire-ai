@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from graph import BerkshireGraph, Variable  # noqa: E402
+from graph import BerkshireGraph  # noqa: E402
 from graph_analysis import (  # noqa: E402
     PromptHeuristicAnalysisRunner,
     mean_master_scores,

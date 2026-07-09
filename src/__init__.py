@@ -15,7 +15,6 @@ from .decision_log import (
     mean_stance,
     research_gaps,
 )
-from .posterior_report import PosteriorReport, build_posterior_report
 from .eval_harness import (
     EvolutionReport,
     RoundMetrics,
@@ -57,6 +56,7 @@ from .observability import (
 )
 from .optimizer import TextualGradientDescent
 from .pipeline import run_full_cycle
+from .posterior_report import PosteriorReport, build_posterior_report
 from .prompt_optimizer import (
     LLMClient,
     OpenAICompatibleLLMClient,

@@ -7,7 +7,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from signal_proposer import (  # noqa: E402
     CompositeHypothesisProposer,
     FactorScanHypothesisProposer,
-    LimitupScanHypothesisProposer,
     proposer_from_signal_scans,
 )
 

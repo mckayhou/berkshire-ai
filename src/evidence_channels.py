@@ -23,12 +23,10 @@ try:
     from .experience_store import Experience, ExperienceRetriever
     from .hypothesis import STATUS_OPEN, Hypothesis
     from .research_loop import HypothesisProposer
-    from .sanitize import sanitize_untrusted
 except ImportError:  # pragma: no cover - flat PYTHONPATH=src
     from experience_store import Experience, ExperienceRetriever
     from hypothesis import STATUS_OPEN, Hypothesis
     from research_loop import HypothesisProposer
-    from sanitize import sanitize_untrusted
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from .bad_case_loader import bad_case_from_dict
 from .llm_judge import judge_consistency, resolve_llm_client

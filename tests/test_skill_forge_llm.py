@@ -17,14 +17,13 @@ from prompt_optimizer import StaticLLMClient  # noqa: E402
 from skill_forge import (  # noqa: E402
     Consistency,
     JudgeMode,
-    analyze_bad_case,
-    diagnose,
-    judge_consistency,
-    judge_failure_record,
-    prepare_bad_cases,
-    evolve_from_fixture,
     aggregate_failures,
+    analyze_bad_case,
     analyze_batch,
+    diagnose,
+    evolve_from_fixture,
+    judge_consistency,
+    prepare_bad_cases,
 )
 from skill_forge.llm_judge import (  # noqa: E402
     ConsistencyBatchReport,
@@ -143,7 +142,6 @@ def test_prepare_bad_cases_unlabeled(mock_llm):
 
 
 def test_analyze_bad_case_llm(mock_llm):
-    from skill_forge.bad_case_loader import bad_case_from_dict
     from skill_forge.bad_case_loader import load_bad_cases_jsonl
 
     case = load_bad_cases_jsonl(FIXTURE)[0]

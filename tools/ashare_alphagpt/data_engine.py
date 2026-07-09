@@ -134,7 +134,6 @@ class AshareDataEngine:
         token = os.environ.get("TUSHARE_TOKEN", "").strip()
         if token:
             try:
-                import pandas as pd
                 import tushare as ts
 
                 pro = ts.pro_api(token)

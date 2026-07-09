@@ -5,7 +5,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from eval_harness import run_multi_round  # noqa: E402
-from graph import BerkshireGraph, Variable  # noqa: E402
+from graph import BerkshireGraph  # noqa: E402
 from graph_analysis import PromptHeuristicAnalysisRunner  # noqa: E402
 from prompt_optimizer import LLMClient  # noqa: E402
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import torch
 
-__all__ = ["OPS_CONFIG", "OP_FUNC_MAP", "OP_ARITY_MAP", "build_op_maps"]
+__all__ = ["OPS_CONFIG", "build_op_maps"]
 
 
 def _ts_delay(x: torch.Tensor, d: int) -> torch.Tensor:

@@ -7,7 +7,6 @@ import json
 import os
 import shutil
 import sys
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -20,9 +19,9 @@ from skill_forge import (  # noqa: E402
     FailureCategory,
     JudgeMode,
     SkillVFS,
+    aggregate_failures,
     analyze_bad_case,
     analyze_batch,
-    aggregate_failures,
     create_skill_v0,
     diagnose,
     evolve_from_fixture,
@@ -31,7 +30,6 @@ from skill_forge import (  # noqa: E402
     parse_sections,
     run_multi_round_evolution,
 )
-
 
 FIXTURE = Path(__file__).parent / "fixtures" / "skill_forge" / "bad_cases.jsonl"
 SKILL_SRC = Path(__file__).resolve().parents[1] / "skills" / "investment-research.md"

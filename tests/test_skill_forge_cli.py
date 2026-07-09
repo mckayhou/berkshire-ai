@@ -10,8 +10,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
-
 BERKSHIRE_DIR = Path(__file__).resolve().parents[1]
 CLI = BERKSHIRE_DIR / "tools" / "skill_evolve.py"
 EVO = BERKSHIRE_DIR / "src" / "evolution_loop_v10.py"

@@ -27,7 +27,7 @@ quality_fn / LLM 均可注入：生产用「在 held-out 标的上跑大师分�
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 if TYPE_CHECKING:
     from graph_analysis import AnalysisRunner

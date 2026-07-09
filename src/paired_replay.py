@@ -17,12 +17,12 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Protocol, runtime_checkable
+from typing import Any, Dict, List, Optional, Protocol, runtime_checkable
 
 try:
-    from .trace_recorder import TraceRecorder, default_trace_dir
+    from .trace_recorder import TraceRecorder
 except ImportError:  # pragma: no cover - flat PYTHONPATH=src
-    from trace_recorder import TraceRecorder, default_trace_dir
+    from trace_recorder import TraceRecorder
 
 
 # ---------------------------------------------------------------------------

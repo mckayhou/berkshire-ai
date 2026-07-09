@@ -43,7 +43,6 @@ def _require_torch() -> None:
 def cmd_train(args: argparse.Namespace) -> int:
     _require_torch()
     import torch
-
     from ashare_alphagpt.config import MiningConfig
     from ashare_alphagpt.data_engine import AshareDataEngine
     from ashare_alphagpt.miner import DeepQuantMiner

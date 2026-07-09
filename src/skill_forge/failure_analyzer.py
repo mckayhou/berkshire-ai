@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import List, Optional, Set, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional, Set
 
 from .judge_mode import JudgeMode, effective_judge_mode
 from .types import (

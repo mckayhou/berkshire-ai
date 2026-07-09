@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import csv
-import json
 import os
 import sys
 from pathlib import Path
@@ -16,9 +15,9 @@ pytest.importorskip("torch")
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 
+import thesis_queue as tq  # noqa: E402
 from ashare_alphagpt.formula_store import save_formula  # noqa: E402
 from ashare_alphagpt.screener import run_screen, score_bars  # noqa: E402
-import thesis_queue as tq  # noqa: E402
 
 
 def _write_csv(path: Path, rows: list[dict]) -> None:

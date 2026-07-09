@@ -14,8 +14,8 @@ from .data_engine import AshareDataEngine
 from .decode import decode_formula
 from .model import AlphaGPTModel, default_device
 from .ops import build_op_maps
-from .vocab import FEATURE_COUNT, VOCAB_SIZE
 from .vm import FormulaVM
+from .vocab import FEATURE_COUNT, VOCAB_SIZE
 
 
 @dataclass

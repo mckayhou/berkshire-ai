@@ -16,10 +16,10 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from .judge_mode import JudgeMode, prepare_bad_cases
-from .types import BadCase, Consistency
+from .types import BadCase
 
 if TYPE_CHECKING:
     from prompt_optimizer import LLMClient

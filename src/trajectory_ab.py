@@ -10,16 +10,16 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 try:
     from .eval_harness import run_multi_round
-    from .graph import BerkshireGraph, Variable
+    from .graph import BerkshireGraph
     from .graph_analysis import PromptHeuristicAnalysisRunner, mean_master_scores
     from .prompt_optimizer import LLMClient
 except ImportError:  # pragma: no cover - flat PYTHONPATH=src
     from eval_harness import run_multi_round
-    from graph import BerkshireGraph, Variable
+    from graph import BerkshireGraph
     from graph_analysis import PromptHeuristicAnalysisRunner, mean_master_scores
     from prompt_optimizer import LLMClient
 

@@ -8,7 +8,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from evidence_channels import (  # noqa: E402
     AnomalyScanEvidenceChannel,
-    Evidence,
     EvidenceBrainstormProposer,
     ExperienceEvidenceChannel,
     GraphifyEvidenceChannel,
@@ -17,11 +16,8 @@ from evidence_channels import (  # noqa: E402
 )
 from experience_store import (  # noqa: E402
     Experience,
-    ExperienceRetriever,
-    KeywordExperienceRetriever,
-    ExperienceStore,
 )
-from hypothesis import Hypothesis, STATUS_OPEN  # noqa: E402
+from hypothesis import STATUS_OPEN, Hypothesis  # noqa: E402
 
 
 class FakeRetriever:

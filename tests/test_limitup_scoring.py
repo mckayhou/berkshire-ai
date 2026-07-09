@@ -12,6 +12,7 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 
+import thesis_queue as tq  # noqa: E402
 from ashare_alphagpt.limitup_scoring import (  # noqa: E402
     SignalType,
     UnifiedScoringSystem,
@@ -20,7 +21,6 @@ from ashare_alphagpt.limitup_scoring import (  # noqa: E402
     signal_from_bars,
 )
 from ashare_alphagpt.screener import run_limitup_screen_from_csv  # noqa: E402
-import thesis_queue as tq  # noqa: E402
 
 
 def _bars_limit_up(n: int = 30, limit_pct: float = 10.0) -> list[dict]:

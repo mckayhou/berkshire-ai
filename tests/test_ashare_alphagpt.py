@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 from ashare_alphagpt.config import MiningConfig  # noqa: E402
 from ashare_alphagpt.data_engine import AshareDataEngine  # noqa: E402
 from ashare_alphagpt.decode import decode_formula  # noqa: E402
-from ashare_alphagpt.features import build_features_from_arrays, robust_norm  # noqa: E402
+from ashare_alphagpt.features import robust_norm  # noqa: E402
 from ashare_alphagpt.vocab import FEATURE_COUNT, VOCAB_SIZE  # noqa: E402
 
 
@@ -84,7 +84,7 @@ def test_engine_shapes(synthetic_engine):
 
 
 def test_vm_execute_constant_feature(synthetic_engine):
-    torch = pytest.importorskip("torch")
+    pytest.importorskip("torch")
     from ashare_alphagpt.vm import FormulaVM
 
     vm = FormulaVM(synthetic_engine.feat_data)
@@ -94,7 +94,7 @@ def test_vm_execute_constant_feature(synthetic_engine):
 
 
 def test_backtest_sortino_runs(synthetic_engine):
-    torch = pytest.importorskip("torch")
+    pytest.importorskip("torch")
     from ashare_alphagpt.backtest import backtest_sortino
     from ashare_alphagpt.vm import FormulaVM
 
@@ -123,7 +123,7 @@ def test_oos_report(synthetic_engine):
 
 
 def test_miner_short_train(synthetic_engine, tmp_path, monkeypatch):
-    torch = pytest.importorskip("torch")
+    pytest.importorskip("torch")
     monkeypatch.setenv("BERKSHIRE_DATA_DIR", str(tmp_path))
     from ashare_alphagpt.miner import DeepQuantMiner
 
