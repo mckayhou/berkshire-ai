@@ -321,10 +321,29 @@ class YFinanceSource(DataSource):
         return True, ""
 
     def _yf_symbol(self, code):
-        c = code.strip().replace(".SH", "").replace(".SZ", "").replace(".BJ", "")
-        if c.startswith(("6", "9", "5")):
-            return f"{c}.SS"
-        return f"{c}.SZ"
+        """Map ticker → Yahoo symbol.
+
+        A股：6/9/5 → .SS，其余 6 位 → .SZ；港股 0700.HK / 700.HK；美股原样。
+        """
+        raw = code.strip().upper()
+        if not raw:
+            return raw
+        # 已带交易所后缀
+        if raw.endswith((".SS", ".SZ", ".HK", ".BJ")):
+            return raw
+        if "." in raw:  # e.g. BRK.B
+            return raw
+        digits = "".join(ch for ch in raw if ch.isdigit())
+        # 港股：4–5 位纯数字
+        if digits == raw and 4 <= len(digits) <= 5:
+            return f"{digits.zfill(4)}.HK"
+        # A股 6 位
+        if digits == raw and len(digits) == 6:
+            if digits.startswith(("6", "9", "5")):
+                return f"{digits}.SS"
+            return f"{digits}.SZ"
+        # 美股等：原样（AAPL / NVDA）
+        return raw
 
     def daily(self, code, limit=250):
         import yfinance as yf
@@ -335,13 +354,32 @@ class YFinanceSource(DataSource):
         hist = hist.tail(limit)
         out = []
         for idx, row in hist.iterrows():
+            d = idx.date() if hasattr(idx, "date") else idx
             out.append({
-                "date": str(getattr(idx, "date", lambda: idx)()),
+                "date": str(d)[:10],
                 "open": row.get("Open"), "close": row.get("Close"),
                 "high": row.get("High"), "low": row.get("Low"),
                 "volume": row.get("Volume"),
             })
         return out
+
+    def quote(self, code):
+        """用最近一根日线 close 充当现价（yfinance 无统一 quote schema）。"""
+        bars = self.daily(code, limit=1)
+        if not bars:
+            return {}
+        b = bars[-1]
+        return {
+            "code": code.strip().upper(),
+            "price": b.get("close"),
+            "close": b.get("close"),
+            "open": b.get("open"),
+            "high": b.get("high"),
+            "low": b.get("low"),
+            "volume": b.get("volume"),
+            "date": b.get("date"),
+            "source": "yfinance",
+        }
 
 
 # ---------------------------------------------------------------------------
