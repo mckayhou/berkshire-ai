@@ -10,11 +10,11 @@ from __future__ import annotations
 from typing import Callable, Dict, List, Optional
 
 try:
-    from experience_store import Experience, ExperienceStore
-    from graph import MASTER_PREFIXES
-except ImportError:  # pragma: no cover
     from .experience_store import Experience, ExperienceStore
     from .graph import MASTER_PREFIXES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from experience_store import Experience, ExperienceStore
+    from graph import MASTER_PREFIXES
 
 DEFAULT_NEUTRAL = 0.72
 

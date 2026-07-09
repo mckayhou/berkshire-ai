@@ -181,21 +181,61 @@ result = run_with_realized_feedback(
 
 设计细节见 [docs/textgrad_design.md](textgrad_design.md)。
 
-### 4.4 经验库校准
+### 4.4 投研效果契约（DecisionRecord + 后验周报）
+
+正式研究**必须**落盘决策，否则无法衡量方向命中 / 校准：
+
+```bash
+# 1) 研究报告收尾：落盘（与行动卡字段一致）
+python3 tools/log_decision.py append \
+  --ticker NVDA --date 2026-07-06 --price 198 \
+  --stance 0.88 \
+  --thesis "AI 算力核心 + CUDA 护城河" \
+  --kill "PE>40 或 份额<75%" \
+  --action hold --horizon 20 --depth standard
+
+# 2) 契约缺口 / 列表
+python3 tools/log_decision.py gaps
+python3 tools/log_decision.py list
+
+# 3) 从 thesis-tracker 活持仓补录种子（NVDA/AVGO/PDD/600900/0700.HK）
+python3 tools/seed_portfolio_decisions.py --dry-run
+python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json
+
+# 4) 每周后验（离线 price map 或 --network）
+python3 tools/posterior_weekly.py report --as-of $(date +%F) \
+  --prices '{"AAPL|2026-01-21":110}'
+python3 tools/posterior_weekly.py report --network   # 需行情源
+
+# 5) 经验库被测试污染时：归档并清空（再靠真实后验重建）
+python3 tools/archive_experiences.py --dry-run
+python3 tools/archive_experiences.py --reset --reason "clean test pollution"
+```
+
+KPI：契约完整率、方向命中率、平均|校准误差|、到期缺价数。见 `src/posterior_report.py`。  
+专题文档：[docs/RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。
+
+**验收（离线 E2E，CI 默认跑）**：
+
+```bash
+pytest tests/test_posterior_report.py tests/e2e/test_research_effectiveness_e2e.py -v
+```
+
+### 4.5 经验库校准
 
 ```bash
 python3 tools/calibrate_conviction.py report
 python3 tools/calibrate_conviction.py report --ticker AAPL --json
 ```
 
-### 4.5 灵敏度校准
+### 4.6 灵敏度校准
 
 ```bash
 python3 tools/calibrate_sensitivity.py universe
 python3 tools/calibrate_sensitivity.py run --lookback 365 --also 182 --json
 ```
 
-### 4.6 V10.26–10.28 进化增强
+### 4.7 V10.26–10.28 进化增强
 
 **分析重跑（V10.26）** — 改写 Prompt 后重跑分析，用 `backward(scores)` 产梯度（默认关，省 LLM）：
 

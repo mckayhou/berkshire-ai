@@ -85,6 +85,18 @@ reports/{公司名}/
 
 扫描工具 `portfolio_scan.py` 可生成候选信号草案，但不能替代行动卡与 `report_audit` 准出。
 
+## DecisionRecord 落盘（投研效果契约）
+
+行动卡完成后，**必须**追加结构化决策（否则不算完成）：
+
+```bash
+python3 tools/log_decision.py append \
+  --ticker <代码> --date <YYYY-MM-DD> --price <锚点> --stance 0.8 \
+  --thesis "<一句话>" --kill "<失效条件>" --action hold --horizon 20
+```
+
+后验周报与 KPI 见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。
+
 ## 报告交付（多通道推送）
 
 报告/信号定稿后，可经 `tools/notify.py` 推送到多个出口；**零配置时只把内容落地到本地

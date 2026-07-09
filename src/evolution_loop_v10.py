@@ -10,32 +10,6 @@ See update-platforms.sh for deployment to OpenClaw/QwenPaw.
 
 # Absolute imports for compatibility (sys.path insert to src/ in tests)
 try:
-    from debate import DebateResult, run_debate
-    from decision_log import DecisionRecord, append_decision
-    from graph import MASTER_PREFIXES, MASTERS, BerkshireGraph, Gradient, Master, Variable
-    from optimizer import TextualGradientDescent
-    from prompt_optimizer import (
-        LLMClient,
-        OpenAICompatibleLLMClient,
-        StaticLLMClient,
-        apply_gradient,
-        build_rewrite_messages,
-    )
-    from prompt_validation import (
-        PromptScorer,
-        StaticPromptScorer,
-        ValidationResult,
-        validated_apply_gradient,
-    )
-    from realized_feedback import (
-        NetworkPriceProvider,
-        PriceProvider,
-        ReturnStats,
-        StaticPriceProvider,
-        realized_scores,
-        realized_scores_via_provider,
-    )
-except ImportError:
     from .debate import DebateResult, run_debate
     from .decision_log import DecisionRecord, append_decision
     from .graph import MASTER_PREFIXES, MASTERS, BerkshireGraph, Gradient, Master, Variable
@@ -62,6 +36,32 @@ except ImportError:
         realized_scores_via_provider,
     )
 
+except ImportError:
+    from debate import DebateResult, run_debate
+    from decision_log import DecisionRecord, append_decision
+    from graph import MASTER_PREFIXES, MASTERS, BerkshireGraph, Gradient, Master, Variable
+    from optimizer import TextualGradientDescent
+    from prompt_optimizer import (
+        LLMClient,
+        OpenAICompatibleLLMClient,
+        StaticLLMClient,
+        apply_gradient,
+        build_rewrite_messages,
+    )
+    from prompt_validation import (
+        PromptScorer,
+        StaticPromptScorer,
+        ValidationResult,
+        validated_apply_gradient,
+    )
+    from realized_feedback import (
+        NetworkPriceProvider,
+        PriceProvider,
+        ReturnStats,
+        StaticPriceProvider,
+        realized_scores,
+        realized_scores_via_provider,
+    )
 __all__ = [
     "BerkshireGraph",
     "Variable",
@@ -171,7 +171,10 @@ def run_with_realized_feedback(
         dict: {graph, scores, stats, gradients, updates, debate,
                experience?(Experience), perf?(PerfReport)}
     """
-    from realized_feedback import DEFAULT_SENSITIVITY  # local import for default
+    try:
+        from .realized_feedback import DEFAULT_SENSITIVITY
+    except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+        from realized_feedback import DEFAULT_SENSITIVITY
     sens = DEFAULT_SENSITIVITY if sensitivity is None else sensitivity
 
     if persist:
@@ -197,9 +200,9 @@ def run_with_realized_feedback(
 
     if llm is not None and use_llm_gradient:
         try:
-            from llm_gradient import enrich_gradients_with_llm
-        except ImportError:
             from .llm_gradient import enrich_gradients_with_llm
+        except ImportError:
+            from llm_gradient import enrich_gradients_with_llm
         analysis_map = analyses if analyses is not None else getattr(decision, "analyses", None)
         note_text = str(getattr(decision, "note", "") or "")
         if not analysis_map and note_text:
@@ -211,11 +214,11 @@ def run_with_realized_feedback(
     effective_scorer = scorer
     if effective_scorer is None and use_validation and llm is not None:
         try:
-            from prompt_validation import StaticPromptScorer
-            from quality_scorer import build_experience_quality_fn
-        except ImportError:
             from .prompt_validation import StaticPromptScorer
             from .quality_scorer import build_experience_quality_fn
+        except ImportError:
+            from prompt_validation import StaticPromptScorer
+            from quality_scorer import build_experience_quality_fn
         effective_scorer = StaticPromptScorer(
             fn=build_experience_quality_fn(decision.ticker)
         )
@@ -269,9 +272,9 @@ def run_with_realized_feedback(
         result["perf"] = perf
 
     try:
-        from trace_recorder import record_trace
-    except ImportError:
         from .trace_recorder import record_trace
+    except ImportError:
+        from trace_recorder import record_trace
     record_trace(
         getattr(decision, "ticker", ""),
         "feedback",
@@ -286,12 +289,12 @@ def _record_feedback_run(decision, stats, experience) -> None:
     """记录反馈闭环 run；失败降级。"""
     try:
         try:
-            from observability import get_run_id
-            from run_recorder import RunRecord, RunRecorder
-        except ImportError:
             from .observability import get_run_id
             from .run_recorder import RunRecord, RunRecorder
 
+        except ImportError:
+            from observability import get_run_id
+            from run_recorder import RunRecord, RunRecorder
         RunRecorder().append(
             RunRecord(
                 run_id=get_run_id() or "",
@@ -324,12 +327,12 @@ def _persist_experience_from_run(decision, stats, *, lesson=None, store=None, lo
     """把 realized_feedback 结果沉淀为 Experience；失败返回 None，不崩主链路。"""
     try:
         try:
-            from experience_store import ExperienceStore, experience_from_stats
-            from observability import get_run_id
-        except ImportError:
             from .experience_store import ExperienceStore, experience_from_stats
             from .observability import get_run_id
 
+        except ImportError:
+            from experience_store import ExperienceStore, experience_from_stats
+            from observability import get_run_id
         exp_store = store or ExperienceStore(path=log_path)
         text = lesson if lesson is not None else _default_lesson(decision, stats)
         hyp_id = getattr(decision, "hypothesis_id", None)
@@ -398,8 +401,8 @@ if __name__ == "__main__":
         "status", "reflect", "optimize", "run", "cron", "cycle", "skill-evolve",
     ):
         try:
-            from evolution_cli import main as cli_main
-        except ImportError:
             from .evolution_cli import main as cli_main
+        except ImportError:
+            from evolution_cli import main as cli_main
         sys.exit(cli_main())
     run_example()

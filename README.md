@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.29**（多源证据 Brainstorm + SkillForge regression gate；累积 V10.28 TextGrad 真闭环 / 轨迹 A/B / 量化信号 / SkillForge）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.29.1**（投研效果契约 + 后验周报 + 离线 E2E；累积 V10.29 Brainstorm / SkillForge regression gate 与 V10.28 TextGrad 闭环）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全功能工作流  
 **文档中心**：[docs/README.md](docs/README.md) — 按场景选阅读路径（回测 / 量化 / 引擎 / 技能 / 测试）
@@ -134,6 +134,8 @@ python3 tools/stock_comparison.py AAPL MSFT GOOGL --html /tmp/compare.html
 python3 tools/aktools_diagnostic.py AAPL          # aktools 原子 API 复合诊断（V10.23）
 python3 tools/calibrate_conviction.py report      # 经验库 conviction 校准（V10.23）
 python3 tools/trajectory_ab_eval.py               # TextGrad 轨迹 A/B（V10.27，发版门控）
+python3 tools/log_decision.py append ...          # 投研效果契约落盘（V10.29.1）
+python3 tools/posterior_weekly.py report          # 后验周报：命中率/校准
 ```
 
 ### 生产主链路（推荐默认入口 · V10.22+）
@@ -241,7 +243,8 @@ berkshire-ai/
 │   ├── evolution_loop_v10.py    # run_example + run_with_realized_feedback（收益反馈闭环）
 │   ├── graph.py / optimizer.py  # 计算图（含 debate()）+ 文本梯度优化器（可注入 LLM 真实改写）
 │   ├── prompt_optimizer.py      # 变量真实改写 Option B：apply_gradient 经 LLM 改写 Prompt（LLMClient 可注入/可 mock）
-│   ├── decision_log.py          # 决策快照 JSONL 持久化（DecisionRecord）
+│   ├── decision_log.py          # 决策快照 JSONL（契约：thesis/kill/action/horizon）
+│   ├── posterior_report.py      # 后验 KPI（命中率/校准/完整率）
 │   ├── realized_feedback.py     # 已实现收益 → 评分（PriceProvider 可注入）
 │   ├── debate.py                # 多空对抗辩论（DebateResult，净判断）
 │   └── tavily_search.py
@@ -256,6 +259,9 @@ berkshire-ai/
 ├── tools/                       # ★ 完整上游工具链（已并入）
 │   ├── financial_rigor.py       # 精确市值/估值/交叉验证（核心）
 │   ├── report_audit.py          # 报告数据抽检（15%）
+│   ├── log_decision.py          # 投研效果：DecisionRecord 落盘
+│   ├── posterior_weekly.py      # 投研效果：后验周报
+│   ├── seed_portfolio_decisions.py / archive_experiences.py
 │   ├── ashare_data.py           # A股行情/财务/估值/日线
 │   ├── data_sources.py          # A股多源降级数据层（可插拔适配器）
 │   ├── notify.py                # 多通道交付（Telegram/飞书/本地兜底）
@@ -264,6 +270,7 @@ berkshire-ai/
 │   ├── skill.md                 # V10.1 整合版 meta-skill
 │   └── state.md
 ├── docs/
+│   ├── RESEARCH_EFFECTIVENESS.md  # 投研效果契约 + 后验 KPI + E2E
 │   └── textgrad_design.md
 ├── graphify-out/                # 知识图谱 (graphify) - 用于项目结构查询、代码/技能关系
 ├── tests/
@@ -322,7 +329,8 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 
 ## 📊 当前版本
 
-**V10.11** (2026-06-30)
+**V10.29.1** (2026-07-09) — 包版本 `10.29.1`
+- ✅ **投研效果契约**：DecisionRecord thesis/kill/action/horizon + `log_decision` / `posterior_weekly` / 离线 E2E
 - ✅ TextGrad 化 (节点级诊断 + 梯度反向传播)
 - ✅ Tavily 双Key轮询 (2000次/月)
 - ✅ 四大师全覆盖 (100%)
@@ -340,7 +348,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 - ✅ **主线接线（V10.20）**：`run_with_realized_feedback` 在 `persist=True` 时自动 `experience_from_stats` → `ExperienceStore`；`include_perf=True` 返回 `perf` 摘要；`retriever`/`retriever_k` 透传 D 段 few-shot 改写
 - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`
 - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：本地绩效指标库 `tools/perf_metrics.py`（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/累计求和/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`）；经验库 RAG-lite `experience_store`（成败经验 JSONL 沉淀 + 确定性关键词召回 + 作为 few-shot 注入 `build_rewrite_messages`，`examples=None` 逐字节不变、失败降级）；显式假设对象 `hypothesis`（可证伪命题 + 最小存储）
-- ✅ 测试 382 通过（详见 [VERSION_HISTORY.md](VERSION_HISTORY.md)）
+- ✅ 测试 518+ 通过（核心；详见 [VERSION_HISTORY.md](VERSION_HISTORY.md) / [TESTING.md](TESTING.md)）
 
 ## 🚀 服务部署（V10.17 档D）
 
@@ -376,4 +384,4 @@ curl -X POST localhost:8000/debate \
 ## 📝 维护者
 
 - Mckay (houqing)
-- 最后更新: 2026-06-30 (V10.11: 收益反馈闭环 + 多空辩论；A股多源降级数据 + 多通道推送)
+- 最后更新: 2026-07-09 (V10.29.1: 投研效果契约 + 后验周报 + 离线 E2E；包导入 relative-first)

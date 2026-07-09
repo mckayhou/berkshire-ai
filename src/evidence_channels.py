@@ -20,15 +20,15 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Protocol, runtime_checkable
 
 try:
-    from experience_store import Experience, ExperienceRetriever
-    from hypothesis import STATUS_OPEN, Hypothesis
-    from research_loop import HypothesisProposer
-    from sanitize import sanitize_untrusted
-except ImportError:  # pragma: no cover
     from .experience_store import Experience, ExperienceRetriever
     from .hypothesis import STATUS_OPEN, Hypothesis
     from .research_loop import HypothesisProposer
     from .sanitize import sanitize_untrusted
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from experience_store import Experience, ExperienceRetriever
+    from hypothesis import STATUS_OPEN, Hypothesis
+    from research_loop import HypothesisProposer
+    from sanitize import sanitize_untrusted
 
 logger = logging.getLogger(__name__)
 

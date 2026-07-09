@@ -17,6 +17,10 @@
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
 | `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
 | `calibrate_conviction.py` | 经验库 conviction 校准报告 | 否 | 无 |
+| `log_decision.py` | **投研效果契约**：DecisionRecord 落盘 / 列表 / gaps | 否 | 无 |
+| `posterior_weekly.py` | **后验周报**：方向命中率 / 校准误差 / 完整率 | 否* | 可选 `--network` 行情 |
+| `seed_portfolio_decisions.py` | 从持仓 thesis 补录决策种子 | 否 | `data/portfolio_decision_seeds.json` |
+| `archive_experiences.py` | 归档/清空被污染的 experiences.jsonl | 否 | 无 |
 | `trajectory_ab_eval.py` | TextGrad V9.3 vs V10 轨迹 A/B 评测（V10.27） | 否 | 无 |
 | `skill_evolve.py` | **SkillForge** 技能进化（LLM-judge CR + 四维诊断 + patch） | 否* | 见 [SKILL_EVOLUTION.md](../docs/SKILL_EVOLUTION.md)；`--judge-mode llm` 需 API Key |
 | `notify.py` | **多通道交付**（Telegram/飞书/本地兜底） | 是* | curl；零配置时只落地本地，不报错 |
@@ -41,7 +45,30 @@
 
 ---
 
+## log_decision.py / posterior_weekly.py（投研效果，离线优先）
+
+```bash
+# 报告收尾：落盘（缺 thesis/kill/action/horizon → gaps 非 0）
+python3 tools/log_decision.py append \
+  --ticker NVDA --date 2026-07-06 --price 198 --stance 0.88 \
+  --thesis "CUDA 护城河" --kill "份额下滑" --action hold --horizon 20
+
+python3 tools/log_decision.py list
+python3 tools/log_decision.py gaps
+
+# 持仓种子（与 thesis-tracker 对齐）
+python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json
+
+# 后验周报：price map 键为 TICKER|到期日
+python3 tools/posterior_weekly.py report --as-of 2026-07-26 \
+  --prices '{"NVDA|2026-07-26":205}' --json
+
+# 经验库污染清理
+python3 tools/archive_experiences.py --reset --reason "test pollution"
+```
+
 ## financial_rigor.py（核心，离线）
+
 
 精确十进制计算，杜绝心算/浮点误差。
 

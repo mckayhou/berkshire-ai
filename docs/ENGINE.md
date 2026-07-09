@@ -29,8 +29,21 @@
 python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 ```
 
-### 2.2 进化循环 CLI（`src/evolution_cli.py`）
+### 2.1.1 投研效果 CLI（决策落盘 / 后验）
 
+```bash
+python3 tools/log_decision.py append --ticker AAPL --date 2026-01-02 --price 100 \
+  --stance 0.8 --thesis "..." --kill "..." --action hold
+python3 tools/posterior_weekly.py report --as-of 2026-02-01 --prices '{"AAPL|2026-01-22":110}'
+```
+
+详见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。验收：
+
+```bash
+pytest tests/e2e/test_research_effectiveness_e2e.py tests/test_posterior_report.py -v
+```
+
+### 2.2 进化循环 CLI（`src/evolution_cli.py`）
 通过 `evolution_loop_v10.py` 子命令调用：
 
 ```bash
@@ -65,10 +78,12 @@ cp .env.example .env   # 可选
 
 ## 3. Python API
 
-### 3.1 决策落盘
+### 3.1 决策落盘（投研效果契约）
+
+正式研究须带 `thesis` / `kill_condition` / `action` / `horizon_days`。完整说明见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。
 
 ```python
-from src import DecisionRecord, append_decision
+from src import DecisionRecord, append_decision, is_research_complete
 
 d = DecisionRecord(
     ticker="600519",
@@ -78,8 +93,16 @@ d = DecisionRecord(
     benchmark="000300",
     benchmark_anchor=3800.0,
     analyses={"buffett": "护城河…"},  # 供 ∇_LLM
+    thesis="白酒护城河宽、现金流强",
+    kill_condition="吨价失守或渠道库存危机",
+    action="hold",
+    horizon_days=20,
+    depth="standard",
+    skill="investment-research",
 )
+assert is_research_complete(d)
 append_decision(d)  # → ~/.berkshire/decisions.jsonl
+# 或 CLI: python3 tools/log_decision.py append ...
 ```
 
 ### 3.2 完整主链路
@@ -247,6 +270,7 @@ curl -s localhost:8000/doctor
 | V10.28 | 信号→Hypothesis | `run_full_cycle(factor_scan=…, limitup_scan=…)` |
 | V10.29 | 多源证据 Brainstorm | `run_full_cycle(use_brainstorm=True)` |
 | V10.29 | SkillForge regression gate | `run_evolution_round(regression_cases=…)` |
+| V10.29.1 | 投研效果契约 + 后验周报 | `log_decision` / `posterior_weekly`；见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) |
 
 ---
 

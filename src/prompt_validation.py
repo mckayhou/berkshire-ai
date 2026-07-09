@@ -30,11 +30,11 @@ from dataclasses import dataclass
 from typing import Callable, Optional, Sequence
 
 try:
-    from graph import Gradient, Variable
-    from prompt_optimizer import LLMClient, apply_gradient
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import Gradient, Variable
     from .prompt_optimizer import LLMClient, apply_gradient
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import Gradient, Variable
+    from prompt_optimizer import LLMClient, apply_gradient
 
 
 # ---------------------------------------------------------------------------

@@ -15,9 +15,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 try:
-    from observability import get_run_id, new_run_id
-except ImportError:  # pragma: no cover
     from .observability import get_run_id, new_run_id
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from observability import get_run_id, new_run_id
 
 
 ENV_RUN_LOG = "BERKSHIRE_RUN_LOG"

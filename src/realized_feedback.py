@@ -37,11 +37,11 @@ from dataclasses import dataclass
 from typing import Callable, Dict, Optional, Tuple
 
 try:
-    from decision_log import DecisionRecord
-    from graph import MASTER_PREFIXES
-except ImportError:  # pragma: no cover - 包内导入回退
     from .decision_log import DecisionRecord
     from .graph import MASTER_PREFIXES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from decision_log import DecisionRecord
+    from graph import MASTER_PREFIXES
 
 
 # 基线灵敏度。该值由 tools/calibrate_sensitivity.py 用真实历史行情做「尺度校准」

@@ -21,9 +21,9 @@ import threading
 from typing import Dict, Optional
 
 try:
-    from observability import MetricsCollector
-except ImportError:  # pragma: no cover - 包内导入回退
     from .observability import MetricsCollector
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from observability import MetricsCollector
 
 _METRIC_PREFIX = "berkshire"
 

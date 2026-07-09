@@ -1,0 +1,72 @@
+[
+  {
+    "ticker": "NVDA",
+    "date": "2026-07-06",
+    "price_anchor": 198.0,
+    "stance": 0.88,
+    "action": "hold",
+    "horizon_days": 20,
+    "depth": "standard",
+    "skill": "thesis-tracker",
+    "thesis": "AI 算力核心基础设施，CUDA 生态护城河宽",
+    "kill_condition": "PE > 40x OR 份额 < 75%",
+    "note": "seed from berkshire_state 2026-07-07 Hold",
+    "benchmark": "SPX"
+  },
+  {
+    "ticker": "AVGO",
+    "date": "2026-07-06",
+    "price_anchor": 362.0,
+    "stance": 0.72,
+    "action": "watch",
+    "horizon_days": 20,
+    "depth": "standard",
+    "skill": "thesis-tracker",
+    "thesis": "HBM/CoWoS 需求持续；AI 芯片 $100B 目标未上调需观察",
+    "kill_condition": "Price > $400 OR PE > 65x",
+    "note": "seed from berkshire_state Watch",
+    "benchmark": "SPX"
+  },
+  {
+    "ticker": "PDD",
+    "date": "2026-07-06",
+    "price_anchor": 110.0,
+    "stance": 0.45,
+    "action": "reduce",
+    "horizon_days": 20,
+    "depth": "deep",
+    "skill": "thesis-tracker",
+    "thesis": "海外 Temu 放缓；国内利润支撑底部，但 Q2 触发重评",
+    "kill_condition": "Q2 Revenue < Consensus -5%（已 TRIGGERED，需重新评估逻辑）",
+    "note": "seed TRIGGERED — 立场偏谨慎，非新建仓",
+    "benchmark": "SPX"
+  },
+  {
+    "ticker": "600900",
+    "date": "2026-07-06",
+    "price_anchor": 27.05,
+    "stance": 0.80,
+    "action": "hold",
+    "horizon_days": 60,
+    "depth": "lite",
+    "skill": "thesis-tracker",
+    "thesis": "水电公用事业化，防御底仓",
+    "kill_condition": "Dividend Yield < 3%",
+    "note": "seed defensive sleeve",
+    "benchmark": "000300"
+  },
+  {
+    "ticker": "0700.HK",
+    "date": "2026-07-06",
+    "price_anchor": 447.2,
+    "stance": 0.84,
+    "action": "add",
+    "horizon_days": 40,
+    "depth": "standard",
+    "skill": "thesis-tracker",
+    "thesis": "AI+游戏双轮驱动，估值相对合理",
+    "kill_condition": "下一财报显著 miss 或机构逻辑破裂",
+    "note": "seed Accumulate HK$447.20",
+    "benchmark": "HSI"
+  }
+]

@@ -17,18 +17,30 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
-from typing import Dict, List, Optional
+from datetime import datetime, timedelta, timezone
+from typing import Dict, List, Optional, Sequence, Tuple
 
 try:
-    from graph import MASTER_PREFIXES
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import MASTER_PREFIXES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import MASTER_PREFIXES
 
 
 # 环境变量优先；否则落在 ~/.berkshire/decisions.jsonl
 ENV_LOG_PATH = "BERKSHIRE_DECISION_LOG"
 DEFAULT_LOG_PATH = os.path.join(os.path.expanduser("~"), ".berkshire", "decisions.jsonl")
+
+# 投研效果契约：可执行操作 + 深度档（空串表示未填，兼容旧记录）
+VALID_ACTIONS = frozenset({"buy", "add", "hold", "reduce", "exit", "watch", ""})
+VALID_DEPTHS = frozenset({"lite", "standard", "deep", ""})
+DEFAULT_HORIZON_DAYS = 20
+# 正式研究落盘最低字段（缺一则 is_research_complete=False）
+RESEARCH_REQUIRED_FIELDS: Tuple[str, ...] = (
+    "thesis",
+    "kill_condition",
+    "action",
+    "horizon_days",
+)
 
 
 def default_log_path() -> str:
@@ -52,6 +64,12 @@ class DecisionRecord:
         trace_id:         关联的计算图 trace_id，可选
         hypothesis_id:    关联的可证伪假设 id（衔接 hypothesis.py），可选
         created_at:       落盘时间（ISO）
+        horizon_days:     后验 horizon（日历日），默认 20；None 表示未声明
+        thesis:           一句话投资逻辑（投研效果契约）
+        kill_condition:   论点失效 / kill 条件
+        action:           buy|add|hold|reduce|exit|watch
+        depth:            lite|standard|deep
+        skill:            来源 skill 名（如 investment-research）
     """
 
     ticker: str
@@ -65,6 +83,12 @@ class DecisionRecord:
     trace_id: Optional[str] = None
     hypothesis_id: Optional[str] = None
     created_at: Optional[str] = None
+    horizon_days: Optional[int] = DEFAULT_HORIZON_DAYS
+    thesis: str = ""
+    kill_condition: str = ""
+    action: str = ""
+    depth: str = ""
+    skill: str = ""
 
     def __post_init__(self) -> None:
         self.ticker = str(self.ticker).strip().upper()
@@ -92,6 +116,24 @@ class DecisionRecord:
             self.analyses = clean_a or None
         if self.created_at is None:
             self.created_at = datetime.now(timezone.utc).isoformat()
+        if self.horizon_days is not None:
+            hd = int(self.horizon_days)
+            if hd <= 0:
+                raise ValueError(f"horizon_days 必须为正整数: {self.horizon_days}")
+            self.horizon_days = hd
+        self.thesis = str(self.thesis or "").strip()
+        self.kill_condition = str(self.kill_condition or "").strip()
+        self.action = str(self.action or "").strip().lower()
+        if self.action not in VALID_ACTIONS:
+            raise ValueError(
+                f"action 必须是 {sorted(a for a in VALID_ACTIONS if a)} 之一或空: {self.action!r}"
+            )
+        self.depth = str(self.depth or "").strip().lower()
+        if self.depth not in VALID_DEPTHS:
+            raise ValueError(
+                f"depth 必须是 lite|standard|deep 或空: {self.depth!r}"
+            )
+        self.skill = str(self.skill or "").strip()
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -100,6 +142,44 @@ class DecisionRecord:
     def from_dict(cls, data: Dict) -> "DecisionRecord":
         allowed = {f for f in cls.__dataclass_fields__}  # type: ignore[attr-defined]
         return cls(**{k: v for k, v in data.items() if k in allowed})
+
+
+def mean_stance(record: DecisionRecord) -> Optional[float]:
+    """四大师 scores 的算术均值；无 scores 返回 None。"""
+    if not record.scores:
+        return None
+    vals = [float(v) for v in record.scores.values()]
+    return sum(vals) / len(vals)
+
+
+def maturity_date(record: DecisionRecord) -> Optional[str]:
+    """决策日 + horizon_days（日历日）→ YYYY-MM-DD；缺 horizon 返回 None。"""
+    if record.horizon_days is None:
+        return None
+    try:
+        base = datetime.strptime(record.date[:10], "%Y-%m-%d")
+    except ValueError:
+        return None
+    return (base + timedelta(days=int(record.horizon_days))).strftime("%Y-%m-%d")
+
+
+def research_gaps(record: DecisionRecord) -> List[str]:
+    """返回投研效果契约缺失字段名列表。"""
+    gaps: List[str] = []
+    if not record.thesis:
+        gaps.append("thesis")
+    if not record.kill_condition:
+        gaps.append("kill_condition")
+    if not record.action:
+        gaps.append("action")
+    if record.horizon_days is None:
+        gaps.append("horizon_days")
+    return gaps
+
+
+def is_research_complete(record: DecisionRecord) -> bool:
+    """正式研究是否具备后验所需最小字段。"""
+    return not research_gaps(record)
 
 
 def append_decision(record: DecisionRecord, path: Optional[str] = None) -> str:
@@ -137,3 +217,13 @@ def latest_decision(ticker: str, path: Optional[str] = None) -> Optional[Decisio
     """取某 ticker 最近一条决策（按 date），无则 None。"""
     rows = decisions_for_ticker(ticker, path)
     return rows[-1] if rows else None
+
+
+def incomplete_research_decisions(
+    path: Optional[str] = None,
+    *,
+    records: Optional[Sequence[DecisionRecord]] = None,
+) -> List[DecisionRecord]:
+    """列出缺 thesis/kill/action/horizon 的记录（投研补录清单）。"""
+    rows = list(records) if records is not None else load_decisions(path)
+    return [r for r in rows if not is_research_complete(r)]

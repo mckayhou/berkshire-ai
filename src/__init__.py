@@ -7,7 +7,15 @@ Exports the main classes for TextGrad-based 4-masters analysis.
 from .access_control import RateLimiter, check_api_key, key_fingerprint
 from .cron_evolution import CronResult, run_cron
 from .debate import DebateCase, DebateResult, run_debate
-from .decision_log import DecisionRecord, append_decision, load_decisions
+from .decision_log import (
+    DecisionRecord,
+    append_decision,
+    is_research_complete,
+    load_decisions,
+    mean_stance,
+    research_gaps,
+)
+from .posterior_report import PosteriorReport, build_posterior_report
 from .eval_harness import (
     EvolutionReport,
     RoundMetrics,
@@ -102,6 +110,11 @@ __all__ = [
     "DecisionRecord",
     "append_decision",
     "load_decisions",
+    "is_research_complete",
+    "mean_stance",
+    "research_gaps",
+    "PosteriorReport",
+    "build_posterior_report",
     "realized_scores",
     "realized_scores_via_provider",
     "compute_returns",

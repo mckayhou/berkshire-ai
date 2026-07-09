@@ -40,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-07）**：`tests/` 下 **522** 个 pytest 用例；典型本地结果 **520 passed, 2 skipped**（e2e LLM + Tavily integration）；以 `pytest tests/ -ra` 为准。
+**当前规模（2026-07）**：核心用例（无 factor-mining extra）约 **510+ passed**；含 `tests/e2e/test_research_effectiveness_e2e.py` 离线 E2E。典型 skip：`e2e/test_llm_smoke`（无 API Key）。以 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -232,6 +232,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_pipeline_brainstorm.py` | `pipeline` + `use_brainstorm` | V10.29 接线 |
 | `test_regression_gate.py` | `skill_forge/regression_gate` | V10.29 paired replay |
 | `test_skill_forge_cli.py` | `tools/skill_evolve.py` CLI | 子命令 subprocess 冒烟 |
+| `test_posterior_report.py` | `decision_log` 契约 + `posterior_report` + CLI | 方向命中 / 完整率 / log_decision |
+| `e2e/test_research_effectiveness_e2e.py` | **投研效果离线 E2E** | 落盘→种子→归档→后验→反馈（无网络） |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
 ---
@@ -259,7 +261,24 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/evidence_channels.py` 多源证据 | `pytest tests/test_evidence_channels.py tests/test_pipeline_brainstorm.py` |
 | `src/skill_forge/regression_gate.py` 回归门控 | `pytest tests/test_regression_gate.py` |
 | `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
+| 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
+
+### 投研效果契约 / 后验周报验收
+
+```bash
+# 单元 + 离线 E2E（CI 默认；无网络、无 LLM）
+python3 -m pytest tests/test_posterior_report.py tests/e2e/test_research_effectiveness_e2e.py -v
+
+# 手工冒烟
+python3 tools/log_decision.py gaps
+python3 tools/seed_portfolio_decisions.py --dry-run --from-json data/portfolio_decision_seeds.json
+python3 tools/posterior_weekly.py report --as-of $(date +%F) \
+  --prices '{"AAPL|2026-01-21":110}'
+python3 tools/archive_experiences.py --dry-run
+```
+
+文档：[docs/RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md)
 
 ### SkillForge 技能进化验收
 
@@ -309,6 +328,12 @@ python3 tools/thesis_queue.py --json
 python3 tools/portfolio_risk.py --holdings '{"NVDA":45,"CASH":55}' --json
 python3 tools/skill_evolve.py list
 python3 tools/skill_evolve.py judge tests/fixtures/skill_forge/bad_cases.jsonl --judge-mode rule
+python3 tools/log_decision.py list
+python3 tools/log_decision.py gaps
+python3 tools/seed_portfolio_decisions.py --dry-run --from-json data/portfolio_decision_seeds.json
+python3 tools/posterior_weekly.py report --as-of 2026-02-01 \
+  --prices '{"AAPL|2026-01-21":110}'
+python3 tools/archive_experiences.py --dry-run
 python3 src/config.py
 ```
 
@@ -548,6 +573,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-09 | 3.14 | **524 passed, 3 skipped**（V10.29.1：投研效果 E2E + 包导入 relative-first；numpy/torch 缺则 skip；e2e LLM skip） |
 | 2026-07-04 | 3.14 | **520 passed, 2 skipped**（V10.29 + evidence channels + regression gate；e2e LLM + Tavily skip） |
 | 2026-07-02 | 3.14 | **503 passed, 2 skipped**（V10.28 + SkillForge；e2e LLM + Tavily integration skip） |
 | 2026-07-02 | 3.14 | **458 passed, 1 skipped** | 含 limitup/factor/quant 测试；e2e LLM skip |

@@ -4,6 +4,18 @@
 
 所有深度研报（`investment-research`、`investment-team`）与组合审视（`portfolio-review`）在正文末尾**必须**附上本行动卡。
 
+**投研效果契约**：行动卡写完后，必须用 `tools/log_decision.py append` 落一条 `DecisionRecord`（`thesis` / `kill_condition` / `action` / `horizon_days` / 四大师 `scores`）。无落盘记录的报告视为未完成。后验周报：`tools/posterior_weekly.py report`。
+
+字段映射建议：
+
+| 行动卡 | DecisionRecord |
+|--------|----------------|
+| 综合立场 / 多空净判断 | `scores` 或 `--stance` |
+| 操作建议 | `action`：新建仓→`buy`，加仓→`add`，持有→`hold`，减仓→`reduce`，清仓→`exit`，仅观察→`watch` |
+| 论点失效条件 | `kill_condition` |
+| 看多逻辑第 1 条（压缩） | `thesis` |
+| 持有期限 | `horizon_days`（事件驱动可 20；1–3 年可 60–90 仅作后验窗，非持有上限） |
+
 ---
 
 ## 模板（复制到报告末尾）

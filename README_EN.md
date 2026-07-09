@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.29** (Multi-source evidence brainstorm + SkillForge regression gate; builds on V10.28 TextGrad closed loop / trajectory A/B / quant signals / SkillForge). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.29.1** (Research-effectiveness DecisionRecord contract + posterior weekly report + offline E2E; builds on V10.29 brainstorm / SkillForge regression gate and V10.28 TextGrad closed loop). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 

@@ -36,6 +36,35 @@
 
 ## 📜 版本历史
 
+### V10.29.1 - 2026-07-09 (投研效果契约 + 后验周报 + 离线 E2E)
+
+将「过程质量」接到可证伪的决策后验（不宣称 alpha，先修数据契约）。
+
+**DecisionRecord 契约字段** `src/decision_log.py`
+- `thesis` / `kill_condition` / `action` / `horizon_days` / `depth` / `skill`
+- `is_research_complete` / `research_gaps` / `mean_stance` / `maturity_date`
+
+**后验与工具**
+- `src/posterior_report.py`：方向命中率、校准误差、契约完整率
+- `tools/log_decision.py`：append / list / gaps
+- `tools/posterior_weekly.py`：周报 CLI（`--prices` / `--network` / `--strict`）
+- `tools/seed_portfolio_decisions.py` + `data/portfolio_decision_seeds.json`
+- `tools/archive_experiences.py`：归档并清空污染 experiences
+
+**技能 / 文档**
+- `skills/investment-research.md`、`thesis-tracker.md` 收尾强制落盘
+- `docs/RESEARCH_EFFECTIVENESS.md`、`action-card.md`、`ENGINE.md`、`BACKTEST.md`、`USER_GUIDE.md` §4.4、`TESTING.md`
+
+**测试结果**:
+- [x] 单元：`tests/test_posterior_report.py`
+- [x] 离线 E2E：`tests/e2e/test_research_effectiveness_e2e.py`（8 passed；落盘→种子→归档→后验→反馈）
+- [x] 核心回归：`pytest tests/` **passed**（缺 numpy/torch 时 alphagpt 相关 **skip**，不再炸 collection；LLM smoke 无 Key skip）
+- [x] 包导入：`from src import run_full_cycle` 可用（src 双导入 relative-first）
+
+**结论**: ✅ 工具与 E2E 上线；真实命中率待 horizon 到期后用 `posterior_weekly` 积累
+
+---
+
 ### V10.29 - 2026-07-04 (多源证据 Brainstorm + SkillForge regression gate)
 
 借鉴 AgentX (Kuaishou, arXiv:2606.26859) 的四路证据加权提案与 paired replay 防劣化。
@@ -772,17 +801,17 @@ V9.1 (模型优化)
   ↓
 V9.3 (Tavily 集成)
   ↓
-V10.28 ← 当前版本
+V10.29.1 ← 当前（投研效果契约 + 后验 E2E）
 ```
 
 ---
 
 ## 🔮 未来规划
 
-### V10.1 (计划中)
-- [ ] 自动化 Prompt 优化 (根据梯度自动修改)
-- [ ] 多股票并行分析
-- [ ] 增量学习机制
+### 投研效果（进行中）
+- [x] DecisionRecord 契约 + 后验周报 + 离线 E2E
+- [ ] 真实 horizon 后验样本 ≥20 后公布命中率
+- [ ] 高 conviction 负 alpha → SkillForge 只改 top 失败
 
 ### V11.0 (规划中)
 - [ ] 引入更多大师视角 (彼得·林奇 / 霍华德·马克斯)
@@ -792,4 +821,4 @@ V10.28 ← 当前版本
 ---
 
 **维护者**: Mckay (houqing)  
-**最后更新**: 2026-07-02
+**最后更新**: 2026-07-09

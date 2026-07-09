@@ -227,3 +227,131 @@ class StaticExperienceRetriever:
     def retrieve(self, *, ticker: str = "", sector: Optional[str] = None,
                  tags: Optional[List[str]] = None, k: int = 3) -> List[Experience]:
         return self._items[: max(0, int(k))]
+
+
+# ---------------------------------------------------------------------------
+# V10.29: 失败根因检索（从 trace 中提取失败经验）
+# ---------------------------------------------------------------------------
+@dataclass
+class FailureTrace:
+    """从 trace 中提取的失败记录（可检索）。"""
+
+    task_id: str
+    ticker: str
+    timestamp: str
+    phase: str
+    failure_root_cause: str
+    failure_detail: str
+    score: float = 0.0
+
+    def to_experience(self) -> Experience:
+        """转换为 Experience 对象（用于注入 Hypothesis 生成）。"""
+        return Experience(
+            ticker=self.ticker,
+            date=self.timestamp[:10] if self.timestamp else "",
+            stances={},
+            alpha=-1.0,  # 失败经验，alpha 为负
+            realized_base=0.0,
+            verdict=VERDICT_REFUTED,
+            lesson=f"[{self.failure_root_cause}] {self.failure_detail}",
+            tags=[f"failure:{self.failure_root_cause}"],
+        )
+
+
+class FailureRootCauseRetriever:
+    """从 trace 文件中检索失败根因（V10.29 失败资产化）。
+
+    用法：
+        retriever = FailureRootCauseRetriever()
+        failures = retriever.retrieve(ticker="AAPL", failure_root_cause="missing_data")
+    """
+
+    def __init__(self, trace_dir: Optional[str] = None):
+        try:
+            from .trace_recorder import default_trace_dir
+        except ImportError:
+            from trace_recorder import default_trace_dir
+        self.trace_dir = trace_dir or default_trace_dir()
+
+    def _load_traces(self) -> List[Dict]:
+        """加载所有 trace 文件。"""
+        import os
+        traces = []
+        if not os.path.isdir(self.trace_dir):
+            return traces
+        for filename in os.listdir(self.trace_dir):
+            if not filename.endswith(".json"):
+                continue
+            filepath = os.path.join(self.trace_dir, filename)
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    data = json.load(f)
+                if isinstance(data, list):
+                    traces.extend(data)
+            except (json.JSONDecodeError, OSError):
+                continue
+        return traces
+
+    def retrieve(
+        self,
+        *,
+        ticker: str = "",
+        failure_root_cause: str = "",
+        k: int = 3,
+    ) -> List[FailureTrace]:
+        """检索失败 trace。
+
+        Args:
+            ticker: 标的代码（可选，空则匹配所有）
+            failure_root_cause: 失败根因分类（可选，空则匹配所有失败）
+            k: 返回数量
+
+        Returns:
+            失败 trace 列表（按时间倒序）
+        """
+        try:
+            traces = self._load_traces()
+            tkr = str(ticker).strip().upper()
+            frc = str(failure_root_cause).strip().lower()
+
+            matched = []
+            for t in traces:
+                # 过滤：必须有 failure_root_cause 且不是 "none"
+                root_cause = str(t.get("failure_root_cause", "")).strip().lower()
+                if not root_cause or root_cause == "none":
+                    continue
+                # 过滤：ticker 匹配
+                if tkr and str(t.get("ticker", "")).strip().upper() != tkr:
+                    continue
+                # 过滤：failure_root_cause 匹配
+                if frc and root_cause != frc:
+                    continue
+                matched.append(FailureTrace(
+                    task_id=str(t.get("task_id", "")),
+                    ticker=str(t.get("ticker", "")),
+                    timestamp=str(t.get("timestamp", "")),
+                    phase=str(t.get("phase", "")),
+                    failure_root_cause=root_cause,
+                    failure_detail=str(t.get("failure_detail", "")),
+                    score=float(t.get("score", 0.0)),
+                ))
+
+            # 按时间倒序
+            matched.sort(key=lambda x: x.timestamp, reverse=True)
+            return matched[: max(0, int(k))]
+        except Exception:  # noqa: BLE001 - 检索失败一律降级为空，不崩主链路
+            return []
+
+    def retrieve_as_experiences(
+        self,
+        *,
+        ticker: str = "",
+        failure_root_cause: str = "",
+        k: int = 3,
+    ) -> List[Experience]:
+        """检索失败 trace 并转换为 Experience 对象。"""
+        return [ft.to_experience() for ft in self.retrieve(
+            ticker=ticker,
+            failure_root_cause=failure_root_cause,
+            k=k,
+        )]

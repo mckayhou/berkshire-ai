@@ -18,17 +18,17 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 try:
-    from decision_log import load_decisions
-    from experience_store import ExperienceStore
-    from reflect import reflect_ticker
-    from run_recorder import RunRecord, RunRecorder
-    from trace_recorder import record_trace
-except ImportError:  # pragma: no cover
     from .decision_log import load_decisions
     from .experience_store import ExperienceStore
     from .reflect import reflect_ticker
     from .run_recorder import RunRecord, RunRecorder
     from .trace_recorder import record_trace
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from decision_log import load_decisions
+    from experience_store import ExperienceStore
+    from reflect import reflect_ticker
+    from run_recorder import RunRecord, RunRecorder
+    from trace_recorder import record_trace
 
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _TOOLS = os.path.join(_REPO_ROOT, "tools")

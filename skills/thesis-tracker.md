@@ -2,7 +2,7 @@
 name: berkshire-thesis-tracker
 description: |
   投资论文追踪纪律系统。买入后持续检查、季度复盘、动态调整。
-version: 10.2
+version: 10.29.1
 ---
 
 # 投资论文追踪：买入后的纪律系统
@@ -108,6 +108,26 @@ version: 10.2
 - 估值锚点
 - 追踪记录表（初始为空）
 
+### A6：DecisionRecord 落盘（投研效果契约 · 必须）
+
+建立或重大更新论文后，**必须**追加决策记录，供后验 KPI 使用：
+
+```bash
+python3 tools/log_decision.py append \
+  --ticker <代码> --date <YYYY-MM-DD> --price <买入或当前锚点> \
+  --stance <0~1> \
+  --thesis "<核心论文一句话压缩>" \
+  --kill "<红线或失效条件第一条>" \
+  --action hold \
+  --horizon 20 \
+  --depth standard \
+  --skill thesis-tracker
+```
+
+活持仓批量种子：`python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json`  
+后验周报：`python3 tools/posterior_weekly.py report`  
+详见 `docs/RESEARCH_EFFECTIVENESS.md`。
+
 ---
 
 ## 模式B：追踪检查
@@ -177,6 +197,8 @@ version: 10.2
 六、结论与行动建议
 七、下次检查需关注的重点
 ```
+
+若结论变更操作建议（加仓/减仓/清仓/重评），再执行一次 `log_decision.py append`（新 date + 新 action），勿只改 Markdown。
 
 #### 论文健康度评分标准
 

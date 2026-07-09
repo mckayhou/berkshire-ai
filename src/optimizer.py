@@ -8,13 +8,13 @@ from typing import Any, Dict, List, Optional
 
 # Absolute for src/ path insert compatibility
 try:
-    from graph import BerkshireGraph, Gradient, Variable
-    from prompt_optimizer import LLMClient, apply_gradient
-    from prompt_validation import PromptScorer, validated_apply_gradient
-except ImportError:
     from .graph import BerkshireGraph, Gradient, Variable
     from .prompt_optimizer import LLMClient, apply_gradient
     from .prompt_validation import PromptScorer, validated_apply_gradient
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import BerkshireGraph, Gradient, Variable
+    from prompt_optimizer import LLMClient, apply_gradient
+    from prompt_validation import PromptScorer, validated_apply_gradient
 
 
 class TextualGradientDescent:

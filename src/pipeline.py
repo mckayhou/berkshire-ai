@@ -7,20 +7,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 try:
-    from decision_log import DecisionRecord
-    from experience_store import ExperienceStore, KeywordExperienceRetriever
-    from graph import BerkshireGraph
-    from observability import run_context
-    from prompt_optimizer import LLMClient, StaticLLMClient
-    from quality_scorer import build_experience_quality_fn
-    from research_loop import HypothesisProposer, run_rd_cycle
-    from run_recorder import RunRecord, RunRecorder
-    from scenario import DEFAULT_SCENARIO, Scenario
-    from trace_recorder import record_trace
-except ImportError:  # pragma: no cover
     from .decision_log import DecisionRecord
     from .experience_store import ExperienceStore, KeywordExperienceRetriever
     from .graph import BerkshireGraph
@@ -31,6 +20,17 @@ except ImportError:  # pragma: no cover
     from .run_recorder import RunRecord, RunRecorder
     from .scenario import DEFAULT_SCENARIO, Scenario
     from .trace_recorder import record_trace
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from decision_log import DecisionRecord
+    from experience_store import ExperienceStore, KeywordExperienceRetriever
+    from graph import BerkshireGraph
+    from observability import run_context
+    from prompt_optimizer import LLMClient, StaticLLMClient
+    from quality_scorer import build_experience_quality_fn
+    from research_loop import HypothesisProposer, run_rd_cycle
+    from run_recorder import RunRecord, RunRecorder
+    from scenario import DEFAULT_SCENARIO, Scenario
+    from trace_recorder import record_trace
 
 
 def run_full_cycle(
@@ -72,10 +72,10 @@ def run_full_cycle(
         其余参数同 run_with_realized_feedback。
     """
     try:
-        from signal_proposer import proposer_from_signal_scans
-    except ImportError:
         from .signal_proposer import proposer_from_signal_scans
 
+    except ImportError:
+        from signal_proposer import proposer_from_signal_scans
     effective_proposer = proposer
     if factor_scan or limitup_scan:
         merged = proposer_from_signal_scans(
@@ -88,25 +88,39 @@ def run_full_cycle(
 
     if use_brainstorm:
         try:
-            from evidence_channels import build_brainstorm_proposer
-        except ImportError:
             from .evidence_channels import build_brainstorm_proposer
+        except ImportError:
+            from evidence_channels import build_brainstorm_proposer
         effective_proposer = build_brainstorm_proposer(
             base_proposer=effective_proposer,
             factor_scan_loader=(lambda: factor_scan) if factor_scan else None,
             limitup_scan_loader=(lambda: limitup_scan) if limitup_scan else None,
         )
     try:
-        from evolution_loop_v10 import run_with_realized_feedback
-    except ImportError:
         from .evolution_loop_v10 import run_with_realized_feedback
 
+    except ImportError:
+        from evolution_loop_v10 import run_with_realized_feedback
     result: Dict[str, Any] = {"decision": decision, "rd": None, "feedback": None}
 
     with run_context() as rid:
         retriever = KeywordExperienceRetriever(ExperienceStore())
         quality_fn = build_experience_quality_fn(decision.ticker)
         llm_client = llm or StaticLLMClient(responses={"*": "pipeline-optimized"})
+
+        # V10.29: 获取失败根因作为负面约束
+        negative_constraints: List[str] = []
+        try:
+            from experience_store import FailureRootCauseRetriever
+            failure_retriever = FailureRootCauseRetriever()
+            failures = failure_retriever.retrieve(ticker=decision.ticker, k=3)
+            negative_constraints = [
+                f"[{f.failure_root_cause}] {f.failure_detail}"
+                for f in failures
+                if f.failure_detail
+            ]
+        except Exception:  # noqa: BLE001 - 失败根因检索失败不阻塞主流程
+            pass
 
         if run_rd:
             graph = BerkshireGraph(scenario=scenario)
@@ -125,6 +139,7 @@ def run_full_cycle(
                 run_id=rid,
                 rerun_analysis=rerun_analysis,
                 analysis_runner=analysis_runner,
+                negative_constraints=negative_constraints,  # V10.29
             )
             result["rd"] = rd_report
             if record_traces:

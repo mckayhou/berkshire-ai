@@ -29,9 +29,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 try:
-    from graph import MASTER_PREFIXES
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import MASTER_PREFIXES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import MASTER_PREFIXES
 
 ENV_LOG_PATH = "BERKSHIRE_HYPOTHESIS_LOG"
 DEFAULT_LOG_PATH = os.path.join(os.path.expanduser("~"), ".berkshire", "hypotheses.jsonl")

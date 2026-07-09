@@ -9,17 +9,12 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
-import numpy as np
-
-from .config import MiningConfig
-from .data_engine import AshareDataEngine
-from .decode import decode_formula
-from .formula_store import load_formula
-from .vm import FormulaVM
-
 _TOOLS = Path(__file__).resolve().parent.parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
+
+# 注意：不要在模块顶层 import torch / decode / FormulaVM。
+# run_limitup_screen_from_csv 只依赖 CSV + limitup_scoring，须在无 factor-mining extra 时可用。
 
 
 def _data_dir() -> Path:
@@ -79,7 +74,11 @@ def score_bars(
     device=None,
 ) -> dict | None:
     """Score one symbol's OHLCV bars; returns None if insufficient data."""
+    import numpy as np
     import torch
+
+    from .data_engine import AshareDataEngine
+    from .vm import FormulaVM
 
     min_b = _min_bars()
     if len(bars) < min_b:
@@ -127,6 +126,10 @@ def score_symbol_online(
     """Fetch daily bars then score (network)."""
     import torch
 
+    from .config import MiningConfig
+    from .data_engine import AshareDataEngine
+    from .vm import FormulaVM
+
     cfg = MiningConfig(
         index_code=_code_digits(code),
         daily_limit=daily_limit or MiningConfig().daily_limit,
@@ -164,6 +167,9 @@ def run_screen(
 ) -> dict:
     """Screen symbols; prefers local CSV, falls back to online per-symbol fetch."""
     import torch
+
+    from .decode import decode_formula
+    from .formula_store import load_formula
 
     if formula_tokens is None:
         loaded = load_formula(formula_path)

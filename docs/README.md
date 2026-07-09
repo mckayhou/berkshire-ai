@@ -17,6 +17,7 @@
 | **选 Agent 技能** | [SKILLS.md](SKILLS.md) | 5 min |
 | **技能进化（SkillForge + Regression Gate）** | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) | 15 min |
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
+| **投研效果 / 决策后验 KPI** | [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) | 10 min |
 | **理解架构与设计** | [textgrad_design.md](textgrad_design.md) | 30 min |
 | **Prompt 模板** | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 按需 |
 | **借鉴评估备忘** | [qlib_evaluation.md](qlib_evaluation.md)、[rdagent_reference.md](rdagent_reference.md) | 架构决策时 |
@@ -38,6 +39,7 @@ docs/README.md          ← 你在这里（导航）
 ├── textgrad_design.md    引擎设计（深度）
 ├── action-card.md        组合行动卡模板
 ├── report-conventions.md 报告规范
+├── RESEARCH_EFFECTIVENESS.md  投研效果契约 + 后验 KPI + E2E 验收
 ├── ROADMAP.md            路线图
 └── tdx_mcp_tool_design.md 通达信 MCP（不实施，备忘）
 

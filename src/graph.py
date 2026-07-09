@@ -11,17 +11,6 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 try:
-    from scenario import (
-        DEFAULT_SCENARIO,
-        MASTER_CHECKS,
-        MASTER_PREFIXES,
-        MASTERS,
-        ROLE_NAMES,
-        SCORE_THRESHOLD,
-        Master,
-        Scenario,
-    )
-except ImportError:  # pragma: no cover
     from .scenario import (
         DEFAULT_SCENARIO,
         MASTER_CHECKS,
@@ -33,6 +22,17 @@ except ImportError:  # pragma: no cover
         Scenario,
     )
 
+except ImportError:  # pragma: no cover
+    from scenario import (
+        DEFAULT_SCENARIO,
+        MASTER_CHECKS,
+        MASTER_PREFIXES,
+        MASTERS,
+        ROLE_NAMES,
+        SCORE_THRESHOLD,
+        Master,
+        Scenario,
+    )
 # 向后兼容：历史代码 from graph import MASTERS / MASTER_PREFIXES 等仍可用
 __all__ = [
     "Master",
@@ -303,9 +303,9 @@ class BerkshireGraph:
                issues_by_master: Optional[Dict[str, List[str]]] = None):
         """多空辩论环节。"""
         try:
-            from debate import run_debate
-        except ImportError:  # pragma: no cover
             from .debate import run_debate
+        except ImportError:  # pragma: no cover
+            from debate import run_debate
         return run_debate(scores, issues_by_master=issues_by_master)
 
     def visualize(self) -> str:

@@ -1,5 +1,5 @@
 # Berkshire AI - Global State & Thesis Tracker
-> Last Updated: 2026-07-04 | Loop Engine: Active (L2 - Assisted) | **Version: V10.29**（多源证据 Brainstorm + SkillForge regression gate；累积 V10.28 闭环/A_B/信号/SkillForge）
+> Last Updated: 2026-07-09 | Loop Engine: Active (L2 - Assisted) | **Version: V10.29.1**（投研效果契约 + 后验周报 + 离线 E2E；累积 V10.29 Brainstorm / SkillForge gate 与 V10.28 闭环）
 
 ## 1. Active Portfolio Theses (活着的投资逻辑)
 | Ticker | Thesis | Confidence | Last Check | Next Trigger | Status |

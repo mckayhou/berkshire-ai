@@ -13,18 +13,6 @@ import sys
 from typing import Any, Dict, Optional
 
 try:
-    from decision_log import default_log_path, load_decisions
-    from eval_harness import run_multi_round
-    from experience_store import ExperienceStore, KeywordExperienceRetriever
-    from experience_store import default_log_path as exp_log_path
-    from graph import BerkshireGraph
-    from hypothesis import HypothesisStore
-    from hypothesis import default_log_path as hyp_log_path
-    from observability import run_context
-    from prompt_optimizer import StaticLLMClient
-    from reflect import reflect_ticker
-    from run_recorder import RunRecord, RunRecorder, default_run_log_path
-except ImportError:  # pragma: no cover
     from .decision_log import default_log_path, load_decisions
     from .eval_harness import run_multi_round
     from .experience_store import ExperienceStore, KeywordExperienceRetriever
@@ -36,6 +24,18 @@ except ImportError:  # pragma: no cover
     from .prompt_optimizer import StaticLLMClient
     from .reflect import reflect_ticker
     from .run_recorder import RunRecord, RunRecorder, default_run_log_path
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from decision_log import default_log_path, load_decisions
+    from eval_harness import run_multi_round
+    from experience_store import ExperienceStore, KeywordExperienceRetriever
+    from experience_store import default_log_path as exp_log_path
+    from graph import BerkshireGraph
+    from hypothesis import HypothesisStore
+    from hypothesis import default_log_path as hyp_log_path
+    from observability import run_context
+    from prompt_optimizer import StaticLLMClient
+    from reflect import reflect_ticker
+    from run_recorder import RunRecord, RunRecorder, default_run_log_path
 
 
 def build_status_report() -> Dict[str, Any]:
@@ -157,9 +157,9 @@ def cmd_optimize(args: argparse.Namespace) -> int:
 
 def cmd_cron(args: argparse.Namespace) -> int:
     try:
-        from cron_evolution import run_cron
-    except ImportError:
         from .cron_evolution import run_cron
+    except ImportError:
+        from cron_evolution import run_cron
     result = run_cron(args.task)
     payload = {
         "task": result.task,
@@ -173,12 +173,12 @@ def cmd_cron(args: argparse.Namespace) -> int:
 
 def cmd_cycle(args: argparse.Namespace) -> int:
     try:
-        from decision_log import DecisionRecord
-        from pipeline import run_full_cycle
-    except ImportError:
         from .decision_log import DecisionRecord
         from .pipeline import run_full_cycle
 
+    except ImportError:
+        from decision_log import DecisionRecord
+        from pipeline import run_full_cycle
     factor_scan = None
     limitup_scan = None
     if args.factor_scan:
@@ -222,9 +222,9 @@ def cmd_run_example(_args: argparse.Namespace) -> int:
     scores = {"duan": 0.92, "buffett": 0.68, "munger": 0.85, "lilu": 0.55}
     gradients = graph.backward(scores)
     try:
-        from optimizer import TextualGradientDescent
-    except ImportError:
         from .optimizer import TextualGradientDescent
+    except ImportError:
+        from optimizer import TextualGradientDescent
     optimizer = TextualGradientDescent(graph)
     updates = optimizer.step(gradients)
     print("Updates needed:", len(updates))
@@ -292,10 +292,10 @@ def build_parser() -> argparse.ArgumentParser:
 
 def cmd_skill_evolve(args: argparse.Namespace) -> int:
     try:
-        from skill_forge.cli import main as skill_forge_main
-    except ImportError:
         from .skill_forge.cli import main as skill_forge_main
 
+    except ImportError:
+        from skill_forge.cli import main as skill_forge_main
     argv = [args.action]
 
     if args.action == "list":

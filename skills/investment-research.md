@@ -4,7 +4,7 @@ description: |
   对指定公司/股票进行系统化四大师投资研究（段永平-巴菲特-芒格-李录）。
   包含 AI 偏见自查、数据双源验证、金融严谨性工具调用（financial_rigor.py）、
   反面检验与明确结论。适合 OpenClaw / QwenPaw 等 Agent 运行时激活。
-version: 10.9
+version: 10.29.1
 ---
 
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
@@ -275,3 +275,55 @@ python3 tools/report_audit.py verdict \
 
 - **【准出】**：所有抽检点偏差 ≤ 1% → 报告可发布
 - **【打回】**：任意点偏差 > 1% → 修正对应数据后重新抽检，直到准出
+
+## 收尾：DecisionRecord 落盘（必须 · 投研效果契约）
+
+**无 DecisionRecord 的报告不算完成。** 后验 KPI、校准与 TextGrad 反馈都依赖这条记录。
+
+### 必填字段
+
+| 字段 | 含义 | 示例 |
+|------|------|------|
+| `ticker` / `date` / `price_anchor` | 标的、决策日、锚点价 | `NVDA`, `2026-07-06`, `198` |
+| `scores` | 四大师 0~1 信心 | `{"duan":0.88,"buffett":0.9,"munger":0.82,"lilu":0.85}` |
+| `thesis` | 一句话投资逻辑 | `AI 算力核心 + CUDA 护城河` |
+| `kill_condition` | 论点失效条件 | `PE>40 或 份额<75%` |
+| `action` | `buy`/`add`/`hold`/`reduce`/`exit`/`watch` | `hold` |
+| `horizon_days` | 后验窗口（日历日） | `20`（默认） |
+| `depth` | `lite`/`standard`/`deep` | 与本次研究深度一致 |
+| `skill` | 来源技能名 | `investment-research` |
+
+行动卡中的「综合立场 / 操作建议 / 论点失效条件」必须映射进上表，禁止只写 Markdown 不落盘。
+
+### 落盘命令
+
+```bash
+python3 tools/log_decision.py append \
+  --ticker <代码> --date <YYYY-MM-DD> --price <锚点价> \
+  --scores '{"duan":0.8,"buffett":0.75,"munger":0.7,"lilu":0.65}' \
+  --thesis "<一句话逻辑>" \
+  --kill "<失效条件>" \
+  --action hold --horizon 20 --depth standard --skill investment-research
+```
+
+无分项分数时可用 `--stance 0.75`（四大师同分）。检查契约：
+
+```bash
+python3 tools/log_decision.py gaps          # 缺字段清单
+python3 tools/log_decision.py list --json   # 全部决策
+```
+
+### 完成后检查清单（standard/deep 准出前全勾）
+
+- [ ] 行动卡完整（见 `docs/action-card.md`）
+- [ ] `report_audit` 准出（lite 可跳过 audit，**仍须** DecisionRecord）
+- [ ] `log_decision.py append` 成功且 `research_complete=true`
+- [ ] `kill_condition` 与行动卡「论点失效条件」一致
+- [ ] 已知持仓时 thesis 已写入 / 更新 `config/state.md` 或平台 state
+
+### 后验（不在本技能内自动跑，但必须可被跑）
+
+```bash
+# 每周：干净后验周报（优先离线 price map；有网可加 --network）
+python3 tools/posterior_weekly.py report --as-of $(date +%F)
+```

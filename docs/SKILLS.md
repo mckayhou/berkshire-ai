@@ -23,7 +23,7 @@
 | [investment-team.md](../skills/investment-team.md) | **多 Agent 并行**团队研究 | 「investment-team 研究 NVDA」 |
 | [investment-checklist.md](../skills/investment-checklist.md) | 研究检查清单 | 「按 checklist 检查这篇研报」 |
 | [financial-data.md](../skills/financial-data.md) | **数据源规范**（各技能必须引用） | 「这个数据从哪来」 |
-| [thesis-tracker.md](../skills/thesis-tracker.md) | 论文状态跟踪 / TRIGGERED | 「更新 thesis 状态」 |
+| [thesis-tracker.md](../skills/thesis-tracker.md) | 论文状态跟踪 / TRIGGERED；**须 log_decision 落盘** | 「更新 thesis 状态」 |
 | [portfolio-review.md](../skills/portfolio-review.md) | 组合审视 | 「portfolio review」 |
 | [earnings-review.md](../skills/earnings-review.md) | 单公司财报季分析 | 「Q4 earnings review」 |
 | [earnings-team.md](../skills/earnings-team.md) | 财报季多 Agent 团队 | 「earnings-team」 |
@@ -48,6 +48,8 @@
 |------|----------|
 | 数据获取 | `data_sources.py`, `ashare_data.py`, `src/tavily_search.py` |
 | 数字验证 | `financial_rigor.py`（**必须**） |
+| **研究收尾落盘** | `log_decision.py append`（**必须**，投研效果契约） |
+| 后验周报 | `posterior_weekly.py report` |
 | 报告准出 | `report_audit.py` |
 | 组合上下文 | `portfolio_scan.py`, `portfolio_risk.py` |
 | A 股候选 | `factor_screener_bridge`, `limitup_screener_bridge` |

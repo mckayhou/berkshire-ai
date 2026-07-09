@@ -13,15 +13,15 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 try:
-    from eval_harness import run_multi_round
-    from graph import BerkshireGraph, Variable
-    from graph_analysis import PromptHeuristicAnalysisRunner, mean_master_scores
-    from prompt_optimizer import LLMClient
-except ImportError:  # pragma: no cover
     from .eval_harness import run_multi_round
     from .graph import BerkshireGraph, Variable
     from .graph_analysis import PromptHeuristicAnalysisRunner, mean_master_scores
     from .prompt_optimizer import LLMClient
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from eval_harness import run_multi_round
+    from graph import BerkshireGraph, Variable
+    from graph_analysis import PromptHeuristicAnalysisRunner, mean_master_scores
+    from prompt_optimizer import LLMClient
 
 TARGET_AVG = 0.85
 MASTER_KEYS = ("duan", "buffett", "munger", "lilu")

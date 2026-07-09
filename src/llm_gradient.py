@@ -24,15 +24,15 @@ from __future__ import annotations
 from typing import Dict, List, Optional
 
 try:
-    from graph import SCORE_THRESHOLD, BerkshireGraph, Gradient
-    from observability import get_logger
-    from prompt_optimizer import LLMClient
-    from sanitize import sanitize_untrusted
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import SCORE_THRESHOLD, BerkshireGraph, Gradient
     from .observability import get_logger
     from .prompt_optimizer import LLMClient
     from .sanitize import sanitize_untrusted
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import SCORE_THRESHOLD, BerkshireGraph, Gradient
+    from observability import get_logger
+    from prompt_optimizer import LLMClient
+    from sanitize import sanitize_untrusted
 
 
 _CRITIC_SYSTEM = (
@@ -159,10 +159,10 @@ def enrich_gradients_with_llm(
     gen = LLMGradientGenerator(llm, threshold=threshold)
 
     try:
-        from graph import MASTER_PREFIXES, ROLE_NAMES
-    except ImportError:  # pragma: no cover - 包内导入回退
         from .graph import MASTER_PREFIXES, ROLE_NAMES
 
+    except ImportError:  # pragma: no cover - 包内导入回退
+        from graph import MASTER_PREFIXES, ROLE_NAMES
     for prefix in MASTER_PREFIXES:
         analysis_node = graph.analysis_node(prefix)
         grad = gradients.get(analysis_node)

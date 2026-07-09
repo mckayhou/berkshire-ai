@@ -20,15 +20,6 @@ import os
 from typing import Any, Dict
 
 try:
-    # 绝对导入解析到 src/config.py；与仓库根 config/ 目录同名，mypy 误判故忽略
-    from access_control import RateLimiter, check_api_key  # type: ignore[attr-defined]
-    from config import doctor as config_doctor  # type: ignore[attr-defined]
-    from debate import run_debate
-    from decision_log import DecisionRecord
-    from metrics_export import ServiceMetrics, render_prometheus
-    from observability import get_logger
-    from realized_feedback import realized_scores
-except ImportError:  # pragma: no cover - 包内导入回退
     from .access_control import RateLimiter, check_api_key
     from .config import doctor as config_doctor
     from .debate import run_debate
@@ -37,7 +28,17 @@ except ImportError:  # pragma: no cover - 包内导入回退
     from .observability import get_logger
     from .realized_feedback import realized_scores
 
-APP_VERSION = "10.29.0"
+except ImportError:  # pragma: no cover - 包内导入回退
+    # 绝对导入解析到 src/config.py；与仓库根 config/ 目录同名，mypy 误判故忽略
+    from access_control import RateLimiter, check_api_key  # type: ignore[attr-defined]
+    from config import doctor as config_doctor  # type: ignore[attr-defined]
+    from debate import run_debate
+    from decision_log import DecisionRecord
+    from metrics_export import ServiceMetrics, render_prometheus
+    from observability import get_logger
+    from realized_feedback import realized_scores
+
+APP_VERSION = "10.29.1"
 SERVICE_NAME = "berkshire-ai"
 
 
@@ -248,9 +249,9 @@ def run() -> None:  # pragma: no cover - 进程入口，由容器/CLI 调用
         ) from e
 
     try:
-        from config import load_dotenv  # type: ignore[attr-defined]
-    except ImportError:  # pragma: no cover
         from .config import load_dotenv
+    except ImportError:  # pragma: no cover
+        from config import load_dotenv  # type: ignore[attr-defined]
     load_dotenv()
 
     host = os.getenv("BERKSHIRE_HOST", "0.0.0.0")  # noqa: S104 - 容器内监听

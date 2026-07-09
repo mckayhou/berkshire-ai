@@ -7,8 +7,11 @@ import json
 import os
 import sys
 
-import numpy as np
 import pytest
+
+np = pytest.importorskip("numpy")
+# torch 仅训练路径需要；decode/ops 在 import 链上可能要求
+pytest.importorskip("torch")
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 

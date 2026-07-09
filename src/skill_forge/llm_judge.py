@@ -21,11 +21,11 @@ if TYPE_CHECKING:
     from prompt_optimizer import LLMClient
 
 try:
-    from prompt_optimizer import LLMClient, OpenAICompatibleLLMClient
-    from sanitize import sanitize_untrusted
-except ImportError:  # pragma: no cover
     from ..prompt_optimizer import LLMClient, OpenAICompatibleLLMClient
     from ..sanitize import sanitize_untrusted
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from prompt_optimizer import LLMClient, OpenAICompatibleLLMClient
+    from sanitize import sanitize_untrusted
 
 
 @dataclass

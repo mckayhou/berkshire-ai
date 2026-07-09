@@ -19,14 +19,6 @@ from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional, Protocol, runtime_checkable
 
 try:
-    from eval_harness import EvolutionReport, run_multi_round
-    from experience_store import Experience, ExperienceRetriever, ExperienceStore
-    from graph import BerkshireGraph
-    from hypothesis import STATUS_OPEN, Hypothesis, HypothesisStore
-    from observability import get_logger, run_context
-    from prompt_optimizer import LLMClient
-    from sanitize import sanitize_untrusted
-except ImportError:  # pragma: no cover - 包内导入回退
     from .eval_harness import EvolutionReport, run_multi_round
     from .experience_store import Experience, ExperienceRetriever, ExperienceStore
     from .graph import BerkshireGraph
@@ -34,6 +26,14 @@ except ImportError:  # pragma: no cover - 包内导入回退
     from .observability import get_logger, run_context
     from .prompt_optimizer import LLMClient
     from .sanitize import sanitize_untrusted
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from eval_harness import EvolutionReport, run_multi_round
+    from experience_store import Experience, ExperienceRetriever, ExperienceStore
+    from graph import BerkshireGraph
+    from hypothesis import STATUS_OPEN, Hypothesis, HypothesisStore
+    from observability import get_logger, run_context
+    from prompt_optimizer import LLMClient
+    from sanitize import sanitize_untrusted
 
 QualityFn = Callable[[str], float]
 
@@ -159,7 +159,10 @@ def _parse_hypothesis_lines(raw: str, ticker: str) -> List[Hypothesis]:
 
 
 class LLMHypothesisProposer:
-    """LLM 生成假设（可注入 LLMClient）；失败返回空列表，不抛到主链路。"""
+    """LLM 生成假设（可注入 LLMClient）；失败返回空列表，不抛到主链路。
+
+    V10.29: 支持注入失败根因作为负面约束（negative_constraints）。
+    """
 
     def __init__(self, llm: LLMClient):
         self.llm = llm
@@ -171,7 +174,17 @@ class LLMHypothesisProposer:
         recent: List[Experience],
         retriever: Optional[ExperienceRetriever] = None,
         k: int = 3,
+        negative_constraints: Optional[List[str]] = None,
     ) -> List[Hypothesis]:
+        """生成假设。
+
+        Args:
+            ticker: 标的代码
+            recent: 近期经验列表
+            retriever: 经验检索器
+            k: 返回数量
+            negative_constraints: V10.29 负面约束（失败根因列表），注入到 prompt 中
+        """
         pool = list(recent)
         if retriever is not None:
             try:
@@ -184,10 +197,25 @@ class LLMHypothesisProposer:
                 for e in pool[: max(k, 5)]
             )
         ) or "（无历史经验）"
+
+        # V10.29: 注入负面约束（失败根因）
+        negative_section = ""
+        if negative_constraints:
+            neg_safe = sanitize_untrusted(
+                "\n".join(f"- {c}" for c in negative_constraints[:5])
+            )
+            if neg_safe:
+                negative_section = (
+                    f"\n\n<<<NEGATIVE_CONSTRAINTS\n"
+                    f"以下是历史失败根因，请避免重复这些错误：\n{neg_safe}\n"
+                    f"NEGATIVE_CONSTRAINTS>>>"
+                )
+
         user = (
             f"标的：{ticker.upper()}\n"
             f"请提出最多 {k} 条可证伪投资命题（每行一个 JSON 对象）。\n\n"
             f"<<<UNTRUSTED_EXPERIENCE\n{safe}\nUNTRUSTED_EXPERIENCE"
+            f"{negative_section}"
         )
         try:
             raw = self.llm.complete(_PROPOSE_SYSTEM, user)
@@ -248,6 +276,7 @@ def run_rd_cycle(
     run_id: Optional[str] = None,
     rerun_analysis: bool = False,
     analysis_runner: Optional[Any] = None,
+    negative_constraints: Optional[List[str]] = None,
 ) -> RDCycleReport:
     """跑 R/D 双循环：每轮先 R（提假设）再 D（验证门控进化）。
 
@@ -264,6 +293,7 @@ def run_rd_cycle(
         dev_rounds: 每轮 D 段 `run_multi_round` 最大轮数。
         rerun_analysis: D 段是否每轮改写后重跑分析（V10.26）。
         analysis_runner: 可选分析执行器。
+        negative_constraints: V10.29 负面约束（失败根因列表），注入到 Hypothesis 生成。
     """
     tkr = str(ticker).strip().upper()
     logger = get_logger("research_loop")
@@ -282,9 +312,20 @@ def run_rd_cycle(
             hyps: List[Hypothesis] = []
             if proposer is not None:
                 try:
-                    hyps = proposer.propose(
-                        ticker=tkr, recent=recent, retriever=retriever, k=3
-                    )
+                    # V10.29: 支持 negative_constraints 注入
+                    propose_kwargs = {
+                        "ticker": tkr,
+                        "recent": recent,
+                        "retriever": retriever,
+                        "k": 3,
+                    }
+                    # 如果 proposer 支持 negative_constraints（如 LLMHypothesisProposer）
+                    if negative_constraints and hasattr(proposer, "propose"):
+                        import inspect
+                        sig = inspect.signature(proposer.propose)
+                        if "negative_constraints" in sig.parameters:
+                            propose_kwargs["negative_constraints"] = negative_constraints
+                    hyps = proposer.propose(**propose_kwargs)
                 except Exception:  # noqa: BLE001
                     hyps = []
                 if hypothesis_store is not None:

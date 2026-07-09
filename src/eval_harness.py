@@ -33,17 +33,17 @@ if TYPE_CHECKING:
     from graph_analysis import AnalysisRunner
 
 try:
-    from graph import BerkshireGraph, Gradient
-    from observability import get_logger, run_context
-    from optimizer import TextualGradientDescent
-    from prompt_optimizer import LLMClient
-    from prompt_validation import StaticPromptScorer
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import BerkshireGraph, Gradient
     from .observability import get_logger, run_context
     from .optimizer import TextualGradientDescent
     from .prompt_optimizer import LLMClient
     from .prompt_validation import StaticPromptScorer
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import BerkshireGraph, Gradient
+    from observability import get_logger, run_context
+    from optimizer import TextualGradientDescent
+    from prompt_optimizer import LLMClient
+    from prompt_validation import StaticPromptScorer
 
 
 QualityFn = Callable[[str], float]
@@ -162,9 +162,9 @@ def run_multi_round(
     runner = analysis_runner
     if rerun_analysis and runner is None:
         try:
-            from graph_analysis import PromptHeuristicAnalysisRunner
-        except ImportError:
             from .graph_analysis import PromptHeuristicAnalysisRunner
+        except ImportError:
+            from graph_analysis import PromptHeuristicAnalysisRunner
         runner = PromptHeuristicAnalysisRunner()
 
     def _run_analysis() -> Optional[Dict[str, float]]:
@@ -174,9 +174,9 @@ def run_multi_round(
 
     def _mean_quality_from_scores(scores: Dict[str, float]) -> float:
         try:
-            from graph_analysis import mean_master_scores
-        except ImportError:
             from .graph_analysis import mean_master_scores
+        except ImportError:
+            from graph_analysis import mean_master_scores
         if prompt_nodes:
             prefixes = [
                 n[: -len("_prompt")]
@@ -199,9 +199,9 @@ def run_multi_round(
     def _build_grads(scores: Optional[Dict[str, float]] = None) -> Dict[str, Gradient]:
         if rerun_analysis and runner is not None:
             try:
-                from graph_analysis import prompt_gradients_from_scores
-            except ImportError:
                 from .graph_analysis import prompt_gradients_from_scores
+            except ImportError:
+                from graph_analysis import prompt_gradients_from_scores
             s = scores if scores is not None else _run_analysis()
             if not s:
                 return {}

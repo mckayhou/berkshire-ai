@@ -23,6 +23,7 @@ Rules:
 | 新 CLI / 工具 | `tools/README.md`、`docs/USER_GUIDE.md`（若用户可见）、`TESTING.md` §验收入口 |
 | 新引擎 / 管线 | `docs/ENGINE.md`、`docs/README.md`、必要时 `VERSION_HISTORY.md` |
 | 新 Agent 技能 / 技能进化 | `docs/SKILLS.md`、专题 doc（如 `docs/SKILL_EVOLUTION.md`）、`docs/ROADMAP.md` |
+| 投研效果 / 决策后验 | `docs/RESEARCH_EFFECTIVENESS.md`、`docs/action-card.md`、相关 skill 收尾、`tests/e2e/test_research_effectiveness_e2e.py` |
 | 测试 / fixture | `TESTING.md` 索引、`tests/fixtures/*/README.md`（若有） |
 
 3. **图谱**：改过 `src/` 或 `tools/` 后执行 `graphify update .`

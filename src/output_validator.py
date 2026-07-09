@@ -19,9 +19,9 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 try:
-    from scenario import MASTER_PREFIXES, ROLE_NAMES
-except ImportError:  # pragma: no cover
     from .scenario import MASTER_PREFIXES, ROLE_NAMES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from scenario import MASTER_PREFIXES, ROLE_NAMES
 
 
 # ---------------------------------------------------------------------------

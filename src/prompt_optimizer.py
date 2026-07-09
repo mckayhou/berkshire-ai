@@ -28,17 +28,6 @@ import time
 from typing import Any, Callable, Dict, List, Optional, Sequence
 
 try:
-    from graph import Gradient, Variable
-    from observability import (
-        LLMCallMetrics,
-        MetricsCollector,
-        approx_tokens,
-        estimate_cost,
-        get_run_id,
-        log_llm_call,
-    )
-    from sanitize import sanitize_untrusted
-except ImportError:  # pragma: no cover - 包内导入回退
     from .graph import Gradient, Variable
     from .observability import (
         LLMCallMetrics,
@@ -51,6 +40,17 @@ except ImportError:  # pragma: no cover - 包内导入回退
     from .sanitize import sanitize_untrusted
 
 
+except ImportError:  # pragma: no cover - 包内导入回退
+    from graph import Gradient, Variable
+    from observability import (
+        LLMCallMetrics,
+        MetricsCollector,
+        approx_tokens,
+        estimate_cost,
+        get_run_id,
+        log_llm_call,
+    )
+    from sanitize import sanitize_untrusted
 # ---------------------------------------------------------------------------
 # LLM 客户端：可注入/可 mock 的接口（核心引擎不硬连网络）
 # ---------------------------------------------------------------------------
@@ -309,6 +309,7 @@ def apply_gradient(
     *,
     base_prompt: Optional[str] = None,
     examples: Optional[Sequence[Any]] = None,
+    enable_paired_replay: bool = True,
 ) -> Optional[str]:
     """真·文本梯度步：用 LLM 把梯度落到 Prompt 上，返回改写后的新 Prompt。
 
@@ -318,11 +319,13 @@ def apply_gradient(
         llm: LLMClient（真实或 mock）。
         base_prompt: 当前 Prompt 文本；缺省时取 variable.value。
         examples: 可选历史经验 few-shot（默认 None → 行为与改动前一致）。
+        enable_paired_replay: 是否启用 Paired Replay 防劣化（默认 True）。
 
     Returns:
         改写后的新 Prompt 文本；以下情况返回 None（交由上层降级）：
         - gradient.ok（无需改写）；
-        - 既无 base_prompt 也无 variable.value（无可改写底稿）。
+        - 既无 base_prompt 也无 variable.value（无可改写底稿）；
+        - Paired Replay 检测到退化（衰减率超阈值）。
 
     不吞 LLM 异常：网络/调用错误向上抛，由 optimizer.step() 决定是否降级。
     """
@@ -336,4 +339,37 @@ def apply_gradient(
     messages = build_rewrite_messages(variable, gradient, current, examples=examples)
     raw = llm.complete(messages["system"], messages["user"])
     new_prompt = _clean(raw)
-    return new_prompt or None
+    if not new_prompt:
+        return None
+
+    # V10.29: Paired Replay 防劣化
+    if enable_paired_replay:
+        try:
+            from paired_replay import check_paired_replay
+            ticker = getattr(variable, "ticker", "") or ""
+            result = check_paired_replay(
+                old_prompt=current,
+                new_prompt=new_prompt,
+                ticker=ticker,
+            )
+            if not result.passed:
+                # 衰减率超阈值，回滚到旧 prompt
+                log_llm_call(
+                    model="paired_replay",
+                    input_tokens=0,
+                    output_tokens=0,
+                    cost_usd=0.0,
+                    latency_ms=0,
+                    extra={
+                        "action": "rollback",
+                        "decay_rate": result.decay_rate,
+                        "ticker": ticker,
+                    },
+                )
+                return None  # 返回 None 表示降级，上层保留旧 prompt
+        except ImportError:
+            pass  # paired_replay 模块不存在，跳过
+        except Exception:
+            pass  # 回放失败不阻塞主流程
+
+    return new_prompt

@@ -16,9 +16,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 try:
-    from observability import get_run_id
-except ImportError:  # pragma: no cover
     from .observability import get_run_id
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from observability import get_run_id
 
 ENV_TRACE_DIR = "BERKSHIRE_TRACE_DIR"
 DEFAULT_TRACE_DIR = os.path.join(os.path.expanduser("~"), ".qwenpaw", "berkshire_traces")

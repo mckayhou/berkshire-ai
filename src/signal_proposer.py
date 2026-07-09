@@ -13,13 +13,13 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 try:
-    from experience_store import Experience, ExperienceRetriever
-    from hypothesis import STATUS_OPEN, Hypothesis
-    from research_loop import HypothesisProposer
-except ImportError:  # pragma: no cover
     from .experience_store import Experience, ExperienceRetriever
     from .hypothesis import STATUS_OPEN, Hypothesis
     from .research_loop import HypothesisProposer
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from experience_store import Experience, ExperienceRetriever
+    from hypothesis import STATUS_OPEN, Hypothesis
+    from research_loop import HypothesisProposer
 
 
 def _scan_tickers(scan: Optional[dict]) -> List[dict]:

@@ -10,9 +10,9 @@ from __future__ import annotations
 from typing import Callable, Dict, Optional, Protocol, runtime_checkable
 
 try:
-    from graph import MASTER_PREFIXES, BerkshireGraph
-except ImportError:  # pragma: no cover
     from .graph import MASTER_PREFIXES, BerkshireGraph
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from graph import MASTER_PREFIXES, BerkshireGraph
 
 ScoreFn = Callable[[str], float]
 

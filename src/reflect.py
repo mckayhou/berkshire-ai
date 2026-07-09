@@ -12,13 +12,13 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 try:
-    from decision_log import load_decisions
-    from experience_store import VERDICT_CONFIRMED, VERDICT_REFUTED, Experience, ExperienceStore
-    from graph import MASTER_PREFIXES
-except ImportError:  # pragma: no cover
     from .decision_log import load_decisions
     from .experience_store import VERDICT_CONFIRMED, VERDICT_REFUTED, Experience, ExperienceStore
     from .graph import MASTER_PREFIXES
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from decision_log import load_decisions
+    from experience_store import VERDICT_CONFIRMED, VERDICT_REFUTED, Experience, ExperienceStore
+    from graph import MASTER_PREFIXES
 
 
 @dataclass

@@ -20,9 +20,9 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Protocol, runtime_checkable
 
 try:
-    from trace_recorder import TraceRecorder, default_trace_dir
-except ImportError:  # pragma: no cover
     from .trace_recorder import TraceRecorder, default_trace_dir
+except ImportError:  # pragma: no cover - flat PYTHONPATH=src
+    from trace_recorder import TraceRecorder, default_trace_dir
 
 
 # ---------------------------------------------------------------------------
