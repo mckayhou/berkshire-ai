@@ -704,7 +704,35 @@ def _print_result(res):
             print(f"  {data}")
 
 
+def _load_repo_dotenv() -> None:
+    """CLI 启动时加载仓库根 .env（不覆盖已有环境变量）。"""
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    env_path = os.path.join(root, ".env")
+    if not os.path.isfile(env_path):
+        return
+    try:
+        sys.path.insert(0, os.path.join(root, "src"))
+        from config import load_dotenv  # type: ignore
+
+        load_dotenv(env_path, override=False)
+    except Exception:
+        # 无 config 时手写最小解析
+        try:
+            with open(env_path, encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line or line.startswith("#") or "=" not in line:
+                        continue
+                    k, _, v = line.partition("=")
+                    k, v = k.strip(), v.strip().strip("'\"")
+                    if k and k not in os.environ:
+                        os.environ[k] = v
+        except OSError:
+            pass
+
+
 def main():
+    _load_repo_dotenv()
     parser = argparse.ArgumentParser(
         description="A股数据多源降级获取层",
         formatter_class=argparse.RawDescriptionHelpFormatter,
