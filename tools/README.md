@@ -428,10 +428,16 @@ print(risk_analysis(rets))  # 年化收益、波动、夏普、最大回撤等
 
 ## src/tavily_search.py（在线，位于 `src/`）
 
-四大师实时检索；**不在** `tools/` 目录。
+四大师实时检索；**不在** `tools/` 目录。Agent 侧优先用 **AnySearch Skill**（`skills/anysearch/` / `anysearch-web.md`）。
 
 ```bash
-export TAVILY_API_KEYS=key1,key2
+# Skill（推荐）
+python3 skills/anysearch/scripts/anysearch_cli.py search "腾讯 PE" --max_results 5
+
+# 流水线 hybrid（Tavily 主 + AnySearch 回退）
+export TAVILY_API_KEYS=key1,key2   # 可选
+export ANYSEARCH_API_KEY=...       # 项目 .env 或 skills/anysearch/.env
+export SEARCH_MODE=hybrid
 python3 src/tavily_search.py stock 600519 贵州茅台
 python3 src/tavily_search.py financial 0700.HK
 python3 src/tavily_search.py news 互联网 腾讯

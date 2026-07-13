@@ -347,19 +347,37 @@ python3 tools/aktools_diagnostic.py 600519
 python3 tools/aktools_diagnostic.py AAPL --json -o reports/aapl_diag.md
 ```
 
-### 5.4 Tavily 实时检索
+### 5.4 实时检索（AnySearch Skill + Tavily hybrid）
+
+**Agent 首选**：AnySearch Skill（垂直域 / batch / extract），见 `skills/anysearch-web.md` 与 `skills/anysearch/SKILL.md`。
 
 ```bash
-export TAVILY_API_KEYS=key1,key2
+# 1) 配置 Key（写入 .env，切勿提交；也可 skills/anysearch/.env）
+# export ANYSEARCH_API_KEY=as_sk_...
+# export TAVILY_API_KEYS=key1,key2          # 可选主路
+# export SEARCH_MODE=hybrid                # auto|tavily|anysearch|hybrid
 
-# 子命令（与 config/skill.md 一致）
+# 2) Skill CLI（官方 skill，推荐）
+python3 skills/anysearch/scripts/anysearch_cli.py search "腾讯控股 PE 市值" --max_results 5
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+python3 skills/anysearch/scripts/anysearch_cli.py extract "https://example.com/page"
+
+# 3) 流水线 CLI（Tavily + AnySearch 补充/回退）
 python3 src/tavily_search.py stock 600519 贵州茅台
 python3 src/tavily_search.py financial 0700.HK
 python3 src/tavily_search.py news 互联网 腾讯
-python3 src/tavily_search.py test   # 集成自测
+python3 src/tavily_search.py search "腾讯 PE 市值" --mode anysearch
+python3 src/tavily_search.py test
 ```
 
-多 Key 轮询；也可用单变量 `TAVILY_API_KEY`。无 Key 时相关技能应降级为公开源或跳过。
+| 模式 | 行为 |
+|------|------|
+| `auto` | 有 Tavily Key → Tavily，否则 AnySearch |
+| `hybrid` | Tavily 优先，失败/空结果回退 AnySearch（推荐） |
+| `anysearch` / `tavily` | 仅单后端 |
+| `SEARCH_SUPPLEMENT=1` | hybrid 下双侧合并（URL 去重） |
+
+文档：[anysearch.com/docs](https://www.anysearch.com/docs)。同步平台：`./update-platforms.sh`。
 
 ---
 
@@ -699,7 +717,10 @@ python3 tools/xueqiu_scraper.py --user-id <ID> --keywords 拼多多,PDD --output
 
 | 变量 | 作用 |
 |------|------|
-| `TAVILY_API_KEYS` | 实时检索多 Key |
+| `TAVILY_API_KEYS` | 实时检索多 Key（Tavily 主路） |
+| `ANYSEARCH_API_KEY(S)` | AnySearch 补充/回退（可选；无 Key 可匿名） |
+| `SEARCH_MODE` | `auto`/`tavily`/`anysearch`/`hybrid`（默认 auto） |
+| `SEARCH_SUPPLEMENT` | `1` 时 hybrid 合并双侧结果 |
 | `BERKSHIRE_LLM_*` | Prompt 改写 LLM |
 | `BERKSHIRE_SENSITIVITY` | 收益反馈灵敏度（默认 0.5） |
 | `BERKSHIRE_DECISION_LOG` | 决策 JSONL 路径 |

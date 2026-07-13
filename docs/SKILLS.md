@@ -46,7 +46,7 @@
 
 | 阶段 | 推荐工具 |
 |------|----------|
-| 数据获取 | `data_sources.py`, `ashare_data.py`, `src/tavily_search.py` |
+| 数据获取 | `anysearch-web` / `skills/anysearch/`（AnySearch Skill）, `data_sources.py`, `ashare_data.py`, `src/tavily_search.py`（Tavily+AnySearch hybrid） |
 | 数字验证 | `financial_rigor.py`（**必须**） |
 | **研究收尾落盘** | `log_decision.py append`（**必须**，投研效果契约） |
 | 后验周报 | `posterior_weekly.py report` |

@@ -36,6 +36,23 @@
 
 ## 📜 版本历史
 
+### V10.29.2 - 2026-07-13 (AnySearch Skill + Tavily hybrid)
+
+**变更内容**:
+- 引入官方 **AnySearch Skill**：`skills/anysearch/`（CLI search / vertical / batch / extract）
+- Berkshire 入口：`skills/anysearch-web.md`；`financial-data` 优先走 AnySearch
+- `src/tavily_search.py`：AnySearch 补充/回退（`SEARCH_MODE=auto|hybrid|...`），`load_dotenv` 读 Key
+- `update-platforms.sh`：同步目录型 skill 到 OpenClaw / QwenPaw
+- 离线测试：`tests/test_tools_network.py` 覆盖 AnySearch normalize / hybrid fallback / supplement
+
+**测试结果**:
+- [x] 单元测试: `pytest tests/test_tools_network.py` 25 passed
+- [x] Skill CLI 手工连通（需本地 `ANYSEARCH_API_KEY`，不入库）
+
+**结论**: ✅ 上线（Key 仅 `.env` / `skills/anysearch/.env`）
+
+---
+
 ### V10.29.1 - 2026-07-09 (投研效果契约 + 后验周报 + 离线 E2E)
 
 将「过程质量」接到可证伪的决策后验（不宣称 alpha，先修数据契约）。

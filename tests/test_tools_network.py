@@ -106,7 +106,9 @@ def test_search_retries_transient_then_succeeds(monkeypatch):
     monkeypatch.setattr(tv.httpx, "Client", _fake_client_factory(actions))
     s = tv.TavilySearcher(api_keys=["k"])
     res = s.search("q")
-    assert res == {"answer": "ok", "results": []}
+    assert res["answer"] == "ok"
+    assert res["results"] == []
+    assert res.get("provider") == "tavily"
 
 
 def test_search_5xx_retries_then_gives_up(monkeypatch):
@@ -155,6 +157,157 @@ def test_get_stock_data_propagates_error(monkeypatch):
     s = tv.TavilySearcher(api_keys=["k"])
     monkeypatch.setattr(s, "search", lambda *a, **k: {"error": "boom", "results": []})
     assert s.get_stock_data("x", "y") == {"error": "boom"}
+
+
+# ===========================================================================
+# AnySearch + Hybrid
+# ===========================================================================
+def test_load_anysearch_keys(monkeypatch):
+    monkeypatch.setenv("ANYSEARCH_API_KEYS", "a1, a2")
+    monkeypatch.delenv("ANYSEARCH_API_KEY", raising=False)
+    assert tv._load_anysearch_keys() == ["a1", "a2"]
+    monkeypatch.delenv("ANYSEARCH_API_KEYS", raising=False)
+    monkeypatch.setenv("ANYSEARCH_API_KEY", "solo")
+    assert tv._load_anysearch_keys() == ["solo"]
+
+
+def test_anysearch_normalize_response():
+    s = tv.AnySearchSearcher(api_keys=[], allow_anonymous=True)
+    payload = {
+        "code": 0,
+        "message": "success",
+        "request_id": "rid",
+        "data": {
+            "results": [
+                {
+                    "title": "T",
+                    "url": "https://example.com/x",
+                    "snippet": "snip",
+                    "content": "full content here",
+                }
+            ],
+            "metadata": {"total_results": 1},
+        },
+    }
+    out = s._normalize_response(payload, max_results=5)
+    assert out["provider"] == "anysearch"
+    assert out["request_id"] == "rid"
+    assert out["results"][0]["content"] == "full content here"
+    assert "snip" in out["answer"] or out["answer"]
+
+
+def test_anysearch_search_success(monkeypatch):
+    monkeypatch.setattr(tv.time, "sleep", lambda *_: None)
+    body = {
+        "code": 0,
+        "message": "success",
+        "request_id": "r1",
+        "data": {
+            "results": [
+                {"title": "A", "url": "https://a.com", "snippet": "s", "content": "c"}
+            ],
+            "metadata": {"total_results": 1},
+        },
+    }
+    actions = [_Resp(200, body)]
+    monkeypatch.setattr(tv.httpx, "Client", _fake_client_factory(actions))
+    s = tv.AnySearchSearcher(api_keys=[], allow_anonymous=True)
+    res = s.search("tencent")
+    assert "error" not in res
+    assert res["provider"] == "anysearch"
+    assert res["results"][0]["title"] == "A"
+
+
+def test_anysearch_empty_query():
+    s = tv.AnySearchSearcher(api_keys=[], allow_anonymous=True)
+    res = s.search("  ")
+    assert "error" in res
+
+
+def test_hybrid_fallback_to_anysearch(monkeypatch):
+    monkeypatch.setattr(tv.time, "sleep", lambda *_: None)
+    # Tavily fails with 503 exhaust; AnySearch succeeds
+    t_actions = [_Resp(503), _Resp(503), _Resp(503)]
+    a_body = {
+        "code": 0,
+        "data": {
+            "results": [
+                {"title": "via-any", "url": "https://b.com", "content": "x", "snippet": "x"}
+            ]
+        },
+    }
+
+    t_client = _fake_client_factory(t_actions)
+    a_client = _fake_client_factory([_Resp(200, a_body)])
+    clients = [t_client, a_client]
+    call_n = {"i": 0}
+
+    def _client_factory(*a, **k):
+        # TavilySearcher uses Client once per attempt; after exhaust Hybrid uses AnySearch
+        idx = min(call_n["i"], len(clients) - 1)
+        # Advance only when entering a new Client context for remaining attempts:
+        # simpler: first N posts go tavily, then any
+        return clients[0] if call_n["i"] == 0 or len(t_actions) > 0 else clients[1]
+
+    # More reliable: patch each searcher's Client separately after construct
+    h = tv.HybridSearcher(
+        mode="hybrid",
+        tavily_keys=["tk"],
+        anysearch_keys=[],
+        supplement=False,
+    )
+    monkeypatch.setattr(h._tavily, "search", lambda *a, **k: {"error": "tavily-down", "results": [], "provider": "tavily"})
+    monkeypatch.setattr(h._any, "search", lambda *a, **k: {
+        "answer": "ok",
+        "results": [{"title": "via-any", "url": "https://b.com", "content": "x"}],
+        "provider": "anysearch",
+    })
+    res = h.search("q")
+    assert res["provider"] == "anysearch"
+    assert res["results"][0]["title"] == "via-any"
+
+
+def test_hybrid_supplement_merges(monkeypatch):
+    h = tv.HybridSearcher(
+        mode="hybrid",
+        tavily_keys=["tk"],
+        anysearch_keys=[],
+        supplement=True,
+    )
+    monkeypatch.setattr(h._tavily, "search", lambda *a, **k: {
+        "answer": "t-ans",
+        "results": [
+            {"title": "T1", "url": "https://same.com/a", "content": "t"},
+            {"title": "T2", "url": "https://t-only.com", "content": "t2"},
+        ],
+        "provider": "tavily",
+    })
+    monkeypatch.setattr(h._any, "search", lambda *a, **k: {
+        "answer": "a-ans",
+        "results": [
+            {"title": "A1", "url": "https://www.same.com/a", "content": "a"},  # dupe
+            {"title": "A2", "url": "https://a-only.com", "content": "a2"},
+        ],
+        "provider": "anysearch",
+    })
+    res = h.search("q", max_results=10)
+    assert res["provider"] == "hybrid"
+    urls = [r["url"] for r in res["results"]]
+    assert "https://t-only.com" in urls
+    assert "https://a-only.com" in urls
+    # same.com/a 只保留一条
+    assert sum(1 for u in urls if "same.com" in u) == 1
+
+
+def test_create_searcher_auto_anysearch_only(monkeypatch):
+    monkeypatch.delenv("TAVILY_API_KEYS", raising=False)
+    monkeypatch.delenv("TAVILY_API_KEY", raising=False)
+    monkeypatch.delenv("ANYSEARCH_API_KEYS", raising=False)
+    monkeypatch.delenv("ANYSEARCH_API_KEY", raising=False)
+    monkeypatch.setenv("SEARCH_MODE", "auto")
+    s = tv.create_searcher()
+    assert s._tavily is None
+    assert s._any is not None
 
 
 # ===========================================================================

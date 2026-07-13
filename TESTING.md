@@ -68,7 +68,7 @@ python3 tests/test_v10_backtest.py
 | 变量 | 用途 | 无配置时 |
 |------|------|----------|
 | `BERKSHIRE_LLM_API_KEY` / `OPENAI_API_KEY` | `tests/e2e/test_llm_smoke.py` | **skip**（非失败） |
-| `TAVILY_API_KEYS` | 手工 `tavily_search.py test` | 手工跳过 |
+| `TAVILY_API_KEYS` / `ANYSEARCH_API_KEY` | 手工 `tavily_search.py test`（AnySearch 可匿名） | 离线 mock 不依赖 |
 | `BERKSHIRE_*` | 各模块配置 | 单测多用 `monkeypatch` 清理 |
 
 ---

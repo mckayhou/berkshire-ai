@@ -12,6 +12,18 @@ version: 10.2
 
 本规范适用于所有涉及企业财务数据的研究。**每个关键数据必须来自两个独立来源，误差>1%须标记。**
 
+### 联网检索（AnySearch Skill 优先）
+
+实时网页/垂直金融检索优先走 **AnySearch Skill**（见 `anysearch-web.md` / `skills/anysearch/SKILL.md`）：
+
+```bash
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+python3 skills/anysearch/scripts/anysearch_cli.py search "{ticker}" --domain finance \
+  --sub_domain finance.quote --sdp type=stock,symbol={ticker},cn_code= --max_results 5
+```
+
+脚本流水线可用 `python3 src/tavily_search.py`（`SEARCH_MODE=hybrid`：Tavily + AnySearch）。密钥：`ANYSEARCH_API_KEY`（项目 `.env` 或 `skills/anysearch/.env`），**禁止写入 skill 正文**。
+
 ---
 
 ## 数据源优先级

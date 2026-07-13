@@ -11,6 +11,21 @@ for f in "$BASE/skills/"*.md; do
   cp "$f" "$HOME/.openclaw/workspace/skills/$name/SKILL.md"
   echo "Updated $name"
 done
+# Directory skills (e.g. skills/anysearch/ with SKILL.md + scripts)
+for d in "$BASE/skills"/*/; do
+  [ -d "$d" ] || continue
+  [ -f "${d}SKILL.md" ] || continue
+  name="$(basename "$d")"
+  mkdir -p "$HOME/.openclaw/workspace/skills/$name"
+  rsync -av --delete --exclude '.env' --exclude '__pycache__' --exclude '.git' \
+    "$d" "$HOME/.openclaw/workspace/skills/$name/" || true
+  # Prefer project-root .env key via env; if skill-local .env exists, copy privately (not from git)
+  if [ -f "${d}.env" ]; then
+    cp "${d}.env" "$HOME/.openclaw/workspace/skills/$name/.env"
+    chmod 600 "$HOME/.openclaw/workspace/skills/$name/.env" 2>/dev/null || true
+  fi
+  echo "Synced directory skill: $name"
+done
 if [ -d "$BASE/.agents/skills" ]; then
   echo "=== Syncing finance-quant-skills (.agents/skills) to OpenClaw ==="
   for d in "$BASE/.agents/skills"/*/; do

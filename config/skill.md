@@ -210,8 +210,14 @@ python3 src/tavily_search.py financial 0700.HK
 python3 src/tavily_search.py news 互联网 腾讯
 ```
 
-**环境变量**: `TAVILY_API_KEYS`（逗号分隔多 Key，推荐）或单 Key `TAVILY_API_KEY`。**切勿把真实 Key 写入仓库**，请放 `~/.bashrc` 或 `.env`。
-**免费额度**: 1000 次/月/Key（多 Key 轮询见 `src/tavily_search.py`）
+**环境变量**:
+- `TAVILY_API_KEYS`（逗号分隔多 Key，推荐）或 `TAVILY_API_KEY` — 主搜索
+- `ANYSEARCH_API_KEY(S)` — [AnySearch](https://www.anysearch.com/docs) 补充/回退（可选；无 Key 可匿名）
+- `SEARCH_MODE=auto|tavily|anysearch|hybrid`（默认 auto：有 Tavily 用 Tavily，否则 AnySearch）
+- `SEARCH_SUPPLEMENT=1` — hybrid 下合并双侧结果（URL 去重）
+
+**切勿把真实 Key 写入仓库**，请放 `~/.bashrc` 或 `.env`。
+**额度**: Tavily 约 1000 次/月/Key；AnySearch 免费约 1000 次/天（见官网 pricing）。实现见 `src/tavily_search.py`。
 
 ### 4.2 财务验证工具
 
