@@ -46,8 +46,10 @@
 - 离线测试：`tests/test_tools_network.py` 覆盖 AnySearch normalize / hybrid fallback / supplement
 
 **测试结果**:
-- [x] 单元测试: `pytest tests/test_tools_network.py` 25 passed
-- [x] Skill CLI 手工连通（需本地 `ANYSEARCH_API_KEY`，不入库）
+- [x] 全量: **`pytest tests/` → 545 passed, 1 skipped**（e2e LLM 无 Key skip）
+- [x] 聚焦: `e2e/` + `test_v10_integration` + `test_tools_network` → **39 passed, 1 skipped**
+- [x] Skill CLI 在线 search + 离线 `doc`；hybrid 有 Key 时集成通过
+- [x] 文档：README / README_EN / USER_GUIDE §5.4 / SKILLS / ENGINE / textgrad / investment-research / investment-team / news-pulse / financial-data / TESTING 附录
 
 **结论**: ✅ 上线（Key 仅 `.env` / `skills/anysearch/.env`）
 

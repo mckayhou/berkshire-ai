@@ -271,6 +271,7 @@ curl -s localhost:8000/doctor
 | V10.29 | 多源证据 Brainstorm | `run_full_cycle(use_brainstorm=True)` |
 | V10.29 | SkillForge regression gate | `run_evolution_round(regression_cases=…)` |
 | V10.29.1 | 投研效果契约 + 后验周报 | `log_decision` / `posterior_weekly`；见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) |
+| V10.29.2 | AnySearch Skill + Tavily hybrid | `skills/anysearch/`、`anysearch-web`、`src/tavily_search.py`；见 [USER_GUIDE §5.4](USER_GUIDE.md) |
 
 ---
 
@@ -281,6 +282,9 @@ curl -s localhost:8000/doctor
 | `BERKSHIRE_LLM_API_KEY` / `OPENAI_API_KEY` | Prompt 改写 |
 | `BERKSHIRE_LLM_BASE_URL` | OpenAI 兼容网关 |
 | `BERKSHIRE_LLM_MODEL` | 模型名 |
+| `ANYSEARCH_API_KEY` | AnySearch Skill / hybrid 检索（可选，匿名额度更低） |
+| `TAVILY_API_KEYS` | Tavily 主路多 Key |
+| `SEARCH_MODE` | `auto` / `tavily` / `anysearch` / `hybrid` |
 
 - Option B：`apply_gradient` 经 LLM 改写 prompt
 - 验证门控：`validated_apply_gradient`（改写后评分不劣才接受）

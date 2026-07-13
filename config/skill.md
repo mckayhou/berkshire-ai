@@ -143,19 +143,20 @@ description: >
 
 **违反规则**: 如果任何大师分析缺失，轨迹记录将标记为低分 (< 0.7)，触发对比反思。
 
-### Step 1: 数据收集 (V9.3: Tavily 实时搜索)
+### Step 1: 数据收集 (V10.29.2: AnySearch Skill + Tavily hybrid)
 
-> **V9.3 核心升级**: 所有财务数据必须通过 Tavily 实时搜索获取，禁止依赖 LLM 内部知识。
+> **核心要求**: 所有财务/行情相关事实必须通过实时检索获取，禁止依赖 LLM 内部知识。
+> Agent 优先 **AnySearch Skill**；脚本/流水线用 `tavily_search.py`（`SEARCH_MODE=hybrid`）。
 
 **数据获取流程**:
 ```bash
-# 1. 获取股票实时数据 (股价/市值/PE/PB/股息率)
+# 0. Agent 首选 — AnySearch Skill
+python3 skills/anysearch/scripts/anysearch_cli.py search "{ticker} {company_name} 市值 PE" --max_results 5
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+
+# 1–3. 流水线 hybrid（Tavily 主 + AnySearch 回退）
 python3 src/tavily_search.py stock {ticker} {company_name}
-
-# 2. 获取财务指标 (收入/利润/ROE/负债率)
 python3 src/tavily_search.py financial {ticker}
-
-# 3. 获取行业新闻 (竞争格局/最新动态)
 python3 src/tavily_search.py news {industry} {company}
 ```
 
@@ -197,27 +198,27 @@ python3 src/tavily_search.py news {industry} {company}
 
 ## 🔧 4. 金融严谨性工具 (必须使用)
 
-### 4.1 Tavily 实时搜索 (V9.3 新增)
+### 4.1 实时搜索 (AnySearch Skill + Tavily hybrid)
 
 ```bash
-# 股票实时数据
+# AnySearch Skill（Agent 首选）
+python3 skills/anysearch/scripts/anysearch_cli.py search "0700.HK 腾讯 市值" --max_results 5
+
+# 流水线 CLI
 python3 src/tavily_search.py stock 0700.HK 腾讯控股
-
-# 财务指标
 python3 src/tavily_search.py financial 0700.HK
-
-# 行业新闻
 python3 src/tavily_search.py news 互联网 腾讯
+python3 src/tavily_search.py test
 ```
 
 **环境变量**:
-- `TAVILY_API_KEYS`（逗号分隔多 Key，推荐）或 `TAVILY_API_KEY` — 主搜索
-- `ANYSEARCH_API_KEY(S)` — [AnySearch](https://www.anysearch.com/docs) 补充/回退（可选；无 Key 可匿名）
-- `SEARCH_MODE=auto|tavily|anysearch|hybrid`（默认 auto：有 Tavily 用 Tavily，否则 AnySearch）
+- `ANYSEARCH_API_KEY` — [AnySearch](https://www.anysearch.com/docs)（Skill + hybrid；可写 `skills/anysearch/.env`）
+- `TAVILY_API_KEYS` / `TAVILY_API_KEY` — Tavily 主路（多 Key 轮询）
+- `SEARCH_MODE=auto|tavily|anysearch|hybrid`（推荐 `hybrid`）
 - `SEARCH_SUPPLEMENT=1` — hybrid 下合并双侧结果（URL 去重）
 
 **切勿把真实 Key 写入仓库**，请放 `~/.bashrc` 或 `.env`。
-**额度**: Tavily 约 1000 次/月/Key；AnySearch 免费约 1000 次/天（见官网 pricing）。实现见 `src/tavily_search.py`。
+**额度**: AnySearch 约 1000 次/天；Tavily 约 1000 次/月/Key。见 `skills/anysearch-web.md`、`src/tavily_search.py`。
 
 ### 4.2 财务验证工具
 
@@ -261,8 +262,8 @@ python3 tools/financial_rigor.py cross-validate \
 
 **计算图结构**:
 ```
-Layer 0: 输入 (ticker, tavily_query, date_anchor)
-Layer 1: 数据获取 (tavily_search)
+Layer 0: 输入 (ticker, search_query, date_anchor)
+Layer 1: 数据获取 (AnySearch Skill + tavily_search hybrid)
 Layer 2: 四大师分析 (duan/buffett/munger/lilu × prompt+model)
 Layer 3: 财务验证 (financial_rigor)
 Layer 4: 输出 (final_report)

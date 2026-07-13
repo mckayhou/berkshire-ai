@@ -35,6 +35,7 @@
 | 2026-06-26 | **Tracker V10.0 - PDD 触发器命中** | Q1 营收低于预期 + 欧盟罚款 Temu，触发 "Q2 Revenue < Consensus -5%" 条件。需重新评估投资逻辑。 | `thesis-tracker` v10.0 |
 | 2026-06-26 | **Tracker V10.0 - AVGO 风险信号** | 6/4 急跌 15%，麦格理下调至中性，担忧谷歌自研芯片影响 ASIC 市场份额。需关注 Q2 财报验证。 | `thesis-tracker` v10.0 |
 | 2026-06-25 | **V10.0 - TextGrad 化** | 借鉴 Nature 2025 论文，实现显式计算图 + 节点级诊断 + 文本梯度反向传播。诊断精度从整体评分提升到节点级定位。**Cron 任务已升级**: `99ac7a57` (每周五 20:00) | `investment-research` v10.0 |
+| 2026-07-13 | **V10.29.2 - AnySearch Skill + Tavily hybrid** | Agent 优先 AnySearch Skill；`tavily_search` hybrid 回退；Key 仅本地 `.env` | `anysearch-web` + `tavily_search` |
 | 2026-06-25 | **V9.3 - Tavily 实时搜索集成** | 消除 LLM 数据幻觉，所有财务数据必须来自实时搜索。**双 Key 轮询**，预期评分提升 +3.9% | `investment-research` v9.3 |
 | 2026-06-25 | **E2E Test 8/8 PASS (100%)** | 全链路验证通过：18 Skills + 8 Tools + 4 Masters + Evolution Loop + Polyglot MAS | `e2e_test.py` |
 | 2026-06-25 | **V9.0 - 继承 ai-berkshire** | 整合四大师并行框架 (Buffett/Munger/Duan/Li Lu) + 反偏见机制 + 金融严谨性工具 | `investment-research` v9.0 |

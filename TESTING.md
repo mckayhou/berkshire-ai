@@ -68,7 +68,7 @@ python3 tests/test_v10_backtest.py
 | 变量 | 用途 | 无配置时 |
 |------|------|----------|
 | `BERKSHIRE_LLM_API_KEY` / `OPENAI_API_KEY` | `tests/e2e/test_llm_smoke.py` | **skip**（非失败） |
-| `TAVILY_API_KEYS` / `ANYSEARCH_API_KEY` | 手工 `tavily_search.py test`（AnySearch 可匿名） | 离线 mock 不依赖 |
+| `TAVILY_API_KEYS` / `ANYSEARCH_API_KEY` | 手工 `tavily_search.py test` / AnySearch Skill CLI；离线 `test_tools_network` 全 mock | 离线不依赖；e2e 集成无 key 可 skip |
 | `BERKSHIRE_*` | 各模块配置 | 单测多用 `monkeypatch` 清理 |
 
 ---
@@ -356,7 +356,12 @@ python3 tools/ashare_data.py quote 600519
 python3 tools/momentum_backtest.py
 python3 tools/stock_screener.py
 python3 tools/morningstar_fair_value.py --max-pages 1 --top 5
-python3 src/tavily_search.py test    # 需 TAVILY_API_KEYS
+# AnySearch Skill（推荐；Key 可选，有 Key 额度更高）
+python3 skills/anysearch/scripts/anysearch_cli.py search "腾讯 PE" --max_results 1
+python3 skills/anysearch/scripts/anysearch_cli.py doc | head -20
+
+# hybrid 流水线（Tavily 和/或 AnySearch）
+python3 src/tavily_search.py test
 ```
 
 ### 7.4 需额外服务 / 登录
@@ -367,6 +372,7 @@ python3 src/tavily_search.py test    # 需 TAVILY_API_KEYS
 | `xueqiu_scraper.py` | Playwright + 雪球 cookie |
 | `notify.py send` | Telegram / 飞书 webhook（或仅本地兜底） |
 | `tests/e2e/test_llm_smoke.py` | OpenAI 兼容 API Key |
+| AnySearch / Tavily 在线 smoke | `ANYSEARCH_API_KEY` 和/或 `TAVILY_API_KEYS` |
 
 ### 7.5 一键研究队列链路冒烟
 
@@ -573,6 +579,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-13 | 3.14 | **545 passed, 1 skipped**（V10.29.2：AnySearch skill + hybrid；e2e research 8 + network 25 + v10 integration；e2e LLM skip） |
 | 2026-07-09 | 3.14 | **524 passed, 3 skipped**（V10.29.1：投研效果 E2E + 包导入 relative-first；numpy/torch 缺则 skip；e2e LLM skip） |
 | 2026-07-04 | 3.14 | **520 passed, 2 skipped**（V10.29 + evidence channels + regression gate；e2e LLM + Tavily skip） |
 | 2026-07-02 | 3.14 | **503 passed, 2 skipped**（V10.28 + SkillForge；e2e LLM + Tavily integration skip） |

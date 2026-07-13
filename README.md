@@ -44,9 +44,9 @@
 │                    Berkshire AI V10.0                        │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  Layer 0: 输入 (ticker, tavily_query, date_anchor)         │
+│  Layer 0: 输入 (ticker, search_query, date_anchor)         │
 │      ↓                                                      │
-│  Layer 1: 数据获取 (Tavily 双Key轮询 / A股多源降级链)      │
+│  Layer 1: 数据获取 (AnySearch Skill + Tavily hybrid / A股) │
 │      ↓                                                      │
 │  Layer 2: 四大师分析 (段永平/巴菲特/芒格/李录)             │
 │      ↓                                                      │
@@ -247,13 +247,15 @@ berkshire-ai/
 │   ├── posterior_report.py      # 后验 KPI（命中率/校准/完整率）
 │   ├── realized_feedback.py     # 已实现收益 → 评分（PriceProvider 可注入）
 │   ├── debate.py                # 多空对抗辩论（DebateResult，净判断）
-│   └── tavily_search.py
-├── skills/                      # ★ 完整上游 18 个技能（已并入，OpenClaw 兼容）
+│   └── tavily_search.py         # Tavily + AnySearch hybrid 实时检索
+├── skills/                      # ★ 上游技能 + AnySearch（OpenClaw 兼容）
 │   ├── investment-research.md   # 带 frontmatter，可直接作为 SKILL.md 使用
 │   ├── investment-team.md
 │   ├── earnings-review.md
 │   ├── news-pulse.md
 │   ├── financial-data.md        # 数据源规范（所有技能必须引用）
+│   ├── anysearch-web.md         # AnySearch 入口（Tavily 补充）
+│   ├── anysearch/               # 官方 AnySearch Skill（CLI + SKILL.md）
 │   └── ... (其他 13 个)
 │   # OpenClaw 安装示例见上方“OpenClaw 中使用”章节
 ├── tools/                       # ★ 完整上游工具链（已并入）
@@ -329,10 +331,11 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 
 ## 📊 当前版本
 
-**V10.29.1** (2026-07-09) — 包版本 `10.29.1`
+**V10.29.2** (2026-07-13) — 包版本以 `VERSION_HISTORY` 为准
+- ✅ **AnySearch Skill + Tavily hybrid**：`skills/anysearch/` + `anysearch-web`；`SEARCH_MODE=hybrid` 回退/合并；Key 仅本地 `.env`
 - ✅ **投研效果契约**：DecisionRecord thesis/kill/action/horizon + `log_decision` / `posterior_weekly` / 离线 E2E
 - ✅ TextGrad 化 (节点级诊断 + 梯度反向传播)
-- ✅ Tavily 双Key轮询 (2000次/月)
+- ✅ Tavily 多 Key 轮询 + AnySearch 补充（脚本/流水线）
 - ✅ 四大师全覆盖 (100%)
 - ✅ 回测诊断覆盖率 100%
 - ✅ **上游全能力整合**：完整 skills/ (18个) + tools/ from xbtlin/ai-berkshire 并入 (已规范化路径引用)
@@ -348,7 +351,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 - ✅ **主线接线（V10.20）**：`run_with_realized_feedback` 在 `persist=True` 时自动 `experience_from_stats` → `ExperienceStore`；`include_perf=True` 返回 `perf` 摘要；`retriever`/`retriever_k` 透传 D 段 few-shot 改写
 - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`
 - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：本地绩效指标库 `tools/perf_metrics.py`（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/累计求和/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`）；经验库 RAG-lite `experience_store`（成败经验 JSONL 沉淀 + 确定性关键词召回 + 作为 few-shot 注入 `build_rewrite_messages`，`examples=None` 逐字节不变、失败降级）；显式假设对象 `hypothesis`（可证伪命题 + 最小存储）
-- ✅ 测试 518+ 通过（核心；详见 [VERSION_HISTORY.md](VERSION_HISTORY.md) / [TESTING.md](TESTING.md)）
+- ✅ 测试 **545 passed / 1 skipped**（2026-07-13 全量；详见 [VERSION_HISTORY.md](VERSION_HISTORY.md) / [TESTING.md](TESTING.md)）
 
 ## 🚀 服务部署（V10.17 档D）
 

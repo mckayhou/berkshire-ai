@@ -136,9 +136,9 @@ version: 10.2
 {任务description的内容}
 
 **研究方法**：
-- 使用 WebSearch 搜索最新公开信息（财报、行业报告、新闻）
+- 使用 **AnySearch Skill**（`skills/anysearch-web.md`）搜索最新公开信息（财报、行业报告、新闻）；失败再 hybrid `src/tavily_search.py` 或 WebSearch
 - **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），两源误差>1%须标记
-- 确保数据准确，关键数据标注来源
+- 确保数据准确，关键数据标注来源（URL + 获取时间）
 - 分析要深入，不流于表面
 
 **输出要求**：

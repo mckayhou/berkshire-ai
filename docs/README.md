@@ -15,6 +15,7 @@
 | **TextGrad 引擎 / API / 服务** | [ENGINE.md](ENGINE.md) | 20 min |
 | **跑测试、CI、冒烟** | [TESTING.md](../TESTING.md) | 10 min |
 | **选 Agent 技能** | [SKILLS.md](SKILLS.md) | 5 min |
+| **实时检索（AnySearch / Tavily）** | [USER_GUIDE.md §5.4](USER_GUIDE.md) + [anysearch-web](../skills/anysearch-web.md) | 5 min |
 | **技能进化（SkillForge + Regression Gate）** | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) | 15 min |
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
 | **投研效果 / 决策后验 KPI** | [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) | 10 min |

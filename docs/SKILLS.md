@@ -1,6 +1,6 @@
 # Agent 技能目录（SKILLS）
 
-> `skills/` 下 18 个独立 Agent 指令，可直接作为 OpenClaw `SKILL.md` 使用。  
+> `skills/` 下 18 个独立 Agent 指令 + **AnySearch 检索 skill**，可直接作为 OpenClaw `SKILL.md` 使用。  
 > Meta-skill 总入口：[config/skill.md](../config/skill.md) | 导航：[docs/README.md](README.md)
 
 ---
@@ -11,7 +11,9 @@
 ./update-platforms.sh
 ```
 
-手动：复制 `skills/xxx.md` → `~/.openclaw/workspace/skills/berkshire-xxx/SKILL.md`（保留 YAML frontmatter）。
+手动：
+- 单文件：复制 `skills/xxx.md` → `~/.openclaw/workspace/skills/berkshire-xxx/SKILL.md`
+- 目录 skill：同步 `skills/anysearch/` 整目录（含 `SKILL.md` + `scripts/`；**勿提交** `.env`）
 
 ---
 
@@ -19,6 +21,7 @@
 
 | 技能文件 | 用途 | 典型触发语 |
 |----------|------|------------|
+| [anysearch-web.md](../skills/anysearch-web.md) + [anysearch/](../skills/anysearch/) | **实时检索**（AnySearch；Tavily 补充） | 「搜一下腾讯 PE」「anysearch」 |
 | [investment-research.md](../skills/investment-research.md) | **单标的**四大师深度研究 | 「对腾讯做四大师投资研究」 |
 | [investment-team.md](../skills/investment-team.md) | **多 Agent 并行**团队研究 | 「investment-team 研究 NVDA」 |
 | [investment-checklist.md](../skills/investment-checklist.md) | 研究检查清单 | 「按 checklist 检查这篇研报」 |

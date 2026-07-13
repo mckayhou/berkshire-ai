@@ -27,29 +27,33 @@ def _skip(reason: str):
 
 
 def test_tavily_integration():
-    """测试 Tavily 实时搜索集成。
+    """测试实时搜索集成（Tavily 和/或 AnySearch hybrid）。
 
-    需要真实网络与 API Key（TAVILY_API_KEYS / TAVILY_API_KEY），
-    未配置时跳过，避免 CI 无网络环境下误判失败。
+    优先 Tavily；无 Tavily 时用 AnySearch（可匿名）。
+    全无可用后端或外网失败时 skip，避免 CI 误判。
     """
     print("\n" + "=" * 60)
-    print("📊 测试: Tavily 实时搜索集成")
+    print("📊 测试: 实时搜索集成 (Tavily / AnySearch)")
     print("=" * 60)
 
-    if not (os.getenv("TAVILY_API_KEYS") or os.getenv("TAVILY_API_KEY")):
-        msg = "未配置 TAVILY_API_KEYS / TAVILY_API_KEY，跳过 Tavily 集成测试"
+    from tavily_search import create_searcher
+
+    has_tavily = bool(os.getenv("TAVILY_API_KEYS") or os.getenv("TAVILY_API_KEY"))
+    has_any = bool(os.getenv("ANYSEARCH_API_KEY") or os.getenv("ANYSEARCH_API_KEYS"))
+    # AnySearch 可匿名；仅当明确禁用网络时才 skip
+    try:
+        searcher = create_searcher(mode="hybrid" if has_tavily else "auto")
+    except ValueError as e:
+        msg = f"无可用搜索后端，跳过: {e}"
         print(f"  ⚠️ {msg}")
         _skip(msg)
         return
 
-    searcher = TavilySearcher()
-    print(f"  ✅ Tavily 初始化成功 (Keys: {len(searcher.keys)})")
-
+    print(f"  ✅ Searcher 就绪 (tavily={has_tavily}, anysearch_key={has_any})")
     result = searcher.get_stock_data("600519", "贵州茅台")
 
-    # 外部服务/网络/鉴权问题（如 403/429/超时）属环境因素，跳过而非判失败
     if "error" in result:
-        msg = f"Tavily 调用返回错误（环境/网络/鉴权问题），跳过: {result['error']}"
+        msg = f"搜索返回错误（环境/网络/鉴权），跳过: {result['error']}"
         print(f"  ⚠️ {msg}")
         _skip(msg)
         return
@@ -57,7 +61,26 @@ def test_tavily_integration():
     assert "answer" in result, "缺少 answer 字段"
     assert len(result.get("sources", [])) > 0, "无搜索结果"
     print("  ✅ 股票数据获取成功")
+    print(f"     provider: {result.get('provider')}")
     print(f"     摘要: {result['answer'][:80]}...")
+
+
+def test_anysearch_skill_cli_doc():
+    """AnySearch 官方 skill CLI 离线 doc 子命令（无网络）。"""
+    cli = os.path.join(BERKSHIRE_DIR, "skills", "anysearch", "scripts", "anysearch_cli.py")
+    if not os.path.isfile(cli):
+        _skip("skills/anysearch CLI 未安装")
+        return
+    proc = subprocess.run(
+        [sys.executable, cli, "doc"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        cwd=BERKSHIRE_DIR,
+    )
+    assert proc.returncode == 0, proc.stderr or proc.stdout
+    out = (proc.stdout or "") + (proc.stderr or "")
+    assert "search" in out.lower() or "anysearch" in out.lower() or "Query" in out
 
 
 def test_computation_graph():

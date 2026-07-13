@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.29.1** (Research-effectiveness DecisionRecord contract + posterior weekly report + offline E2E; builds on V10.29 brainstorm / SkillForge regression gate and V10.28 TextGrad closed loop). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.29.2** (AnySearch Skill + Tavily hybrid search; research-effectiveness DecisionRecord + posterior weekly report + offline E2E). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 
@@ -76,7 +76,7 @@ See [`assets/architecture.mmd`](assets/architecture.mmd) (Mermaid source) / [`as
 ├─────────────────────────────────────────────────────────────┤
 │  Layer 0: Input (ticker, query, date_anchor)                │
 │      ↓                                                       │
-│  Layer 1: Data fetch (Tavily round-robin / A-share fallback)│
+│  Layer 1: Data fetch (AnySearch Skill + Tavily hybrid / A-share)│
 │      ↓                                                       │
 │  Layer 2: Four-masters analysis (Duan/Buffett/Munger/Li Lu) │
 │      ↓                                                       │
@@ -212,8 +212,10 @@ berkshire-ai/
 │   ├── decision_log.py          # decision snapshot JSONL persistence (DecisionRecord)
 │   ├── realized_feedback.py     # realized return → scores (injectable PriceProvider)
 │   ├── debate.py                # bull/bear debate (DebateResult, net stance)
-│   └── tavily_search.py
-├── skills/                      # 18 upstream skills (merged, OpenClaw-compatible, with frontmatter)
+│   └── tavily_search.py         # Tavily + AnySearch hybrid search
+├── skills/                      # upstream skills + AnySearch (OpenClaw-compatible)
+│   ├── anysearch-web.md         # Berkshire entry for AnySearch
+│   ├── anysearch/               # official AnySearch skill (CLI)
 ├── tools/                       # full toolchain (financial_rigor, report_audit, ashare_data, data_sources, notify, ...)
 ├── config/                      # skill.md (meta-skill) + state.md
 ├── docs/                        # textgrad_design, ROADMAP, report-conventions, articles
