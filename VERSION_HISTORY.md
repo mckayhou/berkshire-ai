@@ -46,10 +46,11 @@
 - 离线测试：`tests/test_tools_network.py` 覆盖 AnySearch normalize / hybrid fallback / supplement
 
 **测试结果**:
-- [x] 全量: **`pytest tests/` → 545 passed, 1 skipped**（e2e LLM 无 Key skip）
+- [x] 全量: **`pytest tests/` → 545 passed, 1 skipped**（后补真实 LLM e2e 1 passed）
 - [x] 聚焦: `e2e/` + `test_v10_integration` + `test_tools_network` → **39 passed, 1 skipped**
-- [x] Skill CLI 在线 search + 离线 `doc`；hybrid 有 Key 时集成通过
-- [x] 文档：README / README_EN / USER_GUIDE §5.4 / SKILLS / ENGINE / textgrad / investment-research / investment-team / news-pulse / financial-data / TESTING 附录
+- [x] Skill CLI 在线 search + 离线 `doc`；hybrid 真网 `tavily_search.py test` 通过
+- [x] **质量对照** R1（启发式）+ R2（finance 垂直 + LLM 裁判）→ `reports/_search_compare/`；策略改为 **Tavily 主 / Any 回退 / fundamental 补数**
+- [x] 文档：README / USER_GUIDE §5.4 / SKILLS / ENGINE / investment-* / anysearch-web / financial-data / TESTING
 
 **结论**: ✅ 上线（Key 仅 `.env` / `skills/anysearch/.env`）
 

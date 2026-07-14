@@ -349,35 +349,38 @@ python3 tools/aktools_diagnostic.py AAPL --json -o reports/aapl_diag.md
 
 ### 5.4 实时检索（AnySearch Skill + Tavily hybrid）
 
-**Agent 首选**：AnySearch Skill（垂直域 / batch / extract），见 `skills/anysearch-web.md` 与 `skills/anysearch/SKILL.md`。
+**默认策略（质量对照后）**：`SEARCH_MODE=hybrid` —— **Tavily 主路**（通用/新闻/估值问句更稳），AnySearch 作回退与补源；结构化财报指标可再走 AnySearch `finance.fundamental`。详见 `skills/anysearch-web.md` 与对照报告 `reports/_search_compare/`。
 
 ```bash
-# 1) 配置 Key（写入 .env，切勿提交；也可 skills/anysearch/.env）
+# 1) 配置 Key（写入 .env，切勿提交）
+# export TAVILY_API_KEYS=key1,key2
 # export ANYSEARCH_API_KEY=as_sk_...
-# export TAVILY_API_KEYS=key1,key2          # 可选主路
-# export SEARCH_MODE=hybrid                # auto|tavily|anysearch|hybrid
+# export SEARCH_MODE=hybrid
 
-# 2) Skill CLI（官方 skill，推荐）
-python3 skills/anysearch/scripts/anysearch_cli.py search "腾讯控股 PE 市值" --max_results 5
-python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
-python3 skills/anysearch/scripts/anysearch_cli.py extract "https://example.com/page"
-
-# 3) 流水线 CLI（Tavily + AnySearch 补充/回退）
+# 2) 流水线（推荐 hybrid）
 python3 src/tavily_search.py stock 600519 贵州茅台
 python3 src/tavily_search.py financial 0700.HK
 python3 src/tavily_search.py news 互联网 腾讯
-python3 src/tavily_search.py search "腾讯 PE 市值" --mode anysearch
 python3 src/tavily_search.py test
+
+# 3) AnySearch Skill：垂直财务 / 抽页 / 批量
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+python3 skills/anysearch/scripts/anysearch_cli.py search "贵州茅台 财务指标" \
+  --domain finance --sub_domain finance.fundamental \
+  --sdp type=indicator,symbol=,cn_code=600519.SH --max_results 5
+python3 skills/anysearch/scripts/anysearch_cli.py extract "https://example.com/page"
 ```
 
 | 模式 | 行为 |
 |------|------|
+| `hybrid` | **推荐**：Tavily 优先，失败/空结果回退 AnySearch |
 | `auto` | 有 Tavily Key → Tavily，否则 AnySearch |
-| `hybrid` | Tavily 优先，失败/空结果回退 AnySearch（推荐） |
 | `anysearch` / `tavily` | 仅单后端 |
 | `SEARCH_SUPPLEMENT=1` | hybrid 下双侧合并（URL 去重） |
 
-文档：[anysearch.com/docs](https://www.anysearch.com/docs)。同步平台：`./update-platforms.sh`。
+**对照摘要（R1+R2，启发式 + LLM 裁判）**：Tavily 通用题综合更优；AnySearch 更快、正文更长；垂直 `fundamental` 在部分结构化财务题上 LLM 分更高，不宜替代全部通用搜索。
+
+文档：[anysearch.com/docs](https://www.anysearch.com/docs)。同步：`./update-platforms.sh`。
 
 ---
 

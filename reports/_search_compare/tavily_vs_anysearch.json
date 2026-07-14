@@ -1,0 +1,556 @@
+{
+  "timestamp": "2026-07-13T20:42:51",
+  "max_results": 5,
+  "n_queries": 6,
+  "wins": {
+    "tavily": 5,
+    "anysearch": 1
+  },
+  "avg": {
+    "tavily": {
+      "composite": 95.67,
+      "keyword_rate": 0.97,
+      "unique_domains": 4.67,
+      "avg_content_len": 1937.53,
+      "latency_ms": 5418.83,
+      "has_answer_rate": 1.0
+    },
+    "anysearch": {
+      "composite": 90.5,
+      "keyword_rate": 0.83,
+      "unique_domains": 4.5,
+      "avg_content_len": 3006.43,
+      "latency_ms": 2328.67,
+      "has_answer_rate": 1.0
+    }
+  },
+  "rows": [
+    {
+      "id": "hk_price",
+      "intent": "港股实时估值",
+      "query": "0700.HK 腾讯控股 股价 市值 PE PB 股息率",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "lixinger.com",
+          "xueqiu.com",
+          "cn.investing.com",
+          "quotes.sina.cn",
+          "hk.finance.yahoo.com"
+        ],
+        "answer_len": 144,
+        "has_answer": true,
+        "avg_content_len": 1791.4,
+        "keyword_hits": 8,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 7,
+        "composite": 100.0,
+        "sources_preview": [
+          {
+            "title": "腾讯控股(00700)市盈率|估值|基本面 - 理杏仁",
+            "domain": "lixinger.com",
+            "content_len": 1917
+          },
+          {
+            "title": "腾讯控股(00700)股票股价_股价行情_讨论",
+            "domain": "xueqiu.com",
+            "content_len": 1571
+          },
+          {
+            "title": "腾讯控股(0700)股票股利_历史股息一览_英为财情Investing.com",
+            "domain": "cn.investing.com",
+            "content_len": 2336
+          }
+        ],
+        "answer_preview": "Tencent Holdings' stock price is HKD 460.20, market cap is HKD 4.143 trillion, PE ratio is 16.52, PB ratio is 3.18, and dividend yield is 1.15%.",
+        "latency_ms": 4789,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "quotes.sina.cn",
+          "lixinger.com",
+          "xueqiu.com",
+          "moomoo.com",
+          "google.com"
+        ],
+        "answer_len": 571,
+        "has_answer": true,
+        "avg_content_len": 2872.4,
+        "keyword_hits": 7,
+        "keyword_rate": 0.875,
+        "has_numeric": true,
+        "finance_hits": 4,
+        "composite": 96.2,
+        "sources_preview": [
+          {
+            "title": "腾讯控股（hk00700）股票价格_股票实时行情_走势图",
+            "domain": "quotes.sina.cn",
+            "content_len": 165
+          },
+          {
+            "title": "腾讯控股(00700)市盈率|估值|基本面",
+            "domain": "lixinger.com",
+            "content_len": 3300
+          },
+          {
+            "title": "腾讯控股(00700)股票股价_股价行情_讨论",
+            "domain": "xueqiu.com",
+            "content_len": 3820
+          }
+        ],
+        "answer_preview": "腾讯控股（hk00700）股票价格_股票实时行情_走势图-手机新浪财经 * 网页版港股行情数据延时，若需查看实时行情，请点击下方APP ADR换算价 相对港股 腾讯控股（hk00700）股票价格\\_股票实时行情\\_走势图-手机新浪财经 \\* 网页版港股行情数据延时，若需查看实时行情，请点击下方APP ADR换算价 相对港股 ** | 腾讯控股(00700)市盈率|估值|基本面 - 理杏仁 腾讯控股 港股通空最新回购 (2026-01-1",
+        "latency_ms": 2150,
+        "provider": "anysearch"
+      },
+      "winner": "tavily",
+      "delta_composite": -3.8
+    },
+    {
+      "id": "a_fin",
+      "intent": "A股财务指标",
+      "query": "600519 贵州茅台 营收 净利润 ROE 毛利率 最新财报",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 4,
+        "domains": [
+          "moomoo.com",
+          "cn.investing.com",
+          "pdf.dfcfw.com",
+          "duplik-1252068037.cos.ap-beijing.myqcloud.com",
+          "pdf.dfcfw.com"
+        ],
+        "answer_len": 187,
+        "has_answer": true,
+        "avg_content_len": 2368.4,
+        "keyword_hits": 7,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 8,
+        "composite": 97.0,
+        "sources_preview": [
+          {
+            "title": "贵州茅台(600519)关键财务指标_财务状况分析",
+            "domain": "moomoo.com",
+            "content_len": 2325
+          },
+          {
+            "title": "贵州茅台(600519)利润表（损益表）_英为财情Investing.com",
+            "domain": "cn.investing.com",
+            "content_len": 2325
+          },
+          {
+            "title": "贵州茅台（600519.SH）",
+            "domain": "pdf.dfcfw.com",
+            "content_len": 2396
+          }
+        ],
+        "answer_preview": "Latest financial report shows Guizhou Moutai's net profit at 82,320.07 million CNY, with a net profit margin of 50.53%. The company's ROE is 10.57%, and its gross profit margin is 89.76%.",
+        "latency_ms": 6451,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 4,
+        "domains": [
+          "dataclouds.cninfo.com.cn",
+          "pdf.dfcfw.com",
+          "hibor.com.cn",
+          "ddx.gubit.cn",
+          "pdf.dfcfw.com"
+        ],
+        "answer_len": 606,
+        "has_answer": true,
+        "avg_content_len": 3554.6,
+        "keyword_hits": 6,
+        "keyword_rate": 0.857,
+        "has_numeric": true,
+        "finance_hits": 3,
+        "composite": 90.2,
+        "sources_preview": [
+          {
+            "title": "贵州茅台酒股份有限公司2026年第一季度报告",
+            "domain": "dataclouds.cninfo.com.cn",
+            "content_len": 3975
+          },
+          {
+            "title": "贵州茅台酒股份有限公司2026年第一季度报告",
+            "domain": "pdf.dfcfw.com",
+            "content_len": 3975
+          },
+          {
+            "title": "财信证券-贵州茅台-600519-2026年一季报点评：业绩符合预期，i茅台放量-慧博投研资讯",
+            "domain": "hibor.com.cn",
+            "content_len": 1966
+          }
+        ],
+        "answer_preview": "| 证券代码：600519 | | 贵州茅台酒股份有限公司 | 证券简称：贵州茅台 2026 年第一季度报告 | | --- | --- | --- | --- | | 漏，并对其内容的真实性、准确性和完整性承担法律责任。 | 本公司董事会及全体董事保证本公告内容不存在任何虚假记载、误导性陈述或者重大遗 | | | 重要内容提示 公司董事会及董事、高级管理人员保证季度报告内容的真实、准确、完整，不 | | 证券代码：600519 | |",
+        "latency_ms": 1931,
+        "provider": "anysearch"
+      },
+      "winner": "tavily",
+      "delta_composite": -6.8
+    },
+    {
+      "id": "us_val",
+      "intent": "美股估值英文",
+      "query": "NVDA NVIDIA PE market cap free cash flow latest earnings",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "alphaquery.com",
+          "macrotrends.net",
+          "barchart.com",
+          "investing.com",
+          "stockanalysis.com"
+        ],
+        "answer_len": 246,
+        "has_answer": true,
+        "avg_content_len": 1617.6,
+        "keyword_hits": 8,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 3,
+        "composite": 97.5,
+        "sources_preview": [
+          {
+            "title": "NVIDIA Corporation (NVDA) - Free Cash Flow (Quarterly)",
+            "domain": "alphaquery.com",
+            "content_len": 1641
+          },
+          {
+            "title": "NVIDIA Free Cash Flow 2012-2026 | NVDA",
+            "domain": "macrotrends.net",
+            "content_len": 2151
+          },
+          {
+            "title": "Nvidia's Massive Free Cash Flow Margins Could Push NVDA Stock 45% Higher",
+            "domain": "barchart.com",
+            "content_len": 2169
+          }
+        ],
+        "answer_preview": "As of 2026-07-13, NVDA's latest earnings report shows a free cash flow of $48.59 billion for the fiscal quarter ending April 30, 2026. The company's market cap is $4.72 trillion, and its P/E ratio is 46.8. The last earni",
+        "latency_ms": 3948,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 4,
+        "domains": [
+          "investor.nvidia.com",
+          "stockanalysis.com",
+          "finance.yahoo.com",
+          "sec.gov",
+          "investor.nvidia.com"
+        ],
+        "answer_len": 606,
+        "has_answer": true,
+        "avg_content_len": 3960.8,
+        "keyword_hits": 7,
+        "keyword_rate": 0.875,
+        "has_numeric": true,
+        "finance_hits": 2,
+        "composite": 88.2,
+        "sources_preview": [
+          {
+            "title": "NVIDIA Corporation - NVIDIA Announces Financial Results for First Quarter Fiscal",
+            "domain": "investor.nvidia.com",
+            "content_len": 3986
+          },
+          {
+            "title": "NVIDIA (NVDA) Statistics & Valuation",
+            "domain": "stockanalysis.com",
+            "content_len": 3949
+          },
+          {
+            "title": "NVIDIA Corporation (NVDA) Valuation Measures & Financial Statistics",
+            "domain": "finance.yahoo.com",
+            "content_len": 3971
+          }
+        ],
+        "answer_preview": "NVIDIA Corporation - NVIDIA Announces Financial Results for First Quarter Fiscal 2027 ### NVIDIA Announces Financial Results for First Quarter Fiscal 2027 May 20, 2026 Download this Press Release - Re | NVIDIA (NVDA) Sta",
+        "latency_ms": 2723,
+        "provider": "anysearch"
+      },
+      "winner": "tavily",
+      "delta_composite": -9.3
+    },
+    {
+      "id": "industry",
+      "intent": "行业趋势中文",
+      "query": "中国白酒行业 2026 竞争格局 渠道库存 茅台 五粮液",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "finance.sina.com.cn",
+          "cnwinenews.com",
+          "chyxx.com",
+          "assets.kpmg.com",
+          "pdf.dfcfw.com"
+        ],
+        "answer_len": 228,
+        "has_answer": true,
+        "avg_content_len": 2240.4,
+        "keyword_hits": 7,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 2,
+        "composite": 95.0,
+        "sources_preview": [
+          {
+            "title": "2026观察|白酒行业格局生变  头部酒局竞争日趋白热化",
+            "domain": "finance.sina.com.cn",
+            "content_len": 2128
+          },
+          {
+            "title": "白酒业周期筑底与格局重构，六大关键词解码2026变革走向 - 中酒新闻网·华夏酒报－酒类产业链首席门户|酒|红酒|葡萄酒|白酒|啤酒|黄酒|洋酒|酒吧|糖酒会|",
+            "domain": "cnwinenews.com",
+            "content_len": 2138
+          },
+          {
+            "title": "2026年中国白酒行业产业链图谱、生产现状、竞争格局、上市企业对比及未来竞争趋势分析：行业呈现强者恒强、梯队分化、优胜突围的竞争格局[图]_智研咨询",
+            "domain": "chyxx.com",
+            "content_len": 2175
+          }
+        ],
+        "answer_preview": "By 2026, China's baijiu industry is consolidating, with top brands like Maotai and Wuliangye leading. The market is shifting towards quality and away from quantity. Head companies are focusing on brand value and price st",
+        "latency_ms": 4607,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "assets.kpmg.com",
+          "chnmc.com",
+          "m.chyxx.com",
+          "news.qq.com",
+          "finance.sina.com.cn"
+        ],
+        "answer_len": 606,
+        "has_answer": true,
+        "avg_content_len": 3033.0,
+        "keyword_hits": 7,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 4,
+        "composite": 100.0,
+        "sources_preview": [
+          {
+            "title": "2026中国白酒市场中期研究报告",
+            "domain": "assets.kpmg.com",
+            "content_len": 3942
+          },
+          {
+            "title": "毕马威 × 中国酒业协会：《2026中国白酒市场中期研究报告》深度全景解读||咨询公司观点和方案- #中国管理咨询网 #chnmc #2026中国白酒市场",
+            "domain": "chnmc.com",
+            "content_len": 3017
+          },
+          {
+            "title": "食品饮料行业2026年度投资策略报告(二)：白酒：底部信号夯实 重视优质酒企配置机会_智研咨询",
+            "domain": "m.chyxx.com",
+            "content_len": 1994
+          }
+        ],
+        "answer_preview": "© 2026 毕马威华振会计师事务所 (特殊普通合伙) — 中国合伙制会计师事务所，毕马威企业咨询 (中国) 有限公司 — 中国有限责任公司，毕马威会计师事 务所 — 澳门特别行政区合伙制事务所，及毕马威会计师事务所 — 香港特别行政区合伙制事务所，均是与毕马威国际有限公司 (英国私营担保有限公司) 相 关联的独立成员所全球组织中的成员。版权所有，不得转载。在中国印刷。 ## 编委会 ### 报告 | 毕马威 × 中国酒业协会：《202",
+        "latency_ms": 2775,
+        "provider": "anysearch"
+      },
+      "winner": "anysearch",
+      "delta_composite": 5.0
+    },
+    {
+      "id": "news",
+      "intent": "公司新闻",
+      "query": "腾讯 最新动态 游戏 广告 云 监管 2026",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 4,
+        "domains": [
+          "sohu.com",
+          "news.qq.com",
+          "sohu.com",
+          "cn.chinadaily.com.cn",
+          "static.www.tencent.com"
+        ],
+        "answer_len": 279,
+        "has_answer": true,
+        "avg_content_len": 1636.2,
+        "keyword_hits": 5,
+        "keyword_rate": 0.833,
+        "has_numeric": true,
+        "finance_hits": 3,
+        "composite": 89.5,
+        "sources_preview": [
+          {
+            "title": "腾讯2026：AI赋能下的稳健增长新逻辑_游戏_广告_服务收入",
+            "domain": "sohu.com",
+            "content_len": 1337
+          },
+          {
+            "title": "2026腾讯游戏发布会：超40款游戏最新动态，多项游戏AI应用新进展_腾讯新闻",
+            "domain": "news.qq.com",
+            "content_len": 2307
+          },
+          {
+            "title": "腾讯2026：AI引领增长新纪元，财报透视未来潜力_总收入_游戏_业务",
+            "domain": "sohu.com",
+            "content_len": 1393
+          }
+        ],
+        "answer_preview": "Tencent's 2026 growth relies on AI-driven advertising, international game expansion, and cloud services. AI enhances ad targeting and efficiency, while games like \"Honor of Kings\" and \"Peacekeeper Elite\" drive revenue. C",
+        "latency_ms": 8756,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 4,
+        "domains": [
+          "tencent.com",
+          "36kr.com",
+          "news.qq.com",
+          "game.zol.com.cn",
+          "36kr.com"
+        ],
+        "answer_len": 606,
+        "has_answer": true,
+        "avg_content_len": 3145.4,
+        "keyword_hits": 4,
+        "keyword_rate": 0.667,
+        "has_numeric": true,
+        "finance_hits": 2,
+        "composite": 82.0,
+        "sources_preview": [
+          {
+            "title": "腾讯游戏发布会SPARK 2026公布45项重磅更新，聚焦未来玩家体验 - Tencent 腾讯",
+            "domain": "tencent.com",
+            "content_len": 3948
+          },
+          {
+            "title": "腾讯游戏暑期未保行动：每周限玩3小时-36氪",
+            "domain": "36kr.com",
+            "content_len": 873
+          },
+          {
+            "title": "腾讯混元Hy3正式上线：坚持实用主义路线，Agent任务解决率跃升_腾讯新闻",
+            "domain": "news.qq.com",
+            "content_len": 3629
+          }
+        ],
+        "answer_preview": "腾讯游戏发布会SPARK 2026公布45项重磅更新，聚焦未来玩家体验 - Tencent 腾讯 # Tencent腾讯 简 | 繁 | EN # 腾讯游戏发布会SPARK 2026公布45项重磅更新，聚焦未来玩家体验 “聚焦最新内容，展现腾讯游戏持续为全球玩家打造创新互动数字体验的长期投入 今日，腾讯游戏于年度游戏发布会SPARK 2026上公布了45项重磅更新。直播内容覆盖研发、发行与投资三大 | 腾讯游戏暑期未保行动：每周限玩3小",
+        "latency_ms": 2632,
+        "provider": "anysearch"
+      },
+      "winner": "tavily",
+      "delta_composite": -7.5
+    },
+    {
+      "id": "risk",
+      "intent": "风险/事件",
+      "query": "拼多多 PDD Temu 监管风险 欧盟 诉讼 最新",
+      "tavily": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "app.myzaker.com",
+          "instagram.com",
+          "caifuhao.eastmoney.com",
+          "m.caixin.com",
+          "inews.hket.com"
+        ],
+        "answer_len": 251,
+        "has_answer": true,
+        "avg_content_len": 1971.2,
+        "keyword_hits": 7,
+        "keyword_rate": 1.0,
+        "has_numeric": true,
+        "finance_hits": 2,
+        "composite": 95.0,
+        "sources_preview": [
+          {
+            "title": "拼多多Temu再遭2亿欧元巨额罚单:未尽责排查违规商品_ZAKER新闻",
+            "domain": "app.myzaker.com",
+            "content_len": 2165
+          },
+          {
+            "title": "Instagram",
+            "domain": "instagram.com",
+            "content_len": 2124
+          },
+          {
+            "title": "2亿欧元罚单砸向Temu：海外拼多多的低价神话，撞上欧洲合规高墙_财富号_东方财富网",
+            "domain": "caifuhao.eastmoney.com",
+            "content_len": 2279
+          }
+        ],
+        "answer_preview": "In 2026, the EU fined Temu €200 million for failing to regulate illegal products on its platform. Temu must submit a compliance plan by August 28, or face further penalties. The fine highlights growing EU scrutiny of cro",
+        "latency_ms": 3962,
+        "provider": "tavily"
+      },
+      "anysearch": {
+        "error": null,
+        "n_results": 5,
+        "unique_domains": 5,
+        "domains": [
+          "dw.com",
+          "m.caixin.com",
+          "rfi.fr",
+          "cna.com.tw",
+          "news.qq.com"
+        ],
+        "answer_len": 606,
+        "has_answer": true,
+        "avg_content_len": 1472.4,
+        "keyword_hits": 5,
+        "keyword_rate": 0.714,
+        "has_numeric": true,
+        "finance_hits": 2,
+        "composite": 86.4,
+        "sources_preview": [
+          {
+            "title": "被指销售不合规商品 Temu被欧盟重罚2亿欧元",
+            "domain": "dw.com",
+            "content_len": 1691
+          },
+          {
+            "title": "欧盟对Temu罚款2亿欧元因未排查平台违规商品｜出海·消费",
+            "domain": "m.caixin.com",
+            "content_len": 675
+          },
+          {
+            "title": "欧盟罚拼多多（Temu）2亿欧元指其放任非法商品销售",
+            "domain": "rfi.fr",
+            "content_len": 865
+          }
+        ],
+        "answer_preview": "被指销售不合规商品 Temu被欧盟重罚2亿欧元 1. 跳转至内容 2. 跳转至主菜单 3. 跳转到更多DW网站 https://p.dw.com/p/5ETev Temu目前在欧洲拥有高达1.3亿用户 （德国之声中文网）本周四（5月28日），欧盟委员会宣布对拼多多旗下跨境电商平台Temu处以2亿欧元（约合2.3亿美元）罚款，理由是该公司未能有效遏制平台上非法商品的销售，违反欧盟《数字服务法》（DS | 欧盟对Temu罚款2亿欧元 因未排",
+        "latency_ms": 1761,
+        "provider": "anysearch"
+      },
+      "winner": "tavily",
+      "delta_composite": -8.6
+    }
+  ],
+  "notes": [
+    "composite = coverage(20)+diversity(15)+keyword(30)+depth(15)+answer(10)+finance(10)",
+    "Not a human relevance study; heuristic proxy for investment-research use cases",
+    "AnySearch answer is snippet-joined when API has no LLM answer field"
+  ]
+}

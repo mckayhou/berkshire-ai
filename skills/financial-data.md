@@ -12,17 +12,22 @@ version: 10.2
 
 本规范适用于所有涉及企业财务数据的研究。**每个关键数据必须来自两个独立来源，误差>1%须标记。**
 
-### 联网检索（AnySearch Skill 优先）
+### 联网检索（hybrid：Tavily 主 + AnySearch 补）
 
-实时网页/垂直金融检索优先走 **AnySearch Skill**（见 `anysearch-web.md` / `skills/anysearch/SKILL.md`）：
+质量对照后（`reports/_search_compare/`）：通用/新闻/事件 **优先 Tavily**；AnySearch 通用作回退；**结构化财务卡片**可加 AnySearch `finance.fundamental`。
 
 ```bash
+# 默认流水线
+SEARCH_MODE=hybrid python3 src/tavily_search.py stock {ticker} {company_name}
+SEARCH_MODE=hybrid python3 src/tavily_search.py financial {ticker}
+
+# 结构化财务补数（A 股示例）
 python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
-python3 skills/anysearch/scripts/anysearch_cli.py search "{ticker}" --domain finance \
-  --sub_domain finance.quote --sdp type=stock,symbol={ticker},cn_code= --max_results 5
+python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务指标" --domain finance \
+  --sub_domain finance.fundamental --sdp type=indicator,symbol=,cn_code={code}.SH --max_results 5
 ```
 
-脚本流水线可用 `python3 src/tavily_search.py`（`SEARCH_MODE=hybrid`：Tavily + AnySearch）。密钥：`ANYSEARCH_API_KEY`（项目 `.env` 或 `skills/anysearch/.env`），**禁止写入 skill 正文**。
+密钥：`TAVILY_API_KEYS` / `ANYSEARCH_API_KEY`（仅 `.env`），**禁止写入 skill 正文**。见 `anysearch-web.md`。
 
 ---
 
