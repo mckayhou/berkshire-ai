@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.29.1**（投研效果契约 + 后验周报 + 离线 E2E；累积 V10.29 Brainstorm / SkillForge regression gate 与 V10.28 TextGrad 闭环）。完整版本历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.29.2**（AnySearch Skill + Tavily hybrid 与质量对照路由；累积投研效果契约 / 后验周报 / Brainstorm / SkillForge）。包版本 `10.29.2`。完整历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全功能工作流  
 **文档中心**：[docs/README.md](docs/README.md) — 按场景选阅读路径（回测 / 量化 / 引擎 / 技能 / 测试）
@@ -331,7 +331,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 
 ## 📊 当前版本
 
-**V10.29.2** (2026-07-13) — 包版本以 `VERSION_HISTORY` 为准
+**V10.29.2** (2026-07-13) — 包版本 `10.29.2`
 - ✅ **AnySearch Skill + Tavily hybrid**：`skills/anysearch/` + `anysearch-web`；`SEARCH_MODE=hybrid` 回退/合并；Key 仅本地 `.env`
 - ✅ **投研效果契约**：DecisionRecord thesis/kill/action/horizon + `log_decision` / `posterior_weekly` / 离线 E2E
 - ✅ TextGrad 化 (节点级诊断 + 梯度反向传播)
@@ -387,4 +387,4 @@ curl -X POST localhost:8000/debate \
 ## 📝 维护者
 
 - Mckay (houqing)
-- 最后更新: 2026-07-09 (V10.29.1: 投研效果契约 + 后验周报 + 离线 E2E；包导入 relative-first)
+- 最后更新: 2026-07-14 (V10.29.2: AnySearch Skill + Tavily hybrid；质量对照路由；包 `10.29.2`)

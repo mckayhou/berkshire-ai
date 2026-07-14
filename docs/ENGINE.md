@@ -271,7 +271,7 @@ curl -s localhost:8000/doctor
 | V10.29 | 多源证据 Brainstorm | `run_full_cycle(use_brainstorm=True)` |
 | V10.29 | SkillForge regression gate | `run_evolution_round(regression_cases=…)` |
 | V10.29.1 | 投研效果契约 + 后验周报 | `log_decision` / `posterior_weekly`；见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) |
-| V10.29.2 | AnySearch Skill + Tavily hybrid | `skills/anysearch/`、`anysearch-web`、`src/tavily_search.py`；见 [USER_GUIDE §5.4](USER_GUIDE.md) |
+| V10.29.2 | AnySearch Skill + Tavily hybrid（**当前包 10.29.2**） | `skills/anysearch/`、`anysearch-web`、`src/tavily_search.py`；见 [USER_GUIDE §5.4](USER_GUIDE.md) |
 
 ---
 

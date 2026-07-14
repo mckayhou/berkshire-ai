@@ -2,7 +2,7 @@
 name: berkshire-thesis-tracker
 description: |
   投资论文追踪纪律系统。买入后持续检查、季度复盘、动态调整。
-version: 10.29.1
+version: 10.29.2
 ---
 
 # 投资论文追踪：买入后的纪律系统

@@ -96,7 +96,7 @@
 - ✅ `tools/posterior_weekly.py` + `src/posterior_report.py`（方向命中 / 校准 / 完整率）
 - ✅ `tools/seed_portfolio_decisions.py` + `data/portfolio_decision_seeds.json`
 - ✅ `tools/archive_experiences.py` 清理测试污染经验库
-- ✅ 离线 E2E：`tests/e2e/test_research_effectiveness_e2e.py`；包版本 **10.29.1**
+- ✅ 离线 E2E：`tests/e2e/test_research_effectiveness_e2e.py`；包版本 **10.29.2**
 - 🟡 持续：真实决策后验样本 ≥20 后再谈 IR；禁止用假 experiences 宣称 alpha
 
 ## 可选 / 未排期

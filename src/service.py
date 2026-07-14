@@ -38,7 +38,7 @@ except ImportError:  # pragma: no cover - 包内导入回退
     from observability import get_logger
     from realized_feedback import realized_scores
 
-APP_VERSION = "10.29.1"
+APP_VERSION = "10.29.2"
 SERVICE_NAME = "berkshire-ai"
 
 

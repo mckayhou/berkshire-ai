@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "berkshire-ai"
-version = "10.29.1"
+version = "10.29.2"
 description = "四大师并行投研系统 + V10 TextGrad 自进化引擎（OpenClaw / QwenPaw 适配）"
 readme = "README.md"
 requires-python = ">=3.10"
