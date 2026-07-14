@@ -143,7 +143,7 @@ lead 收集 4 份，做归因合成。
 {任务description的内容}
 
 **侦察方法**：
-- 优先使用 **AnySearch Skill**（`skills/anysearch-web.md`）做时效性查询；失败再 hybrid `src/tavily_search.py` 或 WebSearch（关键词加日期或「最近」「latest」「2026」）
+- 优先 **hybrid Tavily**（`SEARCH_MODE=hybrid python3 src/tavily_search.py news ...` 或等价）做时效性查询；失败/需长正文再 AnySearch Skill（`anysearch-web.md`）或 WebSearch（关键词加日期或「最近」「latest」「2026」）
 - 关键事件用 WebFetch 精读原始来源（公告原文、财报、监管文件）
 - 对每个事件做"独立信源验证"——传言至少要 2 个独立来源
 - **不要被标题党误导**：标题与正文不符的事件要标注"标题误导"

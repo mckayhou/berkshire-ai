@@ -146,18 +146,19 @@ description: >
 ### Step 1: 数据收集 (V10.29.2: AnySearch Skill + Tavily hybrid)
 
 > **核心要求**: 所有财务/行情相关事实必须通过实时检索获取，禁止依赖 LLM 内部知识。
-> Agent 优先 **AnySearch Skill**；脚本/流水线用 `tavily_search.py`（`SEARCH_MODE=hybrid`）。
+> 默认 **`SEARCH_MODE=hybrid`（Tavily 主 + AnySearch 回退）**；结构化财务可加 AnySearch `finance.fundamental`（见质量对照 `docs/search-compare/`）。
 
 **数据获取流程**:
 ```bash
-# 0. Agent 首选 — AnySearch Skill
-python3 skills/anysearch/scripts/anysearch_cli.py search "{ticker} {company_name} 市值 PE" --max_results 5
-python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+# 1–3. 流水线 hybrid（推荐）
+SEARCH_MODE=hybrid python3 src/tavily_search.py stock {ticker} {company_name}
+SEARCH_MODE=hybrid python3 src/tavily_search.py financial {ticker}
+SEARCH_MODE=hybrid python3 src/tavily_search.py news {industry} {company}
 
-# 1–3. 流水线 hybrid（Tavily 主 + AnySearch 回退）
-python3 src/tavily_search.py stock {ticker} {company_name}
-python3 src/tavily_search.py financial {ticker}
-python3 src/tavily_search.py news {industry} {company}
+# 可选：垂直财务补数 / 抽页
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
+python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务" --domain finance \
+  --sub_domain finance.fundamental --sdp type=indicator,symbol=,cn_code= --max_results 5
 ```
 
 **数据要求**:
@@ -198,17 +199,17 @@ python3 src/tavily_search.py news {industry} {company}
 
 ## 🔧 4. 金融严谨性工具 (必须使用)
 
-### 4.1 实时搜索 (AnySearch Skill + Tavily hybrid)
+### 4.1 实时搜索 (Tavily hybrid + AnySearch 补)
 
 ```bash
-# AnySearch Skill（Agent 首选）
-python3 skills/anysearch/scripts/anysearch_cli.py search "0700.HK 腾讯 市值" --max_results 5
-
-# 流水线 CLI
-python3 src/tavily_search.py stock 0700.HK 腾讯控股
-python3 src/tavily_search.py financial 0700.HK
-python3 src/tavily_search.py news 互联网 腾讯
+# 流水线 hybrid（推荐主路）
+SEARCH_MODE=hybrid python3 src/tavily_search.py stock 0700.HK 腾讯控股
+SEARCH_MODE=hybrid python3 src/tavily_search.py financial 0700.HK
+SEARCH_MODE=hybrid python3 src/tavily_search.py news 互联网 腾讯
 python3 src/tavily_search.py test
+
+# 垂直财务 / extract
+python3 skills/anysearch/scripts/anysearch_cli.py get_sub_domains --domain finance
 ```
 
 **环境变量**:
