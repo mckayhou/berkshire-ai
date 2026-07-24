@@ -107,6 +107,7 @@ def test_vfs_section_patch_idempotent(sandbox_skill):
 
 def test_evolve_from_fixture_dry_run(sandbox_skill):
     skills, evo = sandbox_skill
+    # 强制 RULE：有 BERKSHIRE_LLM_API_KEY 时 AUTO 会走真实 LLM，补丁文案非确定
     report = evolve_from_fixture(
         "investment-research",
         FIXTURE,
@@ -114,6 +115,7 @@ def test_evolve_from_fixture_dry_run(sandbox_skill):
         skills_root=skills,
         evolution_root=evo,
         write_live=False,
+        mode=JudgeMode.RULE,
     )
     assert report.rounds
     assert report.rounds[0].accepted_changes >= 1
@@ -132,6 +134,7 @@ def test_evolve_writes_version_and_optional_live(sandbox_skill):
         skills_root=skills,
         evolution_root=evo,
         write_live=True,
+        mode=JudgeMode.RULE,
     )
     live = (skills / "investment-research.md").read_text(encoding="utf-8")
     assert "SkillForge 补强" in live
