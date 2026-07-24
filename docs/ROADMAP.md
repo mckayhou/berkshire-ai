@@ -90,13 +90,16 @@
 ### SENSITIVITY 尺度校准 — ✅ V10.12
 - ✅ V10.23 **conviction 校准**：`tools/calibrate_conviction.py`（经验库 stance vs realized_base 偏差报告）
 
-### 投研效果北极星（过程 → 可证伪结果）— ✅ V10.29.1 工具+E2E / 🟡 样本积累中
+### 投研效果北极星（过程 → 可证伪结果）— ✅ V10.29.3 门禁+周环 / 🟡 样本积累中
 - ✅ `DecisionRecord` 契约字段：`thesis` / `kill_condition` / `action` / `horizon_days` / `depth` / `skill`
+- ✅ **V10.29.3** `ACTION_STANCE_BANDS`：action↔mean_stance 进入 `is_research_complete`；`log_decision bands/--strict`
+- ✅ **V10.29.3** `repair_decision_stances` / `feedback_due_decisions` / `scripts/weekly-posterior.sh`
+- ✅ **V10.29.3** `NetworkPriceProvider` Yahoo chart 无依赖回退（美股/ADR）
 - ✅ `tools/log_decision.py` 落盘 + gaps；`skills/investment-research.md` 收尾清单
 - ✅ `tools/posterior_weekly.py` + `src/posterior_report.py`（方向命中 / 校准 / 完整率）
 - ✅ `tools/seed_portfolio_decisions.py` + `data/portfolio_decision_seeds.json`
 - ✅ `tools/archive_experiences.py` 清理测试污染经验库
-- ✅ 离线 E2E：`tests/e2e/test_research_effectiveness_e2e.py`；包版本 **10.29.2**
+- ✅ 离线 E2E：`tests/e2e/test_research_effectiveness_e2e.py`；包版本 **10.29.3**
 - 🟡 持续：真实决策后验样本 ≥20 后再谈 IR；禁止用假 experiences 宣称 alpha
 
 ## 可选 / 未排期

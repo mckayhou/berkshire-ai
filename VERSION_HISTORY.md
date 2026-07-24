@@ -36,6 +36,35 @@
 
 ## 📜 版本历史
 
+### V10.29.3 - 2026-07-24 (action↔stance 门禁 + 周度后验/到期反馈)
+
+把投研效果从「字段齐全」推进到「action 与信心一致 + 到期可自动学习」。
+
+**契约硬化** `src/decision_log.py`
+- `ACTION_STANCE_BANDS`：`buy/add≥0.70`、`hold≤0.80`、`reduce/exit≤0.55`、`watch∈[0.45,0.75]`
+- `action_stance_gaps` / `research_gaps` / `is_research_complete` 纳入带宽
+- `tools/log_decision.py`：`bands`、gaps 展示 stance 违规、`append --strict`（有缺口拒绝落盘）
+
+**工具**
+- `tools/repair_decision_stances.py`：历史越界 clip scores 或 remap-action（默认 dry-run，`--apply` 备份写回）
+- `tools/feedback_due_decisions.py`：maturity≤as_of → realized feedback → experiences（`mat:` 去重）
+- `scripts/weekly-posterior.sh`：gaps + posterior_weekly + 可选 `--feedback[-apply]` / `--notify`
+- `NetworkPriceProvider` Yahoo chart stdlib 回退（美股/ADR；`BERKSHIRE_DISABLE_YAHOO_FALLBACK`）
+
+**技能 / 文档**
+- `skills/investment-research.md` / `thesis-tracker.md`：stance 标尺、benchmark 建议、`--strict`
+- `docs/RESEARCH_EFFECTIVENESS.md`、`action-card.md`、`USER_GUIDE` §4.4、`ENGINE`、`ROADMAP`、`tools/README`、`TESTING.md`
+
+**测试结果**:
+- [x] 全量：`pytest tests/` → **557 passed, 1 skipped**（e2e LLM 无 Key skip）
+- [x] 聚焦：`test_posterior_report` + `test_repair_*` + `test_feedback_due_*` + `test_network_price_provider` + `e2e/test_research_effectiveness_e2e`
+- [x] 手工：`log_decision gaps/bands`、`weekly-posterior.sh --offline/--feedback`、`feedback_due_decisions` dry-run
+- [x] 版本对齐：`pyproject.toml` == `APP_VERSION` == `10.29.3`；README / state banner **V10.29**
+
+**结论**: ✅ 工具与契约上线；真实样本仍靠 horizon 到期后 `weekly-posterior --feedback-apply` 积累
+
+---
+
 ### V10.29.2 - 2026-07-13 (AnySearch Skill + Tavily hybrid)
 
 **变更内容**:
@@ -823,7 +852,9 @@ V9.3 (Tavily 集成)
   ↓
 V10.29.1（投研效果契约 + 后验 E2E）
   ↓
-V10.29.2 ← 当前（AnySearch Skill + Tavily hybrid）
+V10.29.2（AnySearch Skill + Tavily hybrid）
+  ↓
+V10.29.3 ← 当前（action↔stance 门禁 + weekly feedback）
 ```
 
 ---
@@ -832,6 +863,7 @@ V10.29.2 ← 当前（AnySearch Skill + Tavily hybrid）
 
 ### 投研效果（进行中）
 - [x] DecisionRecord 契约 + 后验周报 + 离线 E2E
+- [x] action↔stance 门禁 + 历史修复 + 到期反馈入 experiences（V10.29.3）
 - [ ] 真实 horizon 后验样本 ≥20 后公布命中率
 - [ ] 高 conviction 负 alpha → SkillForge 只改 top 失败
 
@@ -843,4 +875,4 @@ V10.29.2 ← 当前（AnySearch Skill + Tavily hybrid）
 ---
 
 **维护者**: Mckay (houqing)  
-**最后更新**: 2026-07-09
+**最后更新**: 2026-07-24

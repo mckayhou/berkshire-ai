@@ -1,6 +1,6 @@
 # 投研效果契约与后验 KPI
 
-> **版本**：V10.29.1 起契约落地（当前包 `10.29.2`）  
+> **版本**：V10.29.1 起契约落地；**V10.29.3** 增加 action↔stance 门禁 + 到期反馈（当前包 `10.29.3`）  
 > 把「写得好」变成「可证伪的对错」。  
 > 导航：[docs/README.md](README.md) | 引擎：[ENGINE.md](ENGINE.md) | 使用：[USER_GUIDE.md](USER_GUIDE.md) §4.4
 
