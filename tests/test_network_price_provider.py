@@ -95,6 +95,26 @@ def test_empty_or_failed_fetch_raises():
         p_empty.get_price("X", "2024-01-05")
 
 
+def test_yahoo_fallback_when_primary_empty(monkeypatch):
+    """主链空时可用 yahoo_fallback=True + 注入 _yahoo_chart_series。"""
+    import realized_feedback as rf
+
+    monkeypatch.setattr(
+        rf,
+        "_yahoo_chart_series",
+        lambda ticker, range_="6mo": {"2024-03-01": 42.0},
+    )
+    p = NetworkPriceProvider(
+        fetcher=lambda c, l: {"ok": False, "data": None},
+        yahoo_fallback=True,
+    )
+    assert p.get_price("TSM", "2024-03-01") == 42.0
+    # 注入 fetcher 默认关 Yahoo
+    p_off = NetworkPriceProvider(fetcher=lambda c, l: {"ok": False, "data": None})
+    with pytest.raises(KeyError):
+        p_off.get_price("TSM", "2024-03-01")
+
+
 def test_robust_close_parsing_skips_bad_bars():
     def fetcher(code, limit):
         return _ok([

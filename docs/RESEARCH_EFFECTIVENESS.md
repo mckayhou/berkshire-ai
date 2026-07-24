@@ -27,9 +27,20 @@
 | `kill_condition` | ✅ | 论点失效条件 |
 | `action` | ✅ | `buy`/`add`/`hold`/`reduce`/`exit`/`watch` |
 | `horizon_days` | ✅ | 后验日历日窗口（默认 20） |
+| `action` ↔ `mean_stance` | ✅ | 见下方带宽；不一致 → `action_stance:*` gap |
 | `depth` / `skill` | 建议 | lite/standard/deep；来源技能名 |
+| `benchmark` / `benchmark_anchor` | 强烈建议 | 否则 alpha≈raw_return，校准失真 |
 
-缺 `thesis` / `kill_condition` / `action` / `horizon_days` → `is_research_complete=False`。
+缺 `thesis` / `kill_condition` / `action` / `horizon_days`，或 **action↔stance 越界** → `is_research_complete=False`。
+
+### action ↔ mean_stance 带宽（`ACTION_STANCE_BANDS`）
+
+| action | 约束 |
+|--------|------|
+| `buy` / `add` | mean_stance ≥ 0.70 |
+| `hold` | mean_stance ≤ 0.80 |
+| `reduce` / `exit` | mean_stance ≤ 0.55 |
+| `watch` | mean_stance ∈ [0.45, 0.75] |
 
 路径：`BERKSHIRE_DECISION_LOG`（默认 `~/.berkshire/decisions.jsonl`）。
 
@@ -38,13 +49,15 @@
 ## 3. 工具与命令
 
 ```bash
-# 落盘
+# 落盘（hold 勿用 stance>0.80；生产加 --strict）
 python3 tools/log_decision.py append \
-  --ticker NVDA --date 2026-07-06 --price 198 --stance 0.88 \
-  --thesis "CUDA 护城河" --kill "份额下滑" --action hold --horizon 20
+  --ticker NVDA --date 2026-07-06 --price 198 --stance 0.75 \
+  --thesis "CUDA 护城河" --kill "份额下滑" --action hold --horizon 20 \
+  --benchmark SPY --benchmark-price 580 --strict
 
 python3 tools/log_decision.py list
-python3 tools/log_decision.py gaps          # 有缺口则 exit 1
+python3 tools/log_decision.py gaps          # 字段缺口 + action↔stance；有则 exit 1
+python3 tools/log_decision.py bands         # 打印带宽表
 
 # 持仓种子（与 thesis-tracker 对齐）
 python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json
@@ -55,6 +68,19 @@ python3 tools/posterior_weekly.py report --as-of 2026-07-26 \
 
 python3 tools/posterior_weekly.py report --network   # 可选真实行情
 
+# 周度一键（gaps + network 后验 + 可选 notify）
+./scripts/weekly-posterior.sh
+./scripts/weekly-posterior.sh --notify
+
+# 历史 action↔stance 越界修复（门禁上线后旧日志完整率会掉）
+python3 tools/repair_decision_stances.py              # dry-run
+python3 tools/repair_decision_stances.py --apply      # clip scores，保留 action + 备份
+# 或保留原 scores、改 action：--strategy remap-action
+
+# 到期决策批量反馈 → experiences（可学习标签）
+python3 tools/feedback_due_decisions.py               # dry-run
+python3 tools/feedback_due_decisions.py --apply       # 写入经验库（去重 mat:YYYY-MM-DD）
+
 # 经验库污染清理
 python3 tools/archive_experiences.py --dry-run
 python3 tools/archive_experiences.py --reset --reason "test pollution"
@@ -62,9 +88,10 @@ python3 tools/archive_experiences.py --reset --reason "test pollution"
 
 | 模块 | 路径 |
 |------|------|
-| 记录模型 | `src/decision_log.py` |
+| 记录模型 | `src/decision_log.py`（含 `ACTION_STANCE_BANDS`） |
 | 后验聚合 | `src/posterior_report.py` |
-| CLI | `tools/log_decision.py`、`posterior_weekly.py`、`seed_portfolio_decisions.py`、`archive_experiences.py` |
+| CLI | `tools/log_decision.py`、`posterior_weekly.py`、`seed_portfolio_decisions.py`、`archive_experiences.py`、`repair_decision_stances.py`、`feedback_due_decisions.py` |
+| 周度脚本 | `scripts/weekly-posterior.sh`（可选 `--feedback`） |
 | 种子数据 | `data/portfolio_decision_seeds.json` |
 | 技能收尾 | `skills/investment-research.md`、`docs/action-card.md` |
 
@@ -88,10 +115,10 @@ python3 tools/archive_experiences.py --reset --reason "test pollution"
 ```text
 研究 (investment-research)
   → financial_rigor + report_audit
-  → 行动卡
-  → log_decision.py append          ← 契约硬门
+  → 行动卡（action 与 mean_stance 对齐带宽）
+  → log_decision.py append --strict   ← 契约 + action↔stance 硬门
   → thesis-tracker / state 更新
-  → （horizon 后）posterior_weekly
+  → （每周）./scripts/weekly-posterior.sh
   → 只对「高 conviction + 负 alpha」做 SkillForge
 ```
 

@@ -8,8 +8,11 @@ from .access_control import RateLimiter, check_api_key, key_fingerprint
 from .cron_evolution import CronResult, run_cron
 from .debate import DebateCase, DebateResult, run_debate
 from .decision_log import (
+    ACTION_STANCE_BANDS,
     DecisionRecord,
+    action_stance_gaps,
     append_decision,
+    format_action_stance_rule,
     is_research_complete,
     load_decisions,
     mean_stance,
@@ -108,11 +111,14 @@ __all__ = [
     "MASTERS",
     "TextualGradientDescent",
     "DecisionRecord",
+    "ACTION_STANCE_BANDS",
     "append_decision",
     "load_decisions",
     "is_research_complete",
     "mean_stance",
     "research_gaps",
+    "action_stance_gaps",
+    "format_action_stance_rule",
     "PosteriorReport",
     "build_posterior_report",
     "realized_scores",

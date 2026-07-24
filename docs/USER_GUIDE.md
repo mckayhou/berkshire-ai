@@ -183,29 +183,40 @@ result = run_with_realized_feedback(
 
 ### 4.4 投研效果契约（DecisionRecord + 后验周报）
 
-正式研究**必须**落盘决策，否则无法衡量方向命中 / 校准：
+正式研究**必须**落盘决策，否则无法衡量方向命中 / 校准。  
+另：**action 必须与 mean_stance 带宽一致**（`hold≤0.80`，`buy/add≥0.70`，`reduce/exit≤0.55`，`watch∈[0.45,0.75]`），否则 `research_complete=false`。
 
 ```bash
-# 1) 研究报告收尾：落盘（与行动卡字段一致）
+# 1) 研究报告收尾：落盘（与行动卡字段一致；hold 勿 stance>0.80）
 python3 tools/log_decision.py append \
   --ticker NVDA --date 2026-07-06 --price 198 \
-  --stance 0.88 \
+  --stance 0.75 \
   --thesis "AI 算力核心 + CUDA 护城河" \
   --kill "PE>40 或 份额<75%" \
-  --action hold --horizon 20 --depth standard
+  --action hold --horizon 20 --depth standard \
+  --benchmark SPY --benchmark-price 580 \
+  --strict
 
-# 2) 契约缺口 / 列表
+# 2) 契约缺口 / 带宽表 / 列表
 python3 tools/log_decision.py gaps
+python3 tools/log_decision.py bands
 python3 tools/log_decision.py list
 
 # 3) 从 thesis-tracker 活持仓补录种子（NVDA/AVGO/PDD/600900/0700.HK）
 python3 tools/seed_portfolio_decisions.py --dry-run
 python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json
 
-# 4) 每周后验（离线 price map 或 --network）
+# 4) 每周后验（推荐一键脚本）
+./scripts/weekly-posterior.sh                 # gaps + --network + 落 reports/_posterior/
+./scripts/weekly-posterior.sh --notify        # 再经 notify 推送
+./scripts/weekly-posterior.sh --feedback      # 另：到期决策反馈 dry-run
+./scripts/weekly-posterior.sh --feedback-apply  # 写入 experiences
+./scripts/weekly-posterior.sh --offline       # 不拉行情
+# 或手工：
 python3 tools/posterior_weekly.py report --as-of $(date +%F) \
   --prices '{"AAPL|2026-01-21":110}'
-python3 tools/posterior_weekly.py report --network   # 需行情源
+python3 tools/posterior_weekly.py report --network
+python3 tools/feedback_due_decisions.py --apply
 
 # 5) 经验库被测试污染时：归档并清空（再靠真实后验重建）
 python3 tools/archive_experiences.py --dry-run

@@ -30,20 +30,21 @@ from decision_log import (  # noqa: E402
 )
 from graph import MASTER_PREFIXES  # noqa: E402
 
-# 与 2026-07-07 state 对齐的默认种子（价格锚点为当时备注近似值，后验需自行刷新）
+# 与 data/portfolio_decision_seeds.json 对齐的默认种子（价格锚点为当时备注近似值）
+# stance 须满足 ACTION_STANCE_BANDS（hold≤0.80 等）
 DEFAULT_SEEDS: List[Dict[str, Any]] = [
     {
         "ticker": "NVDA",
         "date": "2026-07-06",
         "price_anchor": 198.0,
-        "stance": 0.88,
+        "stance": 0.78,
         "action": "hold",
         "horizon_days": 20,
         "depth": "standard",
         "skill": "thesis-tracker",
         "thesis": "AI 算力核心基础设施，CUDA 生态护城河宽",
         "kill_condition": "PE > 40x OR 份额 < 75%",
-        "note": "seed from berkshire_state 2026-07-07 Hold",
+        "note": "seed from berkshire_state 2026-07-07 Hold；stance 按 hold≤0.80 校准",
         "benchmark": "SPX",
     },
     {

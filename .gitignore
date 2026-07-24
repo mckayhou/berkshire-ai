@@ -53,5 +53,8 @@ data/holdings.json
 # notify.py 本地兜底落地的推送内容（生成物，不提交）
 reports/notifications/
 
+# weekly-posterior.sh 生成的后验周报（本地归档，不提交）
+reports/_posterior/
+
 # SkillForge 本地进化版本快照（见 docs/SKILL_EVOLUTION.md）
 skills/.evolution/

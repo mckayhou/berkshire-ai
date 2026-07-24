@@ -144,12 +144,62 @@ def _default_daily_fetcher(code: str, limit: int) -> dict:
     return data_sources.daily(code, limit=limit)
 
 
+def _yahoo_chart_series(ticker: str, range_: str = "6mo") -> Dict[str, float]:
+    """零第三方库的 Yahoo chart 日线回退（美股/ADR 等 native 链常空时）。
+
+    仅用 stdlib urllib；失败返回 {}。不替代 data_sources 主链，只在主链空时调用。
+    """
+    import urllib.error
+    import urllib.request
+    from datetime import datetime, timezone
+
+    sym = str(ticker).strip().upper()
+    if not sym or any(c in sym for c in " /\\"):
+        return {}
+    # 简单安全：仅字母数字与 ._-
+    if not all(c.isalnum() or c in "._-" for c in sym):
+        return {}
+    url = (
+        f"https://query2.finance.yahoo.com/v8/finance/chart/{sym}"
+        f"?interval=1d&range={range_}"
+    )
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "berkshire-ai/10.29 NetworkPriceProvider"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:  # noqa: S310 - 固定 yahoo host
+            raw = resp.read().decode("utf-8", errors="replace")
+        payload = json.loads(raw)
+        result = (payload.get("chart") or {}).get("result") or []
+        if not result:
+            return {}
+        block = result[0]
+        ts = block.get("timestamp") or []
+        quote = ((block.get("indicators") or {}).get("quote") or [{}])[0]
+        closes = quote.get("close") or []
+        out: Dict[str, float] = {}
+        for t, px in zip(ts, closes):
+            if px is None:
+                continue
+            try:
+                day = datetime.fromtimestamp(int(t), tz=timezone.utc).strftime("%Y-%m-%d")
+                out[day] = float(px)
+            except (TypeError, ValueError, OSError, OverflowError):
+                continue
+        return out
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError, TypeError, ValueError):
+        return {}
+
+
 class NetworkPriceProvider(PriceProvider):
     """接真实行情的价格源：经 tools/data_sources 多源降级链取日线，内存缓存。
 
     设计（与既有工程约束一致）：
     - **可注入 fetcher**：默认走 data_sources.daily（native→tushare→…→yfinance 降级链）；
       测试传入 mock fetcher 即可完全离线。
+    - **Yahoo chart 回退**：主链空且未关闭时，用 stdlib 拉 query2 chart（覆盖美股 ADR）。
+      `yahoo_fallback=False` 或 env `BERKSHIRE_DISABLE_YAHOO_FALLBACK=1` 关闭。
     - **内存缓存**：每个 ticker 的整条日线只取一次，构建 {date: close} 映射，
       一次 run 内多次 get_price 不重复取数。
     - **非交易日回退**：请求日无 bar 时，回退到该日**之前最近的交易日**收盘价
@@ -166,12 +216,22 @@ class NetworkPriceProvider(PriceProvider):
         fallback_to_prior: bool = True,
         disk_cache_dir: Optional[str] = None,
         disk_cache_ttl: Optional[int] = None,
+        yahoo_fallback: Optional[bool] = None,
     ):
         self._fetcher: DailyFetcher = fetcher or _default_daily_fetcher
         self._sources = sources
         self._limit = limit
         self._fallback_to_prior = fallback_to_prior
         self._cache: Dict[str, Dict[str, float]] = {}
+        # 注入自定义 fetcher 时默认关 Yahoo（保持单测零网络）；生产默认开
+        if yahoo_fallback is None:
+            if fetcher is not None:
+                yahoo_fallback = False
+            else:
+                yahoo_fallback = os.environ.get(
+                    "BERKSHIRE_DISABLE_YAHOO_FALLBACK", ""
+                ).strip() not in ("1", "true", "TRUE", "yes")
+        self._yahoo_fallback = bool(yahoo_fallback)
         self._disk_cache_dir = disk_cache_dir or os.environ.get(ENV_PRICE_CACHE_DIR, "").strip() or None
         raw_ttl = disk_cache_ttl
         if raw_ttl is None:
@@ -243,6 +303,8 @@ class NetworkPriceProvider(PriceProvider):
                     series[nd] = float(raw_close)
                 except (TypeError, ValueError):
                     continue
+        if not series and self._yahoo_fallback:
+            series = _yahoo_chart_series(key)
         self._cache[key] = series
         if series:
             self._save_disk_cache(key, series)

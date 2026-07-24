@@ -31,10 +31,13 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(_ROOT, "src"))
 
 from decision_log import (  # noqa: E402
+    ACTION_STANCE_BANDS,
     DEFAULT_HORIZON_DAYS,
     DecisionRecord,
+    action_stance_gaps,
     append_decision,
     default_log_path,
+    format_action_stance_rule,
     incomplete_research_decisions,
     is_research_complete,
     load_decisions,
@@ -80,8 +83,29 @@ def cmd_append(args: argparse.Namespace) -> int:
         depth=args.depth or "",
         skill=args.skill or "",
     )
-    path = append_decision(rec, path=args.log)
     gaps = research_gaps(rec)
+    stance_gaps = action_stance_gaps(rec)
+    # 默认仍落盘（保留审计轨迹）；--strict 时遇缺口拒绝写入
+    if args.strict and gaps:
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "rejected": True,
+                    "ticker": rec.ticker,
+                    "date": rec.date,
+                    "mean_stance": mean_stance(rec),
+                    "gaps": gaps,
+                    "action_stance_rule": format_action_stance_rule(rec.action),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        return 3
+
+    path = append_decision(rec, path=args.log)
     print(json.dumps(
         {
             "ok": True,
@@ -92,13 +116,21 @@ def cmd_append(args: argparse.Namespace) -> int:
             "mean_stance": mean_stance(rec),
             "research_complete": is_research_complete(rec),
             "gaps": gaps,
+            "action_stance_rule": format_action_stance_rule(rec.action),
         },
         ensure_ascii=False,
         indent=2,
     ))
     if gaps:
+        hint = ""
+        if stance_gaps:
+            hint = (
+                f" action↔stance 须满足: {format_action_stance_rule(rec.action)}"
+                f"（见 ACTION_STANCE_BANDS）。"
+            )
         print(
-            f"警告: 契约不完整，缺 {gaps}。后验 KPI 仍可记方向，但 complete_rate 会扣分。",
+            f"警告: 契约不完整，缺 {gaps}。{hint}"
+            "后验 KPI 仍可记方向，但 complete_rate 会扣分。",
             file=sys.stderr,
         )
         return 2
@@ -149,8 +181,10 @@ def cmd_gaps(args: argparse.Namespace) -> int:
             "ticker": r.ticker,
             "date": r.date,
             "gaps": research_gaps(r),
-            "thesis": r.thesis,
+            "mean_stance": mean_stance(r),
             "action": r.action,
+            "action_stance_rule": format_action_stance_rule(r.action),
+            "thesis": r.thesis,
         }
         for r in rows
     ]
@@ -158,9 +192,31 @@ def cmd_gaps(args: argparse.Namespace) -> int:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         print(f"契约不完整: {len(payload)} 条")
+        print(
+            "action↔stance 带宽: "
+            + ", ".join(
+                f"{a}→{format_action_stance_rule(a)}"
+                for a in ("buy", "add", "hold", "reduce", "exit", "watch")
+            )
+        )
         for p in payload:
-            print(f"  {p['ticker']} {p['date']}: 缺 {p['gaps']}")
+            ms = p["mean_stance"]
+            ms_s = f"{ms:.3f}" if isinstance(ms, float) else "-"
+            print(
+                f"  {p['ticker']} {p['date']}: act={p['action'] or '-'} "
+                f"stance={ms_s} 缺 {p['gaps']}"
+            )
     return 0 if not payload else 1
+
+
+def cmd_bands(_args: argparse.Namespace) -> int:
+    """打印 action↔mean_stance 带宽表（给 Agent / 人工对照）。"""
+    rows = [
+        {"action": a, "rule": format_action_stance_rule(a), "band": ACTION_STANCE_BANDS[a]}
+        for a in ("buy", "add", "hold", "reduce", "exit", "watch")
+    ]
+    print(json.dumps(rows, ensure_ascii=False, indent=2))
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -187,6 +243,11 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--benchmark", default="")
     ap.add_argument("--benchmark-price", type=float, default=None)
     ap.add_argument("--note", default="")
+    ap.add_argument(
+        "--strict",
+        action="store_true",
+        help="契约/action↔stance 有缺口时拒绝落盘（exit 3）",
+    )
     ap.set_defaults(func=cmd_append)
 
     lp = sub.add_parser("list", help="列出决策")
@@ -194,9 +255,12 @@ def build_parser() -> argparse.ArgumentParser:
     lp.add_argument("--json", action="store_true")
     lp.set_defaults(func=cmd_list)
 
-    gp = sub.add_parser("gaps", help="列出契约不完整记录")
+    gp = sub.add_parser("gaps", help="列出契约不完整记录（含 action↔stance）")
     gp.add_argument("--json", action="store_true")
     gp.set_defaults(func=cmd_gaps)
+
+    bp = sub.add_parser("bands", help="打印 action↔mean_stance 带宽表")
+    bp.set_defaults(func=cmd_bands)
 
     return p
 

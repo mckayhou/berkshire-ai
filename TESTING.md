@@ -232,7 +232,9 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_pipeline_brainstorm.py` | `pipeline` + `use_brainstorm` | V10.29 接线 |
 | `test_regression_gate.py` | `skill_forge/regression_gate` | V10.29 paired replay |
 | `test_skill_forge_cli.py` | `tools/skill_evolve.py` CLI | 子命令 subprocess 冒烟 |
-| `test_posterior_report.py` | `decision_log` 契约 + `posterior_report` + CLI | 方向命中 / 完整率 / log_decision |
+| `test_posterior_report.py` | `decision_log` 契约 + `posterior_report` + CLI | 方向命中 / 完整率 / log_decision / action↔stance |
+| `test_repair_decision_stances.py` | `tools/repair_decision_stances.py` | clip / remap / apply 备份 |
+| `test_feedback_due_decisions.py` | `tools/feedback_due_decisions.py` | 到期反馈 dry-run / apply / 去重 |
 | `e2e/test_research_effectiveness_e2e.py` | **投研效果离线 E2E** | 落盘→种子→归档→后验→反馈（无网络） |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
@@ -261,20 +263,26 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/evidence_channels.py` 多源证据 | `pytest tests/test_evidence_channels.py tests/test_pipeline_brainstorm.py` |
 | `src/skill_forge/regression_gate.py` 回归门控 | `pytest tests/test_regression_gate.py` |
 | `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
-| 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
+| 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py tests/test_feedback_due_decisions.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
 
 ### 投研效果契约 / 后验周报验收
 
 ```bash
 # 单元 + 离线 E2E（CI 默认；无网络、无 LLM）
-python3 -m pytest tests/test_posterior_report.py tests/e2e/test_research_effectiveness_e2e.py -v
+python3 -m pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py \
+  tests/test_feedback_due_decisions.py tests/e2e/test_research_effectiveness_e2e.py -v
 
 # 手工冒烟
 python3 tools/log_decision.py gaps
+python3 tools/log_decision.py bands
+python3 tools/repair_decision_stances.py              # 历史越界 dry-run
+python3 tools/feedback_due_decisions.py               # 到期反馈 dry-run
 python3 tools/seed_portfolio_decisions.py --dry-run --from-json data/portfolio_decision_seeds.json
 python3 tools/posterior_weekly.py report --as-of $(date +%F) \
   --prices '{"AAPL|2026-01-21":110}'
+./scripts/weekly-posterior.sh --offline
+./scripts/weekly-posterior.sh --feedback              # 周报 + 反馈 dry-run
 python3 tools/archive_experiences.py --dry-run
 ```
 

@@ -42,6 +42,18 @@ RESEARCH_REQUIRED_FIELDS: Tuple[str, ...] = (
     "horizon_days",
 )
 
+# action ↔ mean_stance 带宽（压低「hold 却 0.87」类校准噪声）
+# buy/add 须偏多；hold 不得过自信；reduce/exit 须偏空；watch 居中。
+ACTION_STANCE_BANDS: Dict[str, Tuple[Optional[float], Optional[float]]] = {
+    # action: (min_inclusive, max_inclusive)；None = 不限制该侧
+    "buy": (0.70, None),
+    "add": (0.70, None),
+    "hold": (None, 0.80),
+    "reduce": (None, 0.55),
+    "exit": (None, 0.55),
+    "watch": (0.45, 0.75),
+}
+
 
 def default_log_path() -> str:
     """决策日志默认路径（环境变量可覆盖）。"""
@@ -163,8 +175,48 @@ def maturity_date(record: DecisionRecord) -> Optional[str]:
     return (base + timedelta(days=int(record.horizon_days))).strftime("%Y-%m-%d")
 
 
+def action_stance_gaps(record: DecisionRecord) -> List[str]:
+    """action 与 mean_stance 带宽不一致时返回缺口标签列表。
+
+    无 action、无 scores、或 action 不在带宽表内 → 空列表（不额外惩罚）。
+    标签形如 ``action_stance:hold_mean_gt_0.80``，便于 CLI / 后验聚合。
+    """
+    action = (record.action or "").strip().lower()
+    if not action or action not in ACTION_STANCE_BANDS:
+        return []
+    stance = mean_stance(record)
+    if stance is None:
+        return []
+    lo, hi = ACTION_STANCE_BANDS[action]
+    gaps: List[str] = []
+    if lo is not None and stance < lo - 1e-12:
+        gaps.append(f"action_stance:{action}_mean_lt_{lo:g}")
+    if hi is not None and stance > hi + 1e-12:
+        gaps.append(f"action_stance:{action}_mean_gt_{hi:g}")
+    return gaps
+
+
+def format_action_stance_rule(action: str) -> str:
+    """人类可读的单条 action 带宽说明。"""
+    action = (action or "").strip().lower()
+    band = ACTION_STANCE_BANDS.get(action)
+    if not band:
+        return "（无带宽约束）"
+    lo, hi = band
+    if lo is not None and hi is not None:
+        return f"mean_stance ∈ [{lo:g}, {hi:g}]"
+    if lo is not None:
+        return f"mean_stance ≥ {lo:g}"
+    if hi is not None:
+        return f"mean_stance ≤ {hi:g}"
+    return "（无带宽约束）"
+
+
 def research_gaps(record: DecisionRecord) -> List[str]:
-    """返回投研效果契约缺失字段名列表。"""
+    """返回投研效果契约缺失 / 不一致项列表。
+
+    含必填字段，以及 action↔mean_stance 带宽（见 ACTION_STANCE_BANDS）。
+    """
     gaps: List[str] = []
     if not record.thesis:
         gaps.append("thesis")
@@ -174,11 +226,12 @@ def research_gaps(record: DecisionRecord) -> List[str]:
         gaps.append("action")
     if record.horizon_days is None:
         gaps.append("horizon_days")
+    gaps.extend(action_stance_gaps(record))
     return gaps
 
 
 def is_research_complete(record: DecisionRecord) -> bool:
-    """正式研究是否具备后验所需最小字段。"""
+    """正式研究是否具备后验所需最小字段，且 action 与 stance 一致。"""
     return not research_gaps(record)
 
 

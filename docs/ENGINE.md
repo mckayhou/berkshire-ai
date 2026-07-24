@@ -33,8 +33,10 @@ python3 src/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 
 ```bash
 python3 tools/log_decision.py append --ticker AAPL --date 2026-01-02 --price 100 \
-  --stance 0.8 --thesis "..." --kill "..." --action hold
+  --stance 0.75 --thesis "..." --kill "..." --action hold   # hold ⇒ stance≤0.80
+python3 tools/log_decision.py bands
 python3 tools/posterior_weekly.py report --as-of 2026-02-01 --prices '{"AAPL|2026-01-22":110}'
+./scripts/weekly-posterior.sh --offline   # 周度 gaps + 后验
 ```
 
 详见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。验收：

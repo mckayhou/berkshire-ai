@@ -54,7 +54,7 @@ def test_e2e_log_decision_append_list_gaps(tmp_path: Path) -> None:
         "--price",
         "100",
         "--stance",
-        "0.85",
+        "0.75",
         "--thesis",
         "E2E 护城河测试",
         "--kill",
@@ -322,7 +322,8 @@ def test_e2e_decision_to_realized_feedback_and_posterior(tmp_path: Path) -> None
     d = DecisionRecord(
         ticker="AAPL",
         date="2026-01-01",
-        scores={"duan": 0.88, "buffett": 0.86, "munger": 0.84, "lilu": 0.87},
+        # mean≈0.75，符合 hold 带宽 ≤0.80；高 conviction 应用 add/buy
+        scores={"duan": 0.78, "buffett": 0.76, "munger": 0.72, "lilu": 0.74},
         price_anchor=100.0,
         benchmark="SPX",
         benchmark_anchor=5000.0,

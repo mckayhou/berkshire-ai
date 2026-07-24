@@ -3,14 +3,14 @@
     "ticker": "NVDA",
     "date": "2026-07-06",
     "price_anchor": 198.0,
-    "stance": 0.88,
+    "stance": 0.78,
     "action": "hold",
     "horizon_days": 20,
     "depth": "standard",
     "skill": "thesis-tracker",
     "thesis": "AI 算力核心基础设施，CUDA 生态护城河宽",
     "kill_condition": "PE > 40x OR 份额 < 75%",
-    "note": "seed from berkshire_state 2026-07-07 Hold",
+    "note": "seed from berkshire_state 2026-07-07 Hold；stance 按 action↔hold≤0.80 校准",
     "benchmark": "SPX"
   },
   {

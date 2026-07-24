@@ -91,11 +91,12 @@ reports/{公司名}/
 
 ```bash
 python3 tools/log_decision.py append \
-  --ticker <代码> --date <YYYY-MM-DD> --price <锚点> --stance 0.8 \
+  --ticker <代码> --date <YYYY-MM-DD> --price <锚点> --stance 0.75 \
   --thesis "<一句话>" --kill "<失效条件>" --action hold --horizon 20
+# hold ⇒ mean_stance≤0.80；buy/add≥0.70。见 log_decision.py bands
 ```
 
-后验周报与 KPI 见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)。
+后验周报与 KPI 见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)；周度：`./scripts/weekly-posterior.sh`。
 
 ## 报告交付（多通道推送）
 

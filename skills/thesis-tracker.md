@@ -121,11 +121,14 @@ python3 tools/log_decision.py append \
   --action hold \
   --horizon 20 \
   --depth standard \
-  --skill thesis-tracker
+  --skill thesis-tracker \
+  --strict
+# action↔stance：hold≤0.80；buy/add≥0.70；reduce/exit≤0.55；watch∈[0.45,0.75]
+# python3 tools/log_decision.py bands
 ```
 
 活持仓批量种子：`python3 tools/seed_portfolio_decisions.py --from-json data/portfolio_decision_seeds.json`  
-后验周报：`python3 tools/posterior_weekly.py report`  
+后验周报：`./scripts/weekly-posterior.sh` 或 `python3 tools/posterior_weekly.py report --network`  
 详见 `docs/RESEARCH_EFFECTIVENESS.md`。
 
 ---

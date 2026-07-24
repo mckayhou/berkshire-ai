@@ -4,7 +4,7 @@ description: |
   对指定公司/股票进行系统化四大师投资研究（段永平-巴菲特-芒格-李录）。
   包含 AI 偏见自查、数据双源验证、金融严谨性工具调用（financial_rigor.py）、
   反面检验与明确结论。适合 OpenClaw / QwenPaw 等 Agent 运行时激活。
-version: 10.29.2
+version: 10.29.3
 ---
 
 # 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
@@ -299,45 +299,77 @@ python3 tools/report_audit.py verdict \
 | 字段 | 含义 | 示例 |
 |------|------|------|
 | `ticker` / `date` / `price_anchor` | 标的、决策日、锚点价 | `NVDA`, `2026-07-06`, `198` |
-| `scores` | 四大师 0~1 信心 | `{"duan":0.88,"buffett":0.9,"munger":0.82,"lilu":0.85}` |
+| `scores` | 四大师 0~1 信心 | `{"duan":0.78,"buffett":0.76,"munger":0.70,"lilu":0.74}` |
 | `thesis` | 一句话投资逻辑 | `AI 算力核心 + CUDA 护城河` |
 | `kill_condition` | 论点失效条件 | `PE>40 或 份额<75%` |
 | `action` | `buy`/`add`/`hold`/`reduce`/`exit`/`watch` | `hold` |
-| `horizon_days` | 后验窗口（日历日） | `20`（默认） |
+| `horizon_days` | 后验窗口（日历日） | `20`（默认）；事件单 10–20，逻辑单 60–120 |
 | `depth` | `lite`/`standard`/`deep` | 与本次研究深度一致 |
 | `skill` | 来源技能名 | `investment-research` |
+| `benchmark` / `benchmark_anchor` | **强烈建议** | 美股 `SPY`/`QQQ`，A 股 `000300`，港股 `HSI` |
 
 行动卡中的「综合立场 / 操作建议 / 论点失效条件」必须映射进上表，禁止只写 Markdown 不落盘。
+
+### mean_stance 标尺与 action 带宽（硬门 · V10.29.3）
+
+`mean_stance = mean(四大师 scores)`。`log_decision` / `is_research_complete` 会校验 **action ↔ stance**；不一致则 `research_complete=false`，`gaps` 含 `action_stance:*`。
+
+| mean_stance | 含义 | 允许的 action |
+|-------------|------|----------------|
+| 0.85–1.0 | 极强：愿重仓 | 仅 `buy` / `add`（且 deep 优先） |
+| 0.70–0.85 | 偏多 | `buy` / `add` / `hold`（hold 上限 0.80） |
+| 0.55–0.70 | 弱多 / 观察 | `watch` / `hold` |
+| 0.45–0.55 | 中性 | `watch` / `hold` / `reduce` |
+| ≤0.45 | 偏空 | `reduce` / `exit`（reduce/exit 上限 0.55） |
+
+**硬规则（落盘前自检）**：
+
+1. **`hold` ⇒ mean_stance ≤ 0.80**（禁止 hold + 0.87 这类过自信）
+2. **`buy` / `add` ⇒ mean_stance ≥ 0.70**
+3. **`reduce` / `exit` ⇒ mean_stance ≤ 0.55**
+4. **`watch` ⇒ mean_stance ∈ [0.45, 0.75]**
+5. 四大师 **允许分歧**（芒格/风险侧常应低于均值）；不要四人同分拉高
+6. 正式研究 **应带 benchmark + benchmark_anchor**，否则 alpha≈raw_return，校准失真
+
+对照表：`python3 tools/log_decision.py bands`
 
 ### 落盘命令
 
 ```bash
 python3 tools/log_decision.py append \
   --ticker <代码> --date <YYYY-MM-DD> --price <锚点价> \
-  --scores '{"duan":0.8,"buffett":0.75,"munger":0.7,"lilu":0.65}' \
+  --scores '{"duan":0.78,"buffett":0.76,"munger":0.70,"lilu":0.74}' \
   --thesis "<一句话逻辑>" \
   --kill "<失效条件>" \
-  --action hold --horizon 20 --depth standard --skill investment-research
+  --action hold --horizon 20 --depth standard --skill investment-research \
+  --benchmark SPY --benchmark-price <基准锚点价>
 ```
 
-无分项分数时可用 `--stance 0.75`（四大师同分）。检查契约：
+无分项分数时可用 `--stance 0.75`（四大师同分；**hold 勿超过 0.80**）。  
+生产收尾建议加 **`--strict`**（有缺口则拒绝落盘，exit 3）。
 
 ```bash
-python3 tools/log_decision.py gaps          # 缺字段清单
-python3 tools/log_decision.py list --json   # 全部决策
+python3 tools/log_decision.py gaps          # 缺字段 + action↔stance
+python3 tools/log_decision.py bands         # 打印带宽表
+python3 tools/log_decision.py list --json
 ```
 
 ### 完成后检查清单（standard/deep 准出前全勾）
 
 - [ ] 行动卡完整（见 `docs/action-card.md`）
 - [ ] `report_audit` 准出（lite 可跳过 audit，**仍须** DecisionRecord）
-- [ ] `log_decision.py append` 成功且 `research_complete=true`
+- [ ] `action` 与 `mean_stance` 落在带宽内（`log_decision.py bands`）
+- [ ] 已填 `benchmark` + `benchmark_anchor`（或说明为何无法锚定）
+- [ ] `log_decision.py append`（建议 `--strict`）成功且 `research_complete=true`
 - [ ] `kill_condition` 与行动卡「论点失效条件」一致
 - [ ] 已知持仓时 thesis 已写入 / 更新 `config/state.md` 或平台 state
 
 ### 后验（不在本技能内自动跑，但必须可被跑）
 
 ```bash
-# 每周：干净后验周报（优先离线 price map；有网可加 --network）
-python3 tools/posterior_weekly.py report --as-of $(date +%F)
+# 推荐：周度脚本（gaps + network 后验 + 可选 notify）
+./scripts/weekly-posterior.sh
+
+# 或手工
+python3 tools/posterior_weekly.py report --as-of $(date +%F) --network
 ```
