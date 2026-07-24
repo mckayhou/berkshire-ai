@@ -349,6 +349,17 @@ python3 tools/ashare_data.py daily 600519 --limit 60
 python3 tools/ashare_data.py search 茅台
 ```
 
+### 5.2.1 台股 FinMind（`twstock_data.py`，上游移植）
+
+```bash
+python3 tools/twstock_data.py quote 2330        # 台積電
+python3 tools/twstock_data.py revenue 2330      # 月营收
+python3 tools/twstock_data.py financials 2330
+# 可选：export FINMIND_TOKEN=...  或 local/finmind_token.txt
+```
+
+金额为 **TWD**。数据规范见 `skills/financial-data.md` 台股节；与 TSM ADR 对照时注意存托比率。
+
 ### 5.3 aktools 复合诊断（可选本地服务）
 
 ```bash
@@ -823,6 +834,7 @@ python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/
 | `report_audit.py` | 否 | 无 | 报告抽检准出 |
 | `data_sources.py` | 是* | 可选多库 | A 股多源降级 |
 | `ashare_data.py` | 是 | curl | A 股直连 |
+| `twstock_data.py` | 是 | 无 | 台股 FinMind（可选 FINMIND_TOKEN） |
 | `ashare_factor_mining.py` | 是* | torch | AlphaGPT 训练 |
 | `factor_screener_bridge.py` | 否* | torch | 因子打分筛选 |
 | `limitup_screener_bridge.py` | 否 | 无 | 五维打板评分 |

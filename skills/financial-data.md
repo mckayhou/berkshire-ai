@@ -1,9 +1,10 @@
 ---
 name: berkshire-financial-data
 description: |
-  财务数据双源获取与交叉验证强制规范（美股/港股/A股）。
+  财务数据双源获取与交叉验证强制规范（美股/港股/A股/台股）。
   所有 berkshire 技能在提取数字时必须遵循本规范，并调用 financial_rigor.py 验证。
-version: 10.2
+  台股走 tools/twstock_data.py（FinMind）。
+version: 10.29.3
 ---
 
 # 财务数据获取与交叉验证规范
@@ -56,6 +57,34 @@ python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务指标
 | 1（主） | **东方财富** | eastmoney.com → 搜股票代码 → 财务报表 | 直接访问 |
 | 2（副） | **巨潮资讯** | cninfo.com.cn | 原始年报/季报PDF |
 
+### 台股（台积电 2330、联发科 2454、大立光 3008 等）
+
+移植自上游 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire)；与本 fork 的 AnySearch/Tavily 规范并存。
+
+| 优先级 | 来源 | URL | 获取方式 |
+|--------|------|-----|---------|
+| 1（主） | **FinMind API** | api.finmindtrade.com | `tools/twstock_data.py`（零依赖） |
+| 2（副） | **Goodinfo** | goodinfo.tw/tw/StockDetail.asp?STOCK_ID={代码} | 直接访问 |
+| 原始一手 | 公开资讯观测站（MOPS） | mops.twse.com.tw | 财报原文 / 月营收 |
+
+```bash
+python3 tools/twstock_data.py quote 2330        # 最新行情 + PER/PBR/殖利率 + 市值验算
+python3 tools/twstock_data.py valuation 2330    # 估值 + PER 一年区间 + 52 周高低
+python3 tools/twstock_data.py financials 2330   # 近 5 年年度核心财务
+python3 tools/twstock_data.py revenue 2330      # 近 13 个月月营收及同比（台股独有）
+python3 tools/twstock_data.py dividend 2330     # 近年股利政策
+python3 tools/twstock_data.py search 台積        # 搜索代码（繁体）
+```
+
+台股注意：
+
+1. **货币为新台币（TWD）**；与 HKD/CNY/USD 混排须显式标注并换算。
+2. **月营收**是台股独有公开信号（每月约 10 日前披露上月营收），earnings-review / thesis-tracker 应优先用 `revenue`。
+3. FinMind 损益表为**单季值**，`twstock_data` 已加总年度；不足 4 季会标注。
+4. Token（可选）：环境变量 `FINMIND_TOKEN` 或 `local/finmind_token.txt`（`local/` 已 gitignore）。**禁止**写入 skill / 报告 / commit。
+5. 交叉验证：FinMind vs Goodinfo（或 ADR 如 TSM）；ADR 注意存托比率（例：1 TSM ADR ≈ 5 股 2330）与汇率。
+6. 美股 ADR 研究（如 TSM）仍可用 hybrid 检索 + Yahoo/macrotrends；台股原股数字以 `twstock_data` 为准并对齐 ADR。
+
 ---
 
 ## 执行规范
@@ -103,7 +132,8 @@ python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务指标
 | 原因 | 说明 |
 |------|------|
 | GAAP vs Non-GAAP | 最常见，尤其是利润类数据 |
-| 汇率换算 | 港币/人民币/美元换算时间点不同 |
+| 汇率换算 | 港币/人民币/美元/新台币换算时间点不同 |
+| ADR vs 原股 | 台股/港股存托凭证与正股的比率、报价币种不同 |
 | 财年定义 | 自然年 vs 财年（如苹果财年10月结束） |
 | 合并口径 | 是否含少数股东权益 |
 | 数据更新滞后 | 某平台尚未更新最新一期财报 |
@@ -129,3 +159,5 @@ python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务指标
 | 吉比特 | eastmoney.com（603444） | cninfo.com.cn |
 | Nintendo | macrotrends.net/stocks/charts/NTDOY | stockanalysis.com/stocks/ntdoy |
 | Capcom | macrotrends（CCOEY） | stockanalysis（CCOEY） |
+| 台积电 2330 / TSM ADR | `twstock_data.py`（2330） | Goodinfo / macrotrends TSM（注意 ADR 比率） |
+| 联发科 2454 | `twstock_data.py` | Goodinfo |

@@ -27,6 +27,8 @@
 | [investment-checklist.md](../skills/investment-checklist.md) | 研究检查清单 | 「按 checklist 检查这篇研报」 |
 | [financial-data.md](../skills/financial-data.md) | **数据源规范**（各技能必须引用） | 「这个数据从哪来」 |
 | [thesis-tracker.md](../skills/thesis-tracker.md) | 论文状态跟踪 / TRIGGERED；**须 log_decision 落盘** | 「更新 thesis 状态」 |
+| [thesis-drift.md](../skills/thesis-drift.md) | **论文漂移**（事实 vs 价格 vs 措辞；上游移植） | 「对比两篇 thesis 有没有漂」 |
+| [income-investment.md](../skills/income-investment.md) | **股息/可分配收益**专项（上游移植） | 「这票适不适合当收入仓」 |
 | [portfolio-review.md](../skills/portfolio-review.md) | 组合审视 | 「portfolio review」 |
 | [earnings-review.md](../skills/earnings-review.md) | 单公司财报季分析 | 「Q4 earnings review」 |
 | [earnings-team.md](../skills/earnings-team.md) | 财报季多 Agent 团队 | 「earnings-team」 |
@@ -49,7 +51,7 @@
 
 | 阶段 | 推荐工具 |
 |------|----------|
-| 数据获取 | `anysearch-web` / `skills/anysearch/`（AnySearch Skill）, `data_sources.py`, `ashare_data.py`, `src/tavily_search.py`（Tavily+AnySearch hybrid） |
+| 数据获取 | `anysearch-web` / `skills/anysearch/`（AnySearch Skill）, `data_sources.py`, `ashare_data.py`, **`twstock_data.py`（台股）**, `src/tavily_search.py`（Tavily+AnySearch hybrid） |
 | 数字验证 | `financial_rigor.py`（**必须**） |
 | **研究收尾落盘** | `log_decision.py append`（**必须**；`--strict` 校验 action↔stance） |
 | action↔stance 带宽 | `log_decision.py bands` / `gaps` |

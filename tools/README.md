@@ -14,6 +14,7 @@
 | `report_html.py` | Markdown → HTML 报告（暗色主题） | 否 | 无 |
 | `stock_comparison.py` | 2–4 标的横向对比矩阵 | 否 | 无 |
 | `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
+| `twstock_data.py` | **台股** FinMind：行情/估值/财务/月营收/股利（上游移植） | 是 | 无（stdlib）；可选 `FINMIND_TOKEN` |
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
 | `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
 | `calibrate_conviction.py` | 经验库 conviction 校准报告 | 否 | 无 |
@@ -130,6 +131,21 @@ python3 tools/ashare_data.py daily 600519 --limit 60  # 近 N 日日线（东方
 python3 tools/ashare_data.py search 茅台          # 搜索代码
 ```
 注：`valuation` 的"推算总股本"是由市值/股价反推，仅供参考；真实市值校验请用 `financial_rigor.py verify-market-cap`。
+
+## twstock_data.py（在线，台股 FinMind · 上游移植）
+
+零第三方依赖。可选 `FINMIND_TOKEN` 或 `local/finmind_token.txt` 提高额度。金额单位 **TWD**。
+
+```bash
+python3 tools/twstock_data.py quote 2330
+python3 tools/twstock_data.py valuation 2330
+python3 tools/twstock_data.py financials 2330
+python3 tools/twstock_data.py revenue 2330      # 月营收（台股独有）
+python3 tools/twstock_data.py dividend 2330
+python3 tools/twstock_data.py search 台積
+```
+
+规范见 `skills/financial-data.md` 台股节。
 
 ## ashare_factor_mining.py（实验性，需 PyTorch）
 

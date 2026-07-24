@@ -58,3 +58,6 @@ reports/_posterior/
 
 # SkillForge 本地进化版本快照（见 docs/SKILL_EVOLUTION.md）
 skills/.evolution/
+
+# 本地密钥与私有落盘（FinMind token 等；勿提交）
+local/

@@ -36,6 +36,22 @@
 
 ## 📜 版本历史
 
+### V10.29.3+upstream-P0 - 2026-07-24 (cherry-pick xbtlin skills + 台股)
+
+从 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) **内容级移植**（无共同 git 祖先，非 merge）：
+
+- `skills/income-investment.md`：股息/可分配收益专项（OpenClaw frontmatter + log_decision 收尾）
+- `skills/thesis-drift.md`：论文漂移检测（事实 vs 价格 vs 措辞）
+- `tools/twstock_data.py`：台股 FinMind 零依赖工具
+- `skills/financial-data.md`：并入台股数据源节（保留 AnySearch/Tavily hybrid）
+- 文档：`docs/SKILLS.md`、`tools/README.md`、`USER_GUIDE` §5.2.1、`.env.example` `FINMIND_TOKEN`、`local/` gitignore
+
+**不做**：整仓 merge upstream；不覆盖本 fork 的 V10 契约 / 引擎 / OpenClaw 适配。
+
+**测试**：`py_compile twstock_data`；在线冒烟 `quote 2330`（需网络）；全量 pytest 回归见下节 V10.29.3。
+
+---
+
 ### V10.29.3 - 2026-07-24 (action↔stance 门禁 + 周度后验/到期反馈)
 
 把投研效果从「字段齐全」推进到「action 与信心一致 + 到期可自动学习」。
