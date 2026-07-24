@@ -51,8 +51,11 @@
 |------|----------|
 | 数据获取 | `anysearch-web` / `skills/anysearch/`（AnySearch Skill）, `data_sources.py`, `ashare_data.py`, `src/tavily_search.py`（Tavily+AnySearch hybrid） |
 | 数字验证 | `financial_rigor.py`（**必须**） |
-| **研究收尾落盘** | `log_decision.py append`（**必须**，投研效果契约） |
-| 后验周报 | `posterior_weekly.py report` |
+| **研究收尾落盘** | `log_decision.py append`（**必须**；`--strict` 校验 action↔stance） |
+| action↔stance 带宽 | `log_decision.py bands` / `gaps` |
+| 后验周报 | `posterior_weekly.py report` 或 `./scripts/weekly-posterior.sh` |
+| 到期反馈→经验 | `feedback_due_decisions.py`（或 weekly-posterior `--feedback-apply`） |
+| 历史 stance 修复 | `repair_decision_stances.py` |
 | 报告准出 | `report_audit.py` |
 | 组合上下文 | `portfolio_scan.py`, `portfolio_risk.py` |
 | A 股候选 | `factor_screener_bridge`, `limitup_screener_bridge` |

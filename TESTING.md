@@ -587,7 +587,8 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
-| 2026-07-24 | 3.14 | **557 passed, 1 skipped**（V10.29.3：action↔stance + repair + due feedback + weekly-posterior；e2e LLM skip） |
+| 2026-07-24 | 3.14 | **558 passed**（V10.29.3：action↔stance + repair + due feedback + weekly-posterior；含 MiniMax-M3 `test_llm_smoke`；SkillForge 离线测强制 RULE） |
+| 2026-07-24 | 3.14 | 557 passed, 1 skipped（同日较早：无 LLM Key 时 e2e smoke skip） |
 | 2026-07-13 | 3.14 | **545 passed, 1 skipped**（V10.29.2 离线全量；e2e LLM 初跑无配对 Key 时 skip） |
 | 2026-07-13 | 3.14 | **真实 e2e 全绿**：`test_llm_smoke` 1 passed（DashScope `qwen3.7-plus`，~3.5min）；`test_research_effectiveness_e2e` 8 passed；`test_tavily_integration`+skill doc 2 passed；`tavily_search.py test` hybrid 真网；AnySearch skill 真搜腾讯/茅台 |
 | 2026-07-13 | 3.14 | **搜索质量对照**：R1 启发式 6 题（Tavily 95.7 vs Any 90.5）；R2 垂直+LLM 8 题（Tavily LLM 8.1 胜；Any `fundamental` 结构化题有补数价值）。报告 `reports/_search_compare/` |

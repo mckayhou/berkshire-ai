@@ -19,7 +19,7 @@
 | **Tavily vs AnySearch 质量对照** | [reports/_search_compare/](../reports/_search_compare/)（R1 启发式 + R2 垂直/LLM） | 5 min |
 | **技能进化（SkillForge + Regression Gate）** | [SKILL_EVOLUTION.md](SKILL_EVOLUTION.md) | 15 min |
 | **写研究报告** | [report-conventions.md](report-conventions.md) + [action-card.md](action-card.md) | 10 min |
-| **投研效果 / 决策后验 KPI** | [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) | 10 min |
+| **投研效果 / 决策后验 KPI** | [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md)（含 action↔stance、`weekly-posterior`、到期反馈） | 10 min |
 | **理解架构与设计** | [textgrad_design.md](textgrad_design.md) | 30 min |
 | **Prompt 模板** | [PROMPT_TEMPLATES.md](PROMPT_TEMPLATES.md) | 按需 |
 | **借鉴评估备忘** | [qlib_evaluation.md](qlib_evaluation.md)、[rdagent_reference.md](rdagent_reference.md) | 架构决策时 |
@@ -41,9 +41,14 @@ docs/README.md          ← 你在这里（导航）
 ├── textgrad_design.md    引擎设计（深度）
 ├── action-card.md        组合行动卡模板
 ├── report-conventions.md 报告规范
-├── RESEARCH_EFFECTIVENESS.md  投研效果契约 + 后验 KPI + E2E 验收
+├── RESEARCH_EFFECTIVENESS.md  投研效果契约 + action↔stance + 后验/到期反馈 + E2E
 ├── ROADMAP.md            路线图
 └── tdx_mcp_tool_design.md 通达信 MCP（不实施，备忘）
+
+仓库脚本（非 docs/）
+├── scripts/weekly-posterior.sh   周度 gaps + 后验 + 可选 feedback/notify
+├── tools/repair_decision_stances.py  历史 action↔stance 修复
+└── tools/feedback_due_decisions.py   到期决策 → experiences
 
 参考与备忘（非操作手册）
 ├── PROMPT_TEMPLATES.md   四大师 Prompt 模板
@@ -127,6 +132,7 @@ docs/README.md          ← 你在这里（导航）
 | 美股动量回测 | BACKTEST §3 | 手工冒烟 | — |
 | TextGrad 引擎 | ENGINE.md | test_v10_*, test_eval_harness_rerun, test_trajectory_ab, test_pipeline | textgrad_design |
 | 收益反馈/绩效 | ENGINE §4, BACKTEST §5 | test_realized_feedback_loop | textgrad_design |
+| 投研效果契约 / 后验周报（V10.29.3） | RESEARCH_EFFECTIVENESS, USER_GUIDE §4.4 | test_posterior_report, test_repair_*, test_feedback_due_*, e2e research | action-card；weekly-posterior / repair / feedback_due |
 | 引擎轨迹回测 | BACKTEST §4 | test_v10_backtest | — |
 | HTTP 服务 | ENGINE §6 | test_service | — |
 | 推送 | USER_GUIDE §11 | test_tools_notify | — |

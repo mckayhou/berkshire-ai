@@ -56,8 +56,9 @@
 - `docs/RESEARCH_EFFECTIVENESS.md`、`action-card.md`、`USER_GUIDE` §4.4、`ENGINE`、`ROADMAP`、`tools/README`、`TESTING.md`
 
 **测试结果**:
-- [x] 全量：`pytest tests/` → **557 passed, 1 skipped**（e2e LLM 无 Key skip）
-- [x] 聚焦：`test_posterior_report` + `test_repair_*` + `test_feedback_due_*` + `test_network_price_provider` + `e2e/test_research_effectiveness_e2e`
+- [x] 全量：`pytest tests/`（加载 `.env` / MiniMax-M3）→ **558 passed**
+- [x] 无 LLM Key 时：557 passed, 1 skipped（`e2e/test_llm_smoke`）
+- [x] 聚焦：`test_posterior_report` + `test_repair_*` + `test_feedback_due_*` + `test_network_price_provider` + `e2e/test_research_effectiveness_e2e` + SkillForge RULE 离线 evolve
 - [x] 手工：`log_decision gaps/bands`、`weekly-posterior.sh --offline/--feedback`、`feedback_due_decisions` dry-run
 - [x] 版本对齐：`pyproject.toml` == `APP_VERSION` == `10.29.3`；README / state banner **V10.29**
 
