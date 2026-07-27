@@ -45,10 +45,12 @@ docs/README.md          ← 你在这里（导航）
 ├── ROADMAP.md            路线图
 └── tdx_mcp_tool_design.md 通达信 MCP（不实施，备忘）
 
-仓库脚本（非 docs/）
-├── scripts/weekly-posterior.sh   周度 gaps + 后验 + 可选 feedback/notify
-├── tools/repair_decision_stances.py  历史 action↔stance 修复
-└── tools/feedback_due_decisions.py   到期决策 → experiences
+仓库脚本 / 桥接工具（非 docs/）
+├── scripts/weekly-posterior.sh        周度 gaps + 后验 + 可选 feedback/notify
+├── tools/repair_decision_stances.py   历史 action↔stance 修复
+├── tools/feedback_due_decisions.py    到期决策 → experiences
+├── tools/dojo_holdings_bridge.py      DojoAgents 组合 → holdings.json
+└── tools/twstock_data.py              台股 FinMind
 
 参考与备忘（非操作手册）
 ├── PROMPT_TEMPLATES.md   四大师 Prompt 模板
@@ -132,7 +134,9 @@ docs/README.md          ← 你在这里（导航）
 | 美股动量回测 | BACKTEST §3 | 手工冒烟 | — |
 | TextGrad 引擎 | ENGINE.md | test_v10_*, test_eval_harness_rerun, test_trajectory_ab, test_pipeline | textgrad_design |
 | 收益反馈/绩效 | ENGINE §4, BACKTEST §5 | test_realized_feedback_loop | textgrad_design |
-| 投研效果契约 / 后验周报（V10.29.3） | RESEARCH_EFFECTIVENESS, USER_GUIDE §4.4 | test_posterior_report, test_repair_*, test_feedback_due_*, e2e research | action-card；weekly-posterior / repair / feedback_due |
+| 投研效果契约 / 后验周报（V10.29.3） | RESEARCH_EFFECTIVENESS, USER_GUIDE §4.4 | test_posterior_report, test_repair_*, test_feedback_due_*, test_dojo_holdings_bridge, e2e research | action-card；weekly-posterior / repair / feedback_due / dojo bridge |
+| 台股数据 | USER_GUIDE §5.2.1, financial-data 台股节 | test_tools_twstock_data | twstock_data / FINMIND_TOKEN |
+| 深度公司系列 | SKILLS deep-company-series | — | 3–8 篇适配 + 篇内骨架（upstream P1） |
 | 引擎轨迹回测 | BACKTEST §4 | test_v10_backtest | — |
 | HTTP 服务 | ENGINE §6 | test_service | — |
 | 推送 | USER_GUIDE §11 | test_tools_notify | — |

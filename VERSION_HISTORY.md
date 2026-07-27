@@ -48,7 +48,7 @@
 
 **不做**：整仓 merge upstream；不覆盖本 fork 的 V10 契约 / 引擎 / OpenClaw 适配。
 
-**测试**：`py_compile twstock_data`；在线冒烟 `quote 2330`（需网络）；全量 pytest 回归见下节 V10.29.3。
+**测试**：`test_tools_twstock_data`；在线冒烟 `quote 2330`；计入 2026-07-27 全量 **572 passed**。
 
 ### V10.29.3+upstream-P1 - 2026-07-27 (研究质量增量摘句)
 
@@ -59,7 +59,7 @@
 - `tools/report_audit.py`：数字捕获保留正负号（含 Unicode 减号），避免 `-1.72%` 被当成 `1.72` 假打回
 - **不移植**：上游 `financial_rigor` 的弱表达式求值（本仓保留 AST 安全 eval）
 
-测试：`test_tools_report_audit` 增加负号提取用例。
+测试：`test_tools_report_audit` 负号提取；计入 2026-07-27 全量 **572 passed**。
 
 ### V10.29.3+dojo-bridge - 2026-07-24 (DojoAgents 持仓桥 + 组合上下文)
 
@@ -71,6 +71,8 @@
 - 文档：USER_GUIDE §5.2.2、RESEARCH_EFFECTIVENESS、tools/README
 
 **不做**：引入 Dojo Dashboard / Agent Loop / React；不改本仓默认 runtime（仍 OpenClaw/QwenPaw）。
+
+测试：`test_dojo_holdings_bridge`；计入 2026-07-27 全量 **572 passed**。
 
 ---
 
@@ -93,14 +95,14 @@
 - `skills/investment-research.md` / `thesis-tracker.md`：stance 标尺、benchmark 建议、`--strict`
 - `docs/RESEARCH_EFFECTIVENESS.md`、`action-card.md`、`USER_GUIDE` §4.4、`ENGINE`、`ROADMAP`、`tools/README`、`TESTING.md`
 
-**测试结果**:
-- [x] 全量：`pytest tests/`（加载 `.env` / MiniMax-M3）→ **558 passed**
-- [x] 无 LLM Key 时：557 passed, 1 skipped（`e2e/test_llm_smoke`）
-- [x] 聚焦：`test_posterior_report` + `test_repair_*` + `test_feedback_due_*` + `test_network_price_provider` + `e2e/test_research_effectiveness_e2e` + SkillForge RULE 离线 evolve
-- [x] 手工：`log_decision gaps/bands`、`weekly-posterior.sh --offline/--feedback`、`feedback_due_decisions` dry-run
+**测试结果**（含后续 P0/P1/Dojo 增量，2026-07-27 复跑）:
+- [x] 全量：`pytest tests/`（`.env` MiniMax-M3）→ **572 passed**
+- [x] e2e：`tests/e2e/` 含 `test_llm_smoke` + `test_research_effectiveness_e2e` 全绿（有 Key）
+- [x] 聚焦：posterior / repair / feedback_due / dojo_bridge / twstock / report_audit 负号 / SkillForge RULE
+- [x] 手工：`config.py` doctor、`log_decision gaps/bands`、`weekly-posterior --offline --feedback`、`feedback_due_decisions`、`twstock quote 2330`、`dojo_holdings_bridge list`、`repair_decision_stances`
 - [x] 版本对齐：`pyproject.toml` == `APP_VERSION` == `10.29.3`；README / state banner **V10.29**
 
-**结论**: ✅ 工具与契约上线；真实样本仍靠 horizon 到期后 `weekly-posterior --feedback-apply` 积累
+**结论**: ✅ 工具与契约上线；真实样本靠 horizon 到期后 `weekly-posterior --feedback-apply` 积累（2026-07-27 已见 NVDA/AVGO/PDD would_write）
 
 ---
 

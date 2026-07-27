@@ -853,6 +853,7 @@ python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/
 | `data_sources.py` | 是* | 可选多库 | A 股多源降级 |
 | `ashare_data.py` | 是 | curl | A 股直连 |
 | `twstock_data.py` | 是 | 无 | 台股 FinMind（可选 FINMIND_TOKEN） |
+| `dojo_holdings_bridge.py` | 否 | 无 | DojoAgents 组合 → holdings.json |
 | `ashare_factor_mining.py` | 是* | torch | AlphaGPT 训练 |
 | `factor_screener_bridge.py` | 否* | torch | 因子打分筛选 |
 | `limitup_screener_bridge.py` | 否 | 无 | 五维打板评分 |

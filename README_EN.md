@@ -6,7 +6,7 @@
 >
 > Plus a local **V10 TextGrad self-evolution engine** (explicit computation graph + node-level textual-gradient backpropagation + targeted optimization).
 
-**Current version**: **V10.29.3** (action↔stance research gate + weekly posterior / due-decision feedback loop; inherits AnySearch/Tavily hybrid and DecisionRecord posterior KPI). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
+**Current version**: **V10.29.3** (action↔stance gate + weekly posterior/due feedback + upstream skill/twstock ports + Dojo holdings bridge; 572 tests passed 2026-07-27). Full history in [VERSION_HISTORY.md](VERSION_HISTORY.md).
 
 **Status**: full upstream capability + the V10 engine are merged into this repo. **Adapted for OpenClaw / QwenPaw-style agent runtimes since V10.2.**
 

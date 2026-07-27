@@ -40,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-07）**：核心用例（无 factor-mining extra）约 **510+ passed**；含 `tests/e2e/test_research_effectiveness_e2e.py` 离线 E2E。典型 skip：`e2e/test_llm_smoke`（无 API Key）。以 `pytest tests/ -ra` 为准。
+**当前规模（2026-07-27）**：全量 **`pytest tests/` → 572 passed**（含 MiniMax-M3 真实 LLM e2e；factor-mining 已装则 alphagpt 用例计入）。无 LLM Key 时 `e2e/test_llm_smoke` 会 skip。以本机 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -235,6 +235,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_posterior_report.py` | `decision_log` 契约 + `posterior_report` + CLI | 方向命中 / 完整率 / log_decision / action↔stance |
 | `test_repair_decision_stances.py` | `tools/repair_decision_stances.py` | clip / remap / apply 备份 |
 | `test_feedback_due_decisions.py` | `tools/feedback_due_decisions.py` | 到期反馈 dry-run / apply / 去重 |
+| `test_dojo_holdings_bridge.py` | `tools/dojo_holdings_bridge.py` | Dojo→holdings 权重 / CLI / DecisionRecord 组合字段 |
+| `test_tools_twstock_data.py` | `tools/twstock_data.py` | token 读取 / CLI help / 子命令面 |
 | `e2e/test_research_effectiveness_e2e.py` | **投研效果离线 E2E** | 落盘→种子→归档→后验→反馈（无网络） |
 | `e2e/test_llm_smoke.py` | 真实 LLM 链路 | 需 Key |
 
@@ -263,7 +265,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/evidence_channels.py` 多源证据 | `pytest tests/test_evidence_channels.py tests/test_pipeline_brainstorm.py` |
 | `src/skill_forge/regression_gate.py` 回归门控 | `pytest tests/test_regression_gate.py` |
 | `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
-| 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py tests/test_feedback_due_decisions.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
+| 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py tests/test_feedback_due_decisions.py tests/test_dojo_holdings_bridge.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
+| 台股 FinMind | `pytest tests/test_tools_twstock_data.py`；手工 `twstock_data.py quote 2330` |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
 
 ### 投研效果契约 / 后验周报验收
@@ -271,19 +274,27 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 ```bash
 # 单元 + 离线 E2E（CI 默认；无网络、无 LLM）
 python3 -m pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py \
-  tests/test_feedback_due_decisions.py tests/e2e/test_research_effectiveness_e2e.py -v
+  tests/test_feedback_due_decisions.py tests/test_dojo_holdings_bridge.py \
+  tests/test_tools_twstock_data.py tests/test_tools_report_audit.py \
+  tests/e2e/test_research_effectiveness_e2e.py -v
+# 有 LLM Key 时再加：
+python3 -m pytest tests/e2e/test_llm_smoke.py -v
 
 # 手工冒烟
+python3 src/config.py
 python3 tools/log_decision.py gaps
 python3 tools/log_decision.py bands
 python3 tools/repair_decision_stances.py              # 历史越界 dry-run
 python3 tools/feedback_due_decisions.py               # 到期反馈 dry-run
+python3 tools/dojo_holdings_bridge.py list
+python3 tools/twstock_data.py quote 2330              # 需网络
 python3 tools/seed_portfolio_decisions.py --dry-run --from-json data/portfolio_decision_seeds.json
 python3 tools/posterior_weekly.py report --as-of $(date +%F) \
   --prices '{"AAPL|2026-01-21":110}'
-./scripts/weekly-posterior.sh --offline
-./scripts/weekly-posterior.sh --feedback              # 周报 + 反馈 dry-run
+./scripts/weekly-posterior.sh --offline --feedback    # 周报 + 反馈 dry-run
 python3 tools/archive_experiences.py --dry-run
+# 全量（发版前）
+python3 -m pytest tests/ -ra
 ```
 
 文档：[docs/RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md)
@@ -587,6 +598,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-07-27 | 3.14 | **572 passed**（V10.29.3 全链路：upstream P0/P1 + Dojo bridge + report_audit 负号 + MiniMax-M3 e2e；手工 gaps/weekly-posterior/feedback/twstock/dojo-bridge 冒烟） |
 | 2026-07-24 | 3.14 | **558 passed**（V10.29.3：action↔stance + repair + due feedback + weekly-posterior；含 MiniMax-M3 `test_llm_smoke`；SkillForge 离线测强制 RULE） |
 | 2026-07-24 | 3.14 | 557 passed, 1 skipped（同日较早：无 LLM Key 时 e2e smoke skip） |
 | 2026-07-13 | 3.14 | **545 passed, 1 skipped**（V10.29.2 离线全量；e2e LLM 初跑无配对 Key 时 skip） |
