@@ -20,6 +20,9 @@ import report_audit as ra  # noqa: E402
     ("1,234.5", 1234.5),
     ("7，518", 7518.0),   # 中文逗号
     ("100", 100.0),
+    ("-1.72", -1.72),
+    ("−1.72", -1.72),    # Unicode minus U+2212
+    ("+3.5", 3.5),
     ("abc", None),
     ("", None),
 ])
@@ -69,7 +72,24 @@ def test_extract_data_points_from_table():
     labels = {p["label"] for p in points}
     # 至少应提取到营业收入相关数据点
     assert any("营业收入" in lbl for lbl in labels)
-    assert all("reported_value" in p and p["reported_value"] > 0 for p in points)
+    assert all("reported_value" in p and p["reported_value"] != 0 for p in points)
+
+
+def test_extract_preserves_negative_percent():
+    """负增速/负利率不得被剥符号（上游 report_audit 符号位修复）。"""
+    md = """
+# 测试
+
+同比增速：-1.72%
+
+| 指标 | 数值 |
+|------|------|
+| 净利率 | -3.5% |
+"""
+    points = ra.extract_data_points(md)
+    vals = {p["reported_value"] for p in points}
+    assert -1.72 in vals or any(abs(v + 1.72) < 1e-9 for v in vals)
+    assert any(v < 0 for v in vals)
 
 
 def test_extract_data_points_empty():

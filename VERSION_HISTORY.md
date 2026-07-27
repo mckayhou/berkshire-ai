@@ -50,6 +50,17 @@
 
 **测试**：`py_compile twstock_data`；在线冒烟 `quote 2330`（需网络）；全量 pytest 回归见下节 V10.29.3。
 
+### V10.29.3+upstream-P1 - 2026-07-27 (研究质量增量摘句)
+
+从上游 **摘句合并**（不整文件覆盖）：
+
+- `skills/deep-company-series.md`：3–8 篇复杂度适配 + 篇内结构骨架（二·五）
+- `skills/bottleneck-hunter.md`：台股 `twstock_data` 取数提示（月营收验证瓶颈）
+- `tools/report_audit.py`：数字捕获保留正负号（含 Unicode 减号），避免 `-1.72%` 被当成 `1.72` 假打回
+- **不移植**：上游 `financial_rigor` 的弱表达式求值（本仓保留 AST 安全 eval）
+
+测试：`test_tools_report_audit` 增加负号提取用例。
+
 ### V10.29.3+dojo-bridge - 2026-07-24 (DojoAgents 持仓桥 + 组合上下文)
 
 借鉴 [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) 的组合感知思路（**不 merge 其 runtime/UI**）：

@@ -39,7 +39,7 @@
 | [bottleneck-hunter.md](../skills/bottleneck-hunter.md) | 产业链瓶颈 | 「bottleneck hunter」 |
 | [management-deep-dive.md](../skills/management-deep-dive.md) | 管理层深度 | 「管理层尽调」 |
 | [private-company-research.md](../skills/private-company-research.md) | 非上市公司 | 「private company」 |
-| [deep-company-series.md](../skills/deep-company-series.md) | 系列深度报告 | 「deep company series」 |
+| [deep-company-series.md](../skills/deep-company-series.md) | 系列深度报告（3–8 篇可适配 + 篇内骨架） | 「deep company series」「看懂XX」 |
 | [wechat-article.md](../skills/wechat-article.md) | 微信文章分析 | 「分析这篇公众号」 |
 | [dyp-ask.md](../skills/dyp-ask.md) | 段永平式提问 | 「dyp ask」 |
 
