@@ -59,7 +59,7 @@
 | 到期反馈→经验 | `feedback_due_decisions.py`（或 weekly-posterior `--feedback-apply`） |
 | 历史 stance 修复 | `repair_decision_stances.py` |
 | 报告准出 | `report_audit.py` |
-| 组合上下文 | `portfolio_scan.py`, `portfolio_risk.py` |
+| 组合上下文 | `portfolio_scan.py`, `portfolio_risk.py`, **`dojo_holdings_bridge.py`（Dojo→holdings）** |
 | A 股候选 | `factor_screener_bridge`, `limitup_screener_bridge` |
 | 待办同步 | `thesis_queue.py` |
 | 交付 | `notify.py`, `report_html.py` |

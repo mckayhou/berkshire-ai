@@ -15,6 +15,7 @@
 | `stock_comparison.py` | 2–4 标的横向对比矩阵 | 否 | 无 |
 | `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
 | `twstock_data.py` | **台股** FinMind：行情/估值/财务/月营收/股利（上游移植） | 是 | 无（stdlib）；可选 `FINMIND_TOKEN` |
+| `dojo_holdings_bridge.py` | **DojoAgents 持仓桥**：portfolio JSON → `holdings.json` + 可选 risk | 否 | 无；可选读 `~/.dojo/data/portfolio` |
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
 | `calibrate_sensitivity.py` | 用真实历史行情**校准** `realized_feedback` 的 `SENSITIVITY` | 是* | 可选 yfinance/akshare/tushare（核心数学离线） |
 | `calibrate_conviction.py` | 经验库 conviction 校准报告 | 否 | 无 |
@@ -146,6 +147,25 @@ python3 tools/twstock_data.py search 台積
 ```
 
 规范见 `skills/financial-data.md` 台股节。
+
+## dojo_holdings_bridge.py（离线，DojoAgents 持仓桥）
+
+把 DojoAgents 组合文档（shares/market）转成本仓 `data/holdings.json`（代码→占比%），可选接 `portfolio_risk`。
+
+```bash
+python3 tools/dojo_holdings_bridge.py list
+python3 tools/dojo_holdings_bridge.py convert \
+  --portfolio ~/.dojo/data/portfolio/<id>.json \
+  --equal-weight --cash 20 --out data/holdings.json --risk
+# 有行情时也可用 --prices '{"AAPL":190}' 按 shares×price 加权
+```
+
+落盘决策时可带组合上下文：
+
+```bash
+python3 tools/log_decision.py append ... \
+  --portfolio-weight 12.5 --risk-flags '["theme_ai"]'
+```
 
 ## ashare_factor_mining.py（实验性，需 PyTorch）
 

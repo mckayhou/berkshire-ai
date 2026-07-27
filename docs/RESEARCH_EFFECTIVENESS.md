@@ -30,6 +30,7 @@
 | `action` ↔ `mean_stance` | ✅ | 见下方带宽；不一致 → `action_stance:*` gap |
 | `depth` / `skill` | 建议 | lite/standard/deep；来源技能名 |
 | `benchmark` / `benchmark_anchor` | 强烈建议 | 否则 alpha≈raw_return，校准失真 |
+| `portfolio_weight` / `risk_flags` | 有持仓时建议 | 组合占比%% + `portfolio_risk` 旗标；可由 Dojo 桥接 |
 
 缺 `thesis` / `kill_condition` / `action` / `horizon_days`，或 **action↔stance 越界** → `is_research_complete=False`。
 
@@ -81,6 +82,11 @@ python3 tools/repair_decision_stances.py --apply      # clip scores，保留 act
 python3 tools/feedback_due_decisions.py               # dry-run
 python3 tools/feedback_due_decisions.py --apply       # 写入经验库（去重 mat:YYYY-MM-DD）
 
+# DojoAgents 持仓 → holdings.json（组合上下文）
+python3 tools/dojo_holdings_bridge.py list
+python3 tools/dojo_holdings_bridge.py convert --portfolio ~/.dojo/data/portfolio/<id>.json \
+  --equal-weight --cash 20 --out data/holdings.json --risk
+
 # 经验库污染清理
 python3 tools/archive_experiences.py --dry-run
 python3 tools/archive_experiences.py --reset --reason "test pollution"
@@ -88,9 +94,9 @@ python3 tools/archive_experiences.py --reset --reason "test pollution"
 
 | 模块 | 路径 |
 |------|------|
-| 记录模型 | `src/decision_log.py`（含 `ACTION_STANCE_BANDS`） |
+| 记录模型 | `src/decision_log.py`（含 `ACTION_STANCE_BANDS`、`portfolio_weight`/`risk_flags`） |
 | 后验聚合 | `src/posterior_report.py` |
-| CLI | `tools/log_decision.py`、`posterior_weekly.py`、`seed_portfolio_decisions.py`、`archive_experiences.py`、`repair_decision_stances.py`、`feedback_due_decisions.py` |
+| CLI | `tools/log_decision.py`、`posterior_weekly.py`、`seed_portfolio_decisions.py`、`archive_experiences.py`、`repair_decision_stances.py`、`feedback_due_decisions.py`、`dojo_holdings_bridge.py` |
 | 周度脚本 | `scripts/weekly-posterior.sh`（可选 `--feedback`） |
 | 种子数据 | `data/portfolio_decision_seeds.json` |
 | 技能收尾 | `skills/investment-research.md`、`docs/action-card.md` |

@@ -307,8 +307,21 @@ python3 tools/report_audit.py verdict \
 | `depth` | `lite`/`standard`/`deep` | 与本次研究深度一致 |
 | `skill` | 来源技能名 | `investment-research` |
 | `benchmark` / `benchmark_anchor` | **强烈建议** | 美股 `SPY`/`QQQ`，A 股 `000300`，港股 `HSI` |
+| `portfolio_weight` | 建议（有持仓时） | 该标的组合占比%%；可由 `data/holdings.json` 或 Dojo 桥接 |
+| `risk_flags` | 建议（有持仓时） | `portfolio_risk.py` 输出的旗标列表 |
 
 行动卡中的「综合立场 / 操作建议 / 论点失效条件」必须映射进上表，禁止只写 Markdown 不落盘。
+
+**组合上下文（DojoAgents / holdings）**：已知持仓时，落盘前应：
+
+```bash
+# 可选：从 Dojo 组合导出占比
+python3 tools/dojo_holdings_bridge.py convert --portfolio ~/.dojo/data/portfolio/<id>.json \
+  --equal-weight --cash 20 --out data/holdings.json --risk
+python3 tools/portfolio_risk.py --holdings-file data/holdings.json --json
+```
+
+将该标的权重写入 `--portfolio-weight`，风险旗标写入 `--risk-flags`。
 
 ### mean_stance 标尺与 action 带宽（硬门 · V10.29.3）
 
@@ -342,7 +355,8 @@ python3 tools/log_decision.py append \
   --thesis "<一句话逻辑>" \
   --kill "<失效条件>" \
   --action hold --horizon 20 --depth standard --skill investment-research \
-  --benchmark SPY --benchmark-price <基准锚点价>
+  --benchmark SPY --benchmark-price <基准锚点价> \
+  --portfolio-weight 12.5 --risk-flags '["theme_ai","single_high"]'
 ```
 
 无分项分数时可用 `--stance 0.75`（四大师同分；**hold 勿超过 0.80**）。  
@@ -360,6 +374,7 @@ python3 tools/log_decision.py list --json
 - [ ] `report_audit` 准出（lite 可跳过 audit，**仍须** DecisionRecord）
 - [ ] `action` 与 `mean_stance` 落在带宽内（`log_decision.py bands`）
 - [ ] 已填 `benchmark` + `benchmark_anchor`（或说明为何无法锚定）
+- [ ] 已知持仓：已跑 `portfolio_risk`，并填写 `portfolio_weight` / `risk_flags`（或 Dojo 桥接）
 - [ ] `log_decision.py append`（建议 `--strict`）成功且 `research_complete=true`
 - [ ] `kill_condition` 与行动卡「论点失效条件」一致
 - [ ] 已知持仓时 thesis 已写入 / 更新 `config/state.md` 或平台 state

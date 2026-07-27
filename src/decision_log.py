@@ -82,6 +82,8 @@ class DecisionRecord:
         action:           buy|add|hold|reduce|exit|watch
         depth:            lite|standard|deep
         skill:            来源 skill 名（如 investment-research）
+        portfolio_weight: 决策时该标的组合占比%%（0–100），可选；Dojo/holdings 桥接
+        risk_flags:       portfolio_risk 等产出的风险旗标列表，可选
     """
 
     ticker: str
@@ -101,6 +103,8 @@ class DecisionRecord:
     action: str = ""
     depth: str = ""
     skill: str = ""
+    portfolio_weight: Optional[float] = None
+    risk_flags: Optional[List[str]] = None
 
     def __post_init__(self) -> None:
         self.ticker = str(self.ticker).strip().upper()
@@ -146,6 +150,15 @@ class DecisionRecord:
                 f"depth 必须是 lite|standard|deep 或空: {self.depth!r}"
             )
         self.skill = str(self.skill or "").strip()
+        if self.portfolio_weight is not None:
+            pw = float(self.portfolio_weight)
+            if pw < 0 or pw > 100:
+                raise ValueError(f"portfolio_weight 须在 0–100: {self.portfolio_weight}")
+            self.portfolio_weight = pw
+        if self.risk_flags is not None:
+            self.risk_flags = [str(x).strip() for x in self.risk_flags if str(x).strip()]
+            if not self.risk_flags:
+                self.risk_flags = None
 
     def to_dict(self) -> Dict:
         return asdict(self)

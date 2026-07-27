@@ -50,6 +50,17 @@
 
 **测试**：`py_compile twstock_data`；在线冒烟 `quote 2330`（需网络）；全量 pytest 回归见下节 V10.29.3。
 
+### V10.29.3+dojo-bridge - 2026-07-24 (DojoAgents 持仓桥 + 组合上下文)
+
+借鉴 [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) 的组合感知思路（**不 merge 其 runtime/UI**）：
+
+- `tools/dojo_holdings_bridge.py`：Dojo portfolio JSON → `data/holdings.json`（等权或 shares×price），可选 `--risk`
+- `DecisionRecord.portfolio_weight` / `risk_flags` + `log_decision --portfolio-weight/--risk-flags`
+- `skills/investment-research.md` 收尾强制「有持仓则跑 portfolio_risk / 填组合上下文」
+- 文档：USER_GUIDE §5.2.2、RESEARCH_EFFECTIVENESS、tools/README
+
+**不做**：引入 Dojo Dashboard / Agent Loop / React；不改本仓默认 runtime（仍 OpenClaw/QwenPaw）。
+
 ---
 
 ### V10.29.3 - 2026-07-24 (action↔stance 门禁 + 周度后验/到期反馈)

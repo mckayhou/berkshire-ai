@@ -360,6 +360,24 @@ python3 tools/twstock_data.py financials 2330
 
 金额为 **TWD**。数据规范见 `skills/financial-data.md` 台股节；与 TSM ADR 对照时注意存托比率。
 
+### 5.2.2 DojoAgents 持仓桥（可选并列运行时）
+
+[DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) 负责组合/市场 UI；本仓负责深度研报与后验。桥接：
+
+```bash
+# 列出 ~/.dojo/data/portfolio 下的组合
+python3 tools/dojo_holdings_bridge.py list
+
+# 导出为 berkshire holdings.json 并跑风险
+python3 tools/dojo_holdings_bridge.py convert \
+  --portfolio ~/.dojo/data/portfolio/<id>.json \
+  --equal-weight --cash 20 --out data/holdings.json --risk
+
+python3 tools/portfolio_risk.py --holdings-file data/holdings.json --json
+```
+
+研究收尾落盘时可写 `--portfolio-weight` / `--risk-flags`（见 §4.4）。
+
 ### 5.3 aktools 复合诊断（可选本地服务）
 
 ```bash

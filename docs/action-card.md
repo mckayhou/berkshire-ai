@@ -16,6 +16,7 @@
 | 看多逻辑第 1 条（压缩） | `thesis` |
 | 持有期限 | `horizon_days`（事件驱动可 20；1–3 年可 60–90 仅作后验窗，非持有上限） |
 | 基准（建议） | `benchmark` + `benchmark_anchor`（美 `SPY`，A `000300`，港 `HSI`） |
+| 组合占比 / 风险旗标（有持仓时） | `portfolio_weight`、`risk_flags`（`portfolio_risk` 或 Dojo 桥接） |
 
 ### action ↔ mean_stance 带宽（硬门）
 

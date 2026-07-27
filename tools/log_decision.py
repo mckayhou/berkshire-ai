@@ -68,6 +68,17 @@ def cmd_append(args: argparse.Namespace) -> int:
     else:
         raise SystemExit("必须提供 --scores JSON 或 --stance 0~1")
 
+    risk_flags = None
+    if getattr(args, "risk_flags", None):
+        try:
+            parsed = json.loads(args.risk_flags)
+            if isinstance(parsed, list):
+                risk_flags = [str(x) for x in parsed]
+            else:
+                raise ValueError("not list")
+        except (json.JSONDecodeError, ValueError):
+            risk_flags = [s.strip() for s in str(args.risk_flags).split(",") if s.strip()]
+
     rec = DecisionRecord(
         ticker=args.ticker,
         date=args.date,
@@ -82,6 +93,8 @@ def cmd_append(args: argparse.Namespace) -> int:
         action=args.action or "",
         depth=args.depth or "",
         skill=args.skill or "",
+        portfolio_weight=args.portfolio_weight,
+        risk_flags=risk_flags,
     )
     gaps = research_gaps(rec)
     stance_gaps = action_stance_gaps(rec)
@@ -243,6 +256,17 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--benchmark", default="")
     ap.add_argument("--benchmark-price", type=float, default=None)
     ap.add_argument("--note", default="")
+    ap.add_argument(
+        "--portfolio-weight",
+        type=float,
+        default=None,
+        help="组合占比%% 0–100（Dojo/holdings 上下文，可选）",
+    )
+    ap.add_argument(
+        "--risk-flags",
+        default=None,
+        help='风险旗标 JSON 列表或逗号分隔，如 \'["conc_high"]\' 或 conc_high,theme_ai',
+    )
     ap.add_argument(
         "--strict",
         action="store_true",

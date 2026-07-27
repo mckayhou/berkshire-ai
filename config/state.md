@@ -35,6 +35,7 @@
 | 2026-06-26 | **Tracker V10.0 - PDD 触发器命中** | Q1 营收低于预期 + 欧盟罚款 Temu，触发 "Q2 Revenue < Consensus -5%" 条件。需重新评估投资逻辑。 | `thesis-tracker` v10.0 |
 | 2026-06-26 | **Tracker V10.0 - AVGO 风险信号** | 6/4 急跌 15%，麦格理下调至中性，担忧谷歌自研芯片影响 ASIC 市场份额。需关注 Q2 财报验证。 | `thesis-tracker` v10.0 |
 | 2026-06-25 | **V10.0 - TextGrad 化** | 借鉴 Nature 2025 论文，实现显式计算图 + 节点级诊断 + 文本梯度反向传播。诊断精度从整体评分提升到节点级定位。**Cron 任务已升级**: `99ac7a57` (每周五 20:00) | `investment-research` v10.0 |
+| 2026-07-24 | **Dojo holdings bridge** | Dojo portfolio→holdings.json；DecisionRecord 组合权重/风险旗标 | `dojo_holdings_bridge` / `decision_log` |
 | 2026-07-24 | **upstream P0 cherry-pick** | 移植 income-investment / thesis-drift / twstock_data；financial-data 台股节 | `skills/*` `tools/twstock_data.py` |
 | 2026-07-24 | **V10.29.3 - action↔stance + weekly feedback** | 决策完整率含 stance 带宽；历史 clip 修复；到期反馈入 experiences；Yahoo 取价回退 | `decision_log` / `repair_decision_stances` / `feedback_due_decisions` / `weekly-posterior.sh` |
 | 2026-07-13 | **V10.29.2 - AnySearch Skill + Tavily hybrid** | Agent 优先 AnySearch Skill；`tavily_search` hybrid 回退；Key 仅本地 `.env` | `anysearch-web` + `tavily_search` |
