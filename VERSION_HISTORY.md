@@ -48,9 +48,11 @@
 
 **不做**：整仓 merge upstream；不覆盖本 fork 的 V10 契约 / 引擎 / OpenClaw 适配。
 
-**测试**：`test_tools_twstock_data`；在线冒烟 `quote 2330`；计入 2026-07-27 全量 **572 passed**。
+**测试**：`test_tools_twstock_data`；在线冒烟 `quote 2330`；计入 2026-08-11 全量 **576 passed**。
 
 ### V10.29.3+ta-lookahead - 2026-08-11 (TradingAgents look-ahead harden)
+
+验收：`pytest tests/` **576 passed**；`tests/e2e/` **9 passed**（含 LLM）。
 
 借鉴 [TradingAgents](https://github.com/TauricResearch/TradingAgents) 回测保真纪律（不 merge LangGraph）：
 
@@ -77,7 +79,7 @@
 - `tools/report_audit.py`：数字捕获保留正负号（含 Unicode 减号），避免 `-1.72%` 被当成 `1.72` 假打回
 - **不移植**：上游 `financial_rigor` 的弱表达式求值（本仓保留 AST 安全 eval）
 
-测试：`test_tools_report_audit` 负号提取；计入 2026-07-27 全量 **572 passed**。
+测试：`test_tools_report_audit` 负号提取；计入 2026-08-11 全量 **576 passed**。
 
 ### V10.29.3+dojo-bridge - 2026-07-24 (DojoAgents 持仓桥 + 组合上下文)
 
@@ -90,7 +92,7 @@
 
 **不做**：引入 Dojo Dashboard / Agent Loop / React；不改本仓默认 runtime（仍 OpenClaw/QwenPaw）。
 
-测试：`test_dojo_holdings_bridge`；计入 2026-07-27 全量 **572 passed**。
+测试：`test_dojo_holdings_bridge`；计入 2026-08-11 全量 **576 passed**。
 
 ---
 
@@ -114,7 +116,7 @@
 - `docs/RESEARCH_EFFECTIVENESS.md`、`action-card.md`、`USER_GUIDE` §4.4、`ENGINE`、`ROADMAP`、`tools/README`、`TESTING.md`
 
 **测试结果**（含后续 P0/P1/Dojo 增量，2026-07-27 复跑）:
-- [x] 全量：`pytest tests/`（`.env` MiniMax-M3）→ **572 passed**
+- [x] 全量：`pytest tests/`（`.env` MiniMax-M3）→ **576 passed**（2026-08-11 复跑）
 - [x] e2e：`tests/e2e/` 含 `test_llm_smoke` + `test_research_effectiveness_e2e` 全绿（有 Key）
 - [x] 聚焦：posterior / repair / feedback_due / dojo_bridge / twstock / report_audit 负号 / SkillForge RULE
 - [x] 手工：`config.py` doctor、`log_decision gaps/bands`、`weekly-posterior --offline --feedback`、`feedback_due_decisions`、`twstock quote 2330`、`dojo_holdings_bridge list`、`repair_decision_stances`

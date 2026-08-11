@@ -101,7 +101,7 @@
 - ✅ `tools/posterior_weekly.py` + `src/posterior_report.py`（方向命中 / 校准 / 完整率）
 - ✅ `tools/seed_portfolio_decisions.py` + `data/portfolio_decision_seeds.json`
 - ✅ `tools/archive_experiences.py` 清理测试污染经验库
-- ✅ 全量验收（2026-07-27）：**572 passed**（含 LLM e2e）；包版本 **10.29.3**
+- ✅ 全量验收（2026-07-27）：**576 passed**（2026-08-11；e2e 9/9 含 LLM）；包版本 **10.29.3**
 - 🟡 持续：真实决策后验样本 ≥20 后再谈 IR；禁止用假 experiences 宣称 alpha
 - 🟡 2026-07-27 feedback dry-run 已见 NVDA/AVGO/PDD 到期 would_write，可用 `--feedback-apply` 入库
 
@@ -113,7 +113,7 @@
 | [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) | `dojo_holdings_bridge`、组合上下文字段 | Dashboard / Agent Loop / React |
 | [TradingAgents](https://github.com/TauricResearch/TradingAgents) | **决策落盘 + 已实现收益反馈 + 多空辩论**；后验反思；**look-ahead 安全取价**（`filter_series_as_of`）+ ticker 路径硬化（`safe_ticker_component`） | LangGraph 全图、Trader/模拟撮合、多轮 risk debators 原样、供应商数据栈 |
 
-TradingAgents v0.3.x 增量（checkpoint resume、look-ahead 过滤、多 provider）与本仓 OpenClaw 运行时正交；若将来加强回测保真，可单独借鉴 look-ahead 过滤，不引入其图执行器。
+TradingAgents v0.3.x：look-ahead 取价截断与 ticker 路径硬化**已落地**（`filter_series_as_of` / `safe_ticker_component`）；checkpoint resume / 多 provider / LangGraph 图执行器明确不合并。
 
 ## 可选 / 未排期
 
