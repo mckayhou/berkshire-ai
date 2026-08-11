@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from dataclasses import dataclass
 from typing import Callable, Dict, Optional, Tuple
@@ -105,6 +106,41 @@ class StaticPriceProvider(PriceProvider):
         if key not in self._prices:
             raise KeyError(f"无价格数据: {key}")
         return self._prices[key]
+
+
+def safe_ticker_component(value: str, *, max_len: int = 32) -> str:
+    """Validate ticker is safe as a single filesystem path component.
+
+    Borrowed from TradingAgents path-hardening: tickers may come from CLI/LLM and
+    must not escape cache dirs via ``../`` or separators. Allows letters, digits,
+    dot, dash, underscore, caret (indices), equals (futures), plus (forex).
+    """
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"ticker must be a non-empty string, got {value!r}")
+    value = value.strip()
+    if len(value) > max_len:
+        raise ValueError(f"ticker exceeds {max_len} chars: {value!r}")
+    if not re.fullmatch(r"[A-Za-z0-9._\-\^=+]+", value):
+        raise ValueError(
+            f"ticker contains characters not allowed in a filesystem path: {value!r}"
+        )
+    if set(value) == {"."}:
+        raise ValueError(f"ticker cannot consist solely of dots: {value!r}")
+    return value
+
+
+def filter_series_as_of(
+    series: Dict[str, float],
+    as_of: str,
+) -> Dict[str, float]:
+    """Keep only bars with date <= as_of (look-ahead safe for backtests/posterior).
+
+    Inspired by TradingAgents OHLCV/fundamentals date filters. Empty if none.
+    """
+    nd = _norm_date(as_of)
+    if nd is None or not series:
+        return {}
+    return {d: px for d, px in series.items() if d <= nd}
 
 
 def _norm_date(value: object) -> Optional[str]:
@@ -248,7 +284,11 @@ class NetworkPriceProvider(PriceProvider):
     def _disk_cache_file(self, ticker: str) -> Optional[str]:
         if not self._disk_cache_dir:
             return None
-        key = str(ticker).strip().upper()
+        # Path-harden: reject traversal; map remaining to a single filename token
+        try:
+            key = safe_ticker_component(str(ticker).strip().upper())
+        except ValueError as e:
+            raise KeyError(str(e)) from e
         safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in key)
         return os.path.join(self._disk_cache_dir, f"{safe}.json")
 
@@ -311,19 +351,26 @@ class NetworkPriceProvider(PriceProvider):
         return series
 
     def get_price(self, ticker: str, date: str) -> float:
+        """Return close on ``date``, or prior trading day if enabled.
+
+        **Look-ahead safe**: only bars with ``bar_date <= date`` are visible,
+        even if the fetcher/cache holds a longer series (TradingAgents-style).
+        """
         series = self._series(ticker)
         if not series:
             raise KeyError(f"无价格数据（取数失败或为空）: {ticker}")
         nd = _norm_date(date)
         if nd is None:
             raise KeyError(f"非法日期: {date!r}")
-        if nd in series:
-            return series[nd]
+        # Hard cutoff: never return a bar after the requested as-of date
+        visible = filter_series_as_of(series, nd)
+        if not visible:
+            raise KeyError(f"无 {ticker} 在 {nd}（或之前）的价格")
+        if nd in visible:
+            return visible[nd]
         if self._fallback_to_prior:
-            prior = [d for d in series if d <= nd]
-            if prior:
-                return series[max(prior)]
-        raise KeyError(f"无 {ticker} 在 {nd}（或之前）的价格")
+            return visible[max(visible.keys())]
+        raise KeyError(f"无 {ticker} 在 {nd} 的价格（且未启用前回退）")
 
 
 @dataclass

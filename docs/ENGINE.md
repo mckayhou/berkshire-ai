@@ -275,7 +275,7 @@ curl -s localhost:8000/doctor
 | V10.29.1 | 投研效果契约 + 后验周报 | `log_decision` / `posterior_weekly`；见 [RESEARCH_EFFECTIVENESS.md](RESEARCH_EFFECTIVENESS.md) |
 | V10.29.2 | AnySearch Skill + Tavily hybrid | `skills/anysearch/`、`anysearch-web`、`src/tavily_search.py`；见 [USER_GUIDE §5.4](USER_GUIDE.md) |
 | V10.29.3 | action↔stance 门禁 + 周度后验/到期反馈（**当前包 10.29.3**） | `ACTION_STANCE_BANDS`、`repair_decision_stances`、`feedback_due_decisions`、`scripts/weekly-posterior.sh`；Yahoo chart 回退 |
-| V10.29.3+ | upstream P0/P1 + Dojo 桥（2026-07-27 验收 **572 passed**） | `income-investment`/`thesis-drift`/`twstock_data`；deep-company 骨架；`report_audit` 负号；`dojo_holdings_bridge` + `portfolio_weight`/`risk_flags` |
+| V10.29.3+ | upstream P0/P1 + Dojo 桥 + TA look-ahead | 同上；另 `filter_series_as_of` / `safe_ticker_component`（TradingAgents 回测纪律） |
 
 ---
 

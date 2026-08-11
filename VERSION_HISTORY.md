@@ -50,6 +50,14 @@
 
 **测试**：`test_tools_twstock_data`；在线冒烟 `quote 2330`；计入 2026-07-27 全量 **572 passed**。
 
+### V10.29.3+ta-lookahead - 2026-08-11 (TradingAgents look-ahead harden)
+
+借鉴 [TradingAgents](https://github.com/TauricResearch/TradingAgents) 回测保真纪律（不 merge LangGraph）：
+
+- `filter_series_as_of`：`NetworkPriceProvider.get_price` 仅可见 `bar_date <= as_of`，缓存/长序列不得泄漏未来收盘价
+- `safe_ticker_component`：价格磁盘缓存文件名拒绝路径穿越
+- 测试：`test_network_price_provider` look-ahead + path 用例
+
 ### V10.29.3+upstream-netcheck - 2026-08-11 (investment-team 联网诚实纪律)
 
 自上游 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) issue #58 纪律移植（OpenClaw/hybrid 改写，非 Claude Code permissions）：

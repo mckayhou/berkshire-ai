@@ -111,7 +111,7 @@
 |------|--------|----------------|
 | [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) | skills SOP、financial_rigor/report_audit 纪律、income/thesis-drift/twstock、deep-company 骨架、investment-team 联网诚实 | Claude/Codex 专有编排、报告资产库 |
 | [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) | `dojo_holdings_bridge`、组合上下文字段 | Dashboard / Agent Loop / React |
-| [TradingAgents](https://github.com/TauricResearch/TradingAgents) | **决策落盘 + 已实现收益反馈 + 多空辩论**（`decision_log` / `realized_feedback` / `debate`）；后验反思理念（`reflect` / `feedback_due`） | LangGraph 全图、Trader/模拟撮合、多轮 risk debators 原样、供应商数据栈 |
+| [TradingAgents](https://github.com/TauricResearch/TradingAgents) | **决策落盘 + 已实现收益反馈 + 多空辩论**；后验反思；**look-ahead 安全取价**（`filter_series_as_of`）+ ticker 路径硬化（`safe_ticker_component`） | LangGraph 全图、Trader/模拟撮合、多轮 risk debators 原样、供应商数据栈 |
 
 TradingAgents v0.3.x 增量（checkpoint resume、look-ahead 过滤、多 provider）与本仓 OpenClaw 运行时正交；若将来加强回测保真，可单独借鉴 look-ahead 过滤，不引入其图执行器。
 

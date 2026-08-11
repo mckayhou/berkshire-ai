@@ -35,6 +35,7 @@
 | 2026-06-26 | **Tracker V10.0 - PDD 触发器命中** | Q1 营收低于预期 + 欧盟罚款 Temu，触发 "Q2 Revenue < Consensus -5%" 条件。需重新评估投资逻辑。 | `thesis-tracker` v10.0 |
 | 2026-06-26 | **Tracker V10.0 - AVGO 风险信号** | 6/4 急跌 15%，麦格理下调至中性，担忧谷歌自研芯片影响 ASIC 市场份额。需关注 Q2 财报验证。 | `thesis-tracker` v10.0 |
 | 2026-06-25 | **V10.0 - TextGrad 化** | 借鉴 Nature 2025 论文，实现显式计算图 + 节点级诊断 + 文本梯度反向传播。诊断精度从整体评分提升到节点级定位。**Cron 任务已升级**: `99ac7a57` (每周五 20:00) | `investment-research` v10.0 |
+| 2026-08-11 | **TA look-ahead harden** | 取价 as_of 截断 + ticker 路径安全（TradingAgents 纪律） | `realized_feedback` |
 | 2026-08-11 | **investment-team 联网诚实** | spawn 前检索预检；失败禁止伪完整报告（upstream #58 → OpenClaw） | `skills/investment-team.md` |
 | 2026-07-27 | **全链路验收** | pytest **572 passed**（含 LLM e2e）；手工 weekly-posterior/feedback/twstock/dojo-bridge | TESTING.md / VERSION_HISTORY |
 | 2026-07-27 | **upstream P1 摘句** | deep-company 篇数/骨架；bottleneck 台股提示；report_audit 负号修复 | `deep-company-series` / `bottleneck-hunter` / `report_audit` |
