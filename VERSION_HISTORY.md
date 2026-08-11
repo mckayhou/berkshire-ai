@@ -50,6 +50,16 @@
 
 **测试**：`test_tools_twstock_data`；在线冒烟 `quote 2330`；计入 2026-07-27 全量 **572 passed**。
 
+### V10.29.3+upstream-netcheck - 2026-08-11 (investment-team 联网诚实纪律)
+
+自上游 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) issue #58 纪律移植（OpenClaw/hybrid 改写，非 Claude Code permissions）：
+
+- `skills/investment-team.md`：spawn 前 **检索可用性预检**（`config.py` / hybrid 冒烟）
+- 子 Agent **联网失败禁止伪装**：降级标注 + 上报 lead；降级稿不得伪装准出
+- 角色提示补台股 `twstock_data`；收尾 checklist 对齐 `log_decision --strict`
+
+**TradingAgents 对照**（已吸收 vs 不合并）：见 [docs/ROADMAP.md](docs/ROADMAP.md)「外部参考」；核心 decision_log / realized_feedback / debate 早已落地，不整仓 merge LangGraph 交易框架。
+
 ### V10.29.3+upstream-P1 - 2026-07-27 (研究质量增量摘句)
 
 从上游 **摘句合并**（不整文件覆盖）：

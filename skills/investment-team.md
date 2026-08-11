@@ -5,7 +5,7 @@ description: |
   提供独立角色提示模板 + 汇总流程 + 工具验证 + 报告准出。
   完整支持多 Agent 并行团队运行（OpenClaw/QwenPaw 风格）。
   已移除 Claude Code 特定 Team/Task 语法，但保留并行子 agent 结构和团队流程。
-version: 10.2
+version: 10.29.3
 ---
 
 # 投研团队：四角色并行分析框架
@@ -57,12 +57,39 @@ version: 10.2
 
 将评级结果告知每个Agent，影响其研究方式。
 
+### 第一步¾：联网 / 检索可用性预检（关键 · 避免子 Agent 静默退化）
+
+在 **spawn 任何并行子 Agent 之前**，team-lead 必须确认实时检索可用。  
+（移植自上游 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) issue #58 纪律，已改写为 OpenClaw / hybrid 检索。）
+
+**为什么必须预检**：并行子 Agent（`sessions_spawn` / ACP / 后台角色）往往**无法向用户弹出交互式权限确认**。若检索 Key 缺失、权限被拦、或 hybrid 全失败，子 Agent 会退化为仅凭训练知识作答，却仍输出「看起来完整、实则未联网」的伪研究——这是本 skill **最危险的失败模式**。
+
+**预检步骤（任选能跑通的一条即可）**：
+
+```bash
+# 1) 配置体检（不打印密钥明文）
+python3 src/config.py
+# 期望：tavily 或检索相关项为 ready（至少一条实时检索路径可用）
+
+# 2) hybrid 冒烟（仓库根目录；需已配置 TAVILY_API_KEYS 和/或 ANYSEARCH_API_KEY）
+SEARCH_MODE=hybrid python3 src/tavily_search.py stock AAPL Apple --limit 3
+# 或：python3 skills/anysearch/scripts/anysearch_cli.py search "AAPL PE" --max_results 3
+```
+
+| 结果 | 动作 |
+|------|------|
+| 预检通过 | 继续第二步 spawn |
+| Key 未配置 / 权限被拦 / 连续失败 | **停下来，不要启动 4 子 Agent**；提示用户配置 `.env` 中 `TAVILY_API_KEYS` / `ANYSEARCH_API_KEY`，或放行平台网络/检索权限后再重跑 |
+| 仅部分源可用 | 可继续，但须在 lead 进度表注明「降级检索：仅 X 可用」 |
+
+**降级研究（用户明确同意后）**：允许单会话、弱联网或无联网继续，但最终报告**顶部必须**有醒目标注（见下方「联网失败禁止伪装」），且 team-lead 不得把降级稿当作成熟准出研报。
+
 ### 第二步：使用平台多 Agent 能力创建并行研究团队
 
 **在 OpenClaw / QwenPaw 这类产品中启动多 Agent 并行研究**：
 
 1. 你（当前会话）作为 **team-lead**（统筹者）。
-2. 使用平台的并行/子 Agent 机制启动 4 个专业子 Agent：
+2. **仅在第一步¾ 预检通过（或用户书面接受降级）后**，使用平台的并行/子 Agent 机制启动 4 个专业子 Agent：
    - OpenClaw 示例：使用 `sessions_spawn` 或 `/acp spawn`（带 thread/subagent）为每个角色创建独立会话/子 Agent，并行运行。
    - QwenPaw 示例：在 loop_engine 中启动 4 个并发角色实例，或通过你的 harness 的并行调度启动 4 个 specialist agents。
 3. 给每个子 Agent 分配下面的角色提示 + 具体任务描述。
@@ -136,10 +163,14 @@ version: 10.2
 {任务description的内容}
 
 **研究方法**：
-- 使用 **hybrid Tavily 主路**（`src/tavily_search.py` / `SEARCH_MODE=hybrid`）搜索最新公开信息；结构化财务可补 AnySearch `finance.fundamental`（`anysearch-web.md`）；再失败用 WebSearch
-- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），两源误差>1%须标记
+- 使用 **hybrid Tavily 主路**（`src/tavily_search.py` / `SEARCH_MODE=hybrid`）搜索最新公开信息；结构化财务可补 AnySearch `finance.fundamental`（`anysearch-web.md`）；平台若提供 WebSearch 可作为补充
+- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯；台股：FinMind `tools/twstock_data.py`+Goodinfo），两源误差>1%须标记
 - 确保数据准确，关键数据标注来源（URL + 获取时间）
 - 分析要深入，不流于表面
+- **联网失败禁止伪装**（硬纪律）：若 hybrid / WebSearch / 页面取数被拦截或不可用，**禁止**用训练知识冒充「已联网核实」的结果。必须：
+  1. 在该子报告**顶部**醒目标注：`⚠️ 本报告未能充分联网，部分内容基于训练知识（请注明模型知识截止若可知），置信度降级，不得作为准出研报`；
+  2. **如实告知 team-lead**（检索失败原因 + 哪些章节未核实）；
+  3. team-lead 决定：中止并行研究、改为单会话补检、或输出降级稿（降级稿**不得**走 `report_audit` 准出装成完整研究）。
 
 **输出要求**：
 - 报告要详尽，使用Markdown表格呈现关键数据
@@ -267,8 +298,11 @@ python3 tools/report_audit.py verdict \
 报告完成后建议执行 `tools/report_audit.py` 做 15% 抽检。
 
 1. **数据准确性**：使用 tools/ 中的 financial_rigor.py 做交叉验证。
-2. **结论要明确**：不回避给出买入/观望/回避建议和具体价格区间。
-3. **所有分析必须有数据支撑**：附数据来源。
-4. **反偏见意识**：汇总时评估资料充裕度、共识偏差，标注信息丰富度评级。
-5. **信息稀缺时的诚实原则**：宁可留白标注“数据不足”，也不要用推测填满。
-6. **输出文件**：最终报告建议保存为 `reports/{公司名}/{公司名}-team-{YYYYMMDD}.md`。
+2. **联网诚实（硬纪律）**：子 Agent 检索失败必须降级标注并上报 lead；禁止伪完整报告（见第一步¾「联网失败禁止伪装」）。
+3. **所有分析必须有数据支撑**：附数据来源（URL + 时间）；训练知识不得冒充实时源。
+4. **结论要明确**：不回避给出买入/观望/回避建议和具体价格区间；降级稿不得伪装为准出研报。
+5. **反偏见意识**：汇总时评估资料充裕度、共识偏差，标注信息丰富度评级。
+6. **信息稀缺时的诚实原则**：宁可留白标注「数据不足」，也不要用推测填满框架伪装确定性。
+7. **台股**：供应链/台股标的优先 `tools/twstock_data.py`（见 financial-data 台股节）。
+8. **输出文件**：最终报告建议保存为 `reports/{公司名}/{公司名}-team-{YYYYMMDD}.md`。
+9. **收尾落盘**：准出后 `log_decision.py append`（建议 `--strict`；有持仓填 `--portfolio-weight` / `--risk-flags`）。

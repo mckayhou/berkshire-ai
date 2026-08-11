@@ -105,6 +105,16 @@
 - 🟡 持续：真实决策后验样本 ≥20 后再谈 IR；禁止用假 experiences 宣称 alpha
 - 🟡 2026-07-27 feedback dry-run 已见 NVDA/AVGO/PDD 到期 would_write，可用 `--feedback-apply` 入库
 
+## 外部参考（吸收边界）
+
+| 项目 | 已吸收 | 明确不整仓合并 |
+|------|--------|----------------|
+| [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) | skills SOP、financial_rigor/report_audit 纪律、income/thesis-drift/twstock、deep-company 骨架、investment-team 联网诚实 | Claude/Codex 专有编排、报告资产库 |
+| [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) | `dojo_holdings_bridge`、组合上下文字段 | Dashboard / Agent Loop / React |
+| [TradingAgents](https://github.com/TauricResearch/TradingAgents) | **决策落盘 + 已实现收益反馈 + 多空辩论**（`decision_log` / `realized_feedback` / `debate`）；后验反思理念（`reflect` / `feedback_due`） | LangGraph 全图、Trader/模拟撮合、多轮 risk debators 原样、供应商数据栈 |
+
+TradingAgents v0.3.x 增量（checkpoint resume、look-ahead 过滤、多 provider）与本仓 OpenClaw 运行时正交；若将来加强回测保真，可单独借鉴 look-ahead 过滤，不引入其图执行器。
+
 ## 可选 / 未排期
 
 ### aktools-pro MCP 后端 — ✅ V10.23（HTTP + 原子诊断）
