@@ -9,6 +9,8 @@
 #   缺库时对应数据源被 import 守卫静默跳过，核心功能不受影响。
 
 httpx>=0.27,<1.0
+# AnySearch Python skill CLI (skills/anysearch/scripts/anysearch_cli.py)
+requests>=2.31,<3.0
 
 # ---------------------------------------------------------------------------
 # 可选增强（按需安装，全部非必需；不装也能用内置 native 源 + 本地兜底通道）

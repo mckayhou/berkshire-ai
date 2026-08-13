@@ -7,13 +7,12 @@ import json
 import os
 import sys
 
-import pytest
-
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 
-import decision_log as dl  # noqa: E402
 import repair_decision_stances as repair  # noqa: E402
+
+import decision_log as dl  # noqa: E402
 
 
 def _hold_hot(**kw):

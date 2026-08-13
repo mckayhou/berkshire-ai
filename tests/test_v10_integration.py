@@ -14,7 +14,6 @@ BERKSHIRE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BERKSHIRE_DIR, "src"))
 
 from evolution_loop_v10 import BerkshireGraph
-from tavily_search import TavilySearcher
 
 
 def _skip(reason: str):

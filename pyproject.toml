@@ -12,9 +12,9 @@ license = { file = "LICENSE" }
 authors = [{ name = "berkshire-ai contributors" }]
 keywords = ["investment", "textgrad", "multi-agent", "llm", "research"]
 
-# 运行时仅 httpx（Tavily 实时检索 + OpenAI 兼容 LLM 客户端）。
+# 运行时：httpx（Tavily + OpenAI 兼容 LLM）；requests（AnySearch skill Python CLI）。
 # 数据降级链 / 多通道推送的内置源仅用系统 curl，无需第三方库。
-dependencies = ["httpx>=0.27,<1.0"]
+dependencies = ["httpx>=0.27,<1.0", "requests>=2.31,<3.0"]
 
 [project.optional-dependencies]
 # A 股数据降级链备用源（tools/data_sources.py），缺库时 import 守卫静默跳过
@@ -64,6 +64,9 @@ ignore = ["E741", "E501"]
 # 测试与部分 CLI 脚本在 import 前插入 sys.path / 设置环境，E402 属有意为之
 "tests/*" = ["E402"]
 "tools/calibrate_sensitivity.py" = ["E402"]
+"tools/feedback_due_decisions.py" = ["E402"]
+"tools/repair_decision_stances.py" = ["E402"]
+"tools/posterior_report.py" = ["E402"]
 "src/evolution_loop_v10.py" = ["E402"]
 
 # ---------------------------------------------------------------------------

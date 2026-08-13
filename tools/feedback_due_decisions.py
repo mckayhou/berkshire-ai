@@ -41,16 +41,20 @@ sys.path.insert(0, os.path.join(_ROOT, "src"))
 
 from decision_log import (  # noqa: E402
     DecisionRecord,
-    default_log_path as default_decision_log,
     load_decisions,
     maturity_date,
     mean_stance,
 )
+from decision_log import (
+    default_log_path as default_decision_log,
+)
 from experience_store import (  # noqa: E402
     ExperienceStore,
     classify_verdict,
-    default_log_path as default_experience_log,
     experience_from_stats,
+)
+from experience_store import (
+    default_log_path as default_experience_log,
 )
 from realized_feedback import (  # noqa: E402
     NetworkPriceProvider,

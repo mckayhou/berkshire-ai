@@ -243,8 +243,7 @@ def test_hybrid_fallback_to_anysearch(monkeypatch):
     call_n = {"i": 0}
 
     def _client_factory(*a, **k):
-        # TavilySearcher uses Client once per attempt; after exhaust Hybrid uses AnySearch
-        idx = min(call_n["i"], len(clients) - 1)
+        # TavilySearcher uses Client once per attempt; after exhaust Hybrid uses AnySearch.
         # Advance only when entering a new Client context for remaining attempts:
         # simpler: first N posts go tavily, then any
         return clients[0] if call_n["i"] == 0 or len(t_actions) > 0 else clients[1]

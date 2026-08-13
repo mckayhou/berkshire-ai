@@ -12,9 +12,10 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tools"))
 
-import decision_log as dl  # noqa: E402
 import feedback_due_decisions as fb  # noqa: E402
-from experience_store import Experience, ExperienceStore  # noqa: E402
+
+import decision_log as dl  # noqa: E402
+from experience_store import ExperienceStore  # noqa: E402
 from realized_feedback import StaticPriceProvider  # noqa: E402
 
 
