@@ -71,17 +71,25 @@ def render_prometheus(
 
     if llm is not None:
         s = llm.summary()
-        gauges = {
-            "llm_calls": s.get("llm_calls", 0),
-            "llm_errors": s.get("llm_errors", 0),
-            "llm_total_tokens": s.get("total_tokens", 0),
-            "llm_total_cost_usd": s.get("total_cost_usd", 0.0),
-            "llm_total_latency_ms": s.get("total_latency_ms", 0.0),
+
+        def _num(key: str, default: float = 0.0) -> float:
+            raw = s.get(key, default)
+            try:
+                return float(raw)  # type: ignore[arg-type]
+            except (TypeError, ValueError):
+                return default
+
+        gauges: Dict[str, float] = {
+            "llm_calls": _num("llm_calls"),
+            "llm_errors": _num("llm_errors"),
+            "llm_total_tokens": _num("total_tokens"),
+            "llm_total_cost_usd": _num("total_cost_usd"),
+            "llm_total_latency_ms": _num("total_latency_ms"),
         }
-        for name, value in gauges.items():
+        for name, gauge_value in gauges.items():
             metric = f"{_METRIC_PREFIX}_{name}"
             lines.append(f"# TYPE {metric} gauge")
-            lines.append(f"{metric} {value:g}")
+            lines.append(f"{metric} {gauge_value:g}")
 
     if not lines:
         lines.append(f"# {_METRIC_PREFIX}: no metrics recorded yet")

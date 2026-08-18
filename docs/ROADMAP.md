@@ -101,9 +101,19 @@
 - ✅ `tools/posterior_weekly.py` + `src/posterior_report.py`（方向命中 / 校准 / 完整率）
 - ✅ `tools/seed_portfolio_decisions.py` + `data/portfolio_decision_seeds.json`
 - ✅ `tools/archive_experiences.py` 清理测试污染经验库
-- ✅ 全量验收（2026-07-27）：**572 passed**（含 LLM e2e）；包版本 **10.29.3**
+- ✅ 全量验收（2026-07-27）：**576 passed**（2026-08-11；e2e 9/9 含 LLM）；包版本 **10.29.3**
 - 🟡 持续：真实决策后验样本 ≥20 后再谈 IR；禁止用假 experiences 宣称 alpha
 - 🟡 2026-07-27 feedback dry-run 已见 NVDA/AVGO/PDD 到期 would_write，可用 `--feedback-apply` 入库
+
+## 外部参考（吸收边界）
+
+| 项目 | 已吸收 | 明确不整仓合并 |
+|------|--------|----------------|
+| [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) | skills SOP、financial_rigor/report_audit 纪律、income/thesis-drift/twstock、deep-company 骨架、investment-team 联网诚实 | Claude/Codex 专有编排、报告资产库 |
+| [DojoAgents](https://github.com/Alpha-Dojo/DojoAgents) | `dojo_holdings_bridge`、组合上下文字段 | Dashboard / Agent Loop / React |
+| [TradingAgents](https://github.com/TauricResearch/TradingAgents) | **决策落盘 + 已实现收益反馈 + 多空辩论**；后验反思；**look-ahead 安全取价**（`filter_series_as_of`）+ ticker 路径硬化（`safe_ticker_component`） | LangGraph 全图、Trader/模拟撮合、多轮 risk debators 原样、供应商数据栈 |
+
+TradingAgents v0.3.x：look-ahead 取价截断与 ticker 路径硬化**已落地**（`filter_series_as_of` / `safe_ticker_component`）；checkpoint resume / 多 provider / LangGraph 图执行器明确不合并。
 
 ## 可选 / 未排期
 

@@ -4,7 +4,7 @@
 > 
 > 叠加本地 **V10 TextGrad 自进化引擎**（显式计算图 + 节点级文本梯度反向传播 + 针对性优化）
 
-**当前版本**：**V10.29.3**（action↔stance 门禁 + 周度后验/到期反馈闭环；继承 AnySearch/Tavily hybrid 与投研效果契约）。包版本 `10.29.3`。完整历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
+**当前版本**：**V10.29.3**（action↔stance + 后验闭环 + upstream/Dojo 桥 + TradingAgents look-ahead 取价硬化）。包版本 `10.29.3`。完整历史见 [VERSION_HISTORY.md](VERSION_HISTORY.md)。
 
 **使用指南**：[docs/USER_GUIDE.md](docs/USER_GUIDE.md) — 全功能工作流  
 **文档中心**：[docs/README.md](docs/README.md) — 按场景选阅读路径（回测 / 量化 / 引擎 / 技能 / 测试）
@@ -354,7 +354,7 @@ python3 -m pytest tests/test_tools_thesis_queue.py -v        # 研究队列
 - ✅ **主线接线（V10.20）**：`run_with_realized_feedback` 在 `persist=True` 时自动 `experience_from_stats` → `ExperienceStore`；`include_perf=True` 返回 `perf` 摘要；`retriever`/`retriever_k` 透传 D 段 few-shot 改写
 - ✅ **R/D 双循环（V10.19）**：`src/research_loop.py` 的 `HypothesisProposer` + `run_rd_cycle`（R 提假设 → D 验证门控进化；`proposer=None` 等价纯 D）；`ExperienceDrivenProposer` / `LLMHypothesisProposer` 可注入；D 段经验召回经 `optimizer.retriever`；`decision_log` 可选 `hypothesis_id`
 - ✅ **借鉴 RD-Agent / Qlib（V10.18）**：本地绩效指标库 `tools/perf_metrics.py`（Qlib `risk_analysis` 口径：年化/波动/IR/夏普/最大回撤/累计求和/超额 CAR/含成本，纯 stdlib，接 `decision_log`+可注入 `PriceProvider`）；经验库 RAG-lite `experience_store`（成败经验 JSONL 沉淀 + 确定性关键词召回 + 作为 few-shot 注入 `build_rewrite_messages`，`examples=None` 逐字节不变、失败降级）；显式假设对象 `hypothesis`（可证伪命题 + 最小存储）
-- ✅ 测试 **572 passed**（2026-07-27 全量含 MiniMax-M3 LLM e2e、upstream P0/P1、Dojo bridge；详见 [VERSION_HISTORY.md](VERSION_HISTORY.md) / [TESTING.md](TESTING.md)）
+- ✅ 测试 **576 passed**（2026-08-11 全量含 MiniMax-M3 e2e 9/9、upstream 纪律、Dojo bridge、TA look-ahead；详见 [VERSION_HISTORY.md](VERSION_HISTORY.md) / [TESTING.md](TESTING.md)）
 
 ## 🚀 服务部署（V10.17 档D）
 
@@ -390,4 +390,4 @@ curl -X POST localhost:8000/debate \
 ## 📝 维护者
 
 - Mckay (houqing)
-- 最后更新: 2026-07-27 (V10.29.3 全链路验收：572 passed；upstream P0/P1 + Dojo bridge；包 `10.29.3`)
+- 最后更新: 2026-08-11 (V10.29.3 全链路验收：576 passed；upstream P0/P1 + Dojo bridge；包 `10.29.3`)

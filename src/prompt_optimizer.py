@@ -353,18 +353,20 @@ def apply_gradient(
                 ticker=ticker,
             )
             if not result.passed:
-                # 衰减率超阈值，回滚到旧 prompt
+                # 衰减率超阈值，回滚到旧 prompt（用 LLM 埋点通道记一条审计事件）
                 log_llm_call(
-                    model="paired_replay",
-                    input_tokens=0,
-                    output_tokens=0,
-                    cost_usd=0.0,
-                    latency_ms=0,
-                    extra={
-                        "action": "rollback",
-                        "decay_rate": result.decay_rate,
-                        "ticker": ticker,
-                    },
+                    LLMCallMetrics(
+                        model="paired_replay",
+                        prompt_tokens=0,
+                        completion_tokens=0,
+                        total_tokens=0,
+                        cost_usd=0.0,
+                        latency_ms=0.0,
+                        ok=False,
+                        error=(
+                            f"rollback decay_rate={result.decay_rate} ticker={ticker}"
+                        ),
+                    )
                 )
                 return None  # 返回 None 表示降级，上层保留旧 prompt
         except ImportError:

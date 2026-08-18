@@ -136,7 +136,7 @@ class PairedReplayEngine:
 
     def _load_top_traces(self, ticker: str) -> List[Dict[str, Any]]:
         """加载指定标的的高分轨迹（Top-K）。"""
-        traces = []
+        traces: List[Dict[str, Any]] = []
         trace_dir = self.trace_recorder.directory
 
         if not os.path.isdir(trace_dir):

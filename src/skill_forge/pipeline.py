@@ -87,7 +87,7 @@ def run_evolution_round(
             )
             if not gate.passed:
                 # Rollback: restore pre-patch skill
-                vfs.write_skill(skill_name, pre_skill_md)
+                vfs.write_live_skill(skill_name, pre_skill_md)
                 accepted = 0
 
     skill_path = str(vfs.skill_path(skill_name))

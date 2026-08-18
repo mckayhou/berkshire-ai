@@ -80,8 +80,10 @@ from .realized_feedback import (
     ReturnStats,
     StaticPriceProvider,
     compute_returns,
+    filter_series_as_of,
     realized_scores,
     realized_scores_via_provider,
+    safe_ticker_component,
 )
 from .reflect import ReflectionReport, reflect_ticker
 from .research_loop import (
@@ -123,6 +125,8 @@ __all__ = [
     "build_posterior_report",
     "realized_scores",
     "realized_scores_via_provider",
+    "safe_ticker_component",
+    "filter_series_as_of",
     "compute_returns",
     "PriceProvider",
     "StaticPriceProvider",

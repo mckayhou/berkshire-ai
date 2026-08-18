@@ -40,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-07-27）**：全量 **`pytest tests/` → 572 passed**（含 MiniMax-M3 真实 LLM e2e；factor-mining 已装则 alphagpt 用例计入）。无 LLM Key 时 `e2e/test_llm_smoke` 会 skip。以本机 `pytest tests/ -ra` 为准。
+**当前规模（2026-08-11）**：全量 **`pytest tests/` → 576 passed**（含 MiniMax-M3 LLM e2e、TA look-ahead hardening）。无 LLM Key 时 `e2e/test_llm_smoke` 会 skip。以本机 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -175,7 +175,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_v10_backtest.py` | 诊断覆盖率 | **脚本**，非 pytest |
 | `test_pipeline.py` | `src/pipeline.py` | `run_full_cycle` |
 | `test_realized_feedback_loop.py` | `realized_feedback.py` | 收益反馈闭环 |
-| `test_network_price_provider.py` | 价格提供者 | 缓存、非交易日 |
+| `test_network_price_provider.py` | 价格提供者 | 缓存、非交易日、**look-ahead 截断**、ticker 路径安全 |
 | `test_decision_log` *(via loop)* | `decision_log.py` | JSONL 持久化 |
 | `test_experience_store.py` | `experience_store.py` | 经验库 JSONL |
 | `test_research_loop.py` | `research_loop.py` | R/D 双循环 |
@@ -267,6 +267,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/skill_forge/` / `tools/skill_evolve.py` | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
 | 投研效果契约 / 后验周报 | `pytest tests/test_posterior_report.py tests/test_repair_decision_stances.py tests/test_feedback_due_decisions.py tests/test_dojo_holdings_bridge.py tests/e2e/test_research_effectiveness_e2e.py`；见 [RESEARCH_EFFECTIVENESS.md](docs/RESEARCH_EFFECTIVENESS.md) |
 | 台股 FinMind | `pytest tests/test_tools_twstock_data.py`；手工 `twstock_data.py quote 2330` |
+| 取价 look-ahead / ticker 安全 | `pytest tests/test_network_price_provider.py`（含 future-bar 截断） |
 | 回测相关（OOS / 轨迹诊断） | 见 [BACKTEST.md](docs/BACKTEST.md)；`pytest tests/test_ashare_alphagpt.py`；`python3 tests/test_v10_backtest.py`；`python3 tools/trajectory_ab_eval.py` |
 
 ### 投研效果契约 / 后验周报验收
@@ -293,6 +294,9 @@ python3 tools/posterior_weekly.py report --as-of $(date +%F) \
   --prices '{"AAPL|2026-01-21":110}'
 ./scripts/weekly-posterior.sh --offline --feedback    # 周报 + 反馈 dry-run
 python3 tools/archive_experiences.py --dry-run
+# e2e 包（需 BERKSHIRE_LLM_API_KEY / OPENAI_API_KEY）
+python3 -m pytest tests/e2e/ -v
+
 # 全量（发版前）
 python3 -m pytest tests/ -ra
 ```
@@ -598,6 +602,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
+| 2026-08-11 | 3.14 | **576 passed**（e2e 9/9 含 LLM smoke；look-ahead 取价 + ticker 路径硬化 + investment-team 联网诚实） |
 | 2026-07-27 | 3.14 | **572 passed**（V10.29.3 全链路：upstream P0/P1 + Dojo bridge + report_audit 负号 + MiniMax-M3 e2e；手工 gaps/weekly-posterior/feedback/twstock/dojo-bridge 冒烟） |
 | 2026-07-24 | 3.14 | **558 passed**（V10.29.3：action↔stance + repair + due feedback + weekly-posterior；含 MiniMax-M3 `test_llm_smoke`；SkillForge 离线测强制 RULE） |
 | 2026-07-24 | 3.14 | 557 passed, 1 skipped（同日较早：无 LLM Key 时 e2e smoke skip） |

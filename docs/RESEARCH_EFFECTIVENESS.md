@@ -114,6 +114,8 @@ python3 tools/archive_experiences.py --reset --reason "test pollution"
 
 `realized_base` 公式见 [ENGINE.md](ENGINE.md) / `realized_feedback.py`（默认 SENSITIVITY=0.5，可用环境变量覆盖）。
 
+取价 look-ahead：`NetworkPriceProvider.get_price` 经 `filter_series_as_of` 仅使用 `bar_date ≤ as_of` 的 K 线（TradingAgents 回测纪律）；磁盘缓存 ticker 经 `safe_ticker_component` 硬化。
+
 ---
 
 ## 5. 推荐工作流

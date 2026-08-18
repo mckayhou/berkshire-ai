@@ -23,7 +23,7 @@
 |----------|------|------------|
 | [anysearch-web.md](../skills/anysearch-web.md) + [anysearch/](../skills/anysearch/) | **实时检索**（AnySearch；Tavily 补充） | 「搜一下腾讯 PE」「anysearch」 |
 | [investment-research.md](../skills/investment-research.md) | **单标的**四大师深度研究 | 「对腾讯做四大师投资研究」 |
-| [investment-team.md](../skills/investment-team.md) | **多 Agent 并行**团队研究 | 「investment-team 研究 NVDA」 |
+| [investment-team.md](../skills/investment-team.md) | **多 Agent 并行**团队研究；spawn 前检索预检；联网失败禁止伪装 | 「investment-team 研究 NVDA」 |
 | [investment-checklist.md](../skills/investment-checklist.md) | 研究检查清单 | 「按 checklist 检查这篇研报」 |
 | [financial-data.md](../skills/financial-data.md) | **数据源规范**（各技能必须引用） | 「这个数据从哪来」 |
 | [thesis-tracker.md](../skills/thesis-tracker.md) | 论文状态跟踪 / TRIGGERED；**须 log_decision 落盘** | 「更新 thesis 状态」 |

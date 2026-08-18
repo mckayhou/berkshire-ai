@@ -19,7 +19,9 @@ from decision_log import DecisionRecord  # noqa: E402
 from realized_feedback import (  # noqa: E402
     NetworkPriceProvider,
     _norm_date,
+    filter_series_as_of,
     realized_scores_via_provider,
+    safe_ticker_component,
 )
 
 
@@ -180,3 +182,49 @@ def test_disk_cache_hits_without_second_fetch(tmp_path):
     p2 = NetworkPriceProvider(fetcher=fetcher, disk_cache_dir=str(cache_dir))
     assert p2.get_price("AAPL", "2024-01-03") == 10.0
     assert len(calls) == 1  # 磁盘缓存命中，不再 fetch
+
+
+# --------------------------- look-ahead + path harden (TradingAgents) ---------------------------
+def test_filter_series_as_of_drops_future_bars():
+    series = {"2024-01-03": 10.0, "2024-01-05": 12.0, "2024-01-08": 15.0}
+    assert filter_series_as_of(series, "2024-01-05") == {
+        "2024-01-03": 10.0,
+        "2024-01-05": 12.0,
+    }
+    assert filter_series_as_of(series, "2024-01-01") == {}
+
+
+def test_get_price_never_returns_future_bar():
+    """Even if fetcher returns bars after as_of, provider must not leak them."""
+    def fetcher(code, limit):
+        return _ok([
+            {"date": "2024-01-03", "close": 10.0},
+            {"date": "2024-01-10", "close": 99.0},  # future relative to query
+        ])
+
+    p = NetworkPriceProvider(fetcher=fetcher, fallback_to_prior=True)
+    assert p.get_price("AAPL", "2024-01-05") == 10.0  # prior, not 99
+    with pytest.raises(KeyError):
+        NetworkPriceProvider(fetcher=fetcher, fallback_to_prior=False).get_price(
+            "AAPL", "2024-01-05"
+        )
+
+
+def test_safe_ticker_component_rejects_traversal():
+    assert safe_ticker_component("AAPL") == "AAPL"
+    assert safe_ticker_component("0700.HK") == "0700.HK"
+    with pytest.raises(ValueError):
+        safe_ticker_component("../etc/passwd")
+    with pytest.raises(ValueError):
+        safe_ticker_component("..")
+    with pytest.raises(ValueError):
+        safe_ticker_component("foo/bar")
+
+
+def test_disk_cache_file_rejects_bad_ticker(tmp_path):
+    p = NetworkPriceProvider(
+        fetcher=lambda c, l: _ok([]),
+        disk_cache_dir=str(tmp_path),
+    )
+    with pytest.raises(KeyError):
+        p._disk_cache_file("../evil")

@@ -56,7 +56,11 @@ def _master_conviction_gap(
 ) -> Optional[float]:
     """高 alpha 与低 alpha 组在某大师信心上的平均差。"""
     def _avg(rows: List[Experience]) -> Optional[float]:
-        vals = [e.stances.get(prefix) for e in rows if e.stances.get(prefix) is not None]
+        vals = [
+            v
+            for e in rows
+            if (v := e.stances.get(prefix)) is not None
+        ]
         if not vals:
             return None
         return sum(vals) / len(vals)
