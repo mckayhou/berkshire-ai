@@ -81,6 +81,9 @@ warn_unused_ignores = false
 no_implicit_optional = true
 # V10.17 收紧：检查未加注解函数的函数体（此前默认跳过，漏掉大量隐性类型错误）。
 check_untyped_defs = true
+# 引擎模块普遍 try: relative / except: flat PYTHONPATH=src 双路径导入；
+# mypy 会把 except 分支当成二次定义。运行时只走一支，禁 no-redef 噪音。
+disable_error_code = ["no-redef"]
 # src/ 内模块用 try/except 双导入（绝对 + 相对）以兼容 sys.path 注入，
 # 关闭重复模块名检查避免误报。
 explicit_package_bases = true

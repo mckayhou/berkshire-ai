@@ -29,12 +29,13 @@ import httpx
 
 # 加载项目根 / CWD 的 .env（含 ANYSEARCH_API_KEY）；不覆盖已有环境变量
 try:
-    from config import load_dotenv as _load_dotenv
+    from config import load_dotenv as _load_dotenv  # type: ignore[attr-defined]
 except ImportError:
     try:
-        from src.config import load_dotenv as _load_dotenv  # type: ignore
+        from src.config import load_dotenv as _load_dotenv  # type: ignore[no-redef,attr-defined]
     except ImportError:
-        _load_dotenv = None  # type: ignore
+        def _load_dotenv(*_a, **_k):  # type: ignore[misc]
+            return False
 if _load_dotenv is not None:
     _here = os.path.dirname(os.path.abspath(__file__))
     _root = os.path.dirname(_here)
@@ -317,7 +318,10 @@ class AnySearchSearcher:
                 "request_id": payload.get("request_id"),
             }
 
-        data = payload.get("data") if isinstance(payload.get("data"), dict) else payload
+        data_obj = payload.get("data")
+        data = data_obj if isinstance(data_obj, dict) else payload
+        if not isinstance(data, dict):
+            data = {}
         raw_results = data.get("results") or []
         results = []
         for r in raw_results[:max_results]:
@@ -458,7 +462,7 @@ class HybridSearcher:
         anysearch_keys: Optional[List[str]] = None,
         supplement: Optional[bool] = None,
     ):
-        self.mode = (mode or os.getenv("SEARCH_MODE", "auto")).strip().lower()
+        self.mode = (mode or os.getenv("SEARCH_MODE") or "auto").strip().lower()
         if self.mode not in {"auto", "tavily", "anysearch", "hybrid"}:
             self.mode = "auto"
 

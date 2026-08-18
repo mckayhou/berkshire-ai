@@ -120,11 +120,15 @@ class TextualGradientDescent:
 
     def _rewrite_prompt(self, var: Variable, gradient: Gradient, update: Dict) -> None:
         """用 LLM 真实改写 prompt 变量；失败/无底稿时优雅降级（仅记录）。"""
+        llm = self.llm
+        if llm is None:
+            update["rewrite_skipped"] = "未注入 llm"
+            return
         old_value = var.value
         examples = self._fetch_examples()
         try:
             new_value = apply_gradient(
-                var, gradient, self.llm, examples=examples
+                var, gradient, llm, examples=examples
             )
         except Exception as e:  # 网络/调用错误 → 降级，不崩链路
             update["rewrite_error"] = f"{type(e).__name__}: {e}"
@@ -142,10 +146,15 @@ class TextualGradientDescent:
 
     def _rewrite_prompt_validated(self, var: Variable, gradient: Gradient, update: Dict) -> None:
         """验证门控改写：改写后评分，只有不劣于(+min_improvement)才回填，否则回滚。"""
+        llm = self.llm
+        scorer = self.scorer
+        if llm is None or scorer is None:
+            update["rewrite_skipped"] = "未注入 llm/scorer"
+            return
         examples = self._fetch_examples()
         try:
             result = validated_apply_gradient(
-                var, gradient, self.llm, self.scorer,
+                var, gradient, llm, scorer,
                 min_improvement=self.min_improvement,
                 examples=examples,
             )

@@ -313,7 +313,7 @@ def run_rd_cycle(
             if proposer is not None:
                 try:
                     # V10.29: 支持 negative_constraints 注入
-                    propose_kwargs = {
+                    propose_kwargs: Dict[str, Any] = {
                         "ticker": tkr,
                         "recent": recent,
                         "retriever": retriever,
@@ -325,7 +325,7 @@ def run_rd_cycle(
                         sig = inspect.signature(proposer.propose)
                         if "negative_constraints" in sig.parameters:
                             propose_kwargs["negative_constraints"] = negative_constraints
-                    hyps = proposer.propose(**propose_kwargs)
+                    hyps = proposer.propose(**propose_kwargs)  # type: ignore[arg-type]
                 except Exception:  # noqa: BLE001
                     hyps = []
                 if hypothesis_store is not None:

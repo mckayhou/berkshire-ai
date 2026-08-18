@@ -276,7 +276,7 @@ class FailureRootCauseRetriever:
     def _load_traces(self) -> List[Dict]:
         """加载所有 trace 文件。"""
         import os
-        traces = []
+        traces: List[Dict] = []
         if not os.path.isdir(self.trace_dir):
             return traces
         for filename in os.listdir(self.trace_dir):
