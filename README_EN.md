@@ -182,6 +182,11 @@ Skills instruct the agent to run, via shell / integrated tools:
 python3 tools/financial_rigor.py verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
 python3 tools/financial_rigor.py cross-validate --field revenue --values '123.4 123.5' --sources 'macrotrends aastocks'
 
+# Deep Research 10-year terminal-value gate
+python3 tools/terminal_value.py audit \
+  --currency CNY --r 0.08 --roic 0.20 --g 0.005,0.015,0.02 --rf 0.017 \
+  --discrete-risks "监管重击:尾部档"
+
 # 15% random report audit + pass/fail verdict
 python3 tools/report_audit.py extract --report reports/腾讯/腾讯-2025Q4.md
 python3 tools/report_audit.py verdict --results '{...}' --report reports/xxx.md

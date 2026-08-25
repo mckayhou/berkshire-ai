@@ -428,7 +428,20 @@ def render_verdict(results: list, report_name: str = "") -> dict:
 # CLI Entry Point
 # ---------------------------------------------------------------------------
 
+def _force_utf8_stdio():
+    """Force stdout/stderr to UTF-8 so report symbols survive Windows GBK."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
 def main():
+    _force_utf8_stdio()
     parser = argparse.ArgumentParser(
         description='Report Audit Tool — 研究报告数据抽检工具',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -504,8 +517,22 @@ def main():
         print('  A股： eastmoney.com（主）+ cninfo.com.cn')
 
         if not args.dry_run:
+            template = []
+            for p in sampled:
+                template.append({
+                    'id': p['id'],
+                    'label': p['label'],
+                    'reported_value': p['reported_value'],
+                    'unit': p['unit'],
+                    'line_number': p['line_number'],
+                    'raw_text': p.get('raw_text', ''),
+                    'fetched_value': None,
+                    'fetched_source': '',
+                    'fetched_value2': None,
+                    'fetched_source2': '',
+                })
             print('\n抽检JSON（请填入fetched_*字段后用于verdict）：')
-            print(json.dumps(sampled, ensure_ascii=False, indent=2))
+            print(json.dumps(template, ensure_ascii=False, indent=2))
 
     elif args.command == 'verdict':
         try:
@@ -518,6 +545,8 @@ def main():
 
         if args.output_json:
             print(json.dumps(verdict, ensure_ascii=False, indent=2))
+
+        sys.exit(0 if verdict.get("verdict") == "PASS" else 1)
 
     else:
         parser.print_help()

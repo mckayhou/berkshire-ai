@@ -206,6 +206,11 @@ Agent 技能会指导你使用 shell / 集成工具执行：
 python3 berkshire-ai/tools/financial_rigor.py verify-market-cap --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
 python3 berkshire-ai/tools/financial_rigor.py cross-validate --field revenue --values '123.4 123.5' --sources 'macrotrends aastocks'
 
+# Deep Research 十年折现准出（deep 档 / 写十年 IRR 时必须）
+python3 berkshire-ai/tools/terminal_value.py audit \
+  --currency CNY --r 0.08 --roic 0.20 --g 0.005,0.015,0.02 --rf 0.017 \
+  --discrete-risks "监管重击:尾部档"
+
 # 报告 15% 随机抽检 + 准出判决
 python3 berkshire-ai/tools/report_audit.py extract --report reports/腾讯-2025Q4.md
 python3 berkshire-ai/tools/report_audit.py verdict --results '{...}' --report reports/xxx.md

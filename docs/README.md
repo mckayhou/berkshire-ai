@@ -82,8 +82,8 @@ docs/README.md          ← 你在这里（导航）
 ### 场景 B：四大师投研 + 报告准出
 
 ```text
-1. SKILLS.md → investment-research
-2. USER_GUIDE.md §9 financial_rigor + report_audit
+1. SKILLS.md → investment-research（Deep Research）
+2. USER_GUIDE.md §9 financial_rigor + report_audit + terminal_value
 3. report-conventions.md
 4. notify.py 交付
 ```
@@ -124,6 +124,7 @@ docs/README.md          ← 你在这里（导航）
 | 功能域 | 使用文档 | 测试文档 | 设计/边界 |
 |--------|----------|----------|-----------|
 | 金融严谨性 | USER_GUIDE §9, tools/README | TESTING §test_tools_financial_rigor | — |
+| 十年折现 / Deep Research | USER_GUIDE §9.3, investment-research skill | test_terminal_value, test_minpack_smoke, e2e minpack | financial-data 复权节 |
 | 报告质检 | USER_GUIDE §9 | TESTING §test_tools_report_audit | report-conventions |
 | A 股数据 | USER_GUIDE §5, QUANT §1 | test_tools_data_sources | quant_data_fusion |
 | 因子挖掘 | QUANT §2, BACKTEST §1 | test_ashare_alphagpt | quant_data_fusion |
