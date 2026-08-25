@@ -204,6 +204,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_rewrite_fewshot.py` | few-shot 注入 | |
 | `test_golden_action_card.py` | 行动卡黄金样例 | |
 | `test_tools_financial_rigor.py` | `financial_rigor.py` | 精确计算 + AST 安全 |
+| `test_terminal_value.py` | `terminal_value.py` | 戈登终值 PE / IRR / audit C3 |
 | `test_tools_report_audit.py` | `report_audit.py` | 提取 / 判决 |
 | `test_tools_data_sources.py` | `data_sources.py` | 降级链、适配器 |
 | `test_tools_network.py` | 网络重试 | monkeypatch httpx |

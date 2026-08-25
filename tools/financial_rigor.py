@@ -20,6 +20,7 @@ import ast
 import json
 import math
 import operator
+import sys
 from decimal import ROUND_HALF_EVEN, Context, Decimal
 
 # ---------------------------------------------------------------------------
@@ -53,6 +54,18 @@ def fmt_number(d: Decimal, unit: str = "") -> str:
     if abs_v >= 1e6:
         return f"{v/1e6:.2f}M"
     return f"{v:,.2f}"
+
+
+def _force_utf8_stdio():
+    """Force stdout/stderr to UTF-8 so ❌ / ⚠️ survive Windows GBK consoles."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
 
 
 # ---------------------------------------------------------------------------
@@ -405,6 +418,7 @@ def three_scenario_valuation(current_price, current_eps, shares_billion,
 # ---------------------------------------------------------------------------
 
 def main():
+    _force_utf8_stdio()
     parser = argparse.ArgumentParser(
         description="Financial Rigor Toolkit — 金融数据严谨性验证工具",
         formatter_class=argparse.RawDescriptionHelpFormatter,

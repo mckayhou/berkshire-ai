@@ -53,6 +53,7 @@
 |------|----------|
 | 数据获取 | `anysearch-web` / `skills/anysearch/`（AnySearch Skill）, `data_sources.py`, `ashare_data.py`, **`twstock_data.py`（台股）**, `src/tavily_search.py`（Tavily+AnySearch hybrid） |
 | 数字验证 | `financial_rigor.py`（**必须**） |
+| 十年折现 / 终值倍数 | `terminal_value.py`（deep 必须；standard 若写十年 IRR 则必须） |
 | **研究收尾落盘** | `log_decision.py append`（**必须**；`--strict` 校验 action↔stance） |
 | action↔stance 带宽 | `log_decision.py bands` / `gaps` |
 | 后验周报 | `posterior_weekly.py report` 或 `./scripts/weekly-posterior.sh` |

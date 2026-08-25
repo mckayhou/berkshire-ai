@@ -36,6 +36,18 @@
 
 ## 📜 版本历史
 
+### V10.29.3+copaw-minpack - 2026-08-25 (Thesis Tracker / Deep Research 最小依赖)
+
+从 Copaw 工作区 `~/.copaw/workspaces/default/skills/ai-berkshire` **合入**最小依赖集，不整文件覆盖本 fork 契约：
+
+- 新增 `tools/terminal_value.py`：十年终值 PE / IRR / C1–C3 audit
+- `investment-research`（Deep Research）：补十年折现流程；保留 depth / Tavily / 行动卡 / `log_decision`
+- `financial-data`：补「股价与复权」；保留 hybrid 检索与台股 ADR 注记
+- `financial_rigor` / `report_audit`：UTF-8 stdio + extract JSON 模板；**保留** AST 安全求值与双源判决
+- `thesis-tracker`：本仓已含 log_decision / thesis_queue，不降级覆盖
+
+测试：`test_terminal_value` + 既有 rigor/audit。
+
 ### V10.29.3+upstream-P0 - 2026-07-24 (cherry-pick xbtlin skills + 台股)
 
 从 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire) **内容级移植**（无共同 git 祖先，非 merge）：

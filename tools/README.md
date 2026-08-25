@@ -10,6 +10,7 @@
 | 工具 | 作用 | 需要网络 | 额外依赖 |
 |---|---|:---:|---|
 | `financial_rigor.py` | 金融数据严谨性验证（核心） | 否 | 无 |
+| `terminal_value.py` | 十年终值 PE / IRR / 三约束 audit（Copaw Deep Research） | 否 | 无 |
 | `report_audit.py` | 研究报告数据抽检 / 准出判决 | 否 | 无 |
 | `report_html.py` | Markdown → HTML 报告（暗色主题） | 否 | 无 |
 | `stock_comparison.py` | 2–4 标的横向对比矩阵 | 否 | 无 |
@@ -109,6 +110,18 @@ python3 tools/financial_rigor.py three-scenario --price 510 --eps 23.5 --shares 
 python3 tools/financial_rigor.py benford --values '[1234,2345,...]'
 # 安全计算器（AST 求值，拒绝任意代码执行）
 python3 tools/financial_rigor.py calc --expr '510 * 9.11e9'
+```
+
+## terminal_value.py（离线 · Deep Research 十年折现）
+
+零依赖。终值 PE = (1 − g/ROIC) / (r − g)。`audit` 卡 C1 同币种、C2 分母 ≥5pct、C3 离散风险不得进 r/β。
+
+```bash
+python3 tools/terminal_value.py pe --roic 0.20 --g 0.02 --r 0.08
+python3 tools/terminal_value.py irr --profit 5390 --mcap 34420 --pe 22.5 --years 10 --payout 0.015
+python3 tools/terminal_value.py audit \
+  --currency CNY --r 0.08 --roic 0.20 --g 0.005,0.02,0.03 --rf 0.017 --beta 1.0 \
+  --discrete-risks "监管重击:尾部档"
 ```
 
 ## report_audit.py（离线）
