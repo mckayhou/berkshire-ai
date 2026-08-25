@@ -194,5 +194,43 @@ def test_render_verdict_skips_missing_fetched():
     assert v["verdict"] == "PASS"
 
 
+def test_extract_cli_emits_fetched_template(tmp_path):
+    report = tmp_path / "r.md"
+    report.write_text("# 测\n\n营业收入：1234 亿元\n净利润：100 亿元\n毛利率：40%\n", encoding="utf-8")
+    cli = os.path.join(os.path.dirname(__file__), "..", "tools", "report_audit.py")
+    proc = __import__("subprocess").run(
+        [sys.executable, cli, "extract", "--report", str(report), "--seed", "1"],
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert "fetched_value" in proc.stdout
+    assert "fetched_source" in proc.stdout
+
+
+def test_verdict_cli_exit_codes():
+    cli = os.path.join(os.path.dirname(__file__), "..", "tools", "report_audit.py")
+    import json
+    import subprocess
+
+    ok = [{"id": 1, "label": "营收", "reported_value": 100, "unit": "亿",
+           "fetched_value": 100, "fetched_source": "a"}]
+    bad = [{"id": 1, "label": "营收", "reported_value": 100, "unit": "亿",
+            "fetched_value": 150, "fetched_source": "a"}]
+    p_ok = subprocess.run(
+        [sys.executable, cli, "verdict", "--results", json.dumps(ok), "--output-json"],
+        capture_output=True, text=True, timeout=15,
+    )
+    p_bad = subprocess.run(
+        [sys.executable, cli, "verdict", "--results", json.dumps(bad), "--output-json"],
+        capture_output=True, text=True, timeout=15,
+    )
+    assert p_ok.returncode == 0
+    assert p_bad.returncode == 1
+    assert '"verdict": "PASS"' in p_ok.stdout or '"verdict":"PASS"' in p_ok.stdout
+    assert '"verdict": "FAIL"' in p_bad.stdout or '"verdict":"FAIL"' in p_bad.stdout
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

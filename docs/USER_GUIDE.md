@@ -629,6 +629,32 @@ python3 tools/report_audit.py extract --report reports/foo.md --dry-run --ratio 
 python3 tools/report_audit.py verdict --report reports/foo.md --results '[{"id":1,"label":"营收",...}]'
 ```
 
+打回时 CLI 退出码为 1，便于脚本/CI 判断。
+
+### 9.3 terminal_value.py（十年折现 / Deep Research 准出）
+
+`investment-research` 的 **deep** 档（以及 standard 里一旦写十年 IRR/终值倍数）必须走永续增长模型，禁止同业 PE 类比当终值。
+
+```bash
+# 单点退出 PE（打印留存率 / 分子 / 分母）
+python3 tools/terminal_value.py pe --roic 0.20 --g 0.02 --r 0.08
+
+# 从零算十年 IRR
+python3 tools/terminal_value.py irr \
+  --profit 5390 --mcap 34420 --pe 22.5 --years 10 --payout 0.015
+
+# 三条硬约束准出（C1 同币种 / C2 分母≥5pct / C3 离散风险不得进 r）
+python3 tools/terminal_value.py audit \
+  --currency CNY --r 0.08 --roic 0.20 --g 0.005,0.015,0.02 --rf 0.017 \
+  --beta 1.0 --discrete-risks "监管重击:尾部档"
+```
+
+- 退出码 0 = 【准出】，1 = 【打回】
+- 分母不够宽又只想做情景：加 `--upside-only`，报告里必须写明「情景不是估值」
+- Thesis Tracker 的 TRIGGERED 论文重研走 `investment-research depth=deep`，因此也会打到本工具
+
+配套规范：`skills/financial-data.md`「股价与复权」；技能正文：`skills/investment-research.md`。
+
 ---
 
 ## 10. 报告产出与对比
@@ -717,10 +743,10 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 
 | 技能 | 用途 |
 |------|------|
-| `investment-research.md` | 四大师单标的深度研究 |
+| `investment-research.md` | 四大师单标的深度研究（Deep Research；deep 档含 `terminal_value`） |
 | `investment-team.md` | 多 Agent 并行团队研究 |
 | `investment-checklist.md` | 研究检查清单 |
-| `financial-data.md` | 数据源规范（各技能必须引用） |
+| `financial-data.md` | 数据源规范 + 股价复权（各技能必须引用） |
 | `thesis-tracker.md` | 论文状态跟踪 |
 | `portfolio-review.md` | 组合审视 |
 | `earnings-review.md` / `earnings-team.md` | 财报季 |
@@ -806,6 +832,8 @@ python3 -m pytest tests/ -q --cov --cov-fail-under=50
 python3 -m pytest tests/test_limitup_scoring.py -v
 python3 -m pytest tests/test_factor_screener_bridge.py -v   # 需 torch
 python3 -m pytest tests/test_tools_thesis_queue.py -v
+python3 -m pytest tests/test_terminal_value.py tests/test_minpack_smoke.py \
+  tests/e2e/test_deep_research_minpack_e2e.py -v
 python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py -v
 ```
 
@@ -814,6 +842,7 @@ python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/
 | 仅打板 | `pytest tests/test_limitup_scoring.py` |
 | 仅因子 | `pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py` |
 | 仅引擎 | `pytest tests/test_v10_unit.py tests/test_v10_integration.py` |
+| Deep Research 最小依赖 | `pytest tests/test_terminal_value.py tests/test_minpack_smoke.py tests/e2e/test_deep_research_minpack_e2e.py` |
 | 技能进化 SkillForge | `pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/test_skill_forge_cli.py` |
 | 真实 LLM e2e | `BERKSHIRE_LLM_API_KEY=... pytest tests/e2e/` |
 
@@ -849,6 +878,7 @@ python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/
 | 工具 | 网络 | 依赖 | 一句话 |
 |------|:----:|------|--------|
 | `financial_rigor.py` | 否 | 无 | 精确验算 / 交叉验证 |
+| `terminal_value.py` | 否 | 无 | 十年终值 PE / IRR / C1–C3 audit |
 | `report_audit.py` | 否 | 无 | 报告抽检准出 |
 | `data_sources.py` | 是* | 可选多库 | A 股多源降级 |
 | `ashare_data.py` | 是 | curl | A 股直连 |

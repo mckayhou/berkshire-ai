@@ -46,7 +46,7 @@
 - `financial_rigor` / `report_audit`：UTF-8 stdio + extract JSON 模板；**保留** AST 安全求值与双源判决
 - `thesis-tracker`：本仓已含 log_decision / thesis_queue，不降级覆盖
 
-测试：`test_terminal_value` + 既有 rigor/audit。
+测试：`test_terminal_value`（单元）+ `test_minpack_smoke`（冒烟）+ `e2e/test_deep_research_minpack_e2e`（离线 e2e）+ 既有 rigor/audit。
 
 ### V10.29.3+upstream-P0 - 2026-07-24 (cherry-pick xbtlin skills + 台股)
 

@@ -40,7 +40,7 @@ python3 -m pytest tests/ -q --cov --cov-report=term-missing --cov-fail-under=50
 python3 tests/test_v10_backtest.py
 ```
 
-**当前规模（2026-08-11）**：全量 **`pytest tests/` → 576 passed**（含 MiniMax-M3 LLM e2e、TA look-ahead hardening）。无 LLM Key 时 `e2e/test_llm_smoke` 会 skip。以本机 `pytest tests/ -ra` 为准。
+**当前规模（2026-08-25）**：全量 **`pytest tests/` → 599 passed, 1 skipped**（无 LLM Key 时 `e2e/test_llm_smoke` skip；含 Deep Research 最小依赖单元/冒烟/离线 e2e）。以本机 `pytest tests/ -ra` 为准。
 
 ---
 
@@ -124,7 +124,9 @@ python3 -m pytest tests/ --lf                   # 只跑上次失败
 python3 -m pytest tests/test_v10_unit.py tests/test_v10_integration.py -v
 
 # 工具链
-python3 -m pytest tests/test_tools_financial_rigor.py tests/test_tools_report_audit.py -v
+python3 -m pytest tests/test_tools_financial_rigor.py tests/test_tools_report_audit.py \
+                 tests/test_terminal_value.py tests/test_minpack_smoke.py \
+                 tests/e2e/test_deep_research_minpack_e2e.py -v
 
 # A 股量化（含打板）
 python3 -m pytest tests/test_limitup_scoring.py tests/test_factor_screener_bridge.py \
@@ -204,8 +206,10 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_rewrite_fewshot.py` | few-shot 注入 | |
 | `test_golden_action_card.py` | 行动卡黄金样例 | |
 | `test_tools_financial_rigor.py` | `financial_rigor.py` | 精确计算 + AST 安全 |
-| `test_terminal_value.py` | `terminal_value.py` | 戈登终值 PE / IRR / audit C3 |
-| `test_tools_report_audit.py` | `report_audit.py` | 提取 / 判决 |
+| `test_terminal_value.py` | `terminal_value.py` | 戈登终值 PE / IRR / C1–C3 audit |
+| `test_minpack_smoke.py` | rigor / audit / terminal_value CLI | Deep Research 最小依赖冒烟 |
+| `e2e/test_deep_research_minpack_e2e.py` | Deep Research 准出链 | rigor → audit → terminal_value → log_decision（离线） |
+| `test_tools_report_audit.py` | `report_audit.py` | 提取 / 判决 / CLI 退出码 |
 | `test_tools_data_sources.py` | `data_sources.py` | 降级链、适配器 |
 | `test_tools_network.py` | 网络重试 | monkeypatch httpx |
 | `test_tools_notify.py` | `notify.py` | 多通道 mock |
@@ -253,6 +257,8 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `src/realized_feedback.py` | `pytest tests/test_realized_feedback_loop.py tests/test_network_price_provider.py` |
 | `src/prompt_optimizer.py` | `pytest tests/test_prompt_optimizer.py tests/test_prompt_validation.py` |
 | `tools/financial_rigor.py` | `pytest tests/test_tools_financial_rigor.py` |
+| `tools/terminal_value.py` / Deep Research 准出 | `pytest tests/test_terminal_value.py tests/test_minpack_smoke.py tests/e2e/test_deep_research_minpack_e2e.py` |
+| `tools/report_audit.py` | `pytest tests/test_tools_report_audit.py` |
 | `tools/data_sources.py` | `pytest tests/test_tools_data_sources.py tests/test_quant_data_fusion.py` |
 | `tools/thesis_queue.py` | `pytest tests/test_tools_thesis_queue.py tests/test_limitup_scoring.py tests/test_factor_screener_bridge.py` |
 | `tools/ashare_alphagpt/*` | `pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py` |
@@ -346,6 +352,9 @@ python3 -m pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridg
 python3 tools/financial_rigor.py verify-market-cap \
   --price 510 --shares 9.11e9 --reported 4.65e12 --currency HKD
 python3 tools/financial_rigor.py calc --expr '510 * 9.11e9'
+python3 tools/terminal_value.py pe --roic 0.20 --g 0.02 --r 0.08
+python3 tools/terminal_value.py audit --currency CNY --r 0.08 --roic 0.20 \
+  --g 0.005,0.015,0.02 --rf 0.017 --discrete-risks "监管重击:尾部档"
 python3 tools/report_audit.py extract --report reports/RocketLab/RKLB-investment-research.md --dry-run
 python3 tools/report_html.py README.md -o /tmp/readme.html
 python3 tools/thesis_queue.py --json
@@ -603,7 +612,7 @@ git push origin main && git push origin vX.Y
 | 日期 | Python | pytest | 备注 |
 |------|--------|--------|------|
 | 2026-06-26 | 3.14.6 | 107 passed | 早期版本基线 |
-| 2026-08-11 | 3.14 | **576 passed**（e2e 9/9 含 LLM smoke；look-ahead 取价 + ticker 路径硬化 + investment-team 联网诚实） |
+| 2026-08-25 | 3.14 | **599 passed, 1 skipped**（Deep Research min-pack：terminal_value 单元 + CLI 冒烟 + 离线 e2e；无 LLM Key 时 e2e smoke skip） |
 | 2026-07-27 | 3.14 | **572 passed**（V10.29.3 全链路：upstream P0/P1 + Dojo bridge + report_audit 负号 + MiniMax-M3 e2e；手工 gaps/weekly-posterior/feedback/twstock/dojo-bridge 冒烟） |
 | 2026-07-24 | 3.14 | **558 passed**（V10.29.3：action↔stance + repair + due feedback + weekly-posterior；含 MiniMax-M3 `test_llm_smoke`；SkillForge 离线测强制 RULE） |
 | 2026-07-24 | 3.14 | 557 passed, 1 skipped（同日较早：无 LLM Key 时 e2e smoke skip） |

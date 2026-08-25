@@ -121,8 +121,9 @@ python3 tools/archive_experiences.py --reset --reason "test pollution"
 ## 5. 推荐工作流
 
 ```text
-研究 (investment-research)
-  → financial_rigor + report_audit
+研究 (investment-research / Deep Research)
+  → financial_rigor + terminal_value audit（deep / 十年 IRR）
+  → report_audit
   → 行动卡（action 与 mean_stance 对齐带宽）
   → log_decision.py append --strict   ← 契约 + action↔stance 硬门
   → thesis-tracker / state 更新
