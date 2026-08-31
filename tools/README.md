@@ -15,6 +15,7 @@
 | `report_html.py` | Markdown → HTML 报告（暗色主题） | 否 | 无 |
 | `stock_comparison.py` | 2–4 标的横向对比矩阵 | 否 | 无 |
 | `ashare_data.py` | A股行情/财务/估值/搜索/日线 | 是 | curl |
+| `capital_flow.py` | **A股资金行为**：户数/融资/大宗/龙虎榜/机构/北向 + 综合分 | 是 | curl |
 | `twstock_data.py` | **台股** FinMind：行情/估值/财务/月营收/股利（上游移植） | 是 | 无（stdlib）；可选 `FINMIND_TOKEN` |
 | `dojo_holdings_bridge.py` | **DojoAgents 持仓桥**：portfolio JSON → `holdings.json` + 可选 risk | 否 | 无；可选读 `~/.dojo/data/portfolio` |
 | `data_sources.py` | A股数据**多源降级链**（可插拔适配器） | 是* | curl（内置源）；可选 tushare/efinance/akshare/baostock/yfinance |
@@ -145,6 +146,18 @@ python3 tools/ashare_data.py daily 600519 --limit 60  # 近 N 日日线（东方
 python3 tools/ashare_data.py search 茅台          # 搜索代码
 ```
 注：`valuation` 的"推算总股本"是由市值/股价反推，仅供参考；真实市值校验请用 `financial_rigor.py verify-market-cap`。
+
+## capital_flow.py（在线 · A 股资金行为）
+
+东财公开接口，curl 零依赖。六模块：股东户数、融资融券、大宗、龙虎榜、机构、北向。综合分为成功模块均分；缺失不计入、不伪装。
+
+```bash
+python3 tools/capital_flow.py score 600519
+python3 tools/capital_flow.py score 600519 --json
+python3 tools/capital_flow.py holders 600519 --json
+```
+
+技能：[skills/capital-flow.md](../skills/capital-flow.md)。无 Streamlit / 无流向预测。
 
 ## twstock_data.py（在线，台股 FinMind · 上游移植）
 

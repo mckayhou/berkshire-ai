@@ -210,6 +210,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `test_minpack_smoke.py` | rigor / audit / terminal_value CLI | Deep Research 最小依赖冒烟 |
 | `e2e/test_deep_research_minpack_e2e.py` | Deep Research 准出链 | rigor → audit → terminal_value → log_decision（离线） |
 | `test_tools_report_audit.py` | `report_audit.py` | 提取 / 判决 / CLI 退出码 |
+| `test_tools_capital_flow.py` | `capital_flow.py` | 六模块打分 / 部分缺失 / CLI JSON |
 | `test_tools_data_sources.py` | `data_sources.py` | 降级链、适配器 |
 | `test_tools_network.py` | 网络重试 | monkeypatch httpx |
 | `test_tools_notify.py` | `notify.py` | 多通道 mock |
@@ -259,6 +260,7 @@ python3 src/evolution_loop_v10.py cycle AAPL --anchor 100 --price 110
 | `tools/financial_rigor.py` | `pytest tests/test_tools_financial_rigor.py` |
 | `tools/terminal_value.py` / Deep Research 准出 | `pytest tests/test_terminal_value.py tests/test_minpack_smoke.py tests/e2e/test_deep_research_minpack_e2e.py` |
 | `tools/report_audit.py` | `pytest tests/test_tools_report_audit.py` |
+| `tools/capital_flow.py` | `pytest tests/test_tools_capital_flow.py`（离线）；手工 `score 600519` |
 | `tools/data_sources.py` | `pytest tests/test_tools_data_sources.py tests/test_quant_data_fusion.py` |
 | `tools/thesis_queue.py` | `pytest tests/test_tools_thesis_queue.py tests/test_limitup_scoring.py tests/test_factor_screener_bridge.py` |
 | `tools/ashare_alphagpt/*` | `pytest tests/test_ashare_alphagpt.py tests/test_factor_screener_bridge.py` |

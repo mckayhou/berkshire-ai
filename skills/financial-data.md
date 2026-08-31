@@ -57,6 +57,14 @@ python3 skills/anysearch/scripts/anysearch_cli.py search "{company} 财务指标
 | 1（主） | **东方财富** | eastmoney.com → 搜股票代码 → 财务报表 | 直接访问 |
 | 2（副） | **巨潮资讯** | cninfo.com.cn | 原始年报/季报PDF |
 
+A 股**资金行为**（股东户数 / 融资融券 / 大宗 / 龙虎榜 / 机构 / 北向）走公开东财接口，不要靠搜索摘要：
+
+```bash
+python3 tools/capital_flow.py score 600519 --json
+```
+
+规范见 `skills/capital-flow.md`。缺失模块记 missing，禁止用模型记忆补数。
+
 ### 台股（台积电 2330、联发科 2454、大立光 3008 等）
 
 移植自上游 [xbtlin/ai-berkshire](https://github.com/xbtlin/ai-berkshire)；与本 fork 的 AnySearch/Tavily 规范并存。

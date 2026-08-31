@@ -36,6 +36,17 @@
 
 ## 📜 版本历史
 
+### V10.29.3+capital-flow - 2026-08-25 (A 股资金行为最小工具)
+
+对照「资金行为分析工具」能力清单的**可落地子集**（非 Streamlit 产品）：
+
+- `tools/capital_flow.py`：股东户数 / 融资融券 / 大宗 / 龙虎榜 / 机构 / 北向 + 综合分
+- 东财公开接口 + curl；单模块失败记 missing，禁止伪装
+- 技能 `skills/capital-flow.md`；Deep Research / financial-data / news-pulse 引用
+- 测试：`test_tools_capital_flow`（全离线注入 fetchers）
+
+不做：看板、异常预警推送、流向预测模型、Wind/Choice。
+
 ### V10.29.3+copaw-minpack - 2026-08-25 (Thesis Tracker / Deep Research 最小依赖)
 
 从 Copaw 工作区 `~/.copaw/workspaces/default/skills/ai-berkshire` **合入**最小依赖集，不整文件覆盖本 fork 契约：
