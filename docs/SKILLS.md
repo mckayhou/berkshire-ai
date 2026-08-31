@@ -1,6 +1,6 @@
 # Agent 技能目录（SKILLS）
 
-> `skills/` 下 18 个独立 Agent 指令 + **AnySearch 检索 skill**，可直接作为 OpenClaw `SKILL.md` 使用。  
+> `skills/` 下独立 Agent 指令 + **AnySearch 检索 skill**，可直接作为 OpenClaw `SKILL.md` 使用。  
 > Meta-skill 总入口：[config/skill.md](../config/skill.md) | 导航：[docs/README.md](README.md)
 
 ---
@@ -26,6 +26,7 @@
 | [investment-team.md](../skills/investment-team.md) | **多 Agent 并行**团队研究；spawn 前检索预检；联网失败禁止伪装 | 「investment-team 研究 NVDA」 |
 | [investment-checklist.md](../skills/investment-checklist.md) | 研究检查清单 | 「按 checklist 检查这篇研报」 |
 | [financial-data.md](../skills/financial-data.md) | **数据源规范**（各技能必须引用） | 「这个数据从哪来」 |
+| [capital-flow.md](../skills/capital-flow.md) | **A 股资金行为**六模块快照（`capital_flow.py`） | 「筹码集中了没」「北向/龙虎榜」 |
 | [thesis-tracker.md](../skills/thesis-tracker.md) | 论文状态跟踪 / TRIGGERED；**须 log_decision 落盘** | 「更新 thesis 状态」 |
 | [thesis-drift.md](../skills/thesis-drift.md) | **论文漂移**（事实 vs 价格 vs 措辞；上游移植） | 「对比两篇 thesis 有没有漂」 |
 | [income-investment.md](../skills/income-investment.md) | **股息/可分配收益**专项（上游移植） | 「这票适不适合当收入仓」 |

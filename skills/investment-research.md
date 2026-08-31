@@ -61,7 +61,7 @@ lite 模式下仍须标注信息丰富度（A/B/C），但可省略图表与历�
 > **数据源规范**：参见 `skills/financial-data.md`。所有财务数据必须来自两个独立来源，误差>1%须标记。
 > - 美股：macrotrends（主）+ stockanalysis（副）
 > - 港股：aastocks（主）+ macrotrends ADR（副）
-> - A股：东方财富（主）+ 巨潮资讯（副）
+> - A股：东方财富（主）+ 巨潮资讯（副）；资金面用 `python3 tools/capital_flow.py score {代码} --json`（见 `skills/capital-flow.md`）
 >
 > **联网检索（V10.29.2 + 质量对照）**：默认 **`SEARCH_MODE=hybrid`（Tavily 主 + AnySearch 回退）**；结构化财报指标可加 AnySearch `finance.fundamental`。禁止用 LLM 内部知识填财务数字。
 >

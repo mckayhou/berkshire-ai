@@ -349,6 +349,16 @@ python3 tools/ashare_data.py daily 600519 --limit 60
 python3 tools/ashare_data.py search 茅台
 ```
 
+### 5.2.0 A 股资金行为（`capital_flow.py`）
+
+股东户数 / 融资融券 / 大宗 / 龙虎榜 / 机构 / 北向。东财公开接口，缺失模块不计入均分。
+
+```bash
+python3 tools/capital_flow.py score 600519 --json
+```
+
+技能：[capital-flow.md](../skills/capital-flow.md)。
+
 ### 5.2.1 台股 FinMind（`twstock_data.py`，上游移植）
 
 ```bash
@@ -739,7 +749,7 @@ python3 tools/notify.py send --title "x" --text "y" --channels feishu --local
 python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 600519 --company 贵州茅台
 ```
 
-### 12.3 技能清单（18 个）
+### 12.3 技能清单
 
 | 技能 | 用途 |
 |------|------|
@@ -747,6 +757,7 @@ python3 ~/.qwenpaw/loop_engine/berkshire_v8/evolution_loop_v10.py --ticker 60051
 | `investment-team.md` | 多 Agent 并行团队研究 |
 | `investment-checklist.md` | 研究检查清单 |
 | `financial-data.md` | 数据源规范 + 股价复权（各技能必须引用） |
+| `capital-flow.md` | A 股资金行为六模块 |
 | `thesis-tracker.md` | 论文状态跟踪 |
 | `portfolio-review.md` | 组合审视 |
 | `earnings-review.md` / `earnings-team.md` | 财报季 |
@@ -882,6 +893,7 @@ python3 -m pytest tests/test_skill_forge.py tests/test_skill_forge_llm.py tests/
 | `report_audit.py` | 否 | 无 | 报告抽检准出 |
 | `data_sources.py` | 是* | 可选多库 | A 股多源降级 |
 | `ashare_data.py` | 是 | curl | A 股直连 |
+| `capital_flow.py` | 是 | curl | A 股资金行为六模块 |
 | `twstock_data.py` | 是 | 无 | 台股 FinMind（可选 FINMIND_TOKEN） |
 | `dojo_holdings_bridge.py` | 否 | 无 | DojoAgents 组合 → holdings.json |
 | `ashare_factor_mining.py` | 是* | torch | AlphaGPT 训练 |
