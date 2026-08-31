@@ -263,7 +263,7 @@ def score_lhb(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
     as_of = _str(rows[0], "TRADE_DATE", "DATE")
     year = as_of[:4]
     if year.isdigit() and int(year) < date.today().year - 1:
-        return {"ok": False, "reason": f"无近期龙虎榜（最近一条 {as_of[:10]}）"}
+        return {"ok": False, "reason": f"该股最近上榜 {as_of[:10]}，并非没有公开龙虎榜"}
 
     if "OPERATEDEPT_NAME" not in rows[0] and "TOTAL_NET" in rows[0]:
         net = _num(rows[0], "TOTAL_NET") or 0.0
@@ -371,13 +371,55 @@ def score_north(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
         flags.append("北向减持（持股降超5%）")
     elif chg >= 0.05:
         flags.append("北向加仓（持股升超5%）")
+    as_of = _str(latest, "TRADE_DATE", "HOLD_DATE", "END_DATE", "DATE")
+    ymd = as_of[:10]
+    if len(ymd) == 10:
+        try:
+            last = date.fromisoformat(ymd)
+            if (date.today() - last).days > 90:
+                flags.append(f"北向日频停更至 {ymd}，变动只反映停更前")
+        except ValueError:
+            pass
     return {
         "ok": True,
         "score": round(score, 1),
         "latest": n0,
         "prev": n1,
         "change_pct": round(chg * 100, 2),
-        "as_of": _str(latest, "TRADE_DATE", "HOLD_DATE", "END_DATE", "DATE"),
+        "as_of": as_of,
+        "flags": flags,
+    }
+
+
+def score_flow(rows: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
+    """主力资金净流入占比高 = 偏多。东财个股资金流向日 K。"""
+    if not rows:
+        return {"ok": False, "reason": "无主力资金流向"}
+    latest = rows[0]
+    pct = _num(latest, "MAIN_PCT")
+    net = _num(latest, "MAIN_NET")
+    if pct is None and net is None:
+        return {"ok": False, "reason": "主力资金字段缺失"}
+    if pct is None:
+        pct = 0.0
+    score = _clip(50.0 + pct * 4.0)
+    flags = []
+    last5 = [_num(r, "MAIN_NET") for r in rows[:5]]
+    last5n = [x for x in last5 if x is not None]
+    if len(last5n) >= 5 and all(x < 0 for x in last5n):
+        flags.append("主力连续5日净流出")
+    elif len(last5n) >= 5 and all(x > 0 for x in last5n):
+        flags.append("主力连续5日净流入")
+    if pct <= -5:
+        flags.append("当日主力净流出占比超5%")
+    elif pct >= 5:
+        flags.append("当日主力净流入占比超5%")
+    return {
+        "ok": True,
+        "score": round(score, 1),
+        "main_net": net,
+        "main_pct": pct,
+        "as_of": _str(latest, "DATE"),
         "flags": flags,
     }
 
@@ -458,12 +500,52 @@ def fetch_inst(code: str) -> List[Dict[str, Any]]:
 
 
 def fetch_north(code: str) -> List[Dict[str, Any]]:
-    return em_rows(
-        "RPT_MUTUAL_HOLDSTOCKNORTH_STA",
+    rows = em_rows(
+        "RPT_MUTUAL_STOCK_HOLDRANKN",
         code,
+        filter_tpl='(SECURITY_CODE="{code}")(INTERVAL_TYPE="1")',
         sort_columns="TRADE_DATE",
-        page_size=10,
+        page_size=20,
     )
+    return [r for r in rows if _num(r, "HOLD_SHARES") is not None]
+
+
+def fetch_flow(code: str) -> List[Dict[str, Any]]:
+    """东财 push2his 个股资金流向日 K（主力/超大单等）。"""
+    url = (
+        "https://push2his.eastmoney.com/api/qt/stock/fflow/daykline/get?"
+        + urlencode(
+            {
+                "lmt": "0",
+                "klt": "101",
+                "secid": _secid(code),
+                "fields1": "f1,f2,f3,f7",
+                "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61,f62,f63,f64,f65",
+            }
+        )
+    )
+    payload = json.loads(_curl(url))
+    klines = ((payload.get("data") or {}).get("klines")) or []
+    rows: List[Dict[str, Any]] = []
+    for line in reversed(klines):
+        parts = str(line).split(",")
+        if len(parts) < 7:
+            continue
+        try:
+            rows.append(
+                {
+                    "DATE": parts[0],
+                    "MAIN_NET": float(parts[1]),
+                    "SMALL_NET": float(parts[2]),
+                    "MID_NET": float(parts[3]),
+                    "BIG_NET": float(parts[4]),
+                    "SUPER_NET": float(parts[5]),
+                    "MAIN_PCT": float(parts[6]),
+                }
+            )
+        except ValueError:
+            continue
+    return rows
 
 
 _FETCHERS = {
@@ -471,8 +553,9 @@ _FETCHERS = {
     "margin": (fetch_margin, score_margin, "融资融券"),
     "block": (fetch_block, score_block, "大宗交易"),
     "lhb": (fetch_lhb, score_lhb, "龙虎榜"),
-    "inst": (fetch_inst, score_inst, "机构持仓"),
+    "inst": (fetch_inst, score_inst, "前十大股东"),
     "north": (fetch_north, score_north, "北向资金"),
+    "flow": (fetch_flow, score_flow, "主力资金"),
 }
 
 
@@ -503,6 +586,8 @@ def _print_module(name: str, rec: Dict[str, Any]) -> None:
         extra.append(f"变动 {rec['change_pct']}%")
     if "avg_premium_pct" in rec:
         extra.append(f"均溢价 {rec['avg_premium_pct']}%")
+    if rec.get("main_pct") is not None:
+        extra.append(f"主力占比 {rec['main_pct']}%")
     if "change_pp" in rec:
         extra.append(f"{rec['change_pp']:+.2f}pct")
     tail = ("  " + "，".join(extra)) if extra else ""
@@ -519,7 +604,7 @@ def cmd_score(code: str, *, as_json: bool = False) -> int:
     print(f"资金行为: {_norm_code(code)}")
     print("=" * 60)
     if result.get("ok"):
-        print(f"  综合: {result['score']}  {result['signal']}  （{result['n_modules']}/6 模块）")
+        print(f"  综合: {result['score']}  {result['signal']}  （{result['n_modules']}/7 模块）")
     else:
         print("  综合: 无法评分（全部模块无数据）")
     print()
@@ -570,6 +655,7 @@ def main() -> None:
         ("lhb", "龙虎榜"),
         ("inst", "机构持仓"),
         ("north", "北向资金"),
+        ("flow", "主力资金流向"),
     ):
         sp = sub.add_parser(name, help=help_)
         sp.add_argument("code", help="A 股代码，如 600519")
