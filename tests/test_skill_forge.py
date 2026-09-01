@@ -53,7 +53,7 @@ def test_load_bad_cases_fixture():
 
 def test_failure_analyzer_four_dimensions():
     cases = load_bad_cases_jsonl(FIXTURE)
-    rec = analyze_bad_case(cases[0])
+    rec = analyze_bad_case(cases[0], mode=JudgeMode.RULE)
     assert len(rec.dimensions) == 4
     cats = {d.category for d in rec.dimensions}
     assert FailureCategory.KNOWLEDGE in cats
@@ -71,14 +71,14 @@ def test_tool_missing_invocation_detected():
         tool_trace=[],
         metadata={"depth": "standard"},
     )
-    rec = analyze_bad_case(case)
+    rec = analyze_bad_case(case, mode=JudgeMode.RULE)
     tool_dim = next(d for d in rec.dimensions if d.category == FailureCategory.TOOL)
     assert tool_dim.issue_type == "missing_invocation"
     assert tool_dim.severity.value in ("medium", "high")
 
 
 def test_aggregate_and_diagnose():
-    records = analyze_batch(load_bad_cases_jsonl(FIXTURE))
+    records = analyze_batch(load_bad_cases_jsonl(FIXTURE), mode=JudgeMode.RULE)
     agg = aggregate_failures(records, top_k=2)
     assert agg
     diag = diagnose("investment-research", 0, agg)
@@ -207,7 +207,7 @@ def test_multi_round_respects_max_rounds(sandbox_skill):
 
 
 def test_aggregator_representative_limit():
-    records = analyze_batch(load_bad_cases_jsonl(FIXTURE))
+    records = analyze_batch(load_bad_cases_jsonl(FIXTURE), mode=JudgeMode.RULE)
     agg = aggregate_failures(records, top_k=1)
     for a in agg:
         assert len(a.representative_task_ids) <= 1
