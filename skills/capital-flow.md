@@ -1,7 +1,7 @@
 ---
 name: berkshire-capital-flow
 description: |
-  A 股资金行为快照：股东户数、融资融券、大宗、龙虎榜、机构持仓、北向。
+  A 股资金行为快照：股东户数、融资融券、大宗、龙虎榜、前十大、北向、主力资金。
   调用 tools/capital_flow.py；缺失模块如实标记，禁止伪装。
 version: 10.29.3
 ---
@@ -31,13 +31,14 @@ python3 tools/capital_flow.py block {代码} --json
 python3 tools/capital_flow.py lhb {代码} --json
 python3 tools/capital_flow.py inst {代码} --json
 python3 tools/capital_flow.py north {代码} --json
+python3 tools/capital_flow.py flow {代码} --json
 ```
 
 数据源：东方财富公开 datacenter（curl，零依赖）。某模块空数据或 HTTP 失败 → `ok: false` + `reason`，**不得用 LLM 知识填数字**。
 
 ## 怎么读分数
 
-综合分 = 成功模块的算术平均（0–100）。**机构**口径是东财「前十大股东合计占比」，不是基金持仓明细；北向若只有一期则标记缺失、不编变动。
+综合分 = 成功模块的算术平均（0–100）。**前十大**口径是东财股东户数表的合计占比，不是基金持仓明细。北向用日频持股，若停更会打旗标、不编今天的数。龙虎榜该股未上榜时写「未上榜」，不是「没有公开数据」。主力资金来自东财个股资金流向日 K。
 
 | 分 | 信号 |
 |----|------|

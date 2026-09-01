@@ -70,14 +70,26 @@ def test_score_lhb_stale_daily_summary():
         [{"TRADE_DATE": "2013-01-28", "TOTAL_NET": -1e8, "TOTAL_BUY": 1e8, "TOTAL_SELL": 2e8}]
     )
     assert rec["ok"] is False
-    assert "无近期龙虎榜" in rec["reason"]
+    assert "该股最近上榜" in rec["reason"]
 
 
-def test_score_north_single_period():
-    rec = cf.score_north([{"HOLD_SHARES": 1e6, "TRADE_DATE": "2026-06-30"}])
-    assert rec["ok"] is False
-    assert "仅一期" in rec["reason"]
-    assert rec["latest"] == 1e6
+def test_score_flow_main_inflow():
+    rows = [{"DATE": "2026-08-31", "MAIN_NET": 1e8, "MAIN_PCT": 8.0}] * 5
+    rec = cf.score_flow(rows)
+    assert rec["ok"] is True
+    assert rec["score"] == 82.0
+    assert any("净流入" in f for f in rec["flags"])
+
+
+def test_score_north_stale_flag():
+    rec = cf.score_north(
+        [
+            {"HOLD_SHARES": 80, "TRADE_DATE": "2024-08-16"},
+            {"HOLD_SHARES": 100, "TRADE_DATE": "2024-08-15"},
+        ]
+    )
+    assert rec["ok"] is True
+    assert any("停更" in f for f in rec["flags"])
 
 
 def test_score_inst_and_north():
@@ -136,6 +148,7 @@ def test_analyze_uses_injected_fetchers():
             "lhb": lambda c: [],
             "inst": lambda c: [],
             "north": lambda c: [],
+            "flow": lambda c: [],
         },
     )
     assert result["code"] == "600519"
@@ -169,6 +182,7 @@ def test_cli_score_json_offline(monkeypatch, capsys):
             "lhb": (lambda c: [], cf.score_lhb, "龙虎榜"),
             "inst": (lambda c: [], cf.score_inst, "机构持仓"),
             "north": (lambda c: [], cf.score_north, "北向资金"),
+            "flow": (lambda c: [], cf.score_flow, "主力资金"),
         },
     )
     monkeypatch.setattr(sys, "argv", ["capital_flow.py", "score", "600519", "--json"])
